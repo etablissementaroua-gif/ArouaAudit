@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+﻿import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { MainLayout } from './layout/MainLayout';
 import { Loader2 } from 'lucide-react';
@@ -70,9 +70,24 @@ const PayrollDashboardView = lazy(() =>
 const StaffDebtsView = lazy(() =>
   import('../features/payroll-hr/views/StaffDebtsView').then((m) => ({ default: m.StaffDebtsView }))
 );
-const FinanceOperationsView = lazy(() =>
-  import('../features/finance-operations/views/FinanceOperationsView').then((m) => ({ default: m.FinanceOperationsView }))
+
+// 5. Listes Finance Views (Stage 6)
+const CreditBalancesView = lazy(() =>
+  import('../features/finance-operations/views/CreditBalancesView').then((m) => ({ default: m.CreditBalancesView }))
 );
+const DiscountsView = lazy(() =>
+  import('../features/finance-operations/views/DiscountsView').then((m) => ({ default: m.DiscountsView }))
+);
+const ExemptionsView = lazy(() =>
+  import('../features/finance-operations/views/ExemptionsView').then((m) => ({ default: m.ExemptionsView }))
+);
+const ImpayesView = lazy(() =>
+  import('../features/finance-operations/views/ImpayesView').then((m) => ({ default: m.ImpayesView }))
+);
+const PaymentsJournalView = lazy(() =>
+  import('../features/finance-operations/views/PaymentsJournalView').then((m) => ({ default: m.PaymentsJournalView }))
+);
+
 const ExpensesView = lazy(() =>
   import('../features/expenses/views/ExpensesView').then((m) => ({ default: m.ExpensesView }))
 );
@@ -214,7 +229,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-            // 4. Comptes & Chèques
+      // 4. Comptes & Chèques
       {
         path: 'checks/accounts',
         element: (
@@ -264,12 +279,12 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 5. Listes Finance
+      // 5. Listes Finance (Stage 6 - Dedicated Views)
       {
         path: 'finance/credit-balances',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <FinanceOperationsView />
+            <CreditBalancesView />
           </Suspense>
         ),
       },
@@ -277,7 +292,7 @@ export const router = createBrowserRouter([
         path: 'finance/discounts',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <FinanceOperationsView />
+            <DiscountsView />
           </Suspense>
         ),
       },
@@ -285,7 +300,7 @@ export const router = createBrowserRouter([
         path: 'finance/exemptions',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <FinanceOperationsView />
+            <ExemptionsView />
           </Suspense>
         ),
       },
@@ -293,7 +308,7 @@ export const router = createBrowserRouter([
         path: 'finance/payments-journal',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <TreasuryCaisseView />
+            <PaymentsJournalView />
           </Suspense>
         ),
       },
@@ -301,7 +316,7 @@ export const router = createBrowserRouter([
         path: 'finance/impayes',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <FinanceOperationsView />
+            <ImpayesView />
           </Suspense>
         ),
       },
