@@ -68,7 +68,16 @@ CREATE TABLE IF NOT EXISTS public.student_accounts (
 CREATE INDEX IF NOT EXISTS idx_student_accounts_student_id ON public.student_accounts(student_id);
 CREATE INDEX IF NOT EXISTS idx_student_accounts_balance ON public.student_accounts(balance);
 
--- 4. Audit Logs Compatibility Columns
+-- 4. Audit Logs Compatibility (Create if missing or Alter)
+CREATE TABLE IF NOT EXISTS public.audit_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    action TEXT,
+    entity_type TEXT,
+    entity_id TEXT,
+    details JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 ALTER TABLE public.audit_logs
 ADD COLUMN IF NOT EXISTS action TEXT,
 ADD COLUMN IF NOT EXISTS entity_type TEXT,
