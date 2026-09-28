@@ -72,22 +72,8 @@ CREATE TABLE IF NOT EXISTS public.checks_portfolio (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ربط student_id بجدول students إذا كان موجوداً
-DO $$ BEGIN
-    IF EXISTS (
-        SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'students'
-    ) THEN
-        IF NOT EXISTS (
-            SELECT 1 FROM information_schema.table_constraints 
-            WHERE constraint_name = 'fk_checks_student' AND table_name = 'checks_portfolio'
-        ) THEN
-            ALTER TABLE public.checks_portfolio 
-            ADD CONSTRAINT fk_checks_student FOREIGN KEY (student_id) 
-            REFERENCES public.students(student_id) ON DELETE SET NULL;
-        END IF;
-    END IF;
-EXCEPTION WHEN OTHERS THEN null;
-END $$;
+-- إزالة أي قيد تبعية خارجي صارم قد يعيق تسجيل الشيكات للتلاميذ غير المزامنين بعد
+ALTER TABLE public.checks_portfolio DROP CONSTRAINT IF EXISTS fk_checks_student;
 
 -- فهرسة سريعة للبحث برقم الشيك وتاريخ الاستحقاق
 CREATE INDEX IF NOT EXISTS idx_checks_due_date ON public.checks_portfolio(due_date);
