@@ -22,6 +22,15 @@ const RevenueAnalyticsView = lazy(() =>
 const SystemSettingsView = lazy(() =>
   import('../features/system-settings/views/SystemSettingsView').then((m) => ({ default: m.SystemSettingsView }))
 );
+const AcademicYearsView = lazy(() =>
+  import('../features/system-settings/views/AcademicYearsView').then((m) => ({ default: m.AcademicYearsView }))
+);
+const LevelsAndGroupsView = lazy(() =>
+  import('../features/system-settings/views/LevelsAndGroupsView').then((m) => ({ default: m.LevelsAndGroupsView }))
+);
+const TarifsPricingGridView = lazy(() =>
+  import('../features/system-settings/views/TarifsPricingGridView').then((m) => ({ default: m.TarifsPricingGridView }))
+);
 const MappedStaffView = lazy(() =>
   import('../features/payroll-hr/views/MappedStaffView').then((m) => ({ default: m.MappedStaffView }))
 );
@@ -56,7 +65,7 @@ export const router = createBrowserRouter([
         path: 'settings/academic-years',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <SystemSettingsView />
+            <AcademicYearsView />
           </Suspense>
         ),
       },
@@ -64,7 +73,7 @@ export const router = createBrowserRouter([
         path: 'settings/cycles',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <SystemSettingsView />
+            <LevelsAndGroupsView />
           </Suspense>
         ),
       },
@@ -72,7 +81,7 @@ export const router = createBrowserRouter([
         path: 'settings/levels-groups',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <SystemSettingsView />
+            <LevelsAndGroupsView />
           </Suspense>
         ),
       },
@@ -80,7 +89,7 @@ export const router = createBrowserRouter([
         path: 'settings/pricing-grid',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <SystemSettingsView />
+            <TarifsPricingGridView />
           </Suspense>
         ),
       },
