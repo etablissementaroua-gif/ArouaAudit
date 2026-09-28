@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useEnrollment } from '../controllers/useEnrollment';
 import { StudentRecord } from '../models/enrollmentModels';
+import { OfficialReceiptModal } from '../../treasury-caisse/components/OfficialReceiptModal';
+import { OfficialReceiptData } from '../../../shared/lib/receiptPdfGenerator';
 import { StatCard } from '../../../shared/components/StatCard';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
 import { 
@@ -38,6 +40,24 @@ export const StudentEnrollmentView: React.FC = () => {
   } = useEnrollment();
 
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
+  const [receiptData, setReceiptData] = useState<OfficialReceiptData | null>(null);
+
+  const handleOpenReceipt = (st: StudentRecord) => {
+    setReceiptData({
+      receiptNumber: 'REC-' + (st.student_id ? st.student_id.replace('STU-', '') : '2026-001'),
+      date: new Date().toISOString().split('T')[0],
+      studentName: st.full_name_ar,
+      massarCode: st.massar_code,
+      classroom: st.classroom || 'عام',
+      academicLevel: st.academic_level,
+      paymentFor: 'أداء الرسوم المدرسية واشتراكات الخدمات (2026-2027)',
+      amountMAD: st.total_paid > 0 ? st.total_paid : 5000,
+      paymentMethod: 'virement',
+      paymentReference: 'VIR-REC-' + st.massar_code,
+      remainingBalanceMAD: st.balance,
+      cashierName: 'أمين الصندوق - أروى'
+    });
+  };
 
   const getSourceBadge = (platform: string) => {
     if (platform === 'arouaschools') {
@@ -305,6 +325,13 @@ export const StudentEnrollmentView: React.FC = () => {
                       )}
 
                       <button
+                        onClick={() => handleOpenReceipt(st)}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 text-xs font-semibold transition"
+                        title="إصدار وطباعة وصل مالي رسمي بالشعار"
+                      >
+                        وصل رسمي
+                      </button>
+                      <button
                         onClick={() => setSelectedStudent(st)}
                         className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition"
                       >
@@ -320,6 +347,14 @@ export const StudentEnrollmentView: React.FC = () => {
       </div>
 
       {/* Student Details Dialog */}
+      {receiptData && (
+        <OfficialReceiptModal
+          receipt={receiptData}
+          isOpen={Boolean(receiptData)}
+          onClose={() => setReceiptData(null)}
+        />
+      )}
+
       {selectedStudent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
           <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
@@ -364,6 +399,17 @@ export const StudentEnrollmentView: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-end gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const st = selectedStudent;
+                  setSelectedStudent(null);
+                  handleOpenReceipt(st);
+                }}
+                className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-md transition"
+              >
+                طباعة وصل أداء رسمي بالشعار
+              </button>
               <button
                 type="button"
                 onClick={() => setSelectedStudent(null)}

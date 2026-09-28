@@ -3,7 +3,9 @@ import { useCaisse } from '../controllers/useCaisse';
 import { CaisseLedgerTable } from '../components/CaisseLedgerTable';
 import { StatCard } from '../../../shared/components/StatCard';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
-import { Wallet, TrendingUp, TrendingDown, Coins, Plus, RefreshCw } from 'lucide-react';
+import { Wallet, TrendingUp, TrendingDown, Coins, Plus, RefreshCw, Printer } from 'lucide-react';
+import { OfficialReceiptModal } from '../components/OfficialReceiptModal';
+import { OfficialReceiptData } from '../../../shared/lib/receiptPdfGenerator';
 import { PaymentMethod, TransactionType } from '../../../shared/types';
 
 export const TreasuryCaisseView: React.FC = () => {
@@ -15,6 +17,24 @@ export const TreasuryCaisseView: React.FC = () => {
   const [category, setCategory] = useState('رسوم دراسية');
   const [description, setDescription] = useState('');
   const [reference, setReference] = useState('');
+  const [receiptData, setReceiptData] = useState<OfficialReceiptData | null>(null);
+
+  const handlePrintDemoReceipt = () => {
+    setReceiptData({
+      receiptNumber: 'REC-2026-9901',
+      date: new Date().toISOString().split('T')[0],
+      studentName: 'حمزة الشرايبي',
+      massarCode: 'R134567890',
+      classroom: '2Bac SM-A',
+      academicLevel: 'السنة الثانية بكالوريا - علوم رياضية',
+      paymentFor: 'سداد قسط الرسوم الدراسية للفصل الأول والنقل المدرسي',
+      amountMAD: 18500.00,
+      paymentMethod: 'virement',
+      paymentReference: 'VIR-26-0901',
+      remainingBalanceMAD: 23000.00,
+      cashierName: 'المسؤول المالي - أروى'
+    });
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +66,9 @@ export const TreasuryCaisseView: React.FC = () => {
           <button onClick={() => refresh()} className="p-2.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 transition">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
+          <button onClick={handlePrintDemoReceipt} className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-400 border border-cyan-500/30 font-medium text-xs shadow-sm transition">
+            <Printer className="w-4 h-4" /> نموذج وصل رسمي
+          </button>
           <button onClick={() => setShowModal(true)} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs shadow-lg shadow-emerald-950/40 transition">
             <Plus className="w-4 h-4" /> تسجيل حركة جديدة
           </button>
@@ -60,6 +83,14 @@ export const TreasuryCaisseView: React.FC = () => {
       </div>
 
       <CaisseLedgerTable transactions={transactions} />
+
+      {receiptData && (
+        <OfficialReceiptModal
+          receipt={receiptData}
+          isOpen={Boolean(receiptData)}
+          onClose={() => setReceiptData(null)}
+        />
+      )}
 
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">

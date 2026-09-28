@@ -30,6 +30,19 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           <Menu className="w-5 h-5" />
         </button>
 
+        {/* Institution Brand Badge with Official Logo */}
+        <div className="flex items-center gap-2.5 px-3 py-1 rounded-xl bg-slate-900/90 border border-slate-800 shadow-sm">
+          <img
+            src="/assets/logo-aroua.png"
+            alt="شعار مجموعة مدارس أروى"
+            className="h-8 w-auto object-contain bg-white/95 p-1 rounded-lg border border-slate-700/50"
+          />
+          <div className="hidden sm:block text-right">
+            <span className="text-xs font-bold text-white block leading-tight">مجموعة مدارس أروى</span>
+            <span className="text-[10px] text-cyan-400 font-mono block leading-tight">Groupe Scolaire Aroua</span>
+          </div>
+        </div>
+
         {/* Active Academic Year Badge */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-medium">
           <Calendar className="w-3.5 h-3.5 text-indigo-400" />
