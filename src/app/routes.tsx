@@ -31,8 +31,14 @@ const LevelsAndGroupsView = lazy(() =>
 const TarifsPricingGridView = lazy(() =>
   import('../features/system-settings/views/TarifsPricingGridView').then((m) => ({ default: m.TarifsPricingGridView }))
 );
-const MappedStaffView = lazy(() =>
-  import('../features/payroll-hr/views/MappedStaffView').then((m) => ({ default: m.MappedStaffView }))
+const ApprovedStaffSyncView = lazy(() =>
+  import('../features/payroll-hr/views/ApprovedStaffSyncView').then((m) => ({ default: m.ApprovedStaffSyncView }))
+);
+const PayrollDashboardView = lazy(() =>
+  import('../features/payroll-hr/views/PayrollDashboardView').then((m) => ({ default: m.PayrollDashboardView }))
+);
+const StaffDebtsView = lazy(() =>
+  import('../features/payroll-hr/views/StaffDebtsView').then((m) => ({ default: m.StaffDebtsView }))
 );
 const FinanceOperationsView = lazy(() =>
   import('../features/finance-operations/views/FinanceOperationsView').then((m) => ({ default: m.FinanceOperationsView }))
@@ -99,7 +105,7 @@ export const router = createBrowserRouter([
         path: 'hr/mapped-staff',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <MappedStaffView />
+            <ApprovedStaffSyncView />
           </Suspense>
         ),
       },
@@ -115,7 +121,15 @@ export const router = createBrowserRouter([
         path: 'hr/payroll',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <PayrollView />
+            <PayrollDashboardView />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'hr/staff-debts',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <StaffDebtsView />
           </Suspense>
         ),
       },
