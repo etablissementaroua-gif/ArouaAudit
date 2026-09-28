@@ -1,0 +1,269 @@
+﻿import React, { useState, useEffect } from 'react';
+import { checksManagementService } from '../services/checksManagement.service';
+import { ReceiptRecord } from '../models/check.types';
+import { OfficialReceiptModal } from '../../treasury-caisse/components/OfficialReceiptModal';
+import { OfficialReceiptData } from '../../../shared/lib/receiptPdfGenerator';
+import { formatMAD } from '../../../shared/lib/currencyFormatter';
+import { 
+  Receipt, 
+  Search, 
+  Printer, 
+  CreditCard, 
+  Banknote, 
+  FileText, 
+  User, 
+  Calendar,
+  CheckCircle2,
+  DollarSign
+} from 'lucide-react';
+
+export const ReceiptsRegistryView: React.FC = () => {
+  const [receipts, setReceipts] = useState<ReceiptRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [methodFilter, setMethodFilter] = useState<string>('all');
+
+  // Modal State
+  const [selectedReceiptData, setSelectedReceiptData] = useState<OfficialReceiptData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchReceipts = async () => {
+      setLoading(true);
+      const data = await checksManagementService.getReceiptsRegistry();
+      setReceipts(data);
+      setLoading(false);
+    };
+    fetchReceipts();
+  }, []);
+
+  const filteredReceipts = receipts.filter(r => {
+    const matchesSearch = 
+      r.receipt_number.toLowerCase().includes(search.toLowerCase()) ||
+      r.payer_name.toLowerCase().includes(search.toLowerCase()) ||
+      (r.reference && r.reference.toLowerCase().includes(search.toLowerCase()));
+
+    const matchesMethod = methodFilter === 'all' || r.payment_method === methodFilter;
+    return matchesSearch && matchesMethod;
+  });
+
+  const totalAmount = filteredReceipts.reduce((sum, r) => sum + r.amount, 0);
+
+  const handleOpenReceipt = (rec: ReceiptRecord) => {
+    const data: OfficialReceiptData = {
+      receiptNumber: rec.receipt_number,
+      date: rec.date,
+      studentName: rec.payer_name,
+      massarCode: rec.student_id || 'MAS-2026-ARW',
+      classroom: 'القسم الدراسي المعتمد',
+      academicLevel: 'المستوى الأكاديمي',
+      paymentFor: rec.purpose,
+      amountMAD: rec.amount,
+      paymentMethod: rec.payment_method,
+      paymentReference: rec.reference || rec.receipt_number,
+      parentName: rec.payer_name,
+      remainingBalanceMAD: 0,
+      notes: `سند قبض صادر برسم الموسم الدراسي ${rec.academic_year}`,
+      cashierName: 'أمين الصندوق المركزي'
+    };
+    setSelectedReceiptData(data);
+    setIsModalOpen(true);
+  };
+
+  const getMethodBadge = (method: string) => {
+    switch (method) {
+      case 'especes':
+        return (
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+            <Banknote className="w-3.5 h-3.5" />
+            <span>نقداً (Espèces)</span>
+          </span>
+        );
+      case 'cheque':
+        return (
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+            <FileText className="w-3.5 h-3.5" />
+            <span>شيك بنكي (Chèque)</span>
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+            <CreditCard className="w-3.5 h-3.5" />
+            <span>تحويل بنكي (Virement)</span>
+          </span>
+        );
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-indigo-600/20 border border-indigo-500/30 rounded-xl text-indigo-400">
+            <Receipt className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-white tracking-wide">سجل الوصولات وسندات القبض</h1>
+            <p className="text-slate-400 text-sm">الأرشيف المركزي لجميع وصولات الأداء المالي، الرسوم المدرسية، وسندات الصندوق</p>
+          </div>
+        </div>
+
+        <div className="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-sm text-slate-300 font-mono">
+          <span>إجمالي الوصولات: </span>
+          <span className="font-bold text-emerald-400">{formatMAD(totalAmount)}</span>
+        </div>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+          <span className="text-xs text-slate-400 uppercase font-semibold block mb-1">العدد الإجمالي للوصولات</span>
+          <p className="text-2xl font-bold text-white font-mono">{filteredReceipts.length}</p>
+          <span className="text-xs text-slate-500">سند قبض صادر</span>
+        </div>
+
+        <div className="bg-slate-900 border border-emerald-500/20 p-5 rounded-2xl">
+          <span className="text-xs text-emerald-400 uppercase font-semibold block mb-1">وصولات الأداء النقدي</span>
+          <p className="text-2xl font-bold text-emerald-400 font-mono">
+            {formatMAD(receipts.filter(r => r.payment_method === 'especes').reduce((s, r) => s + r.amount, 0))}
+          </p>
+          <span className="text-xs text-slate-500">{receipts.filter(r => r.payment_method === 'especes').length} وصل نقدي</span>
+        </div>
+
+        <div className="bg-slate-900 border border-indigo-500/20 p-5 rounded-2xl">
+          <span className="text-xs text-indigo-400 uppercase font-semibold block mb-1">وصولات الشيكات</span>
+          <p className="text-2xl font-bold text-indigo-400 font-mono">
+            {formatMAD(receipts.filter(r => r.payment_method === 'cheque').reduce((s, r) => s + r.amount, 0))}
+          </p>
+          <span className="text-xs text-slate-500">{receipts.filter(r => r.payment_method === 'cheque').length} وصل شيك</span>
+        </div>
+
+        <div className="bg-slate-900 border border-cyan-500/20 p-5 rounded-2xl">
+          <span className="text-xs text-cyan-400 uppercase font-semibold block mb-1">التحويلات البنكية</span>
+          <p className="text-2xl font-bold text-cyan-400 font-mono">
+            {formatMAD(receipts.filter(r => r.payment_method === 'virement').reduce((s, r) => s + r.amount, 0))}
+          </p>
+          <span className="text-xs text-slate-500">{receipts.filter(r => r.payment_method === 'virement').length} وصل تحويل</span>
+        </div>
+      </div>
+
+      {/* Filter and Search Bar */}
+      <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-lg">
+        <div className="flex-1 min-w-[260px] relative">
+          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="بحث برقم الوصل، اسم الدافع، أو المرجع..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full bg-slate-950 border border-slate-800 rounded-xl pr-10 pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <select
+            value={methodFilter}
+            onChange={e => setMethodFilter(e.target.value)}
+            className="bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-indigo-500"
+          >
+            <option value="all">كافة وسائل الأداء</option>
+            <option value="especes">نقداً (Espèces)</option>
+            <option value="cheque">شيك بنكي (Chèque)</option>
+            <option value="virement">تحويل بنكي (Virement)</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Receipts Table */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-right border-collapse">
+            <thead>
+              <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                <th className="py-4 px-4">رقم الوصل الرسمي</th>
+                <th className="py-4 px-4">تاريخ الإصدار</th>
+                <th className="py-4 px-4">الدافع / المعني بالأداء</th>
+                <th className="py-4 px-4">طريقة الأداء</th>
+                <th className="py-4 px-4">موضوع وسياق الأداء</th>
+                <th className="py-4 px-4">المبلغ المستخلص</th>
+                <th className="py-4 px-4 text-center">الإجراء</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800/80 text-sm">
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-500">جاري تحميل سجل الوصولات...</td>
+                </tr>
+              ) : filteredReceipts.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-500">لا توجد وصولات مطابقة للبحث</td>
+                </tr>
+              ) : (
+                filteredReceipts.map(rec => (
+                  <tr key={rec.id} className="hover:bg-slate-800/40 transition-colors">
+                    <td className="py-4 px-4 font-mono font-bold text-white tracking-wider">
+                      {rec.receipt_number}
+                    </td>
+
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-1.5 font-mono text-xs text-slate-300">
+                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                        <span>{rec.date}</span>
+                      </div>
+                    </td>
+
+                    <td className="py-4 px-4 font-medium text-slate-200">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <span>{rec.payer_name}</span>
+                      </div>
+                    </td>
+
+                    <td className="py-4 px-4">
+                      {getMethodBadge(rec.payment_method)}
+                    </td>
+
+                    <td className="py-4 px-4 text-slate-300 text-xs">
+                      <span>{rec.purpose}</span>
+                      {rec.reference && (
+                        <span className="block font-mono text-[11px] text-slate-500 mt-0.5">
+                          المرجع: {rec.reference}
+                        </span>
+                      )}
+                    </td>
+
+                    <td className="py-4 px-4 font-mono font-black text-emerald-400 text-base">
+                      {formatMAD(rec.amount)}
+                    </td>
+
+                    <td className="py-4 px-4 text-center">
+                      <button
+                        onClick={() => handleOpenReceipt(rec)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm"
+                        title="معاينة وإعادة طباعة الوصل"
+                      >
+                        <Printer className="w-3.5 h-3.5" />
+                        <span>إعادة طباعة الوصل</span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Official Receipt Modal */}
+      {selectedReceiptData && (
+        <OfficialReceiptModal
+          receipt={selectedReceiptData}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+    </div>
+  );
+};

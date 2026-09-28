@@ -10,8 +10,23 @@ const StudentEnrollmentView = lazy(() =>
 const TreasuryCaisseView = lazy(() =>
   import('../features/treasury-caisse/views/TreasuryCaisseView').then((m) => ({ default: m.TreasuryCaisseView }))
 );
+const BankAccountsView = lazy(() =>
+  import('../features/checks-management/views/BankAccountsView').then((m) => ({ default: m.BankAccountsView }))
+);
 const ChecksPortfolioView = lazy(() =>
   import('../features/checks-management/views/ChecksPortfolioView').then((m) => ({ default: m.ChecksPortfolioView }))
+);
+const ChecksToDepositView = lazy(() =>
+  import('../features/checks-management/views/ChecksToDepositView').then((m) => ({ default: m.ChecksToDepositView }))
+);
+const DeliverySlipsView = lazy(() =>
+  import('../features/checks-management/views/DeliverySlipsView').then((m) => ({ default: m.DeliverySlipsView }))
+);
+const ReceiptsRegistryView = lazy(() =>
+  import('../features/checks-management/views/ReceiptsRegistryView').then((m) => ({ default: m.ReceiptsRegistryView }))
+);
+const BankInvoicesView = lazy(() =>
+  import('../features/checks-management/views/BankInvoicesView').then((m) => ({ default: m.BankInvoicesView }))
 );
 const PayrollView = lazy(() =>
   import('../features/payroll-hr/views/PayrollView').then((m) => ({ default: m.PayrollView }))
@@ -199,12 +214,12 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 4. Comptes & Chèques
+            // 4. Comptes & Chèques
       {
         path: 'checks/accounts',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <TreasuryCaisseView />
+            <BankAccountsView />
           </Suspense>
         ),
       },
@@ -220,7 +235,7 @@ export const router = createBrowserRouter([
         path: 'checks/delivery-slips',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ChecksPortfolioView />
+            <DeliverySlipsView />
           </Suspense>
         ),
       },
@@ -228,7 +243,7 @@ export const router = createBrowserRouter([
         path: 'checks/receipts',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <TreasuryCaisseView />
+            <ReceiptsRegistryView />
           </Suspense>
         ),
       },
@@ -236,7 +251,7 @@ export const router = createBrowserRouter([
         path: 'checks/deposited',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ChecksPortfolioView />
+            <ChecksToDepositView />
           </Suspense>
         ),
       },
@@ -244,7 +259,7 @@ export const router = createBrowserRouter([
         path: 'checks/invoices',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ChecksPortfolioView />
+            <BankInvoicesView />
           </Suspense>
         ),
       },
