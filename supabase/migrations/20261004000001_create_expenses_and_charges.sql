@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS public.expenses (
     amount DECIMAL(12, 2) NOT NULL CHECK (amount > 0),
     beneficiary_name TEXT NOT NULL, -- المورد / الدائن / الجهة المستفيدة
     beneficiary_ice TEXT,
-    payment_method TEXT NOT NULL CHECK (payment_method IN ('especes', 'cheque', 'virement')),
+    payment_method TEXT NOT NULL CHECK (payment_method IN ('especes', 'cheque', 'virement', 'prelevement')),
     payment_source TEXT NOT NULL DEFAULT 'caisse_centrale', -- 'caisse_centrale', 'banque_attijari', 'banque_bp', etc.
     check_or_trans_ref TEXT,
     invoice_reference TEXT, -- رقم فاتورة المورد
