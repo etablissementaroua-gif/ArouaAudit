@@ -88,9 +88,20 @@ const PaymentsJournalView = lazy(() =>
   import('../features/finance-operations/views/PaymentsJournalView').then((m) => ({ default: m.PaymentsJournalView }))
 );
 
-const ExpensesView = lazy(() =>
-  import('../features/expenses/views/ExpensesView').then((m) => ({ default: m.ExpensesView }))
+// 6. Dépenses Views (Stage 7)
+const ExpenseCategoriesView = lazy(() =>
+  import('../features/expenses/views/ExpenseCategoriesView').then((m) => ({ default: m.ExpenseCategoriesView }))
 );
+const ExpensesListView = lazy(() =>
+  import('../features/expenses/views/ExpensesListView').then((m) => ({ default: m.ExpensesListView }))
+);
+const ExpenseMonthlyStatsView = lazy(() =>
+  import('../features/expenses/views/ExpenseMonthlyStatsView').then((m) => ({ default: m.ExpenseMonthlyStatsView }))
+);
+const DisbursementsRegisterView = lazy(() =>
+  import('../features/expenses/views/DisbursementsRegisterView').then((m) => ({ default: m.DisbursementsRegisterView }))
+);
+
 const ServicesConfigView = lazy(() =>
   import('../features/services-config/views/ServicesConfigView').then((m) => ({ default: m.ServicesConfigView }))
 );
@@ -279,7 +290,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 5. Listes Finance (Stage 6 - Dedicated Views)
+      // 5. Listes Finance (Stage 6)
       {
         path: 'finance/credit-balances',
         element: (
@@ -321,12 +332,12 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 6. Dépenses
+      // 6. Dépenses (Stage 7 - Dedicated Views)
       {
         path: 'expenses/categories',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ExpensesView />
+            <ExpenseCategoriesView />
           </Suspense>
         ),
       },
@@ -334,7 +345,7 @@ export const router = createBrowserRouter([
         path: 'expenses/list',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ExpensesView />
+            <ExpensesListView />
           </Suspense>
         ),
       },
@@ -342,7 +353,7 @@ export const router = createBrowserRouter([
         path: 'expenses/monthly-stats',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ExpensesView />
+            <ExpenseMonthlyStatsView />
           </Suspense>
         ),
       },
@@ -350,7 +361,7 @@ export const router = createBrowserRouter([
         path: 'expenses/register',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ExpensesView />
+            <DisbursementsRegisterView />
           </Suspense>
         ),
       },
