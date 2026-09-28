@@ -102,8 +102,15 @@ const DisbursementsRegisterView = lazy(() =>
   import('../features/expenses/views/DisbursementsRegisterView').then((m) => ({ default: m.DisbursementsRegisterView }))
 );
 
-const ServicesConfigView = lazy(() =>
-  import('../features/services-config/views/ServicesConfigView').then((m) => ({ default: m.ServicesConfigView }))
+// 7. Services Views (Stage 8)
+const TransportConfigView = lazy(() =>
+  import('../features/services-config/views/TransportConfigView').then((m) => ({ default: m.TransportConfigView }))
+);
+const CanteenConfigView = lazy(() =>
+  import('../features/services-config/views/CanteenConfigView').then((m) => ({ default: m.CanteenConfigView }))
+);
+const SuppliesConfigView = lazy(() =>
+  import('../features/services-config/views/SuppliesConfigView').then((m) => ({ default: m.SuppliesConfigView }))
 );
 
 const PageLoader: React.FC = () => (
@@ -332,7 +339,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 6. Dépenses (Stage 7 - Dedicated Views)
+      // 6. Dépenses (Stage 7)
       {
         path: 'expenses/categories',
         element: (
@@ -366,12 +373,12 @@ export const router = createBrowserRouter([
         ),
       },
 
-      // 7. Services
+      // 7. Services (Stage 8 - Dedicated Views)
       {
         path: 'services/transport',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ServicesConfigView />
+            <TransportConfigView />
           </Suspense>
         ),
       },
@@ -379,7 +386,7 @@ export const router = createBrowserRouter([
         path: 'services/canteen',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ServicesConfigView />
+            <CanteenConfigView />
           </Suspense>
         ),
       },
@@ -387,7 +394,7 @@ export const router = createBrowserRouter([
         path: 'services/supplies',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ServicesConfigView />
+            <SuppliesConfigView />
           </Suspense>
         ),
       },
