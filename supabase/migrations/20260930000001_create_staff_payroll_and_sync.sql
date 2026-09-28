@@ -7,15 +7,15 @@
 -- ==============================================================================
 -- 0. التأكد من وجود جدول الصندوق وأنواع البيانات (Prerequisite Types & Table)
 -- ==============================================================================
-DO $ BEGIN
+DO $$ BEGIN
     CREATE TYPE transaction_direction AS ENUM ('encaissement', 'decaissement');
 EXCEPTION WHEN duplicate_object THEN null;
-END $;
+END $$;
 
-DO $ BEGIN
+DO $$ BEGIN
     CREATE TYPE financial_payment_method AS ENUM ('especes', 'cheque', 'virement', 'carte');
 EXCEPTION WHEN duplicate_object THEN null;
-END $;
+END $$;
 
 CREATE TABLE IF NOT EXISTS public.caisse_transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -39,11 +39,11 @@ CREATE INDEX IF NOT EXISTS idx_caisse_type ON public.caisse_transactions (type);
 
 ALTER TABLE public.caisse_transactions ENABLE ROW LEVEL SECURITY;
 
-DO $ BEGIN
+DO $$ BEGIN
     CREATE POLICY "Allow read caisse_transactions" ON public.caisse_transactions FOR SELECT USING (true);
     CREATE POLICY "Allow write caisse_transactions" ON public.caisse_transactions FOR ALL USING (true);
 EXCEPTION WHEN duplicate_object THEN null;
-END $;
+END $$;
 
 -- 1. جدول الموظفين والأساتذة (Employees & Staff Ledger)
 CREATE TABLE IF NOT EXISTS public.employees (
