@@ -9,35 +9,35 @@ CREATE EXTENSION IF NOT EXISTS uuid-ossp;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- 2. Enumerated Types
-DO  BEGIN
-    CREATE TYPE transaction_direction AS ENUM (''encaissement'', ''decaissement'');
+DO $ BEGIN
+    CREATE TYPE transaction_direction AS ENUM ('encaissement', 'decaissement');
 EXCEPTION
     WHEN duplicate_object THEN null;
-END ;
+END $;
 
-DO  BEGIN
-    CREATE TYPE financial_payment_method AS ENUM (''especes'', ''cheque'', ''virement'', ''carte'');
+DO $ BEGIN
+    CREATE TYPE financial_payment_method AS ENUM ('especes', 'cheque', 'virement', 'carte');
 EXCEPTION
     WHEN duplicate_object THEN null;
-END ;
+END $;
 
-DO  BEGIN
-    CREATE TYPE check_lifecycle_status AS ENUM (''en_attente'', ''encaisse'', ''rejete'', ''annule'');
+DO $ BEGIN
+    CREATE TYPE check_lifecycle_status AS ENUM ('en_attente', 'encaisse', 'rejete', 'annule');
 EXCEPTION
     WHEN duplicate_object THEN null;
-END ;
+END $;
 
-DO  BEGIN
-    CREATE TYPE payroll_slip_status AS ENUM (''brouillon'', ''valide'', ''paye'');
+DO $ BEGIN
+    CREATE TYPE payroll_slip_status AS ENUM ('brouillon', 'valide', 'paye');
 EXCEPTION
     WHEN duplicate_object THEN null;
-END ;
+END $;
 
-DO  BEGIN
-    CREATE TYPE sync_state AS ENUM (''synced'', ''pending'', ''conflict'', ''failed'');
+DO $ BEGIN
+    CREATE TYPE sync_state AS ENUM ('synced', 'pending', 'conflict', 'failed');
 EXCEPTION
     WHEN duplicate_object THEN null;
-END ;
+END $;
 
 -- 3. Caisse & Treasury Transactions Ledger
 CREATE TABLE IF NOT EXISTS public.caisse_transactions (
@@ -45,14 +45,14 @@ CREATE TABLE IF NOT EXISTS public.caisse_transactions (
     transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
     type transaction_direction NOT NULL,
     amount NUMERIC(15, 2) NOT NULL CHECK (amount > 0),
-    payment_method financial_payment_method NOT NULL DEFAULT ''especes'',
+    payment_method financial_payment_method NOT NULL DEFAULT 'especes',
     category VARCHAR(100) NOT NULL,
     reference_number VARCHAR(100),
     description TEXT NOT NULL,
     solde_apres NUMERIC(15, 2),
     author_id UUID,
     author_name VARCHAR(150),
-    metadata JSONB DEFAULT ''{}''::jsonb,
+    metadata JSONB DEFAULT '{}'::jsonb,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS public.staff_payroll (
     deductions NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
     avances_deduites NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
     net_payable NUMERIC(12, 2) GENERATED ALWAYS AS (base_salary + primes - deductions - avances_deduites) STORED,
-    status payroll_slip_status NOT NULL DEFAULT ''brouillon'',
+    status payroll_slip_status NOT NULL DEFAULT 'brouillon',
     dettes_restantes NUMERIC(12, 2) NOT NULL DEFAULT 0.00, -- ديون الموظفين العالقة
     notes TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -82,12 +82,12 @@ CREATE TABLE IF NOT EXISTS public.checks_portfolio (
     check_number VARCHAR(100) NOT NULL,
     bank_name VARCHAR(120) NOT NULL,
     drawer_name VARCHAR(200) NOT NULL,
-    beneficiary_name VARCHAR(200) NOT NULL DEFAULT ''Établissement Aroua'',
+    beneficiary_name VARCHAR(200) NOT NULL DEFAULT 'Établissement Aroua',
     amount NUMERIC(15, 2) NOT NULL CHECK (amount > 0),
     emission_date DATE NOT NULL,
     due_date DATE NOT NULL,
     deposit_date DATE,
-    status check_lifecycle_status NOT NULL DEFAULT ''en_attente'',
+    status check_lifecycle_status NOT NULL DEFAULT 'en_attente',
     rejection_reason TEXT,
     scanned_copy_url TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -100,10 +100,10 @@ CREATE TABLE IF NOT EXISTS public.external_sync_mappings (
     entity_type VARCHAR(50) NOT NULL,
     local_id UUID NOT NULL,
     external_source_id VARCHAR(200) NOT NULL,
-    sync_status sync_state NOT NULL DEFAULT ''pending'',
+    sync_status sync_state NOT NULL DEFAULT 'pending',
     last_synced_at TIMESTAMPTZ,
     payload_hash VARCHAR(64),
-    sync_logs JSONB DEFAULT ''[]''::jsonb,
+    sync_logs JSONB DEFAULT '[]'::jsonb,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     CONSTRAINT unique_entity_external UNIQUE (entity_type, external_source_id)
 );

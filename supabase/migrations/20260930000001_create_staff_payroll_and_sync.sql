@@ -4,6 +4,47 @@
 -- Targets: PostgreSQL (Supabase Engine)
 -- ==============================================================================
 
+-- ==============================================================================
+-- 0. التأكد من وجود جدول الصندوق وأنواع البيانات (Prerequisite Types & Table)
+-- ==============================================================================
+DO $ BEGIN
+    CREATE TYPE transaction_direction AS ENUM ('encaissement', 'decaissement');
+EXCEPTION WHEN duplicate_object THEN null;
+END $;
+
+DO $ BEGIN
+    CREATE TYPE financial_payment_method AS ENUM ('especes', 'cheque', 'virement', 'carte');
+EXCEPTION WHEN duplicate_object THEN null;
+END $;
+
+CREATE TABLE IF NOT EXISTS public.caisse_transactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    type transaction_direction NOT NULL,
+    amount NUMERIC(15, 2) NOT NULL CHECK (amount > 0),
+    payment_method financial_payment_method NOT NULL DEFAULT 'especes',
+    category VARCHAR(100) NOT NULL,
+    reference_number VARCHAR(100),
+    description TEXT NOT NULL,
+    solde_apres NUMERIC(15, 2),
+    author_id UUID,
+    author_name VARCHAR(150),
+    metadata JSONB DEFAULT '{}'::jsonb,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_caisse_date ON public.caisse_transactions (transaction_date DESC);
+CREATE INDEX IF NOT EXISTS idx_caisse_type ON public.caisse_transactions (type);
+
+ALTER TABLE public.caisse_transactions ENABLE ROW LEVEL SECURITY;
+
+DO $ BEGIN
+    CREATE POLICY "Allow read caisse_transactions" ON public.caisse_transactions FOR SELECT USING (true);
+    CREATE POLICY "Allow write caisse_transactions" ON public.caisse_transactions FOR ALL USING (true);
+EXCEPTION WHEN duplicate_object THEN null;
+END $;
+
 -- 1. جدول الموظفين والأساتذة (Employees & Staff Ledger)
 CREATE TABLE IF NOT EXISTS public.employees (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
