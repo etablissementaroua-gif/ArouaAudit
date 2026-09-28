@@ -16,8 +16,23 @@ const ChecksPortfolioView = lazy(() =>
 const PayrollView = lazy(() =>
   import('../features/payroll-hr/views/PayrollView').then((m) => ({ default: m.PayrollView }))
 );
-const RevenueAnalyticsView = lazy(() =>
-  import('../features/revenue-analytics/views/RevenueAnalyticsView').then((m) => ({ default: m.RevenueAnalyticsView }))
+const MonthlyCAView = lazy(() =>
+  import('../features/revenue-analytics/views/MonthlyCAView').then((m) => ({ default: m.MonthlyCAView }))
+);
+const AnnualCAView = lazy(() =>
+  import('../features/revenue-analytics/views/AnnualCAView').then((m) => ({ default: m.AnnualCAView }))
+);
+const AgentDailyRecettesView = lazy(() =>
+  import('../features/revenue-analytics/views/AgentDailyRecettesView').then((m) => ({ default: m.AgentDailyRecettesView }))
+);
+const AdminDailyRecettesView = lazy(() =>
+  import('../features/revenue-analytics/views/AdminDailyRecettesView').then((m) => ({ default: m.AdminDailyRecettesView }))
+);
+const GlobalRecettesView = lazy(() =>
+  import('../features/revenue-analytics/views/GlobalRecettesView').then((m) => ({ default: m.GlobalRecettesView }))
+);
+const CateringStatsView = lazy(() =>
+  import('../features/revenue-analytics/views/CateringStatsView').then((m) => ({ default: m.CateringStatsView }))
 );
 const SystemSettingsView = lazy(() =>
   import('../features/system-settings/views/SystemSettingsView').then((m) => ({ default: m.SystemSettingsView }))
@@ -139,7 +154,7 @@ export const router = createBrowserRouter([
         path: 'revenue/monthly-ca',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <RevenueAnalyticsView />
+            <MonthlyCAView />
           </Suspense>
         ),
       },
@@ -147,7 +162,7 @@ export const router = createBrowserRouter([
         path: 'revenue/annual-ca',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <RevenueAnalyticsView />
+            <AnnualCAView />
           </Suspense>
         ),
       },
@@ -155,7 +170,7 @@ export const router = createBrowserRouter([
         path: 'revenue/regisseurs',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <TreasuryCaisseView />
+            <AgentDailyRecettesView />
           </Suspense>
         ),
       },
@@ -163,7 +178,7 @@ export const router = createBrowserRouter([
         path: 'revenue/administration',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <TreasuryCaisseView />
+            <AdminDailyRecettesView />
           </Suspense>
         ),
       },
@@ -171,7 +186,7 @@ export const router = createBrowserRouter([
         path: 'revenue/global-recettes',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <RevenueAnalyticsView />
+            <GlobalRecettesView />
           </Suspense>
         ),
       },
@@ -179,7 +194,7 @@ export const router = createBrowserRouter([
         path: 'revenue/catering-stats',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ServicesConfigView />
+            <CateringStatsView />
           </Suspense>
         ),
       },
