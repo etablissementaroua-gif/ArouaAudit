@@ -108,7 +108,7 @@ export const CanteenConfigView: React.FC = () => {
         );
       case 'trimestriel':
         return (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-200">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
             اشتراك فصلي (Trimestriel)
           </span>
         );
@@ -153,7 +153,7 @@ export const CanteenConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
+            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             <span>إضافة صيغة مطعم جديدة</span>
@@ -224,7 +224,7 @@ export const CanteenConfigView: React.FC = () => {
               <div className="mb-4">{getFrequencyBadge(plan.frequency)}</div>
 
               {plan.daily_meal_desc && (
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200 text-xs text-slate-700 mb-4 leading-relaxed">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 mb-4 leading-relaxed">
                   <span className="text-slate-500 text-[10px] block mb-1">وصف البرنامج الغذائي:</span>
                   {plan.daily_meal_desc}
                 </div>
@@ -396,7 +396,7 @@ export const CanteenConfigView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-slate-900 font-bold transition-all disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 disabled:opacity-50"
                 >
                   {submitting ? 'جاري الحفظ...' : 'حفظ الصيغة وتفعيلها'}
                 </button>

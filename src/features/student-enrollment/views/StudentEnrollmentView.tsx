@@ -129,7 +129,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <button
             disabled={syncing}
             onClick={() => triggerSyncFromArouaSchools()}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Sparkles className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
             <span>{syncing ? 'جاري الاستقبال...' : 'استقبال دفعة من arouaschools'}</span>
@@ -140,7 +140,7 @@ export const StudentEnrollmentView: React.FC = () => {
       {/* 3. KPI Financial Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Due */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-sky-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-teal-400 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">إجمالي الذمم والرسوم</span>
             <div className="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100">
@@ -154,7 +154,7 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
 
         {/* Collected */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-emerald-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-emerald-500 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">المستخلص الفعلي (المقبوض)</span>
             <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
@@ -168,7 +168,7 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
 
         {/* Balance Remaining */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-rose-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-rose-500 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">الذمم المتبقية (قيد التحصيل)</span>
             <div className="p-2 rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
@@ -182,7 +182,7 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
 
         {/* Transport & Canteen Subscribers */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-amber-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-amber-400 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">مشتركو النقل والمطعم</span>
             <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
@@ -222,8 +222,8 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, transportOnly: !prev.transportOnly }))}
             className={
               filters.transportOnly
-                ? "px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
-                : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+                ? "px-4 py-1.5 bg-slate-900 text-white rounded-xl font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                : "px-4 py-1.5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl font-medium text-xs transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
             <Bus className="w-3.5 h-3.5" />
@@ -236,8 +236,8 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, canteenOnly: !prev.canteenOnly }))}
             className={
               filters.canteenOnly
-                ? "px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
-                : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+                ? "px-4 py-1.5 bg-slate-900 text-white rounded-xl font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                : "px-4 py-1.5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl font-medium text-xs transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
             <Utensils className="w-3.5 h-3.5" />

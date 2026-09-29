@@ -127,7 +127,7 @@ export const TransportConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
+            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             <span>إضافة خط حافلة جديد</span>
@@ -202,12 +202,12 @@ export const TransportConfigView: React.FC = () => {
                 
                 {/* Bus Details */}
                 <div className="flex items-center justify-between text-xs text-slate-500 mb-3 font-mono">
-                  <span>لوحة الترقيم: <strong className="text-white">{line.bus_registration}</strong></span>
+                  <span>لوحة الترقيم: <strong className="text-slate-900 font-bold">{line.bus_registration}</strong></span>
                   <span className="text-slate-500">{line.bus_brand}</span>
                 </div>
 
                 {/* Driver & Assistant */}
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200/80 text-xs space-y-1.5 mb-3">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs space-y-1.5 mb-3">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-500">السائق المعتمد:</span>
                     <span className="font-bold text-slate-900">{line.driver_name}</span>
@@ -429,7 +429,7 @@ export const TransportConfigView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:bg-amber-600 text-slate-950 font-bold transition-all disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 disabled:opacity-50"
                 >
                   {submitting ? 'جاري الحفظ...' : 'حفظ وإدراج الخط في الأسطول'}
                 </button>

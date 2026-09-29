@@ -182,7 +182,7 @@ export const ChecksPortfolioView: React.FC = () => {
 
         <button
           onClick={() => setIsNewCheckModalOpen(true)}
-          className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center justify-center gap-2"
+          className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center justify-center gap-2"
         >
           <Plus className="w-5 h-5" />
           <span>تسجيل شيك جديد بالمحفظة</span>
@@ -221,7 +221,7 @@ export const ChecksPortfolioView: React.FC = () => {
           <span className="text-[11px] text-slate-500">{stats.clearedCount} شيك ناجح</span>
         </div>
 
-        <div className="bg-rose-950/30 border border-rose-500/30 p-4 rounded-xl">
+        <div className="bg-rose-50 border border-rose-200 p-4 rounded-xl">
           <span className="text-xs text-rose-600 block mb-1 font-semibold flex items-center gap-1">
             <AlertOctagon className="w-3.5 h-3.5" />
             <span>شيكات راجعة (خطر)</span>
@@ -278,7 +278,7 @@ export const ChecksPortfolioView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">رقم الشيك</th>
                 <th className="py-4 px-4">البنك المسحوب عليه</th>
                 <th className="py-4 px-4">الساحب / التلميذ المرتبط</th>
@@ -322,7 +322,7 @@ export const ChecksPortfolioView: React.FC = () => {
 
                       <td className="py-4 px-4">
                         <div>
-                          <div className="flex items-center gap-1.5 text-white font-medium">
+                          <div className="flex items-center gap-1.5 text-slate-900 font-medium">
                             <User className="w-3.5 h-3.5 text-slate-500" />
                             <span>{chk.issuer_name}</span>
                           </div>
@@ -417,7 +417,7 @@ export const ChecksPortfolioView: React.FC = () => {
 
       {/* Reject Modal */}
       {isRejectModalOpen && selectedCheckForReject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/40 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-white border border-slate-200 shadow-xs w-full max-w-md rounded-2xl shadow-2xl p-6">
             <div className="flex items-center gap-3 mb-4 text-rose-600">
               <div className="p-2 bg-rose-500/20 border border-rose-500/30 rounded-xl">
@@ -454,7 +454,7 @@ export const ChecksPortfolioView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsRejectModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm text-slate-500 hover:text-white"
+                  className="px-4 py-2 rounded-xl text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                 >
                   إلغاء
                 </button>
@@ -473,7 +473,7 @@ export const ChecksPortfolioView: React.FC = () => {
 
       {/* New Check Modal */}
       {isNewCheckModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/40 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-white border border-slate-200 shadow-xs w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
             <div className="flex items-center justify-between p-5 border-b border-slate-200 bg-white/50">
               <div className="flex items-center gap-2.5">

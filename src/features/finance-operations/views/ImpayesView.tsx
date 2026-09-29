@@ -217,25 +217,25 @@ export const ImpayesView: React.FC = () => {
 
       {/* Financial Risk KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+        <div className="bg-white border border-slate-200/90 border-l-4 border-l-indigo-400 p-4 rounded-xl shadow-xs">
           <span className="text-xs text-indigo-700 font-bold block mb-1">متأخرات التمدرس</span>
           <p className="text-xl font-black text-slate-900 font-mono">{formatMAD(stats.scolariteDueAmount)}</p>
           <span className="text-[11px] text-slate-500">واجبات التمدرس الشهرية</span>
         </div>
 
-        <div className="bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+        <div className="bg-white border border-slate-200/90 border-l-4 border-l-amber-400 p-4 rounded-xl shadow-xs">
           <span className="text-xs text-amber-700 font-bold block mb-1">متأخرات النقل المدرسي</span>
           <p className="text-xl font-black text-amber-600 font-mono">{formatMAD(stats.transportDueAmount)}</p>
           <span className="text-[11px] text-slate-500">اشتراكات الحافلات العالقة</span>
         </div>
 
-        <div className="bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+        <div className="bg-white border border-slate-200/90 border-l-4 border-l-cyan-400 p-4 rounded-xl shadow-xs">
           <span className="text-xs text-cyan-700 font-bold block mb-1">متأخرات المطعم المدرسي</span>
           <p className="text-xl font-black text-cyan-600 font-mono">{formatMAD(stats.cantineDueAmount)}</p>
           <span className="text-[11px] text-slate-500">وجبات التغذية والمطعم</span>
         </div>
 
-        <div className="bg-rose-50/70 border border-rose-200 p-4 rounded-xl shadow-xs">
+        <div className="bg-rose-50/70 border border-rose-200 border-l-4 border-l-rose-500 p-4 rounded-xl shadow-xs">
           <span className="text-xs text-rose-700 font-bold block mb-1 flex items-center gap-1">
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>ديون حرجة (+90 يوماً)</span>
@@ -275,8 +275,8 @@ export const ImpayesView: React.FC = () => {
             onClick={() => setFilters({ ...filters, service_type: 'transport' })}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'transport'
-                ? 'bg-amber-600 text-white'
-                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
+                ? 'bg-slate-900 text-white rounded-xl font-bold shadow-xs'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-medium'
             }`}
           >
             <Bus className="w-3.5 h-3.5" />
@@ -287,8 +287,8 @@ export const ImpayesView: React.FC = () => {
             onClick={() => setFilters({ ...filters, service_type: 'cantine' })}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'cantine'
-                ? 'bg-cyan-600 text-white'
-                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
+                ? 'bg-slate-900 text-white rounded-xl font-bold shadow-xs'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-medium'
             }`}
           >
             <Utensils className="w-3.5 h-3.5" />

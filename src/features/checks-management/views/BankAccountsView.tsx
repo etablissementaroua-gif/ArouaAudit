@@ -94,11 +94,11 @@ export const BankAccountsView: React.FC = () => {
   };
 
   const getBankColor = (bankName: string) => {
-    if (bankName.includes('Attijariwafa')) return 'from-amber-600/20 to-amber-950/40 border-amber-500/30 text-amber-700';
-    if (bankName.includes('Populaire')) return 'from-orange-600/20 to-orange-950/40 border-orange-500/30 text-orange-400';
-    if (bankName.includes('CIH')) return 'from-cyan-600/20 to-cyan-950/40 border-cyan-500/30 text-emerald-800';
-    if (bankName.includes('Africa') || bankName.includes('BMCE')) return 'from-blue-600/20 to-blue-950/40 border-blue-500/30 text-blue-400';
-    return 'from-indigo-600/20 to-indigo-950/40 border-indigo-500/30 text-emerald-700';
+    if (bankName.includes('Attijariwafa')) return 'bg-amber-50 border-amber-200 text-amber-700';
+    if (bankName.includes('Populaire')) return 'bg-orange-50 border-orange-200 text-orange-700';
+    if (bankName.includes('CIH')) return 'bg-sky-50 border-sky-200 text-sky-700';
+    if (bankName.includes('Africa') || bankName.includes('BMCE')) return 'bg-blue-50 border-blue-200 text-blue-700';
+    return 'bg-emerald-50 border-emerald-200 text-emerald-700';
   };
 
   return (
@@ -119,7 +119,7 @@ export const BankAccountsView: React.FC = () => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
+          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded-2xl font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
         >
           <Plus className="w-5 h-5" />
           <span>إضافة حساب بنكي جديد</span>
@@ -128,7 +128,7 @@ export const BankAccountsView: React.FC = () => {
 
       {/* Financial Liquidity Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-gradient-to-br from-emerald-950/50 to-slate-900 border border-emerald-500/30 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-emerald-500 p-5 rounded-2xl">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700">إجمالي السيولة البنكية</span>
             <Wallet className="w-5 h-5 text-emerald-700" />
@@ -137,7 +137,7 @@ export const BankAccountsView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">موزعة على {activeCount} حسابات نشطة</p>
         </div>
 
-        <div className="bg-white shadow-xs border border-slate-200 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-teal-400 p-5 rounded-2xl">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">الحسابات النشطة</span>
             <Building2 className="w-5 h-5 text-emerald-700" />
@@ -146,7 +146,7 @@ export const BankAccountsView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">حسابات بنكية معتمدة</p>
         </div>
 
-        <div className="bg-white shadow-xs border border-slate-200 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-teal-400 p-5 rounded-2xl">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">الحساب الرئيسي (Attijari)</span>
             <ShieldCheck className="w-5 h-5 text-amber-700" />
@@ -157,7 +157,7 @@ export const BankAccountsView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">وكالة أكدال - الرباط</p>
         </div>
 
-        <div className="bg-white shadow-xs border border-slate-200 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-teal-400 p-5 rounded-2xl">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">متوسط الرصيد للحساب</span>
             <ArrowUpRight className="w-5 h-5 text-emerald-800" />
@@ -256,7 +256,7 @@ export const BankAccountsView: React.FC = () => {
 
       {/* Add Bank Account Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-white border border-slate-200 shadow-xs w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
             <div className="flex items-center justify-between p-5 border-b border-slate-200 bg-white/50">
               <div className="flex items-center gap-2.5">
