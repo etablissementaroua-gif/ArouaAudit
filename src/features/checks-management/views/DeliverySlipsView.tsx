@@ -78,18 +78,18 @@ export const DeliverySlipsView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-indigo-600/20 border border-indigo-500/30 rounded-xl text-indigo-400">
+          <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800">
             <FileText className="w-6 h-6" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">حوافظ تسليم الشيكات للبنك</h1>
-            <p className="text-slate-400 text-sm">أرشيف وسجلات حوافظ الإيداع الرسمية (Bordereaux de Remise) مع إمكانية المعاينة والطباعة البنكية</p>
+            <p className="text-slate-500 text-sm">أرشيف وسجلات حوافظ الإيداع الرسمية (Bordereaux de Remise) مع إمكانية المعاينة والطباعة البنكية</p>
           </div>
         </div>
 
         <div className="bg-slate-50 px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 font-mono">
           <span>إجمالي الحوافظ: </span>
-          <span className="font-bold text-indigo-400">{remises.length}</span>
+          <span className="font-bold text-emerald-700">{remises.length}</span>
         </div>
       </div>
 
@@ -129,13 +129,13 @@ export const DeliverySlipsView: React.FC = () => {
 
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-2 text-slate-800 font-semibold">
-                        <Building className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <Building className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{rem.bank_account_name || rem.bank_name || 'الحساب الرئيسي'}</span>
                       </div>
                     </td>
 
                     <td className="py-4 px-4">
-                      <div className="flex items-center gap-1.5 font-mono text-xs text-slate-300">
+                      <div className="flex items-center gap-1.5 font-mono text-xs text-slate-700">
                         <Calendar className="w-3.5 h-3.5 text-slate-500" />
                         <span>{rem.remise_date}</span>
                       </div>
@@ -176,12 +176,12 @@ export const DeliverySlipsView: React.FC = () => {
 
       {/* Official Printable Bank Slip Modal */}
       {isPrintModalOpen && selectedRemise && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-8">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 shadow-xs w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-8">
             {/* Modal Control Header */}
-            <div className="flex items-center justify-between p-4 border-b border-slate-800 bg-slate-950 print:hidden">
+            <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-white print:hidden">
               <div className="flex items-center gap-2 text-white font-bold text-sm">
-                <Printer className="w-4 h-4 text-indigo-400" />
+                <Printer className="w-4 h-4 text-emerald-700" />
                 <span>معاينة الحافظة البنكية الرسمية قبل الطباعة</span>
               </div>
 
@@ -196,7 +196,7 @@ export const DeliverySlipsView: React.FC = () => {
 
                 <button
                   onClick={() => setIsPrintModalOpen(false)}
-                  className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                  className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-500 hover:text-white transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -276,7 +276,7 @@ export const DeliverySlipsView: React.FC = () => {
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="bg-slate-100 font-black text-slate-900 border-t-2 border-slate-800 text-sm">
+                  <tr className="bg-slate-100 font-black text-slate-900 border-t-2 border-slate-200 text-sm">
                     <td colSpan={4} className="py-3 px-4 border border-slate-300">
                       المجموع العام ({selectedRemise.checks_count} شيكات مسلّمة)
                     </td>

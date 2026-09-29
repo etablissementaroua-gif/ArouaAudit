@@ -14,8 +14,8 @@ export const MappedStaffView: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight">الموظفون المعتمدون (Personnel Mappé - arouaschools)</h2>
-          <p className="text-xs text-slate-400 mt-1">تتبع الأطر التربوية والإدارية المربوطة تلقائياً عبر المعرفات المرجعية</p>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">الموظفون المعتمدون (Personnel Mappé - arouaschools)</h2>
+          <p className="text-xs text-slate-500 mt-1">تتبع الأطر التربوية والإدارية المربوطة تلقائياً عبر المعرفات المرجعية</p>
         </div>
       </div>
 
@@ -26,9 +26,9 @@ export const MappedStaffView: React.FC = () => {
         <StatCard title="ديون الموظفين المغادرين" value="2,400 MAD" subtitle="تحت المتابعة" icon={ShieldAlert} variant="expense" />
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-md">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white/60 backdrop-blur-md">
         <table className="w-full text-sm text-right">
-          <thead className="bg-slate-800/80 text-xs text-slate-400 border-b border-slate-700/60">
+          <thead className="bg-slate-800/80 text-xs text-slate-500 border-b border-slate-700/60">
             <tr>
               <th className="px-4 py-3 text-right">المعرف والموظف</th>
               <th className="px-4 py-3 text-right">المهمة / المنصب</th>
@@ -39,16 +39,16 @@ export const MappedStaffView: React.FC = () => {
           </thead>
           <tbody className="divide-y divide-slate-800/60">
             {staff.map((s) => (
-              <tr key={s.id} className="hover:bg-slate-800/30 transition-colors">
+              <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
                 <td className="px-4 py-3">
-                  <div className="font-bold text-white">{s.name}</div>
-                  <div className="font-mono text-xs text-indigo-400">{s.id}</div>
+                  <div className="font-bold text-slate-900">{s.name}</div>
+                  <div className="font-mono text-xs text-emerald-700">{s.id}</div>
                 </td>
-                <td className="px-4 py-3 text-slate-300">{s.role}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs">{s.cycle}</td>
-                <td className="px-4 py-3 font-mono text-xs text-slate-300">{s.cnss}</td>
+                <td className="px-4 py-3 text-slate-700">{s.role}</td>
+                <td className="px-4 py-3 text-slate-500 text-xs">{s.cycle}</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-700">{s.cnss}</td>
                 <td className="px-4 py-3 text-left">
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-50 text-emerald-800 border border-emerald-200">
                     🟢 {s.status}
                   </span>
                 </td>

@@ -101,31 +101,31 @@ export const ReceiptsRegistryView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-indigo-600/20 border border-indigo-500/30 rounded-xl text-indigo-400">
+          <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800">
             <Receipt className="w-6 h-6" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">سجل الوصولات وسندات القبض</h1>
-            <p className="text-slate-400 text-sm">الأرشيف المركزي لجميع وصولات الأداء المالي، الرسوم المدرسية، وسندات الصندوق</p>
+            <p className="text-slate-500 text-sm">الأرشيف المركزي لجميع وصولات الأداء المالي، الرسوم المدرسية، وسندات الصندوق</p>
           </div>
         </div>
 
         <div className="bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-200 text-sm text-emerald-800 font-mono">
           <span>إجمالي الوصولات: </span>
-          <span className="font-bold text-emerald-400">{formatMAD(totalAmount)}</span>
+          <span className="font-bold text-emerald-700">{formatMAD(totalAmount)}</span>
         </div>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
-          <span className="text-xs text-slate-400 uppercase font-semibold block mb-1">العدد الإجمالي للوصولات</span>
+          <span className="text-xs text-slate-500 uppercase font-semibold block mb-1">العدد الإجمالي للوصولات</span>
           <p className="text-2xl font-black text-slate-900 font-mono">{filteredReceipts.length}</p>
           <span className="text-xs text-slate-500">سند قبض صادر</span>
         </div>
 
         <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
-          <span className="text-xs text-emerald-400 uppercase font-semibold block mb-1">وصولات الأداء النقدي</span>
+          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">وصولات الأداء النقدي</span>
           <p className="text-2xl font-black text-emerald-600 font-mono">
             {formatMAD(receipts.filter(r => r.payment_method === 'especes').reduce((s, r) => s + r.amount, 0))}
           </p>
@@ -133,7 +133,7 @@ export const ReceiptsRegistryView: React.FC = () => {
         </div>
 
         <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
-          <span className="text-xs text-indigo-400 uppercase font-semibold block mb-1">وصولات الشيكات</span>
+          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">وصولات الشيكات</span>
           <p className="text-2xl font-black text-indigo-600 font-mono">
             {formatMAD(receipts.filter(r => r.payment_method === 'cheque').reduce((s, r) => s + r.amount, 0))}
           </p>
@@ -141,7 +141,7 @@ export const ReceiptsRegistryView: React.FC = () => {
         </div>
 
         <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
-          <span className="text-xs text-cyan-400 uppercase font-semibold block mb-1">التحويلات البنكية</span>
+          <span className="text-xs text-emerald-800 uppercase font-semibold block mb-1">التحويلات البنكية</span>
           <p className="text-2xl font-black text-cyan-600 font-mono">
             {formatMAD(receipts.filter(r => r.payment_method === 'virement').reduce((s, r) => s + r.amount, 0))}
           </p>
@@ -152,7 +152,7 @@ export const ReceiptsRegistryView: React.FC = () => {
       {/* Filter and Search Bar */}
       <div className="bg-white border border-slate-200/90 p-4 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-xs">
         <div className="flex-1 min-w-[260px] relative">
-          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="بحث برقم الوصل، اسم الدافع، أو المرجع..."
@@ -208,7 +208,7 @@ export const ReceiptsRegistryView: React.FC = () => {
                     </td>
 
                     <td className="py-4 px-4">
-                      <div className="flex items-center gap-1.5 font-mono text-xs text-slate-300">
+                      <div className="flex items-center gap-1.5 font-mono text-xs text-slate-700">
                         <Calendar className="w-3.5 h-3.5 text-slate-500" />
                         <span>{rec.date}</span>
                       </div>
@@ -216,7 +216,7 @@ export const ReceiptsRegistryView: React.FC = () => {
 
                     <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{rec.payer_name}</span>
                       </div>
                     </td>

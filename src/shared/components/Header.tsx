@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
 
         {/* Active Academic Year Badge */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium">
-          <Calendar className="w-3.5 h-3.5 text-indigo-600" />
+          <Calendar className="w-3.5 h-3.5 text-emerald-700" />
           <span className="text-slate-500 hidden sm:inline">السنة الدراسية:</span>
           <span className="text-slate-900 font-bold font-mono">2026-2027</span>
         </div>
@@ -82,8 +82,8 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         </button>
 
         {/* RLS Security Indicator */}
-        <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-[11px] text-indigo-700 font-semibold">
-          <ShieldCheck className="w-4 h-4 text-indigo-600" />
+        <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-800 font-semibold">
+          <ShieldCheck className="w-4 h-4 text-emerald-700" />
           <span>RLS Active</span>
         </div>
       </div>

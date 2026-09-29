@@ -196,7 +196,7 @@ export const ExpensesListView: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <Receipt className="w-5 h-5 text-indigo-400" />
+            <Receipt className="w-5 h-5 text-emerald-700" />
             <span>قائمة وسجل النفقات والالتزامات العامة (Registre des Dépenses)</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
@@ -333,7 +333,7 @@ export const ExpensesListView: React.FC = () => {
             <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="py-8 text-center text-slate-400 font-mono">
+                  <td colSpan={10} className="py-8 text-center text-slate-500 font-mono">
                     جاري تحميل سجل النفقات...
                   </td>
                 </tr>
@@ -346,8 +346,8 @@ export const ExpensesListView: React.FC = () => {
               ) : (
                 expenses.map((item) => (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-4 font-mono font-bold text-indigo-400">{item.reference_no}</td>
-                    <td className="py-3 px-4 text-slate-400 font-mono">{formatDateFR(item.expense_date)}</td>
+                    <td className="py-3 px-4 font-mono font-bold text-emerald-700">{item.reference_no}</td>
+                    <td className="py-3 px-4 text-slate-500 font-mono">{formatDateFR(item.expense_date)}</td>
                     <td className="py-3 px-4">
                       <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-700 border border-slate-200">
                         {item.category_code}
@@ -359,8 +359,8 @@ export const ExpensesListView: React.FC = () => {
                         <span className="text-[10px] text-slate-500 font-mono">ICE: {item.beneficiary_ice}</span>
                       )}
                     </td>
-                    <td className="py-3 px-4 font-mono text-slate-400">{item.invoice_reference || '---'}</td>
-                    <td className="py-3 px-4 text-slate-300 max-w-[200px] truncate" title={item.description}>
+                    <td className="py-3 px-4 font-mono text-slate-500">{item.invoice_reference || '---'}</td>
+                    <td className="py-3 px-4 text-slate-700 max-w-[200px] truncate" title={item.description}>
                       {item.description}
                     </td>
                     <td className="py-3 px-4">
@@ -412,12 +412,12 @@ export const ExpensesListView: React.FC = () => {
           <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 text-slate-900 my-8 animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
               <div className="flex items-center gap-2">
-                <Receipt className="w-4 h-4 text-indigo-400" />
+                <Receipt className="w-4 h-4 text-emerald-700" />
                 <h3 className="text-sm font-bold">تسجيل نفقة جديدة وإصدار أمر صرف</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                className="p-1 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -485,7 +485,7 @@ export const ExpensesListView: React.FC = () => {
                     required
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-sm font-bold focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono text-sm font-bold focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>

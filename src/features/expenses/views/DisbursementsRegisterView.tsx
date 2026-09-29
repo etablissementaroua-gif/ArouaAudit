@@ -148,7 +148,7 @@ export const DisbursementsRegisterView: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <FileText className="w-5 h-5 text-indigo-400" />
+            <FileText className="w-5 h-5 text-emerald-700" />
             <span>سجل المصروفات وسندات الصرف الرسمية (Bons de Décaissement)</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
@@ -256,7 +256,7 @@ export const DisbursementsRegisterView: React.FC = () => {
             <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="py-8 text-center text-slate-400 font-mono">
+                  <td colSpan={10} className="py-8 text-center text-slate-500 font-mono">
                     جاري تحميل سجل سندات الصرف...
                   </td>
                 </tr>
@@ -269,16 +269,16 @@ export const DisbursementsRegisterView: React.FC = () => {
               ) : (
                 filteredDisbursements.map((item) => (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-3 px-4 font-mono font-bold text-amber-400">{item.voucher_number}</td>
-                    <td className="py-3 px-4 text-slate-400 font-mono">{formatDateFR(item.disbursement_date)}</td>
+                    <td className="py-3 px-4 font-mono font-bold text-amber-700">{item.voucher_number}</td>
+                    <td className="py-3 px-4 text-slate-500 font-mono">{formatDateFR(item.disbursement_date)}</td>
                     <td className="py-3 px-4 font-bold text-slate-900">{item.beneficiary}</td>
-                    <td className="py-3 px-4 font-mono text-slate-400">{item.recipient_cin || '---'}</td>
+                    <td className="py-3 px-4 font-mono text-slate-500">{item.recipient_cin || '---'}</td>
                     <td className="py-3 px-4">{getModeBadge(item.payment_mode)}</td>
-                    <td className="py-3 px-4 text-slate-300 font-sans">{item.treasury_source}</td>
-                    <td className="py-3 px-4 text-slate-400 max-w-[200px] truncate" title={item.notes || ''}>
+                    <td className="py-3 px-4 text-slate-700 font-sans">{item.treasury_source}</td>
+                    <td className="py-3 px-4 text-slate-500 max-w-[200px] truncate" title={item.notes || ''}>
                       {item.notes || '---'}
                     </td>
-                    <td className="py-3 px-4 text-slate-300">{item.disbursed_by}</td>
+                    <td className="py-3 px-4 text-slate-700">{item.disbursed_by}</td>
                     <td className="py-3 px-4 text-left font-mono font-bold text-rose-600 text-sm">
                       {formatMAD(item.amount)}
                     </td>
@@ -313,12 +313,12 @@ export const DisbursementsRegisterView: React.FC = () => {
           <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 text-slate-900 my-8 animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
               <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-amber-400" />
+                <FileText className="w-4 h-4 text-amber-700" />
                 <h3 className="text-sm font-bold">إصدار سند صرف مباشر (Bon de Décaissement)</h3>
               </div>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                className="p-1 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -344,7 +344,7 @@ export const DisbursementsRegisterView: React.FC = () => {
                     placeholder="مثال: AB123456"
                     value={formData.recipient_cin}
                     onChange={(e) => setFormData({ ...formData, recipient_cin: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -369,7 +369,7 @@ export const DisbursementsRegisterView: React.FC = () => {
                     required
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-sm font-bold focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono text-sm font-bold focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>

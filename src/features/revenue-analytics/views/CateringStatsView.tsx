@@ -81,16 +81,16 @@ export const CateringStatsView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <ArrowDownLeft className="w-6 h-6 text-emerald-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">تغذية الصندوق ورأس المال التشغيلي (Alimentations de Caisse)</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <ArrowDownLeft className="w-6 h-6 text-emerald-700" />
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">تغذية الصندوق ورأس المال التشغيلي (Alimentations de Caisse)</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
               المرحلة 4: ضخ السيولة المالية
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             سجل عمليات تزويد وضخ السيولة النقدية والبنكية في حسابات وصناديق المؤسسة مع المشغل التلقائي للصندوق.
           </p>
         </div>
@@ -110,12 +110,12 @@ export const CateringStatsView: React.FC = () => {
 
       {/* Toast Alert */}
       {toastMessage && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
+        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
             <span className="font-medium">{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-emerald-400/60 hover:text-emerald-300">
+          <button onClick={() => setToastMessage(null)} className="text-emerald-700/60 hover:text-emerald-300">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -147,24 +147,24 @@ export const CateringStatsView: React.FC = () => {
       </div>
 
       {/* Alimentations Table */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-        <div className="p-4 px-6 border-b border-slate-800 flex items-center justify-between">
-          <h2 className="text-sm font-bold text-white">سجل عمليات تزويد وتغذية الصندوق</h2>
-          <span className="text-xs font-mono text-slate-400">سنة 2026/2027</span>
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
+        <div className="p-4 px-6 border-b border-slate-200 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-slate-900">سجل عمليات تزويد وتغذية الصندوق</h2>
+          <span className="text-xs font-mono text-slate-500">سنة 2026/2027</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 border-b border-slate-800 font-semibold uppercase">
+            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
               <tr>
                 <th className="py-4 px-4">التاريخ والمرجع</th>
                 <th className="py-4 px-3">مصدر التغذية</th>
                 <th className="py-4 px-3">المودع / المسؤول</th>
                 <th className="py-4 px-3">مبرر العملية (Motif)</th>
-                <th className="py-4 px-4 text-center font-bold text-emerald-400">المبلغ المودع</th>
+                <th className="py-4 px-4 text-center font-bold text-emerald-700">المبلغ المودع</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-8 text-center text-slate-500 font-mono">
@@ -173,21 +173,21 @@ export const CateringStatsView: React.FC = () => {
                 </tr>
               ) : (
                 alimentations.map((a) => (
-                  <tr key={a.id} className="hover:bg-slate-800/30 transition-colors">
+                  <tr key={a.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4 font-mono">
-                      <div className="font-bold text-white">{a.alimentation_date}</div>
-                      <div className="text-[10px] text-indigo-400">{a.receipt_reference || a.id.slice(0, 8)}</div>
+                      <div className="font-bold text-slate-900">{a.alimentation_date}</div>
+                      <div className="text-[10px] text-emerald-700">{a.receipt_reference || a.id.slice(0, 8)}</div>
                     </td>
 
                     <td className="py-3.5 px-3">
-                      <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 text-[10px] border border-indigo-500/20 font-medium">
+                      <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] border border-indigo-500/20 font-medium">
                         {a.source === 'apport_personnel' ? 'مساهمة شخصية (Apport)' :
                          a.source === 'virement_bancaire' ? 'تحويل بنكي' :
                          a.source === 'recouvrement' ? 'استرداد مالي' : a.source}
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-3 text-slate-300 font-medium">
+                    <td className="py-3.5 px-3 text-slate-700 font-medium">
                       {a.agent_name}
                     </td>
 
@@ -195,7 +195,7 @@ export const CateringStatsView: React.FC = () => {
                       {a.motif}
                     </td>
 
-                    <td className="py-3.5 px-4 text-center font-mono font-bold text-sm text-emerald-400">
+                    <td className="py-3.5 px-4 text-center font-mono font-bold text-sm text-emerald-700">
                       +{a.amount.toLocaleString()} MAD
                     </td>
                   </tr>
@@ -208,21 +208,21 @@ export const CateringStatsView: React.FC = () => {
 
       {/* Add Alimentation Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xs w-full max-w-md p-6 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <ArrowDownLeft className="w-5 h-5 text-emerald-400" />
-                <h3 className="text-sm font-bold text-white">إيداع تغذية جديدة بالصندوق</h3>
+                <ArrowDownLeft className="w-5 h-5 text-emerald-700" />
+                <h3 className="text-sm font-bold text-slate-900">إيداع تغذية جديدة بالصندوق</h3>
               </div>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white transition">
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <form onSubmit={handleCreateAlimentation} className="space-y-4 mt-4 text-xs">
               <div>
-                <label className="block font-medium text-slate-300 mb-1">
+                <label className="block font-medium text-slate-700 mb-1">
                   مبلغ التغذية (MAD) *
                 </label>
                 <input 
@@ -231,33 +231,33 @@ export const CateringStatsView: React.FC = () => {
                   min="500"
                   value={formAmount}
                   onChange={(e) => setFormAmount(Number(e.target.value))}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono font-bold text-sm focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs font-mono font-bold text-sm focus:border-emerald-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-medium text-slate-300 mb-1">
+                  <label className="block font-medium text-slate-700 mb-1">
                     تاريخ العملية
                   </label>
                   <input 
                     type="date"
                     value={formDate}
                     onChange={(e) => setFormDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono focus:border-emerald-500 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs font-mono focus:border-emerald-500 focus:outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block font-medium text-slate-300 mb-1">
+                  <label className="block font-medium text-slate-700 mb-1">
                     مصدر التمويل
                   </label>
                   <select
                     value={formSource}
                     onChange={(e) => setFormSource(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-emerald-500 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs focus:border-emerald-500 focus:outline-none"
                   >
                     <option value="apport_personnel">مساهمة شخصية (Apport)</option>
                     <option value="virement_bancaire">تحويل بنكي</option>
@@ -268,20 +268,20 @@ export const CateringStatsView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-medium text-slate-300 mb-1">
+                <label className="block font-medium text-slate-700 mb-1">
                   المودع / المسؤول
                 </label>
                 <input 
                   type="text"
                   value={formAgent}
                   onChange={(e) => setFormAgent(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs focus:border-emerald-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block font-medium text-slate-300 mb-1">
+                <label className="block font-medium text-slate-700 mb-1">
                   مبرر التغذية (Motif) *
                 </label>
                 <input 
@@ -289,13 +289,13 @@ export const CateringStatsView: React.FC = () => {
                   placeholder="مثال: تغذية الصندوق لمصاريف الانطلاق..."
                   value={formMotif}
                   onChange={(e) => setFormMotif(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs focus:border-emerald-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block font-medium text-slate-300 mb-1">
+                <label className="block font-medium text-slate-700 mb-1">
                   رقم المرجع أو الوصل (اختياري)
                 </label>
                 <input 
@@ -303,7 +303,7 @@ export const CateringStatsView: React.FC = () => {
                   placeholder="ALIM-..."
                   value={formRef}
                   onChange={(e) => setFormRef(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs font-mono focus:border-emerald-500 focus:outline-none"
                 />
               </div>
 
@@ -311,11 +311,11 @@ export const CateringStatsView: React.FC = () => {
                 سيتم إضافة مدخول نقدي (Encaissement) فوراً في يومية الصندوق بمجرد الحفظ.
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition cursor-pointer"
                 >
                   إلغاء
                 </button>

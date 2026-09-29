@@ -84,11 +84,11 @@ export const ExpenseCategoriesView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Layers className="w-5 h-5 text-indigo-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <Layers className="w-5 h-5 text-emerald-700" />
             <span>أبواب وتصنيفات النفقات ومخصصات الميزانية (Rubriques Budgétaires)</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             تبويب مراكز التكلفة المدرسية، مراقبة الميزانيات التقديرية، وتتبع نسب الاستهلاك الفعلي
           </p>
         </div>
@@ -97,7 +97,7 @@ export const ExpenseCategoriesView: React.FC = () => {
           <button
             onClick={loadData}
             disabled={loading}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all disabled:opacity-50"
+            className="p-2 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-700 hover:text-white transition-all disabled:opacity-50"
             title="تحديث البيانات"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -155,7 +155,7 @@ export const ExpenseCategoriesView: React.FC = () => {
           return (
             <div
               key={cat.id}
-              className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
@@ -174,25 +174,25 @@ export const ExpenseCategoriesView: React.FC = () => {
                     className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
                       cat.charge_type === 'fixe'
                         ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20'
-                        : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                        : 'bg-cyan-500/10 text-emerald-800 border border-cyan-500/20'
                     }`}
                   >
                     {cat.charge_type === 'fixe' ? 'تكلفة ثابتة (Fixe)' : 'تكلفة متغيرة (Variable)'}
                   </span>
                 </div>
 
-                <h3 className="text-sm font-bold text-white mb-0.5">{cat.name_ar}</h3>
-                <p className="text-[11px] text-slate-400 mb-4">{cat.name_fr}</p>
+                <h3 className="text-sm font-bold text-slate-900 mb-0.5">{cat.name_ar}</h3>
+                <p className="text-[11px] text-slate-500 mb-4">{cat.name_fr}</p>
 
                 {/* Numbers */}
-                <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs mb-4">
+                <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200/80 text-xs mb-4">
                   <div>
                     <span className="text-slate-500 block text-[10px]">الميزانية المرصودة:</span>
-                    <span className="font-mono font-bold text-slate-200">{formatMAD(cat.budget_allocation)}</span>
+                    <span className="font-mono font-bold text-slate-800">{formatMAD(cat.budget_allocation)}</span>
                   </div>
                   <div>
                     <span className="text-slate-500 block text-[10px]">المصروف الفعلي:</span>
-                    <span className="font-mono font-bold text-rose-400">{formatMAD(cat.spent_amount || 0)}</span>
+                    <span className="font-mono font-bold text-rose-600">{formatMAD(cat.spent_amount || 0)}</span>
                   </div>
                 </div>
               </div>
@@ -200,8 +200,8 @@ export const ExpenseCategoriesView: React.FC = () => {
               {/* Progress Bar & Status */}
               <div>
                 <div className="flex items-center justify-between text-[11px] mb-1.5 font-mono">
-                  <span className="text-slate-400">نسبة الاستهلاك:</span>
-                  <span className={`font-bold ${isHigh ? 'text-rose-400' : isMid ? 'text-amber-400' : 'text-emerald-400'}`}>
+                  <span className="text-slate-500">نسبة الاستهلاك:</span>
+                  <span className={`font-bold ${isHigh ? 'text-rose-600' : isMid ? 'text-amber-700' : 'text-emerald-700'}`}>
                     {rate}%
                   </span>
                 </div>
@@ -218,7 +218,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                 <div className="mt-3 flex items-center justify-between text-[10px] text-slate-500">
                   <span>المتبقي: {formatMAD(cat.remaining_budget || 0)}</span>
                   {isHigh && (
-                    <span className="text-rose-400 flex items-center gap-1 font-sans">
+                    <span className="text-rose-600 flex items-center gap-1 font-sans">
                       <AlertCircle className="w-3 h-3" /> تجاوز 85%
                     </span>
                   )}
@@ -232,15 +232,15 @@ export const ExpenseCategoriesView: React.FC = () => {
       {/* New Category Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6 text-white animate-in fade-in duration-200">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+          <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-xs shadow-2xl p-6 text-white animate-in fade-in duration-200">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-2">
-                <Tag className="w-4 h-4 text-indigo-400" />
+                <Tag className="w-4 h-4 text-emerald-700" />
                 <h3 className="text-sm font-bold">إضافة باب نفقة وميزانية تقديرية جديدة</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -249,18 +249,18 @@ export const ExpenseCategoriesView: React.FC = () => {
             <form onSubmit={handleCreateCategory} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">رمز الباب (Code Unique)*</label>
+                  <label className="text-slate-500 block mb-1">رمز الباب (Code Unique)*</label>
                   <input
                     type="text"
                     required
                     placeholder="مثال: PEDAGOGIE"
                     value={formData.code}
                     onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">طبيعة التكلفة*</label>
+                  <label className="text-slate-500 block mb-1">طبيعة التكلفة*</label>
                   <select
                     value={formData.charge_type}
                     onChange={(e) => setFormData({ ...formData, charge_type: e.target.value as 'fixe' | 'variable' })}
@@ -273,7 +273,7 @@ export const ExpenseCategoriesView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">اسم الباب بالعربية*</label>
+                <label className="text-slate-500 block mb-1">اسم الباب بالعربية*</label>
                 <input
                   type="text"
                   required
@@ -285,7 +285,7 @@ export const ExpenseCategoriesView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">اسم الباب بالفرنسية (Libellé FR)</label>
+                <label className="text-slate-500 block mb-1">اسم الباب بالفرنسية (Libellé FR)</label>
                 <input
                   type="text"
                   placeholder="ex: Activités parascolaires & sorties"
@@ -297,7 +297,7 @@ export const ExpenseCategoriesView: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">الميزانية السنوية المرصودة (MAD)*</label>
+                  <label className="text-slate-500 block mb-1">الميزانية السنوية المرصودة (MAD)*</label>
                   <input
                     type="number"
                     min="0"
@@ -305,11 +305,11 @@ export const ExpenseCategoriesView: React.FC = () => {
                     required
                     value={formData.budget_allocation}
                     onChange={(e) => setFormData({ ...formData, budget_allocation: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">لون التمييز (Color Code)</label>
+                  <label className="text-slate-500 block mb-1">لون التمييز (Color Code)</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
@@ -321,17 +321,17 @@ export const ExpenseCategoriesView: React.FC = () => {
                       type="text"
                       value={formData.color_hex}
                       onChange={(e) => setFormData({ ...formData, color_hex: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono text-xs focus:outline-none"
+                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono text-xs focus:outline-none"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
                 >
                   إلغاء
                 </button>

@@ -61,7 +61,7 @@ export const BankInvoicesView: React.FC = () => {
         <button
           onClick={loadData}
           disabled={loading}
-          className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-xs disabled:opacity-50"
+          className="flex items-center gap-2 bg-white hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-xs disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           <span>تحديث المطابقة اللحظية</span>

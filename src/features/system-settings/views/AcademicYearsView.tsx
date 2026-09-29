@@ -108,16 +108,16 @@ export const AcademicYearsView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <Calendar className="w-6 h-6 text-indigo-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">السنوات الدراسية (Années Scolaires)</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <Calendar className="w-6 h-6 text-emerald-700" />
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">السنوات الدراسية (Années Scolaires)</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/20">
               المرحلة 2: محرك الإعدادات
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             إدارة الفترات المحاسبية السنوية، ضبط السنة الدراسية المعتمدة واستهدافات رقم المعاملات السنوي (Target CA).
           </p>
         </div>
@@ -135,12 +135,12 @@ export const AcademicYearsView: React.FC = () => {
 
       {/* Success Alert */}
       {actionSuccess && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
+        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
             <span className="font-medium">{actionSuccess}</span>
           </div>
-          <button onClick={() => setActionSuccess(null)} className="text-emerald-400/60 hover:text-emerald-300">
+          <button onClick={() => setActionSuccess(null)} className="text-emerald-700/60 hover:text-emerald-300">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -179,20 +179,20 @@ export const AcademicYearsView: React.FC = () => {
       </div>
 
       {/* Years Table */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
+        <div className="p-5 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-indigo-400" />
-            <h2 className="text-sm font-bold text-white">قائمة السنوات الدراسية والفترات المالية المعتمدة</h2>
+            <Clock className="w-5 h-5 text-emerald-700" />
+            <h2 className="text-sm font-bold text-slate-900">قائمة السنوات الدراسية والفترات المالية المعتمدة</h2>
           </div>
-          <span className="text-xs text-slate-400 font-mono">
+          <span className="text-xs text-slate-500 font-mono">
             {years.length} سنوات دراسية مسجلة
           </span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-950/60 text-slate-400 border-b border-slate-800 font-semibold uppercase">
+            <thead className="bg-slate-50 border border-slate-200 text-slate-500 border-b border-slate-200 font-semibold uppercase">
               <tr>
                 <th className="py-3.5 px-4">كود السنة الدراسية</th>
                 <th className="py-3.5 px-4">تاريخ الانطلاق</th>
@@ -202,7 +202,7 @@ export const AcademicYearsView: React.FC = () => {
                 <th className="py-3.5 px-4 text-center">الإجراء المعتمد</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-slate-500 font-mono">
@@ -219,24 +219,24 @@ export const AcademicYearsView: React.FC = () => {
                 years.map((year) => (
                   <tr 
                     key={year.id || year.code}
-                    className={`hover:bg-slate-800/30 transition-colors ${year.is_current ? 'bg-indigo-950/20' : ''}`}
+                    className={`hover:bg-slate-50/80 transition-colors ${year.is_current ? 'bg-indigo-950/20' : ''}`}
                   >
                     <td className="py-4 px-4 font-mono font-bold text-sm text-white flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${year.is_current ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' : 'bg-slate-600'}`} />
                       {year.code}
                     </td>
-                    <td className="py-4 px-4 font-mono text-slate-300">
+                    <td className="py-4 px-4 font-mono text-slate-700">
                       {year.start_date}
                     </td>
-                    <td className="py-4 px-4 font-mono text-slate-300">
+                    <td className="py-4 px-4 font-mono text-slate-700">
                       {year.end_date}
                     </td>
-                    <td className="py-4 px-4 font-mono font-bold text-amber-400">
+                    <td className="py-4 px-4 font-mono font-bold text-amber-700">
                       {formatMAD(year.target_annual_ca || 0)}
                     </td>
                     <td className="py-4 px-4">
                       {year.is_current ? (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
                           <Check className="w-3.5 h-3.5" />
                           السنة الحالية النشطة
                         </span>
@@ -248,15 +248,15 @@ export const AcademicYearsView: React.FC = () => {
                     </td>
                     <td className="py-4 px-4 text-center">
                       {year.is_current ? (
-                        <span className="text-xs text-slate-400 font-mono italic">
+                        <span className="text-xs text-slate-500 font-mono italic">
                           معتمدة افتراضياً
                         </span>
                       ) : (
                         <button
                           onClick={() => handleSetActive(year.code)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-300 text-xs font-medium border border-slate-700 hover:border-indigo-500 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium border border-slate-700 hover:border-indigo-500 transition-all cursor-pointer"
                         >
-                          <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
                           تعيين كسنة معتمدة للحسابات
                         </button>
                       )}
@@ -271,16 +271,16 @@ export const AcademicYearsView: React.FC = () => {
 
       {/* Add Year Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xs w-full max-w-md p-6 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-indigo-400" />
-                <h3 className="text-sm font-bold text-white">إضافة سنة دراسية جديدة</h3>
+                <Calendar className="w-5 h-5 text-emerald-700" />
+                <h3 className="text-sm font-bold text-slate-900">إضافة سنة دراسية جديدة</h3>
               </div>
               <button 
                 onClick={() => { setIsModalOpen(false); resetForm(); }}
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-500 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -288,14 +288,14 @@ export const AcademicYearsView: React.FC = () => {
 
             <form onSubmit={handleCreateYear} className="space-y-4 mt-4">
               {formError && (
-                <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-600 text-xs flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{formError}</span>
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-medium text-slate-700 mb-1">
                   كود السنة الدراسية (Code Année) *
                 </label>
                 <input 
@@ -303,40 +303,40 @@ export const AcademicYearsView: React.FC = () => {
                   placeholder="مثال: 2027/2028"
                   value={formCode}
                   onChange={(e) => setFormCode(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs text-xs font-mono focus:border-indigo-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
+                  <label className="block text-xs font-medium text-slate-700 mb-1">
                     تاريخ الانطلاق (Début)
                   </label>
                   <input 
                     type="date"
                     value={formStartDate}
                     onChange={(e) => setFormStartDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs text-xs font-mono focus:border-indigo-500 focus:outline-none"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
+                  <label className="block text-xs font-medium text-slate-700 mb-1">
                     تاريخ الاختتام (Fin)
                   </label>
                   <input 
                     type="date"
                     value={formEndDate}
                     onChange={(e) => setFormEndDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs text-xs font-mono focus:border-indigo-500 focus:outline-none"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-medium text-slate-700 mb-1">
                   الهدف المالي السنوي لرقم المعاملات (MAD)
                 </label>
                 <div className="relative">
@@ -346,7 +346,7 @@ export const AcademicYearsView: React.FC = () => {
                     placeholder="مثال: 5000000"
                     value={formTargetCA}
                     onChange={(e) => setFormTargetCA(Number(e.target.value))}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none pl-12"
+                    className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs text-xs font-mono focus:border-indigo-500 focus:outline-none pl-12"
                   />
                   <span className="absolute left-3 top-2.5 text-xs font-mono text-slate-500">MAD</span>
                 </div>
@@ -359,18 +359,18 @@ export const AcademicYearsView: React.FC = () => {
                   id="setCurrentCheckbox"
                   checked={formIsCurrent}
                   onChange={(e) => setFormIsCurrent(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-950 text-indigo-600 focus:ring-0 w-4 h-4 cursor-pointer"
+                  className="rounded border-slate-700 bg-white text-indigo-600 focus:ring-0 w-4 h-4 cursor-pointer"
                 />
-                <label htmlFor="setCurrentCheckbox" className="text-xs text-slate-300 cursor-pointer">
+                <label htmlFor="setCurrentCheckbox" className="text-xs text-slate-700 cursor-pointer">
                   تعيين هذه السنة كسنة دراسية نشطة فوراً للحسابات
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => { setIsModalOpen(false); resetForm(); }}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-colors"
                 >
                   إلغاء
                 </button>

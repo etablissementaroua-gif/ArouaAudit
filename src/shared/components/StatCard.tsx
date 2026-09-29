@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface StatCardProps {
@@ -43,8 +43,8 @@ export const StatCard: React.FC<StatCardProps> = ({
         };
       default:
         return {
-          badge: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-          iconBg: 'bg-indigo-100/70 text-indigo-700',
+          badge: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+          iconBg: 'bg-emerald-50 text-emerald-800 border border-emerald-200/60',
           valColor: 'text-slate-900',
         };
     }

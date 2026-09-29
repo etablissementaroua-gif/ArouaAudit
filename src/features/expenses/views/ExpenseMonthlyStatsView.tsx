@@ -55,11 +55,11 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <BarChart3 className="w-5 h-5 text-indigo-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-emerald-700" />
             <span>التحليل الإحصائي والشهري للنفقات (Analyse Mensuelle des Charges)</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             رصد تدفقات النفقات، مقارنة التكاليف القارة والمتغيرة، وتفكيك بنية التكاليف التشغيلية للمؤسسة
           </p>
         </div>
@@ -67,7 +67,7 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
         <button
           onClick={loadData}
           disabled={loading}
-          className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all disabled:opacity-50"
+          className="p-2 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-700 hover:text-white transition-all disabled:opacity-50"
           title="تحديث الإحصائيات"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -107,21 +107,21 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
       </div>
 
       {/* Visual Chart / Progress Breakdown */}
-      <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md">
+      <div className="p-6 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6">
           <div>
-            <h3 className="text-sm font-bold text-white">تطور النفقات عبر أشهر الموسم الدراسي</h3>
-            <p className="text-xs text-slate-400">توزيع المصاريف الثابتة والمتغيرة شهرياً</p>
+            <h3 className="text-sm font-bold text-slate-900">تطور النفقات عبر أشهر الموسم الدراسي</h3>
+            <p className="text-xs text-slate-500">توزيع المصاريف الثابتة والمتغيرة شهرياً</p>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-mono">
             <div className="flex items-center gap-1.5">
               <div className="w-3 h-3 rounded bg-purple-500" />
-              <span className="text-slate-300">تكاليف قارة (Fixes)</span>
+              <span className="text-slate-700">تكاليف قارة (Fixes)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-3 h-3 rounded bg-cyan-500" />
-              <span className="text-slate-300">تكاليف متغيرة (Variables)</span>
+              <span className="text-slate-700">تكاليف متغيرة (Variables)</span>
             </div>
           </div>
         </div>
@@ -143,14 +143,14 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
                     <div className="flex items-center gap-3 font-mono text-[11px]">
                       <span className="text-purple-400">ثابتة: {formatMAD(item.fixed_charges)}</span>
                       <span className="text-slate-600">|</span>
-                      <span className="text-cyan-400">متغيرة: {formatMAD(item.variable_charges)}</span>
+                      <span className="text-emerald-800">متغيرة: {formatMAD(item.variable_charges)}</span>
                       <span className="text-slate-600">|</span>
-                      <span className="font-bold text-white">الإجمالي: {formatMAD(item.total_charges)}</span>
+                      <span className="font-bold text-slate-900">الإجمالي: {formatMAD(item.total_charges)}</span>
                     </div>
                   </div>
 
                   {/* Dual Segment Progress Bar */}
-                  <div className="w-full h-3 rounded-full bg-slate-950/80 p-0.5 border border-slate-800 flex overflow-hidden">
+                  <div className="w-full h-3 rounded-full bg-slate-50 p-0.5 border border-slate-200 flex overflow-hidden">
                     <div
                       className="h-full rounded-full flex overflow-hidden transition-all duration-700"
                       style={{ width: `${Math.max(10, barWidthPercent)}%` }}
@@ -175,15 +175,15 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
       </div>
 
       {/* Monthly Detailed Breakdown Table */}
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md overflow-hidden">
-        <div className="p-4 border-b border-slate-800 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-white">جدول التفصيل المحاسبي الشهري</h3>
-          <span className="text-xs text-slate-400 font-mono">سنة مالية: 2026/2027</span>
+      <div className="rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md overflow-hidden">
+        <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+          <h3 className="text-sm font-bold text-slate-900">جدول التفصيل المحاسبي الشهري</h3>
+          <span className="text-xs text-slate-500 font-mono">سنة مالية: 2026/2027</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 font-medium border-b border-slate-800">
+            <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
               <tr>
                 <th className="py-3 px-4">الشهر المحاسبي</th>
                 <th className="py-3 px-4 text-center">عدد العمليات</th>
@@ -197,13 +197,13 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
               {monthlyStats.map((item) => {
                 const shareOfTotal = totalSpent > 0 ? (item.total_charges / totalSpent) * 100 : 0;
                 return (
-                  <tr key={item.month_key} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3 px-4 font-sans font-bold text-white">{item.month_label}</td>
-                    <td className="py-3 px-4 text-center text-slate-400">{item.count} سندات</td>
+                  <tr key={item.month_key} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-4 font-sans font-bold text-slate-900">{item.month_label}</td>
+                    <td className="py-3 px-4 text-center text-slate-500">{item.count} سندات</td>
                     <td className="py-3 px-4 text-left text-purple-400">{formatMAD(item.fixed_charges)}</td>
-                    <td className="py-3 px-4 text-left text-cyan-400">{formatMAD(item.variable_charges)}</td>
-                    <td className="py-3 px-4 text-left font-bold text-rose-400">{formatMAD(item.total_charges)}</td>
-                    <td className="py-3 px-4 text-center text-slate-300">
+                    <td className="py-3 px-4 text-left text-emerald-800">{formatMAD(item.variable_charges)}</td>
+                    <td className="py-3 px-4 text-left font-bold text-rose-600">{formatMAD(item.total_charges)}</td>
+                    <td className="py-3 px-4 text-center text-slate-700">
                       <span className="px-2 py-0.5 rounded-full bg-slate-800 text-[11px] font-bold">
                         {shareOfTotal.toFixed(1)}%
                       </span>

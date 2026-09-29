@@ -106,11 +106,11 @@ export const TransportConfigView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Bus className="w-5 h-5 text-amber-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <Bus className="w-5 h-5 text-amber-700" />
             <span>النقل المدرسي وتدقيق خطوط الأسطول (Transport Scolaire & Flotte)</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             إدارة الحافلات، السائقين والمرافقات، المناطق المغطاة، ومعدل إشغال المقاعد وتكلفتها الشهرية
           </p>
         </div>
@@ -119,7 +119,7 @@ export const TransportConfigView: React.FC = () => {
           <button
             onClick={loadData}
             disabled={loading}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all disabled:opacity-50"
+            className="p-2 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-700 hover:text-white transition-all disabled:opacity-50"
             title="تحديث البيانات"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -177,12 +177,12 @@ export const TransportConfigView: React.FC = () => {
           return (
             <div
               key={line.id}
-              className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
             >
               <div>
                 {/* Top Badge & Line Code */}
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-50 text-amber-700 border border-amber-200">
                     {line.line_code}
                   </span>
 
@@ -190,40 +190,40 @@ export const TransportConfigView: React.FC = () => {
                     onClick={() => handleToggleStatus(line.id, line.is_active)}
                     className={`px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors ${
                       line.is_active
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                        : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                        ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                        : 'bg-rose-50 text-rose-700 border border-rose-200'
                     }`}
                   >
                     {line.is_active ? 'خط نشط في الخدمة' : 'متوقف مؤقتاً'}
                   </button>
                 </div>
 
-                <h3 className="text-sm font-bold text-white mb-1">{line.line_name}</h3>
+                <h3 className="text-sm font-bold text-slate-900 mb-1">{line.line_name}</h3>
                 
                 {/* Bus Details */}
-                <div className="flex items-center justify-between text-xs text-slate-400 mb-3 font-mono">
+                <div className="flex items-center justify-between text-xs text-slate-500 mb-3 font-mono">
                   <span>لوحة الترقيم: <strong className="text-white">{line.bus_registration}</strong></span>
                   <span className="text-slate-500">{line.bus_brand}</span>
                 </div>
 
                 {/* Driver & Assistant */}
-                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs space-y-1.5 mb-3">
+                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200/80 text-xs space-y-1.5 mb-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-400">السائق المعتمد:</span>
+                    <span className="text-slate-500">السائق المعتمد:</span>
                     <span className="font-semibold text-white">{line.driver_name}</span>
                   </div>
                   {line.driver_phone && (
-                    <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono">
                       <span>الهاتف:</span>
-                      <a href={`tel:${line.driver_phone}`} className="text-amber-400 hover:underline flex items-center gap-1">
+                      <a href={`tel:${line.driver_phone}`} className="text-amber-700 hover:underline flex items-center gap-1">
                         <Phone className="w-3 h-3" /> {line.driver_phone}
                       </a>
                     </div>
                   )}
                   {line.assistant_name && (
-                    <div className="flex items-center justify-between pt-1 border-t border-slate-800 text-[11px]">
-                      <span className="text-slate-400">المرافقة:</span>
-                      <span className="text-slate-200">{line.assistant_name}</span>
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[11px]">
+                      <span className="text-slate-500">المرافقة:</span>
+                      <span className="text-slate-800">{line.assistant_name}</span>
                     </div>
                   )}
                 </div>
@@ -231,17 +231,17 @@ export const TransportConfigView: React.FC = () => {
                 {/* Coverage Zones */}
                 <div className="mb-4 text-xs">
                   <span className="text-slate-500 text-[10px] block mb-1 flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-indigo-400" /> المناطق والمحطات المشمولة:
+                    <MapPin className="w-3 h-3 text-emerald-700" /> المناطق والمحطات المشمولة:
                   </span>
-                  <p className="text-slate-300 text-[11px] leading-relaxed line-clamp-2">{line.zone_coverage}</p>
+                  <p className="text-slate-700 text-[11px] leading-relaxed line-clamp-2">{line.zone_coverage}</p>
                 </div>
               </div>
 
               {/* Bottom Occupancy & Tariff */}
               <div>
                 <div className="flex items-center justify-between text-xs mb-1.5 font-mono">
-                  <span className="text-slate-400">المقاعد المشغولة:</span>
-                  <span className="font-bold text-white">
+                  <span className="text-slate-500">المقاعد المشغولة:</span>
+                  <span className="font-bold text-slate-900">
                     {line.enrolled_count} / {line.capacity} ({rate}%)
                   </span>
                 </div>
@@ -256,9 +256,9 @@ export const TransportConfigView: React.FC = () => {
                   />
                 </div>
 
-                <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
-                  <span className="text-slate-400">التسعيرة الشهرية:</span>
-                  <span className="text-sm font-bold text-amber-400">{formatMAD(line.monthly_fee)}</span>
+                <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs font-mono">
+                  <span className="text-slate-500">التسعيرة الشهرية:</span>
+                  <span className="text-sm font-bold text-amber-700">{formatMAD(line.monthly_fee)}</span>
                 </div>
               </div>
             </div>
@@ -269,15 +269,15 @@ export const TransportConfigView: React.FC = () => {
       {/* Add Transport Line Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6 text-white my-8 animate-in fade-in duration-200">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-xs shadow-2xl p-6 text-white my-8 animate-in fade-in duration-200">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-2">
-                <Bus className="w-4 h-4 text-amber-400" />
+                <Bus className="w-4 h-4 text-amber-700" />
                 <h3 className="text-sm font-bold">إضافة خط حافلة ونقل مدرسي جديد</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -286,18 +286,18 @@ export const TransportConfigView: React.FC = () => {
             <form onSubmit={handleCreateLine} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">رمز الخط (Line Code)*</label>
+                  <label className="text-slate-500 block mb-1">رمز الخط (Line Code)*</label>
                   <input
                     type="text"
                     required
                     placeholder="مثال: LIGNE-04"
                     value={formData.line_code}
                     onChange={(e) => setFormData({ ...formData, line_code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">اسم الخط والمسار*</label>
+                  <label className="text-slate-500 block mb-1">اسم الخط والمسار*</label>
                   <input
                     type="text"
                     required
@@ -311,18 +311,18 @@ export const TransportConfigView: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">لوحة الترقيم*</label>
+                  <label className="text-slate-500 block mb-1">لوحة الترقيم*</label>
                   <input
                     type="text"
                     required
                     placeholder="مثال: 28-أ-12345"
                     value={formData.bus_registration}
                     onChange={(e) => setFormData({ ...formData, bus_registration: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">نوع وموديل الحافلة</label>
+                  <label className="text-slate-500 block mb-1">نوع وموديل الحافلة</label>
                   <input
                     type="text"
                     placeholder="Mercedes Sprinter"
@@ -332,7 +332,7 @@ export const TransportConfigView: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">السعة (عدد المقاعد)*</label>
+                  <label className="text-slate-500 block mb-1">السعة (عدد المقاعد)*</label>
                   <input
                     type="number"
                     min="10"
@@ -340,14 +340,14 @@ export const TransportConfigView: React.FC = () => {
                     required
                     value={formData.capacity}
                     onChange={(e) => setFormData({ ...formData, capacity: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">اسم السائق المعتمد*</label>
+                  <label className="text-slate-500 block mb-1">اسم السائق المعتمد*</label>
                   <input
                     type="text"
                     required
@@ -358,20 +358,20 @@ export const TransportConfigView: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">هاتف السائق</label>
+                  <label className="text-slate-500 block mb-1">هاتف السائق</label>
                   <input
                     type="tel"
                     placeholder="06XXXXXXXX"
                     value={formData.driver_phone}
                     onChange={(e) => setFormData({ ...formData, driver_phone: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">اسم المرافقة</label>
+                  <label className="text-slate-500 block mb-1">اسم المرافقة</label>
                   <input
                     type="text"
                     placeholder="الاسم الكامل للمرافقة"
@@ -381,20 +381,20 @@ export const TransportConfigView: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">هاتف المرافقة</label>
+                  <label className="text-slate-500 block mb-1">هاتف المرافقة</label>
                   <input
                     type="tel"
                     placeholder="06XXXXXXXX"
                     value={formData.assistant_phone}
                     onChange={(e) => setFormData({ ...formData, assistant_phone: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div className="col-span-2">
-                  <label className="text-slate-400 block mb-1">المناطق والمحطات المشمولة*</label>
+                  <label className="text-slate-500 block mb-1">المناطق والمحطات المشمولة*</label>
                   <input
                     type="text"
                     required
@@ -405,7 +405,7 @@ export const TransportConfigView: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">التسعيرة الشهرية (MAD)*</label>
+                  <label className="text-slate-500 block mb-1">التسعيرة الشهرية (MAD)*</label>
                   <input
                     type="number"
                     min="100"
@@ -413,16 +413,16 @@ export const TransportConfigView: React.FC = () => {
                     required
                     value={formData.monthly_fee}
                     onChange={(e) => setFormData({ ...formData, monthly_fee: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
                 >
                   إلغاء
                 </button>

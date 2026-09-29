@@ -156,7 +156,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       case 'emerald':
         return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
       default:
-        return 'bg-indigo-50 text-indigo-700 border border-indigo-200';
+        return 'bg-emerald-50 text-emerald-800 border border-emerald-200';
     }
   };
 
@@ -189,7 +189,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
                 <span className="text-base font-black text-slate-900 tracking-tight">ArouaAudit</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                   V1.0
                 </span>
               </div>
@@ -221,17 +221,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                   onClick={() => toggleSection(section.id)}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     hasActiveChild
-                      ? 'text-indigo-700 bg-indigo-50/60 font-black'
+                      ? 'text-emerald-800 bg-emerald-50/80 font-black'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100/70'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${hasActiveChild ? 'text-indigo-600' : 'text-slate-500'}`} />
+                    <Icon className={`w-4 h-4 ${hasActiveChild ? 'text-emerald-700' : 'text-slate-500'}`} />
                     <span>{section.title}</span>
                   </div>
                   <ChevronDown
                     className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-indigo-600' : ''
+                      isOpen ? 'rotate-180 text-emerald-700' : ''
                     }`}
                   />
                 </button>
@@ -249,7 +249,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                         className={({ isActive }) =>
                           `flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all ${
                             isActive
-                              ? 'bg-indigo-50 text-indigo-700 font-bold border-r-4 border-indigo-600 shadow-2xs'
+                              ? 'bg-emerald-50 text-emerald-800 font-bold border-r-4 border-emerald-600 shadow-2xs'
                               : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60 font-medium'
                           }`
                         }

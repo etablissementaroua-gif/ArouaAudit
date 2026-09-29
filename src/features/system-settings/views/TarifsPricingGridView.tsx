@@ -208,32 +208,32 @@ export const TarifsPricingGridView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <DollarSign className="w-6 h-6 text-indigo-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">مصفوفة وجدول الأسعار والرسوم (Liste des Tarifs)</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <DollarSign className="w-6 h-6 text-emerald-700" />
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">مصفوفة وجدول الأسعار والرسوم (Liste des Tarifs)</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
               المرحلة 2: محرك الرسوم والخدمات
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             ضبط تسعيرات التمدرس الشهري، خدمات النقل والمطعم المدرسي، رسوم التسجيل ولوازم المحفظة لكل مستوى دراسي.
           </p>
         </div>
 
         {/* Academic Year Selector + Save All */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
-            <Calendar className="w-4 h-4 text-indigo-400" />
-            <span className="text-xs text-slate-400">السنة الدراسية:</span>
+          <div className="flex items-center gap-2 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
+            <Calendar className="w-4 h-4 text-emerald-700" />
+            <span className="text-xs text-slate-500">السنة الدراسية:</span>
             <select
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
               className="bg-transparent text-white text-xs font-mono font-bold focus:outline-none cursor-pointer"
             >
               {years.map(y => (
-                <option key={y.code} value={y.code} className="bg-slate-900 text-white">
+                <option key={y.code} value={y.code} className="bg-white text-slate-900">
                   {y.code} {y.is_current ? '(الحالية)' : ''}
                 </option>
               ))}
@@ -253,12 +253,12 @@ export const TarifsPricingGridView: React.FC = () => {
 
       {/* General Toast */}
       {generalToast && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
+        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
             <span className="font-medium">{generalToast}</span>
           </div>
-          <button onClick={() => setGeneralToast(null)} className="text-emerald-400/60 hover:text-emerald-300">
+          <button onClick={() => setGeneralToast(null)} className="text-emerald-700/60 hover:text-emerald-300">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -297,14 +297,14 @@ export const TarifsPricingGridView: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setCycleFilter('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               cycleFilter === 'all'
                 ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                : 'bg-white text-slate-500 hover:text-white border border-slate-200'
             }`}
           >
             كافة الأسلاك
@@ -316,7 +316,7 @@ export const TarifsPricingGridView: React.FC = () => {
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                 cycleFilter === c.code
                   ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                  : 'bg-white text-slate-500 hover:text-white border border-slate-200'
               }`}
             >
               {c.name_ar}
@@ -331,16 +331,16 @@ export const TarifsPricingGridView: React.FC = () => {
             placeholder="بحث بالمستوى أو الرمز..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pr-9 pl-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none"
+            className="w-full pr-9 pl-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs text-xs focus:border-indigo-500 focus:outline-none"
           />
         </div>
       </div>
 
       {/* Matrix Pricing Grid */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 border-b border-slate-800 font-semibold uppercase">
+            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
               <tr>
                 <th className="py-4 px-4">المستوى والسلك</th>
                 <th className="py-4 px-3 text-center">التمدرس الشهري (Scolarité)</th>
@@ -352,7 +352,7 @@ export const TarifsPricingGridView: React.FC = () => {
                 <th className="py-4 px-4 text-center">الإجراء</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {filteredLevels.map((lvl) => {
                 const tarif = tarifs.find(t => t.level_code === lvl.level_code) || {
                   level_code: lvl.level_code,
@@ -372,17 +372,17 @@ export const TarifsPricingGridView: React.FC = () => {
                 return (
                   <tr 
                     key={lvl.level_code}
-                    className="hover:bg-slate-800/30 transition-colors"
+                    className="hover:bg-slate-50/80 transition-colors"
                   >
                     {/* Level Name & Code */}
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono font-bold text-xs border border-indigo-500/20">
+                        <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono font-bold text-xs border border-indigo-500/20">
                           {lvl.level_code}
                         </span>
                         <div>
-                          <div className="font-bold text-white text-xs">{lvl.name_ar}</div>
-                          <div className="text-[10px] text-slate-400 font-mono">{lvl.name_fr}</div>
+                          <div className="font-bold text-slate-900 text-xs">{lvl.name_ar}</div>
+                          <div className="text-[10px] text-slate-500 font-mono">{lvl.name_fr}</div>
                         </div>
                       </div>
                     </td>
@@ -395,7 +395,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="50"
                           value={tarif.tuition_monthly}
                           onChange={(e) => handleInputChange(lvl.level_code, 'tuition_monthly', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono font-bold text-xs focus:border-indigo-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-900 font-mono font-bold text-xs focus:border-indigo-500 focus:outline-none"
                         />
                         <span className="absolute left-2 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -409,7 +409,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="50"
                           value={tarif.transport_monthly}
                           onChange={(e) => handleInputChange(lvl.level_code, 'transport_monthly', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-700 text-amber-300 font-mono text-xs focus:border-amber-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-amber-300 font-mono text-xs focus:border-amber-500 focus:outline-none"
                         />
                         <span className="absolute left-2 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -423,7 +423,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="50"
                           value={tarif.canteen_monthly}
                           onChange={(e) => handleInputChange(lvl.level_code, 'canteen_monthly', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 font-mono text-xs focus:border-indigo-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
                         />
                         <span className="absolute left-2 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -438,14 +438,14 @@ export const TarifsPricingGridView: React.FC = () => {
                             step="50"
                             value={tarif.supplies_fee}
                             onChange={(e) => handleInputChange(lvl.level_code, 'supplies_fee', e.target.value)}
-                            className="w-full text-center py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 font-mono text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
                           />
                           <span className="absolute left-1.5 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => openSuppliesModal(lvl)}
-                          className="p-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white border border-slate-700 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-700 hover:text-white border border-slate-700 transition-colors cursor-pointer"
                           title="تحديد تفاصيل ولوازم المحفظة"
                         >
                           <BookOpen className="w-3.5 h-3.5" />
@@ -461,7 +461,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="100"
                           value={tarif.registration_fee}
                           onChange={(e) => handleInputChange(lvl.level_code, 'registration_fee', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-700 text-emerald-400 font-mono text-xs focus:border-emerald-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-emerald-700 font-mono text-xs focus:border-emerald-500 focus:outline-none"
                         />
                         <span className="absolute left-1.5 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -475,7 +475,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="100"
                           value={tarif.re_registration_fee}
                           onChange={(e) => handleInputChange(lvl.level_code, 're_registration_fee', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-slate-950 border border-slate-700 text-slate-200 font-mono text-xs focus:border-indigo-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
                         />
                         <span className="absolute left-1.5 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -520,23 +520,23 @@ export const TarifsPricingGridView: React.FC = () => {
 
       {/* Supplies Checklist Modal */}
       {suppliesModalLevel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xs w-full max-w-lg p-6 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-indigo-400" />
+                <BookOpen className="w-5 h-5 text-emerald-700" />
                 <div>
-                  <h3 className="text-sm font-bold text-white">
+                  <h3 className="text-sm font-bold text-slate-900">
                     قائمة ولوازم المحفظة: {suppliesModalLevel.name_ar}
                   </h3>
-                  <p className="text-xs text-slate-400 font-mono">
+                  <p className="text-xs text-slate-500 font-mono">
                     {suppliesModalLevel.level_code} • {suppliesModalLevel.name_fr}
                   </p>
                 </div>
               </div>
               <button 
                 onClick={() => setSuppliesModalLevel(null)}
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-slate-500 hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -544,15 +544,15 @@ export const TarifsPricingGridView: React.FC = () => {
 
             <div className="space-y-4 mt-4">
               {/* Add Item Row */}
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                <div className="text-xs font-semibold text-slate-300">إضافة بند أو مقرر جديد:</div>
+              <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-2">
+                <div className="text-xs font-semibold text-slate-700">إضافة بند أو مقرر جديد:</div>
                 <div className="flex items-center gap-2">
                   <input 
                     type="text"
                     placeholder="اسم المقرر، الدفتر، أو الوسيلة..."
                     value={newSupplyName}
                     onChange={(e) => setNewSupplyName(e.target.value)}
-                    className="flex-1 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs focus:border-indigo-500 focus:outline-none"
+                    className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-700 text-white text-xs focus:border-indigo-500 focus:outline-none"
                   />
                   <input 
                     type="number"
@@ -560,7 +560,7 @@ export const TarifsPricingGridView: React.FC = () => {
                     placeholder="الكمية"
                     value={newSupplyQty}
                     onChange={(e) => setNewSupplyQty(Number(e.target.value))}
-                    className="w-16 px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-xs text-center focus:border-indigo-500 focus:outline-none"
+                    className="w-16 px-2 py-1.5 rounded-lg bg-white border border-slate-700 text-white text-xs text-center focus:border-indigo-500 focus:outline-none"
                   />
                   <button
                     type="button"
@@ -577,9 +577,9 @@ export const TarifsPricingGridView: React.FC = () => {
                     id="mandCheckbox"
                     checked={newSupplyMandatory}
                     onChange={(e) => setNewSupplyMandatory(e.target.checked)}
-                    className="rounded border-slate-700 bg-slate-900 text-indigo-600 w-3.5 h-3.5 cursor-pointer"
+                    className="rounded border-slate-700 bg-white text-indigo-600 w-3.5 h-3.5 cursor-pointer"
                   />
-                  <label htmlFor="mandCheckbox" className="text-[11px] text-slate-400 cursor-pointer">
+                  <label htmlFor="mandCheckbox" className="text-[11px] text-slate-500 cursor-pointer">
                     بند إلزامي ضمن المحفظة المدرسية
                   </label>
                 </div>
@@ -595,18 +595,18 @@ export const TarifsPricingGridView: React.FC = () => {
                   currentChecklist.map((item, index) => (
                     <div 
                       key={item.id || index}
-                      className="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800/80 flex items-center justify-between text-xs"
+                      className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 border border-slate-200/80 flex items-center justify-between text-xs"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-indigo-600/20 text-indigo-400 font-mono text-[10px] flex items-center justify-center">
+                        <span className="w-5 h-5 rounded-full bg-indigo-600/20 text-emerald-700 font-mono text-[10px] flex items-center justify-center">
                           {index + 1}
                         </span>
                         <span className="font-medium text-white">{item.item_name}</span>
-                        <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[10px]">
+                        <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200/60 font-mono text-[10px]">
                           الكمية: {item.quantity}
                         </span>
                         {item.mandatory && (
-                          <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px]">
+                          <span className="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px]">
                             إلزامي
                           </span>
                         )}
@@ -615,7 +615,7 @@ export const TarifsPricingGridView: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => handleRemoveSupplyItem(item.id)}
-                        className="text-slate-500 hover:text-rose-400 transition-colors cursor-pointer"
+                        className="text-slate-500 hover:text-rose-600 transition-colors cursor-pointer"
                         title="حذف البند"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -625,11 +625,11 @@ export const TarifsPricingGridView: React.FC = () => {
                 )}
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setSuppliesModalLevel(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-colors cursor-pointer"
                 >
                   إلغاء
                 </button>

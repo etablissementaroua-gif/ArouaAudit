@@ -12,8 +12,8 @@ export const RevenueAnalyticsView: React.FC = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight">التحليلات والمؤشرات الاقتصادية (Financial Analytics & KPIs)</h2>
-          <p className="text-xs text-slate-400 mt-1">قراءة مؤشرات النمو، هامش الربح التشغيلي، ومقارنة الإيرادات والنفقات</p>
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">التحليلات والمؤشرات الاقتصادية (Financial Analytics & KPIs)</h2>
+          <p className="text-xs text-slate-500 mt-1">قراءة مؤشرات النمو، هامش الربح التشغيلي، ومقارنة الإيرادات والنفقات</p>
         </div>
       </div>
 
@@ -24,9 +24,9 @@ export const RevenueAnalyticsView: React.FC = () => {
         <StatCard title="معدل الملاءمة المالية" value="98.4%" subtitle="سلامة التدقيق والسيولة" icon={ShieldCheck} variant="income" />
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-md">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white/60 backdrop-blur-md">
         <table className="w-full text-sm text-right">
-          <thead className="bg-slate-800/80 text-xs text-slate-400 border-b border-slate-700/60">
+          <thead className="bg-slate-800/80 text-xs text-slate-500 border-b border-slate-700/60">
             <tr>
               <th className="px-4 py-3 text-right">الفترة المحاسبية</th>
               <th className="px-4 py-3 text-right">المداخيل (Revenus)</th>
@@ -37,12 +37,12 @@ export const RevenueAnalyticsView: React.FC = () => {
           </thead>
           <tbody className="divide-y divide-slate-800/60">
             {metrics.map((m, idx) => (
-              <tr key={idx} className="hover:bg-slate-800/30 transition-colors">
+              <tr key={idx} className="hover:bg-slate-50/80 transition-colors">
                 <td className="px-4 py-3 text-white font-semibold">{m.period}</td>
-                <td className="px-4 py-3 font-mono text-emerald-400 font-bold">{formatMAD(m.income)}</td>
-                <td className="px-4 py-3 font-mono text-rose-400 font-bold">{formatMAD(m.expense)}</td>
+                <td className="px-4 py-3 font-mono text-emerald-700 font-bold">{formatMAD(m.income)}</td>
+                <td className="px-4 py-3 font-mono text-rose-600 font-bold">{formatMAD(m.expense)}</td>
                 <td className="px-4 py-3 font-mono text-sky-400 font-bold">{formatMAD(m.margin)}</td>
-                <td className="px-4 py-3 text-left font-mono text-xs text-slate-300">
+                <td className="px-4 py-3 text-left font-mono text-xs text-slate-700">
                   {Math.round((m.margin / m.income) * 100)}%
                 </td>
               </tr>

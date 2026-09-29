@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Calendar, 
-  DollarSign, 
   TrendingUp, 
-  CreditCard, 
-  Banknote, 
   CheckCircle2, 
-  Layers 
+  Wallet
 } from 'lucide-react';
 import { StatCard } from '../../../shared/components/StatCard';
 import { revenueAnalyticsService } from '../services/revenueAnalytics.service';
@@ -40,28 +37,35 @@ export const GlobalRecettesView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <div>
-          <div className="flex items-center gap-2">
-            <Calendar className="w-6 h-6 text-indigo-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">المقبوضات العامة والرزنامة الشهرية (Recettes Globales)</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              المرحلة 4: الرؤية المجمعة
-            </span>
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200">
+              <Wallet className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2.5">
+                <h1 className="text-2xl font-black text-slate-900 tracking-tight">المقبوضات العامة والرزنامة الشهرية (Recettes Globales)</h1>
+                <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full font-bold text-xs inline-flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  الرؤية المجمعة المعتمدة
+                </span>
+              </div>
+              <p className="text-sm text-slate-500 mt-1">
+                الرؤية المجمعة لكافة مداخيل المؤسسة اليومية على مدار الشهر مع تفصيل قنوات التحصيل.
+              </p>
+            </div>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            الرؤية المجمعة لكافة مداخيل المؤسسة اليومية على مدار الشهر مع تفصيل قنوات التحصيل.
-          </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
-          <Calendar className="w-4 h-4 text-indigo-400" />
-          <span className="text-xs text-slate-400">الشهر المالي:</span>
+        <div className="flex items-center gap-2.5 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-200 shadow-2xs">
+          <Calendar className="w-4 h-4 text-emerald-700" />
+          <span className="text-xs text-slate-600 font-semibold">الشهر المالي:</span>
           <input 
             type="month"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="bg-transparent text-white text-xs font-mono font-bold focus:outline-none cursor-pointer"
+            className="bg-transparent text-slate-900 text-xs font-mono font-bold focus:outline-none cursor-pointer"
           />
         </div>
       </div>
@@ -92,11 +96,16 @@ export const GlobalRecettesView: React.FC = () => {
       </div>
 
       {/* Monthly Interactive Calendar Grid */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md">
-        <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-indigo-400" />
-          رزنامة مداخيل شهر: {selectedMonth} (تجميع يومي)
-        </h2>
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
+          <h2 className="text-base font-black text-slate-900 flex items-center gap-2.5">
+            <Calendar className="w-5 h-5 text-emerald-700" />
+            <span>رزنامة مداخيل شهر: {selectedMonth} (تجميع يومي)</span>
+          </h2>
+          <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
+            {activeDays} يوم تحصيل مسجل
+          </span>
+        </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-7 gap-3">
           {calendar.map((day) => {
@@ -104,24 +113,26 @@ export const GlobalRecettesView: React.FC = () => {
             return (
               <div 
                 key={day.date}
-                className={`p-3 rounded-xl border transition-all flex flex-col justify-between h-24 ${
+                className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between h-28 ${
                   hasAmount 
-                    ? 'bg-indigo-950/20 border-indigo-500/40 hover:border-indigo-400' 
-                    : 'bg-slate-950/40 border-slate-800/60 opacity-60'
+                    ? 'bg-emerald-50/40 border-emerald-200 hover:border-emerald-500 hover:shadow-md shadow-2xs' 
+                    : 'bg-slate-50/60 border-slate-200/80 hover:bg-white hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono font-bold text-white">يوم {day.day_number}</span>
+                  <span className={`font-mono font-bold ${hasAmount ? 'text-slate-900' : 'text-slate-500'}`}>
+                    يوم {day.day_number}
+                  </span>
                   {hasAmount && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm animate-pulse" />
                   )}
                 </div>
 
                 <div>
-                  <div className={`font-mono font-bold text-xs ${hasAmount ? 'text-emerald-400' : 'text-slate-600'}`}>
+                  <div className={`font-mono font-black text-sm ${hasAmount ? 'text-emerald-700' : 'text-slate-400'}`}>
                     {hasAmount ? `${day.total_amount.toLocaleString()} MAD` : '0 MAD'}
                   </div>
-                  <div className="text-[10px] text-slate-500 font-mono mt-0.5">
+                  <div className={`text-[11px] font-mono mt-0.5 ${hasAmount ? 'text-slate-600 font-medium' : 'text-slate-400'}`}>
                     {day.transactions_count} وصولات
                   </div>
                 </div>
@@ -133,3 +144,5 @@ export const GlobalRecettesView: React.FC = () => {
     </div>
   );
 };
+
+export default GlobalRecettesView;

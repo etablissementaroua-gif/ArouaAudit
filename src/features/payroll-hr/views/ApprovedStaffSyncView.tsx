@@ -266,7 +266,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
         </div>
 
         <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-3" />
+          <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3" />
           <input 
             type="text"
             placeholder="بحث بالاسم أو CIN أو المعرف..."
@@ -350,7 +350,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                             </span>
                           ))
                         ) : (
-                          <span className="text-xs text-slate-400">عام</span>
+                          <span className="text-xs text-slate-500">عام</span>
                         )}
                         {emp.assigned_classes && emp.assigned_classes.length > 0 && (
                           emp.assigned_classes.map((cls, idx) => (
@@ -376,7 +376,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                           {emp.credit_ancien.toLocaleString()} MAD
                         </span>
                       ) : (
-                        <span className="text-slate-400 font-mono text-xs">0 MAD</span>
+                        <span className="text-slate-500 font-mono text-xs">0 MAD</span>
                       )}
                     </td>
 
@@ -445,7 +445,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       {/* Advance Modal */}
       {advanceModalEmployee && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
           <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-md p-6 shadow-xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
@@ -459,7 +459,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
               </div>
               <button 
                 onClick={() => setAdvanceModalEmployee(null)}
-                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg transition"
+                className="text-slate-500 hover:text-slate-700 p-1 rounded-lg transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -564,7 +564,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       {/* Edit Financials Modal */}
       {editEmp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
           <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-md p-6 shadow-xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
@@ -578,7 +578,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
               </div>
               <button 
                 onClick={() => setEditEmp(null)}
-                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg transition"
+                className="text-slate-500 hover:text-slate-700 p-1 rounded-lg transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -647,7 +647,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       {/* Financial Statement Modal */}
       {statementEmp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
           <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg p-6 shadow-xl relative space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
@@ -661,7 +661,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
               </div>
               <button 
                 onClick={() => setStatementEmp(null)}
-                className="text-slate-400 hover:text-slate-700 p-1 rounded-lg transition"
+                className="text-slate-500 hover:text-slate-700 p-1 rounded-lg transition"
               >
                 <X className="w-5 h-5" />
               </button>

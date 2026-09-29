@@ -44,9 +44,9 @@ export const OfficialDisbursementModal: React.FC<OfficialDisbursementModalProps>
       <div className="w-full max-w-2xl bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden my-8 border border-slate-300">
         
         {/* Top Control Bar (Hidden when printing) */}
-        <div className="p-4 bg-slate-900 text-white flex items-center justify-between print:hidden">
+        <div className="p-4 bg-white text-slate-900 flex items-center justify-between print:hidden">
           <div className="flex items-center gap-2">
-            <FileText className="w-4 h-4 text-amber-400" />
+            <FileText className="w-4 h-4 text-amber-700" />
             <span className="text-xs font-bold font-sans">معاينة وطباعة سند الصرف المالي الرسمي (Bon de Décaissement)</span>
           </div>
           <div className="flex items-center gap-2">
@@ -59,7 +59,7 @@ export const OfficialDisbursementModal: React.FC<OfficialDisbursementModalProps>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-lg bg-slate-800 text-slate-500 hover:text-white transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -150,20 +150,20 @@ export const OfficialDisbursementModal: React.FC<OfficialDisbursementModalProps>
           <div className="grid grid-cols-3 gap-3 pt-6 border-t border-slate-200 text-center text-xs">
             <div className="h-28 border border-dashed border-slate-300 rounded-xl p-2 flex flex-col justify-between">
               <span className="font-bold text-slate-700">توقيع المستلم (Émargement)</span>
-              <div className="text-[10px] text-slate-400">توصلت بالمبلغ المذكور أعلاه</div>
+              <div className="text-[10px] text-slate-500">توصلت بالمبلغ المذكور أعلاه</div>
             </div>
             <div className="h-28 border border-dashed border-slate-300 rounded-xl p-2 flex flex-col justify-between">
               <span className="font-bold text-slate-700">أمين الصندوق (Le Caissier)</span>
-              <div className="text-[10px] text-slate-400">تأشيرة الصرف</div>
+              <div className="text-[10px] text-slate-500">تأشيرة الصرف</div>
             </div>
             <div className="h-28 border border-dashed border-slate-300 rounded-xl p-2 flex flex-col justify-between">
               <span className="font-bold text-slate-700">الإدارة العامة والمالية</span>
-              <div className="text-[10px] text-slate-400">الموافقة والاعتماد</div>
+              <div className="text-[10px] text-slate-500">الموافقة والاعتماد</div>
             </div>
           </div>
 
           {/* Footer Note */}
-          <div className="text-center pt-2 text-[10px] text-slate-400 font-mono">
+          <div className="text-center pt-2 text-[10px] text-slate-500 font-mono">
             وثيقة مالية رسمية صادرة آلياً عن نظام الرقابة والتدقيق المستقل ArouaAudit &middot; {new Date().toLocaleDateString('ar-MA')}
           </div>
         </div>

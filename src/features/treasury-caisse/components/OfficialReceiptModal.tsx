@@ -39,9 +39,9 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
       <div className="w-full max-w-2xl bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden my-8 border border-slate-300">
         
         {/* Modal Top Actions */}
-        <div className="p-4 bg-slate-900 text-white flex items-center justify-between print:hidden">
+        <div className="p-4 bg-white text-slate-900 flex items-center justify-between print:hidden">
           <div className="flex items-center gap-2">
-            <Printer className="w-4 h-4 text-cyan-400" />
+            <Printer className="w-4 h-4 text-emerald-800" />
             <span className="text-xs font-bold">معاينة وطباعة الوصل المالي الرسمي (Reçu de Paiement)</span>
           </div>
           <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
             >
               <X className="w-4 h-4" />
             </button>
@@ -163,7 +163,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
           <div className="pt-4 border-t border-slate-200 grid grid-cols-2 gap-8 text-xs text-center">
             <div className="h-28 border border-dashed border-slate-300 rounded-xl p-3 flex flex-col justify-between">
               <span className="font-bold text-slate-600">توقيع ولي الأمر (Signature du Parent)</span>
-              <span className="text-[10px] text-slate-400">حرر بمراكش، في {formatDateFR(receipt.date)}</span>
+              <span className="text-[10px] text-slate-500">حرر بمراكش، في {formatDateFR(receipt.date)}</span>
             </div>
 
             <div className="h-28 border border-dashed border-cyan-300 bg-cyan-50/20 rounded-xl p-3 flex flex-col justify-between">
@@ -176,7 +176,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
           </div>
 
           {/* Legal Notice Footer */}
-          <div className="text-center text-[10px] text-slate-400 pt-2 border-t border-slate-100">
+          <div className="text-center text-[10px] text-slate-500 pt-2 border-t border-slate-100">
             هذا الوصل وثيقة مالية رسمية صادرة عن منظومة ArouaAudit المحاسبية التابعة لمجموعة مدارس أروى.
           </div>
 

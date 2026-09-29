@@ -70,16 +70,16 @@ export const StaffDebtsView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <ShieldAlert className="w-6 h-6 text-rose-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">ديون الموظفين المغادرين العالقة (Créances du Personnel Partant)</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+            <ShieldAlert className="w-6 h-6 text-rose-600" />
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">ديون الموظفين المغادرين العالقة (Créances du Personnel Partant)</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-rose-50 text-rose-700 border border-rose-200">
               الرقابة واسترداد الذمم
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             تتبع وتحصيل المديونيات السابقة للموظفين والأساتذة الذين انتهت مهامهم بالمؤسسة مع توثيق التحصيل بالصندوق.
           </p>
         </div>
@@ -87,12 +87,12 @@ export const StaffDebtsView: React.FC = () => {
 
       {/* Toast Alert */}
       {toastMessage && (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-center justify-between animate-fade-in">
+        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 text-xs flex items-center justify-between animate-fade-in">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
             <span className="font-medium">{toastMessage}</span>
           </div>
-          <button onClick={() => setToastMessage(null)} className="text-emerald-400/60 hover:text-emerald-300">
+          <button onClick={() => setToastMessage(null)} className="text-emerald-700/60 hover:text-emerald-300">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -124,10 +124,10 @@ export const StaffDebtsView: React.FC = () => {
       </div>
 
       {/* Departed Staff Table */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 border-b border-slate-800 font-semibold uppercase">
+            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
               <tr>
                 <th className="py-4 px-4">الموظف السابق</th>
                 <th className="py-4 px-3">المنصب السابق</th>
@@ -137,7 +137,7 @@ export const StaffDebtsView: React.FC = () => {
                 <th className="py-4 px-4 text-center">الإجراء</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-slate-500 font-mono">
@@ -152,28 +152,28 @@ export const StaffDebtsView: React.FC = () => {
                 </tr>
               ) : (
                 departedStaff.map((emp) => (
-                  <tr key={emp.id} className="hover:bg-slate-800/30 transition-colors">
+                  <tr key={emp.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-white text-sm">{emp.full_name}</div>
-                      <div className="text-[10px] text-slate-400 font-mono">
+                      <div className="font-bold text-slate-900 text-sm">{emp.full_name}</div>
+                      <div className="text-[10px] text-slate-500 font-mono">
                         {emp.external_staff_id} • CIN: {emp.cin || 'غير متوفر'}
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-3 text-slate-300">
+                    <td className="py-3.5 px-3 text-slate-700">
                       {emp.role} • {emp.department}
                     </td>
 
-                    <td className="py-3.5 px-3 font-mono text-slate-400">
+                    <td className="py-3.5 px-3 font-mono text-slate-500">
                       {emp.phone || 'غير مسجل'}
                     </td>
 
-                    <td className="py-3.5 px-3 text-center font-mono font-bold text-sm text-rose-400">
+                    <td className="py-3.5 px-3 text-center font-mono font-bold text-sm text-rose-600">
                       {emp.credit_ancien.toLocaleString()} MAD
                     </td>
 
                     <td className="py-3.5 px-3 text-center">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                         مغادر المؤسسة
                       </span>
                     </td>
@@ -201,19 +201,19 @@ export const StaffDebtsView: React.FC = () => {
 
       {/* Repayment Modal */}
       {repayingEmployee && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xs w-full max-w-md p-6 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <Banknote className="w-5 h-5 text-emerald-400" />
+                <Banknote className="w-5 h-5 text-emerald-700" />
                 <div>
-                  <h3 className="text-sm font-bold text-white">تسجيل استرداد دين مالي</h3>
-                  <p className="text-xs text-slate-400">{repayingEmployee.full_name} • متبقي: {repayingEmployee.credit_ancien} MAD</p>
+                  <h3 className="text-sm font-bold text-slate-900">تسجيل استرداد دين مالي</h3>
+                  <p className="text-xs text-slate-500">{repayingEmployee.full_name} • متبقي: {repayingEmployee.credit_ancien} MAD</p>
                 </div>
               </div>
               <button 
                 onClick={() => setRepayingEmployee(null)}
-                className="text-slate-400 hover:text-white transition"
+                className="text-slate-500 hover:text-white transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -221,7 +221,7 @@ export const StaffDebtsView: React.FC = () => {
 
             <form onSubmit={handleRecordRepayment} className="space-y-4 mt-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-medium text-slate-700 mb-1">
                   المبلغ المسترد (MAD) *
                 </label>
                 <input 
@@ -231,13 +231,13 @@ export const StaffDebtsView: React.FC = () => {
                   max={repayingEmployee.credit_ancien}
                   value={repayAmount}
                   onChange={(e) => setRepayAmount(Number(e.target.value))}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono font-bold text-sm focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs font-mono font-bold text-sm focus:border-emerald-500 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-medium text-slate-700 mb-1">
                   بيان وتفاصيل الاسترداد
                 </label>
                 <input 
@@ -245,7 +245,7 @@ export const StaffDebtsView: React.FC = () => {
                   placeholder="مثال: تسوية نقدية بالصندوق أو تحويل بنكي..."
                   value={repayNotes}
                   onChange={(e) => setRepayNotes(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-emerald-500 focus:outline-none"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 shadow-2xs text-xs focus:border-emerald-500 focus:outline-none"
                 />
               </div>
 
@@ -253,11 +253,11 @@ export const StaffDebtsView: React.FC = () => {
                 سيتم خصم هذا المبلغ من مديونية الموظف وإضافته كمدخول نقدي (Encaissement) في يومية الصندوق.
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setRepayingEmployee(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition cursor-pointer"
                 >
                   إلغاء
                 </button>

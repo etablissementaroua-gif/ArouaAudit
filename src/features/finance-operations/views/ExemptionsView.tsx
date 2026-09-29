@@ -83,14 +83,14 @@ export const ExemptionsView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-400">
+          <div className="p-2.5 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-700">
             <Award className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-wide">الإعفاءات والمجانيات الدراسية (Gratuités & Bourses)</h1>
-            <p className="text-slate-400 text-sm">سجل المنح المدرسية الكاملة، إعفاءات أبناء الأطر والعاملين، وحالات الدعم الاجتماعي</p>
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">الإعفاءات والمجانيات الدراسية (Gratuités & Bourses)</h1>
+            <p className="text-slate-500 text-sm">سجل المنح المدرسية الكاملة، إعفاءات أبناء الأطر والعاملين، وحالات الدعم الاجتماعي</p>
           </div>
         </div>
 
@@ -105,23 +105,23 @@ export const ExemptionsView: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <span className="text-xs text-slate-400 uppercase font-semibold block mb-1">إجمالي المستفيدين من الإعفاء</span>
-          <p className="text-2xl font-bold text-white font-mono">{exemptions.filter(e => e.is_active).length}</p>
+        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 uppercase font-semibold block mb-1">إجمالي المستفيدين من الإعفاء</span>
+          <p className="text-2xl font-bold text-slate-900 font-mono">{exemptions.filter(e => e.is_active).length}</p>
           <span className="text-xs text-slate-500 mt-1 block">تلاميذ يتمتعون بمجانية معتمدة</span>
         </div>
 
-        <div className="bg-slate-900 border border-amber-500/20 p-5 rounded-2xl">
-          <span className="text-xs text-amber-400 uppercase font-semibold block mb-1">إعفاءات التمدرس الكاملة (100%)</span>
-          <p className="text-2xl font-bold text-amber-400 font-mono">
+        <div className="bg-white border border-amber-200 shadow-xs p-5 rounded-2xl">
+          <span className="text-xs text-amber-700 uppercase font-semibold block mb-1">إعفاءات التمدرس الكاملة (100%)</span>
+          <p className="text-2xl font-bold text-amber-700 font-mono">
             {exemptions.filter(e => e.type === 'gratuite_totale' && e.is_active).length}
           </p>
           <span className="text-xs text-slate-500 mt-1 block">أبناء الأطر وهيئة التدريس</span>
         </div>
 
-        <div className="bg-slate-900 border border-cyan-500/20 p-5 rounded-2xl">
-          <span className="text-xs text-cyan-400 uppercase font-semibold block mb-1">إعفاءات الخدمات الجزئية</span>
-          <p className="text-2xl font-bold text-cyan-400 font-mono">
+        <div className="bg-white border border-cyan-500/20 p-5 rounded-2xl">
+          <span className="text-xs text-emerald-800 uppercase font-semibold block mb-1">إعفاءات الخدمات الجزئية</span>
+          <p className="text-2xl font-bold text-emerald-800 font-mono">
             {exemptions.filter(e => e.type === 'gratuite_partielle' && e.is_active).length}
           </p>
           <span className="text-xs text-slate-500 mt-1 block">إعفاء وجبات المطعم والنقل</span>
@@ -130,22 +130,22 @@ export const ExemptionsView: React.FC = () => {
 
       {/* Search Input Bar */}
       <div className="relative">
-        <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           placeholder="بحث سريع باسم التلميذ، سبب الإعفاء، أو المعرف..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full bg-slate-900 border border-slate-800 rounded-2xl pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
+          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
         />
       </div>
 
       {/* Exemptions Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-4">نوع الإعفاء</th>
@@ -155,7 +155,7 @@ export const ExemptionsView: React.FC = () => {
                 <th className="py-4 px-4 text-center">حالة المنحة</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">جاري تحميل سجل الإعفاءات...</td>
@@ -166,10 +166,10 @@ export const ExemptionsView: React.FC = () => {
                 </tr>
               ) : (
                 filteredExemptions.map(e => (
-                  <tr key={e.id} className="hover:bg-slate-800/40 transition-colors">
+                  <tr key={e.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-4 px-4 font-medium text-white">
                       <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{e.student_name}</span>
                       </div>
                       <span className="text-[11px] text-slate-500 font-mono block mt-0.5">
@@ -177,18 +177,18 @@ export const ExemptionsView: React.FC = () => {
                       </span>
                     </td>
 
-                    <td className="py-4 px-4 text-slate-300">
+                    <td className="py-4 px-4 text-slate-700">
                       {e.academic_level}
                     </td>
 
                     <td className="py-4 px-4">
                       {e.type === 'gratuite_totale' ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
                           <Award className="w-3.5 h-3.5" />
                           <span>إعفاء كامل (100%)</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-emerald-800 border border-cyan-500/30">
                           <HeartHandshake className="w-3.5 h-3.5" />
                           <span>إعفاء جزئي لخدمة</span>
                         </span>
@@ -197,23 +197,23 @@ export const ExemptionsView: React.FC = () => {
 
                     <td className="py-4 px-4">
                       {e.service_type === 'transport' ? (
-                        <span className="text-xs text-slate-300">النقل المدرسي</span>
+                        <span className="text-xs text-slate-700">النقل المدرسي</span>
                       ) : e.service_type === 'cantine' ? (
-                        <span className="text-xs text-slate-300">المطعم المدرسي</span>
+                        <span className="text-xs text-slate-700">المطعم المدرسي</span>
                       ) : (
-                        <span className="text-xs text-slate-300">التمدرس العام</span>
+                        <span className="text-xs text-slate-700">التمدرس العام</span>
                       )}
                     </td>
 
-                    <td className="py-4 px-4 text-xs text-slate-300">
-                      <span className="bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+                    <td className="py-4 px-4 text-xs text-slate-700">
+                      <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200">
                         {e.beneficiary_relation || 'منحة معتمدة'}
                       </span>
                     </td>
 
-                    <td className="py-4 px-4 text-xs text-slate-400">
+                    <td className="py-4 px-4 text-xs text-slate-500">
                       <div className="flex items-center gap-1">
-                        <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
                         <span>{e.approved_by}</span>
                       </div>
                     </td>
@@ -223,7 +223,7 @@ export const ExemptionsView: React.FC = () => {
                         onClick={() => handleToggle(e.id, e.is_active)}
                         className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${
                           e.is_active
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                            ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 border-emerald-500/30 hover:bg-emerald-500/20'
                             : 'bg-slate-800 text-slate-500 border-slate-700 hover:bg-slate-700'
                         }`}
                       >
@@ -240,16 +240,16 @@ export const ExemptionsView: React.FC = () => {
 
       {/* Add Exemption Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl shadow-2xl p-6">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2.5 text-indigo-400">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 shadow-xs w-full max-w-lg rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2.5 text-emerald-700">
                 <Award className="w-5 h-5" />
-                <h3 className="font-bold text-white text-base">منح إعفاء دراسي / مجانية</h3>
+                <h3 className="font-bold text-slate-900 text-base">منح إعفاء دراسي / مجانية</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-500 hover:text-white rounded-lg hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -258,36 +258,36 @@ export const ExemptionsView: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">اسم التلميذ *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">اسم التلميذ *</label>
                   <input
                     type="text"
                     required
                     placeholder="الاسم الكامل"
                     value={newExemption.student_name}
                     onChange={e => setNewExemption({ ...newExemption, student_name: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">المعرف المدرسي (ID)</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">المعرف المدرسي (ID)</label>
                   <input
                     type="text"
                     placeholder="مثال: STU-2026-008"
                     value={newExemption.student_id}
                     onChange={e => setNewExemption({ ...newExemption, student_id: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">نوع الإعفاء</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">نوع الإعفاء</label>
                   <select
                     value={newExemption.type}
                     onChange={e => setNewExemption({ ...newExemption, type: e.target.value as any })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                   >
                     <option value="gratuite_totale">إعفاء دراسي كامل (100%)</option>
                     <option value="gratuite_partielle">إعفاء جزئي لخدمة محددة</option>
@@ -295,11 +295,11 @@ export const ExemptionsView: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">الخدمة المعفاة</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">الخدمة المعفاة</label>
                   <select
                     value={newExemption.service_type}
                     onChange={e => setNewExemption({ ...newExemption, service_type: e.target.value as any })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                   >
                     <option value="scolarite">واجبات التمدرس (Scolarité)</option>
                     <option value="cantine">المطعم المدرسي (Cantine)</option>
@@ -310,32 +310,32 @@ export const ExemptionsView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">سبب وسند الإعفاء</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">سبب وسند الإعفاء</label>
                 <input
                   type="text"
                   placeholder="مثال: ابن أستاذ(ة)، منحة تشجيعية، دعم اجتماعي معتمد"
                   value={newExemption.beneficiary_relation}
                   onChange={e => setNewExemption({ ...newExemption, beneficiary_relation: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">جهة المصادقة والاعتماد</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">جهة المصادقة والاعتماد</label>
                 <input
                   type="text"
                   placeholder="مثال: مجلس الإدارة، الإدارة العامة"
                   value={newExemption.approved_by}
                   onChange={e => setNewExemption({ ...newExemption, approved_by: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-sm text-slate-500 hover:text-white"
                 >
                   إلغاء
                 </button>

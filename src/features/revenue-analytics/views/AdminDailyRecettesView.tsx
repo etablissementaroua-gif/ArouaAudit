@@ -39,23 +39,23 @@ export const AdminDailyRecettesView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <Briefcase className="w-6 h-6 text-indigo-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">مداخيل الإدارة والتحويلات (Recettes Administratives)</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <Briefcase className="w-6 h-6 text-emerald-700" />
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">مداخيل الإدارة والتحويلات (Recettes Administratives)</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/20">
               المرحلة 4: المقبوضات البنكية والإدارية
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             متابعة المبالغ الكبرى، التحويلات البنكية (Virements)، ودفعات الشيكات المستلمة عبر إدارة المؤسسة.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800">
-          <Calendar className="w-4 h-4 text-indigo-400" />
-          <span className="text-xs text-slate-400">التاريخ:</span>
+        <div className="flex items-center gap-2 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
+          <Calendar className="w-4 h-4 text-emerald-700" />
+          <span className="text-xs text-slate-500">التاريخ:</span>
           <input 
             type="date"
             value={selectedDate}
@@ -91,24 +91,24 @@ export const AdminDailyRecettesView: React.FC = () => {
       </div>
 
       {/* Receipts Table */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md">
-        <div className="p-4 px-6 border-b border-slate-800 flex items-center justify-between">
-          <h2 className="text-sm font-bold text-white">قائمة مقبوضات الإدارة والتحويلات البنكية</h2>
-          <span className="text-xs font-mono text-slate-400">بتاريخ: {selectedDate}</span>
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
+        <div className="p-4 px-6 border-b border-slate-200 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-slate-900">قائمة مقبوضات الإدارة والتحويلات البنكية</h2>
+          <span className="text-xs font-mono text-slate-500">بتاريخ: {selectedDate}</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-950/80 text-slate-400 border-b border-slate-800 font-semibold uppercase">
+            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
               <tr>
                 <th className="py-4 px-4">رقم التحويل / الإشعار</th>
                 <th className="py-4 px-3">البيان والمصدر</th>
                 <th className="py-4 px-3">طريقة الأداء</th>
                 <th className="py-4 px-3 text-center">المسؤول الإداري</th>
-                <th className="py-4 px-4 text-center font-bold text-emerald-400">المبلغ المودع</th>
+                <th className="py-4 px-4 text-center font-bold text-emerald-700">المبلغ المودع</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-8 text-center text-slate-500 font-mono">
@@ -123,23 +123,23 @@ export const AdminDailyRecettesView: React.FC = () => {
                 </tr>
               ) : (
                 records.map((r) => (
-                  <tr key={r.id} className="hover:bg-slate-800/30 transition-colors">
-                    <td className="py-3 px-4 font-mono font-bold text-indigo-400">
+                  <tr key={r.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-4 font-mono font-bold text-emerald-700">
                       {r.reference_number || r.id.slice(0, 8)}
                     </td>
                     <td className="py-3 px-3">
-                      <div className="font-bold text-white">{r.description}</div>
-                      <div className="text-[10px] text-slate-400">{r.category}</div>
+                      <div className="font-bold text-slate-900">{r.description}</div>
+                      <div className="text-[10px] text-slate-500">{r.category}</div>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 font-mono text-[10px] border border-indigo-500/20">
+                      <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] border border-indigo-500/20">
                         {r.payment_method === 'virement' ? 'تحويل بنكي (Virement)' : r.payment_method}
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-center text-slate-300 font-medium">
+                    <td className="py-3 px-3 text-center text-slate-700 font-medium">
                       {r.author_name}
                     </td>
-                    <td className="py-3 px-4 text-center font-mono font-bold text-sm text-emerald-400">
+                    <td className="py-3 px-4 text-center font-mono font-bold text-sm text-emerald-700">
                       {r.amount.toLocaleString()} MAD
                     </td>
                   </tr>

@@ -116,35 +116,35 @@ export const ChecksPortfolioView: React.FC = () => {
     switch (status) {
       case 'encaisse':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>مصروف بالبنك</span>
           </span>
         );
       case 'rejete':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
             <AlertOctagon className="w-3.5 h-3.5" />
             <span>شيك راجع (Impayé)</span>
           </span>
         );
       case 'remis':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/30">
             <ArrowUpRight className="w-3.5 h-3.5" />
             <span>أودع بالحافظة</span>
           </span>
         );
       case 'a_deposer':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30 animate-pulse">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 animate-pulse">
             <Clock className="w-3.5 h-3.5" />
             <span>حان موعد الإيداع</span>
           </span>
         );
       case 'restitue':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-500 border border-slate-700">
             <RotateCcw className="w-3.5 h-3.5" />
             <span>تم الإرجاع</span>
           </span>
@@ -154,7 +154,7 @@ export const ChecksPortfolioView: React.FC = () => {
         return (
           <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
             overdue 
-              ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' 
+              ? 'bg-amber-50 text-amber-700 border border-amber-200 border-amber-500/30' 
               : 'bg-blue-500/10 text-blue-400 border-blue-500/30'
           }`}>
             <Clock className="w-3.5 h-3.5" />
@@ -167,22 +167,22 @@ export const ChecksPortfolioView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header & Quick Action */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <div className="p-2.5 bg-indigo-600/20 border border-indigo-500/30 rounded-xl text-indigo-400">
+            <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800">
               <FileSpreadsheet className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white tracking-wide">محفظة الشيكات والكمبيالات</h1>
-              <p className="text-slate-400 text-sm">متابعة الشيكات المدرسية، مواعيد استحقاقها، الصرف البنكي، وتدقيق الشيكات الراجعة</p>
+              <h1 className="text-2xl font-black text-slate-900 tracking-tight">محفظة الشيكات والكمبيالات</h1>
+              <p className="text-slate-500 text-sm">متابعة الشيكات المدرسية، مواعيد استحقاقها، الصرف البنكي، وتدقيق الشيكات الراجعة</p>
             </div>
           </div>
         </div>
 
         <button
           onClick={() => setIsNewCheckModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs font-bold px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
         >
           <Plus className="w-5 h-5" />
           <span>تسجيل شيك جديد بالمحفظة</span>
@@ -191,56 +191,56 @@ export const ChecksPortfolioView: React.FC = () => {
 
       {/* Financial Status KPI Grid */}
       <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-        <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-          <span className="text-xs text-slate-400 block mb-1">إجمالي المحفظة</span>
-          <p className="text-lg font-bold text-white font-mono">{formatMAD(stats.totalAmount)}</p>
+        <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-xl">
+          <span className="text-xs text-slate-500 block mb-1">إجمالي المحفظة</span>
+          <p className="text-lg font-bold text-slate-900 font-mono">{formatMAD(stats.totalAmount)}</p>
           <span className="text-[11px] text-slate-500">{stats.totalCount} شيك مسجل</span>
         </div>
 
-        <div className="bg-slate-900 border border-blue-500/20 p-4 rounded-xl">
-          <span className="text-xs text-blue-400 block mb-1">في الخزنة</span>
-          <p className="text-lg font-bold text-blue-400 font-mono">{formatMAD(stats.inVaultAmount)}</p>
+        <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-xl">
+          <span className="text-xs text-slate-500 block mb-1 font-semibold">في الخزنة</span>
+          <p className="text-lg font-black text-indigo-700 font-mono">{formatMAD(stats.inVaultAmount)}</p>
           <span className="text-[11px] text-slate-500">{stats.inVaultCount} شيك</span>
         </div>
 
-        <div className="bg-slate-900 border border-amber-500/20 p-4 rounded-xl">
-          <span className="text-xs text-amber-400 block mb-1">حان موعد الإيداع</span>
-          <p className="text-lg font-bold text-amber-400 font-mono">{formatMAD(stats.toDepositAmount)}</p>
+        <div className="bg-white border border-amber-200 shadow-xs p-4 rounded-xl">
+          <span className="text-xs text-amber-700 block mb-1">حان موعد الإيداع</span>
+          <p className="text-lg font-bold text-amber-700 font-mono">{formatMAD(stats.toDepositAmount)}</p>
           <span className="text-[11px] text-slate-500">{stats.toDepositCount} شيك مستحق</span>
         </div>
 
-        <div className="bg-slate-900 border border-indigo-500/20 p-4 rounded-xl">
-          <span className="text-xs text-indigo-400 block mb-1">أودع بالحوافظ</span>
-          <p className="text-lg font-bold text-indigo-400 font-mono">{formatMAD(stats.depositedAmount)}</p>
+        <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-xl">
+          <span className="text-xs text-emerald-700 block mb-1">أودع بالحوافظ</span>
+          <p className="text-lg font-bold text-emerald-700 font-mono">{formatMAD(stats.depositedAmount)}</p>
           <span className="text-[11px] text-slate-500">{stats.depositedCount} شيك بالبنك</span>
         </div>
 
-        <div className="bg-slate-900 border border-emerald-500/20 p-4 rounded-xl">
-          <span className="text-xs text-emerald-400 block mb-1">تم صرفه بالكامل</span>
-          <p className="text-lg font-bold text-emerald-400 font-mono">{formatMAD(stats.clearedAmount)}</p>
+        <div className="bg-white border border-emerald-200 shadow-xs p-4 rounded-xl">
+          <span className="text-xs text-emerald-700 block mb-1">تم صرفه بالكامل</span>
+          <p className="text-lg font-bold text-emerald-700 font-mono">{formatMAD(stats.clearedAmount)}</p>
           <span className="text-[11px] text-slate-500">{stats.clearedCount} شيك ناجح</span>
         </div>
 
         <div className="bg-rose-950/30 border border-rose-500/30 p-4 rounded-xl">
-          <span className="text-xs text-rose-400 block mb-1 font-semibold flex items-center gap-1">
+          <span className="text-xs text-rose-600 block mb-1 font-semibold flex items-center gap-1">
             <AlertOctagon className="w-3.5 h-3.5" />
             <span>شيكات راجعة (خطر)</span>
           </span>
-          <p className="text-lg font-bold text-rose-400 font-mono">{formatMAD(stats.rejectedAmount)}</p>
-          <span className="text-[11px] text-rose-400/80">{stats.rejectedCount} شيك مرفوض</span>
+          <p className="text-lg font-bold text-rose-600 font-mono">{formatMAD(stats.rejectedAmount)}</p>
+          <span className="text-[11px] text-rose-600/80">{stats.rejectedCount} شيك مرفوض</span>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-lg">
+      <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-lg">
         <div className="flex-1 min-w-[260px] relative">
-          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="بحث برقم الشيك، اسم الساحب، أو معرف التلميذ..."
             value={filters.search}
             onChange={e => setFilters({ ...filters, search: e.target.value })}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pr-10 pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
           />
         </div>
 
@@ -248,7 +248,7 @@ export const ChecksPortfolioView: React.FC = () => {
           <select
             value={filters.status}
             onChange={e => setFilters({ ...filters, status: e.target.value as any })}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-700 focus:outline-none focus:border-indigo-500"
           >
             <option value="all">كافة الحالات</option>
             <option value="en_portefeuille">في الخزنة (En Portefeuille)</option>
@@ -262,7 +262,7 @@ export const ChecksPortfolioView: React.FC = () => {
           <select
             value={filters.due_range}
             onChange={e => setFilters({ ...filters, due_range: e.target.value as any })}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-700 focus:outline-none focus:border-indigo-500"
           >
             <option value="all">كافة الآجال</option>
             <option value="overdue">تجاوزت تاريخ الصرف (Échus)</option>
@@ -274,11 +274,11 @@ export const ChecksPortfolioView: React.FC = () => {
       </div>
 
       {/* Checks Interactive Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
                 <th className="py-4 px-4">رقم الشيك</th>
                 <th className="py-4 px-4">البنك المسحوب عليه</th>
                 <th className="py-4 px-4">الساحب / التلميذ المرتبط</th>
@@ -288,7 +288,7 @@ export const ChecksPortfolioView: React.FC = () => {
                 <th className="py-4 px-4 text-center">الإجراءات السريعة</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">جاري تحميل شيكات المحفظة...</td>
@@ -303,11 +303,11 @@ export const ChecksPortfolioView: React.FC = () => {
                   const days = daysUntil(chk.due_date);
 
                   return (
-                    <tr key={chk.id} className="hover:bg-slate-800/40 transition-colors">
+                    <tr key={chk.id} className="hover:bg-slate-50/80 transition-colors">
                       <td className="py-4 px-4">
-                        <span className="font-mono font-bold text-white tracking-wider block">{chk.check_number}</span>
+                        <span className="font-mono font-bold text-slate-900 tracking-wider block">{chk.check_number}</span>
                         {chk.remise_number && (
-                          <span className="text-[11px] text-indigo-400 font-mono mt-0.5 block">
+                          <span className="text-[11px] text-emerald-700 font-mono mt-0.5 block">
                             حافظة: {chk.remise_number}
                           </span>
                         )}
@@ -315,19 +315,19 @@ export const ChecksPortfolioView: React.FC = () => {
 
                       <td className="py-4 px-4">
                         <div className="flex items-center gap-2">
-                          <Building className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                          <span className="text-slate-300 font-medium">{chk.bank_name}</span>
+                          <Building className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                          <span className="text-slate-700 font-medium">{chk.bank_name}</span>
                         </div>
                       </td>
 
                       <td className="py-4 px-4">
                         <div>
                           <div className="flex items-center gap-1.5 text-white font-medium">
-                            <User className="w-3.5 h-3.5 text-slate-400" />
+                            <User className="w-3.5 h-3.5 text-slate-500" />
                             <span>{chk.issuer_name}</span>
                           </div>
                           {(chk.student_name || chk.student_id) && (
-                            <div className="flex items-center gap-1 text-xs text-indigo-400 mt-0.5">
+                            <div className="flex items-center gap-1 text-xs text-emerald-700 mt-0.5">
                               <GraduationCap className="w-3 h-3" />
                               <span>{chk.student_name || chk.student_id}</span>
                             </div>
@@ -336,14 +336,14 @@ export const ChecksPortfolioView: React.FC = () => {
                       </td>
 
                       <td className="py-4 px-4">
-                        <span className="font-mono font-bold text-emerald-400 text-base">
+                        <span className="font-mono font-bold text-emerald-700 text-base">
                           {formatMAD(chk.amount)}
                         </span>
                       </td>
 
                       <td className="py-4 px-4">
                         <div className="font-mono text-xs">
-                          <span className={overdue && chk.status !== 'encaisse' && chk.status !== 'restitue' ? 'text-amber-400 font-bold' : 'text-slate-300'}>
+                          <span className={overdue && chk.status !== 'encaisse' && chk.status !== 'restitue' ? 'text-amber-700 font-bold' : 'text-slate-700'}>
                             {chk.due_date}
                           </span>
                           {chk.status === 'en_portefeuille' && (
@@ -357,7 +357,7 @@ export const ChecksPortfolioView: React.FC = () => {
                       <td className="py-4 px-4">
                         {getStatusBadge(chk.status, chk.due_date)}
                         {chk.rejection_reason && (
-                          <span className="block text-[11px] text-rose-400 mt-1 max-w-[200px] truncate" title={chk.rejection_reason}>
+                          <span className="block text-[11px] text-rose-600 mt-1 max-w-[200px] truncate" title={chk.rejection_reason}>
                             السبب: {chk.rejection_reason}
                           </span>
                         )}
@@ -369,7 +369,7 @@ export const ChecksPortfolioView: React.FC = () => {
                             <button
                               onClick={() => handleStatusChange(chk.id, 'encaisse', { clearance_date: new Date().toISOString().split('T')[0] })}
                               title="تأكيد الصرف البنكي"
-                              className="p-1.5 hover:bg-emerald-500/20 text-emerald-400 rounded-lg transition-colors"
+                              className="p-1.5 hover:bg-emerald-500/20 text-emerald-700 rounded-lg transition-colors"
                             >
                               <Check className="w-4 h-4" />
                             </button>
@@ -379,7 +379,7 @@ export const ChecksPortfolioView: React.FC = () => {
                             <button
                               onClick={() => handleOpenReject(chk)}
                               title="تسجيل كشيك راجع (Impayé)"
-                              className="p-1.5 hover:bg-rose-500/20 text-rose-400 rounded-lg transition-colors"
+                              className="p-1.5 hover:bg-rose-500/20 text-rose-600 rounded-lg transition-colors"
                             >
                               <Ban className="w-4 h-4" />
                             </button>
@@ -389,7 +389,7 @@ export const ChecksPortfolioView: React.FC = () => {
                             <button
                               onClick={() => handleStatusChange(chk.id, 'a_deposer')}
                               title="تحويل إلى جاهز للإيداع"
-                              className="p-1.5 hover:bg-amber-500/20 text-amber-400 rounded-lg transition-colors"
+                              className="p-1.5 hover:bg-amber-500/20 text-amber-700 rounded-lg transition-colors"
                             >
                               <Clock className="w-4 h-4" />
                             </button>
@@ -399,7 +399,7 @@ export const ChecksPortfolioView: React.FC = () => {
                             <button
                               onClick={() => handleStatusChange(chk.id, 'restitue')}
                               title="إرجاع الشيك للساحب"
-                              className="p-1.5 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg transition-colors"
+                              className="p-1.5 hover:bg-slate-100 text-slate-500 hover:text-slate-900 rounded-lg transition-colors"
                             >
                               <RotateCcw className="w-4 h-4" />
                             </button>
@@ -417,30 +417,30 @@ export const ChecksPortfolioView: React.FC = () => {
 
       {/* Reject Modal */}
       {isRejectModalOpen && selectedCheckForReject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl p-6">
-            <div className="flex items-center gap-3 mb-4 text-rose-400">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/40 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 shadow-xs w-full max-w-md rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center gap-3 mb-4 text-rose-600">
               <div className="p-2 bg-rose-500/20 border border-rose-500/30 rounded-xl">
                 <AlertOctagon className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">تسجيل شيك راجع (Impayé)</h3>
-                <p className="text-xs text-slate-400 font-mono">شيك رقم: {selectedCheckForReject.check_number}</p>
+                <h3 className="text-lg font-bold text-slate-900">تسجيل شيك راجع (Impayé)</h3>
+                <p className="text-xs text-slate-500 font-mono">شيك رقم: {selectedCheckForReject.check_number}</p>
               </div>
             </div>
 
             <div className="space-y-4">
-              <div className="p-3 bg-slate-950 rounded-xl text-xs space-y-1">
-                <p className="text-slate-400">الساحب: <span className="text-white font-semibold">{selectedCheckForReject.issuer_name}</span></p>
-                <p className="text-slate-400">المبلغ: <span className="text-emerald-400 font-mono font-bold">{formatMAD(selectedCheckForReject.amount)}</span></p>
+              <div className="p-3 bg-white rounded-xl text-xs space-y-1">
+                <p className="text-slate-500">الساحب: <span className="text-white font-semibold">{selectedCheckForReject.issuer_name}</span></p>
+                <p className="text-slate-500">المبلغ: <span className="text-emerald-700 font-mono font-bold">{formatMAD(selectedCheckForReject.amount)}</span></p>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">سبب الرفض البنكي *</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">سبب الرفض البنكي *</label>
                 <select
                   value={rejectionReason}
                   onChange={e => setRejectionReason(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500"
                 >
                   <option value="انعدام المؤونة الكافية في الحساب (Défaut de provision)">انعدام المؤونة الكافية في الحساب (Défaut de provision)</option>
                   <option value="توقيع غير مطابق (Signature non conforme)">توقيع غير مطابق (Signature non conforme)</option>
@@ -450,11 +450,11 @@ export const ChecksPortfolioView: React.FC = () => {
                 </select>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsRejectModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-sm text-slate-400 hover:text-white"
+                  className="px-4 py-2 rounded-xl text-sm text-slate-500 hover:text-white"
                 >
                   إلغاء
                 </button>
@@ -473,16 +473,16 @@ export const ChecksPortfolioView: React.FC = () => {
 
       {/* New Check Modal */}
       {isNewCheckModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-950/50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-white/40 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 shadow-xs w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-5 border-b border-slate-200 bg-white/50">
               <div className="flex items-center gap-2.5">
-                <Plus className="w-5 h-5 text-indigo-400" />
-                <h3 className="font-bold text-white text-lg">تسجيل شيك جديد بالمحفظة</h3>
+                <Plus className="w-5 h-5 text-emerald-700" />
+                <h3 className="font-bold text-slate-900 text-lg">تسجيل شيك جديد بالمحفظة</h3>
               </div>
               <button
                 onClick={() => setIsNewCheckModalOpen(false)}
-                className="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-700 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -490,7 +490,7 @@ export const ChecksPortfolioView: React.FC = () => {
 
             <form onSubmit={handleCreateCheck} className="p-6 space-y-4">
               {formError && (
-                <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-400 text-sm flex items-center gap-2">
+                <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-600 text-sm flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   <span>{formError}</span>
                 </div>
@@ -498,23 +498,23 @@ export const ChecksPortfolioView: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">رقم الشيك *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">رقم الشيك *</label>
                   <input
                     type="text"
                     placeholder="مثال: CHQ-889012"
                     value={newCheck.check_number}
                     onChange={e => setNewCheck({ ...newCheck, check_number: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm focus:outline-none focus:border-indigo-500 dir-ltr text-left"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 font-mono text-sm focus:outline-none focus:border-indigo-500 dir-ltr text-left"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">البنك المسحوب عليه *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">البنك المسحوب عليه *</label>
                   <select
                     value={newCheck.bank_name}
                     onChange={e => setNewCheck({ ...newCheck, bank_name: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
                   >
                     <option value="Attijariwafa Bank">Attijariwafa Bank</option>
                     <option value="Banque Populaire">Banque Populaire (الشعبي)</option>
@@ -529,32 +529,32 @@ export const ChecksPortfolioView: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">اسم الساحب (ولي الأمر/الطرف) *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">اسم الساحب (ولي الأمر/الطرف) *</label>
                   <input
                     type="text"
                     placeholder="مثال: ذ. عبد الرحيم العلمي"
                     value={newCheck.issuer_name}
                     onChange={e => setNewCheck({ ...newCheck, issuer_name: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">معرف أو اسم التلميذ المرتبط</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">معرف أو اسم التلميذ المرتبط</label>
                   <input
                     type="text"
                     placeholder="STU-2026-001 أو اسم التلميذ"
                     value={newCheck.student_id || ''}
                     onChange={e => setNewCheck({ ...newCheck, student_id: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">مبلغ الشيك (درهم مغربي) *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">مبلغ الشيك (درهم مغربي) *</label>
                   <input
                     type="number"
                     step="0.01"
@@ -562,28 +562,28 @@ export const ChecksPortfolioView: React.FC = () => {
                     placeholder="0.00"
                     value={newCheck.amount || ''}
                     onChange={e => setNewCheck({ ...newCheck, amount: Number(e.target.value) })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-mono font-bold text-sm focus:outline-none focus:border-indigo-500 text-left dir-ltr"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 font-mono font-bold text-sm focus:outline-none focus:border-indigo-500 text-left dir-ltr"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">تاريخ استحقاق الصرف *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">تاريخ استحقاق الصرف *</label>
                   <input
                     type="date"
                     value={newCheck.due_date}
                     onChange={e => setNewCheck({ ...newCheck, due_date: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-mono text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 font-mono text-sm focus:outline-none focus:border-indigo-500"
                     required
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsNewCheckModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 text-sm font-medium transition-colors"
+                  className="px-4 py-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 text-sm font-medium transition-colors"
                 >
                   إلغاء
                 </button>

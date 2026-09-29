@@ -193,12 +193,12 @@ export const ImpayesView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-rose-500/20 border border-rose-500/30 rounded-xl text-rose-400">
+          <div className="p-2.5 bg-rose-500/20 border border-rose-500/30 rounded-xl text-rose-600">
             <AlertOctagon className="w-6 h-6" />
           </div>
           <div>
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">المستحقات غير المؤداة والمتأخرات (Impayés)</h1>
-            <p className="text-slate-400 text-sm">لوحة المراقبة والتحصيل المالي للذمم المدرسية، التمدرس، النقل، والمطعم</p>
+            <p className="text-slate-500 text-sm">لوحة المراقبة والتحصيل المالي للذمم المدرسية، التمدرس، النقل، والمطعم</p>
           </div>
         </div>
 
@@ -240,8 +240,8 @@ export const ImpayesView: React.FC = () => {
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>ديون حرجة (+90 يوماً)</span>
           </span>
-          <p className="text-xl font-bold text-rose-400 font-mono">{formatMAD(stats.overdue90DaysAmount)}</p>
-          <span className="text-[11px] text-rose-400/80">{stats.overdue90DaysCount} تلميذ بحاجة لمتابعة عاجلة</span>
+          <p className="text-xl font-bold text-rose-600 font-mono">{formatMAD(stats.overdue90DaysAmount)}</p>
+          <span className="text-[11px] text-rose-600/80">{stats.overdue90DaysCount} تلميذ بحاجة لمتابعة عاجلة</span>
         </div>
       </div>
 
@@ -323,7 +323,7 @@ export const ImpayesView: React.FC = () => {
 
       {/* Search Input Bar */}
       <div className="relative">
-        <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           placeholder="بحث سريع باسم التلميذ، المعرف المدرسي (ID)، أو الفوج..."
@@ -355,7 +355,7 @@ export const ImpayesView: React.FC = () => {
                 </tr>
               ) : impayes.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-emerald-400">
+                  <td colSpan={7} className="py-12 text-center text-emerald-700">
                     <div className="flex flex-col items-center gap-2">
                       <CheckCircle2 className="w-8 h-8" />
                       <span>ممتاز! لا توجد متأخرات مطابقة لمعايير البحث المحددة</span>
@@ -367,7 +367,7 @@ export const ImpayesView: React.FC = () => {
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-2 font-bold text-slate-900">
-                        <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{item.student_name}</span>
                       </div>
                       <span className="text-[11px] text-slate-500 font-mono block mt-0.5">
@@ -378,7 +378,7 @@ export const ImpayesView: React.FC = () => {
                     <td className="py-4 px-4">
                       <span className="text-slate-800 font-semibold block">{item.academic_level}</span>
                       {item.classroom_group && (
-                        <span className="text-[11px] text-indigo-400 block">{item.classroom_group}</span>
+                        <span className="text-[11px] text-emerald-700 block">{item.classroom_group}</span>
                       )}
                     </td>
 
@@ -432,7 +432,7 @@ export const ImpayesView: React.FC = () => {
                         {item.recovery_status !== 'settled' && (
                           <button
                             onClick={() => handleMarkSettled(item.id)}
-                            className="p-1.5 hover:bg-emerald-50 text-slate-400 hover:text-emerald-600 rounded-xl transition-colors border border-transparent hover:border-emerald-200"
+                            className="p-1.5 hover:bg-emerald-50 text-slate-500 hover:text-emerald-600 rounded-xl transition-colors border border-transparent hover:border-emerald-200"
                             title="تسجيل السداد والتسوية"
                           >
                             <CheckCircle2 className="w-4 h-4" />
@@ -450,10 +450,10 @@ export const ImpayesView: React.FC = () => {
 
       {/* Promise of payment modal */}
       {isPromiseModalOpen && selectedImpaye && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 border border-slate-200 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white border border-slate-200 w-full max-w-md rounded-2xl shadow-2xl p-6 text-slate-900">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2.5 text-indigo-400">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2.5 text-emerald-700">
                 <Calendar className="w-5 h-5" />
                 <h3 className="font-bold text-slate-900 text-base">تسجيل وعد بالسداد والمتابعة</h3>
               </div>
@@ -467,8 +467,8 @@ export const ImpayesView: React.FC = () => {
 
             <div className="space-y-4">
               <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-1.5 p-3.5">
-                <p className="text-slate-400">التلميذ: <span className="text-slate-900 font-bold">{selectedImpaye.student_name}</span></p>
-                <p className="text-slate-400">المبلغ العالق: <span className="text-rose-400 font-mono font-bold">{formatMAD(selectedImpaye.amount_due)}</span></p>
+                <p className="text-slate-500">التلميذ: <span className="text-slate-900 font-bold">{selectedImpaye.student_name}</span></p>
+                <p className="text-slate-500">المبلغ العالق: <span className="text-rose-600 font-mono font-bold">{formatMAD(selectedImpaye.amount_due)}</span></p>
               </div>
 
               <div>

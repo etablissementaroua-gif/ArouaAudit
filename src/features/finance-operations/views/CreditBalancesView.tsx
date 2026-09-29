@@ -91,21 +91,21 @@ export const CreditBalancesView: React.FC = () => {
     switch (status) {
       case 'carried_over':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/30">
             <ArrowRightLeft className="w-3.5 h-3.5" />
             <span>تم الترحيل للشهر القادم</span>
           </span>
         );
       case 'refunded':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-500 border border-slate-700">
             <RotateCcw className="w-3.5 h-3.5" />
             <span>تم الإرجاع نقداً</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>رصيد متاح للخصم</span>
           </span>
@@ -116,14 +116,14 @@ export const CreditBalancesView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-emerald-500/20 border border-emerald-500/30 rounded-xl text-emerald-400">
+          <div className="p-2.5 bg-emerald-500/20 border border-emerald-500/30 rounded-xl text-emerald-700">
             <PiggyBank className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-wide">الأرصدة الزائدة والفوائض المالية (Soldes Créditeurs)</h1>
-            <p className="text-slate-400 text-sm">سجل المبالغ المسددة بالزيادة أو التسبيقات القابلة للترحيل أو الاسترجاع لأولياء الأمور</p>
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">الأرصدة الزائدة والفوائض المالية (Soldes Créditeurs)</h1>
+            <p className="text-slate-500 text-sm">سجل المبالغ المسددة بالزيادة أو التسبيقات القابلة للترحيل أو الاسترجاع لأولياء الأمور</p>
           </div>
         </div>
 
@@ -139,19 +139,19 @@ export const CreditBalancesView: React.FC = () => {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-gradient-to-br from-emerald-950/40 to-slate-900 border border-emerald-500/30 p-5 rounded-2xl">
-          <span className="text-xs text-emerald-400 uppercase font-semibold block mb-1">إجمالي الفوائض المتاحة للخصم</span>
-          <p className="text-2xl font-black text-emerald-400 font-mono">{formatMAD(totalCreditAvailable)}</p>
-          <span className="text-xs text-slate-400 mt-1 block">رصيد متاح للاستخدام في الشهور القادمة</span>
+          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">إجمالي الفوائض المتاحة للخصم</span>
+          <p className="text-2xl font-black text-emerald-700 font-mono">{formatMAD(totalCreditAvailable)}</p>
+          <span className="text-xs text-slate-500 mt-1 block">رصيد متاح للاستخدام في الشهور القادمة</span>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
-          <span className="text-xs text-slate-400 uppercase font-semibold block mb-1">عدد التلاميذ أصحاب الأرصدة</span>
-          <p className="text-2xl font-bold text-white font-mono">{balances.filter(b => b.status === 'available').length}</p>
+        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 uppercase font-semibold block mb-1">عدد التلاميذ أصحاب الأرصدة</span>
+          <p className="text-2xl font-bold text-slate-900 font-mono">{balances.filter(b => b.status === 'available').length}</p>
           <span className="text-xs text-slate-500 mt-1 block">تلاميذ لديهم مبالغ دائنة</span>
         </div>
 
-        <div className="bg-slate-900 border border-indigo-500/20 p-5 rounded-2xl">
-          <span className="text-xs text-indigo-400 uppercase font-semibold block mb-1">المبالغ المرحلة سابقاً</span>
+        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl">
+          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">المبالغ المرحلة سابقاً</span>
           <p className="text-2xl font-bold text-indigo-300 font-mono">
             {formatMAD(balances.filter(b => b.status === 'carried_over').reduce((s, b) => s + b.credit_amount, 0))}
           </p>
@@ -161,22 +161,22 @@ export const CreditBalancesView: React.FC = () => {
 
       {/* Search Input Bar */}
       <div className="relative">
-        <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           placeholder="بحث سريع باسم التلميذ، المعرف، أو مرجع الوصل..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full bg-slate-900 border border-slate-800 rounded-2xl pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
+          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
         />
       </div>
 
       {/* Credit Balances Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-4">مبلغ الرصيد الدائن</th>
@@ -186,7 +186,7 @@ export const CreditBalancesView: React.FC = () => {
                 <th className="py-4 px-4 text-center">الإجراءات</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">جاري تحميل الأرصدة الدائنة...</td>
@@ -197,10 +197,10 @@ export const CreditBalancesView: React.FC = () => {
                 </tr>
               ) : (
                 filteredBalances.map(item => (
-                  <tr key={item.id} className="hover:bg-slate-800/40 transition-colors">
+                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-4 px-4 font-medium text-white">
                       <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{item.student_name}</span>
                       </div>
                       <span className="text-[11px] text-slate-500 font-mono block mt-0.5">
@@ -208,15 +208,15 @@ export const CreditBalancesView: React.FC = () => {
                       </span>
                     </td>
 
-                    <td className="py-4 px-4 text-slate-300">
+                    <td className="py-4 px-4 text-slate-700">
                       {item.academic_level}
                     </td>
 
-                    <td className="py-4 px-4 font-mono font-black text-emerald-400 text-base">
+                    <td className="py-4 px-4 font-mono font-black text-emerald-700 text-base">
                       {formatMAD(item.credit_amount)}
                     </td>
 
-                    <td className="py-4 px-4 font-mono text-xs text-indigo-400">
+                    <td className="py-4 px-4 font-mono text-xs text-emerald-700">
                       {item.source_payment_reference || '---'}
                     </td>
 
@@ -224,7 +224,7 @@ export const CreditBalancesView: React.FC = () => {
                       {getStatusBadge(item.status)}
                     </td>
 
-                    <td className="py-4 px-4 text-xs text-slate-400 max-w-[200px] truncate" title={item.notes || ''}>
+                    <td className="py-4 px-4 text-xs text-slate-500 max-w-[200px] truncate" title={item.notes || ''}>
                       {item.notes || '---'}
                     </td>
 
@@ -233,7 +233,7 @@ export const CreditBalancesView: React.FC = () => {
                         <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => handleCarryOver(item.id)}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 rounded-xl text-xs font-semibold border border-indigo-500/30 transition-all hover:scale-105 active:scale-95"
+                            className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-emerald-700 rounded-xl text-xs font-semibold border border-indigo-500/30 transition-all hover:scale-105 active:scale-95"
                             title="ترحيل للخصم من الشهر الموالي"
                           >
                             <ArrowRightLeft className="w-3.5 h-3.5" />
@@ -242,7 +242,7 @@ export const CreditBalancesView: React.FC = () => {
 
                           <button
                             onClick={() => handleRefund(item.id)}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition-all"
+                            className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-medium transition-all"
                             title="إرجاع المبلغ نقداً لولي الأمر"
                           >
                             <Banknote className="w-3.5 h-3.5" />
@@ -263,16 +263,16 @@ export const CreditBalancesView: React.FC = () => {
 
       {/* Add Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl shadow-2xl p-6">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2.5 text-indigo-400">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 shadow-xs w-full max-w-lg rounded-2xl shadow-2xl p-6">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-2.5 text-emerald-700">
                 <PiggyBank className="w-5 h-5" />
-                <h3 className="font-bold text-white text-base">تسجيل رصيد دائن / تسبيق مالي</h3>
+                <h3 className="font-bold text-slate-900 text-base">تسجيل رصيد دائن / تسبيق مالي</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-500 hover:text-white rounded-lg hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -281,43 +281,43 @@ export const CreditBalancesView: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">اسم التلميذ *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">اسم التلميذ *</label>
                   <input
                     type="text"
                     required
                     placeholder="اسم التلميذ الثلاثي"
                     value={newCredit.student_name}
                     onChange={e => setNewCredit({ ...newCredit, student_name: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">المعرف المدرسي (اختياري)</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">المعرف المدرسي (اختياري)</label>
                   <input
                     type="text"
                     placeholder="مثال: STU-2026-001"
                     value={newCredit.student_id}
                     onChange={e => setNewCredit({ ...newCredit, student_id: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">المستوى الدراسي</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">المستوى الدراسي</label>
                   <input
                     type="text"
                     placeholder="مثال: CE1"
                     value={newCredit.academic_level}
                     onChange={e => setNewCredit({ ...newCredit, academic_level: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1.5">مبلغ الفائض الزائد (درهم) *</label>
+                  <label className="block text-xs font-medium text-slate-700 mb-1.5">مبلغ الفائض الزائد (درهم) *</label>
                   <input
                     type="number"
                     step="0.01"
@@ -326,38 +326,38 @@ export const CreditBalancesView: React.FC = () => {
                     placeholder="0.00"
                     value={newCredit.credit_amount || ''}
                     onChange={e => setNewCredit({ ...newCredit, credit_amount: Number(e.target.value) })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono font-bold text-left dir-ltr"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono font-bold text-left dir-ltr"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">مرجع الأداء أو الوصل الأصلي</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">مرجع الأداء أو الوصل الأصلي</label>
                 <input
                   type="text"
                   placeholder="مثال: REC-2026-0891 أو رقم الشيك/التحويل"
                   value={newCredit.source_payment_reference}
                   onChange={e => setNewCredit({ ...newCredit, source_payment_reference: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">ملاحظات ومبررات التسجيل</label>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">ملاحظات ومبررات التسجيل</label>
                 <textarea
                   rows={2}
                   value={newCredit.notes}
                   onChange={e => setNewCredit({ ...newCredit, notes: e.target.value })}
                   placeholder="مثال: تسديد واجب شهرين دفعة واحدة مع زيادة في المبلغ..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-sm text-slate-500 hover:text-white"
                 >
                   إلغاء
                 </button>

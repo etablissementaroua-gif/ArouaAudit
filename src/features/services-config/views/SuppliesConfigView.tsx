@@ -123,11 +123,11 @@ export const SuppliesConfigView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-emerald-400" />
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-emerald-700" />
             <span>اللوازم والمحفظة والزي المدرسي (Fournitures & Packs Scolaires)</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             إعداد حزم الكتب والمقررات، تتبع مخزون المآزر والمحافظ، وتدقيق هوامش الربحية التجارية
           </p>
         </div>
@@ -136,7 +136,7 @@ export const SuppliesConfigView: React.FC = () => {
           <button
             onClick={loadData}
             disabled={loading}
-            className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all disabled:opacity-50"
+            className="p-2 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-700 hover:text-white transition-all disabled:opacity-50"
             title="تحديث البيانات"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -194,35 +194,35 @@ export const SuppliesConfigView: React.FC = () => {
           return (
             <div
               key={pack.id}
-              className="p-5 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
                     {pack.pack_code}
                   </span>
 
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/20 font-mono">
                     مستوى: {pack.academic_level}
                   </span>
                 </div>
 
-                <h3 className="text-sm font-bold text-white mb-0.5">{pack.title_ar}</h3>
-                <p className="text-[11px] text-slate-400 mb-4">{pack.title_fr}</p>
+                <h3 className="text-sm font-bold text-slate-900 mb-0.5">{pack.title_ar}</h3>
+                <p className="text-[11px] text-slate-500 mb-4">{pack.title_fr}</p>
 
                 {/* Pricing & Margin Box */}
-                <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs mb-4 text-center font-mono">
+                <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs mb-4 text-center font-mono">
                   <div>
                     <span className="text-slate-500 text-[10px] block">سعر التكلفة:</span>
-                    <span className="text-slate-300 font-bold">{formatMAD(pack.cost_price)}</span>
+                    <span className="text-slate-700 font-bold">{formatMAD(pack.cost_price)}</span>
                   </div>
                   <div>
                     <span className="text-slate-500 text-[10px] block">سعر البيع:</span>
-                    <span className="text-emerald-400 font-bold">{formatMAD(pack.selling_price)}</span>
+                    <span className="text-emerald-700 font-bold">{formatMAD(pack.selling_price)}</span>
                   </div>
                   <div>
                     <span className="text-slate-500 text-[10px] block">هامش الربح:</span>
-                    <span className="text-amber-400 font-bold">+{formatMAD(pack.margin_unit || 0)}</span>
+                    <span className="text-amber-700 font-bold">+{formatMAD(pack.margin_unit || 0)}</span>
                   </div>
                 </div>
 
@@ -234,9 +234,9 @@ export const SuppliesConfigView: React.FC = () => {
                       {items.slice(0, 3).map((it, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center justify-between text-[11px] p-1.5 rounded-lg bg-slate-800/40 border border-slate-800"
+                          className="flex items-center justify-between text-[11px] p-1.5 rounded-lg bg-slate-800/40 border border-slate-200"
                         >
-                          <span className="text-slate-300 truncate max-w-[180px]">{it.name}</span>
+                          <span className="text-slate-700 truncate max-w-[180px]">{it.name}</span>
                           <span className="text-slate-500 font-mono">x{it.qty}</span>
                         </div>
                       ))}
@@ -253,8 +253,8 @@ export const SuppliesConfigView: React.FC = () => {
               {/* Stock and Sales Progress */}
               <div>
                 <div className="flex items-center justify-between text-xs mb-1.5 font-mono">
-                  <span className="text-slate-400">التوزيع والمبيعات:</span>
-                  <span className="font-bold text-white">
+                  <span className="text-slate-500">التوزيع والمبيعات:</span>
+                  <span className="font-bold text-slate-900">
                     {pack.stock_sold} بيعت / {pack.stock_available} متبقية
                   </span>
                 </div>
@@ -266,9 +266,9 @@ export const SuppliesConfigView: React.FC = () => {
                   />
                 </div>
 
-                <div className="pt-2 border-t border-slate-800 flex items-center justify-between font-mono text-xs">
-                  <span className="text-slate-400">الأرباح التراكمية:</span>
-                  <span className="font-bold text-emerald-400">{formatMAD(pack.margin_total || 0)}</span>
+                <div className="pt-2 border-t border-slate-200 flex items-center justify-between font-mono text-xs">
+                  <span className="text-slate-500">الأرباح التراكمية:</span>
+                  <span className="font-bold text-emerald-700">{formatMAD(pack.margin_total || 0)}</span>
                 </div>
               </div>
             </div>
@@ -279,15 +279,15 @@ export const SuppliesConfigView: React.FC = () => {
       {/* Add Supplies Pack Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-6 text-white my-8 animate-in fade-in duration-200">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-xs shadow-2xl p-6 text-white my-8 animate-in fade-in duration-200">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-emerald-400" />
+                <BookOpen className="w-4 h-4 text-emerald-700" />
                 <h3 className="text-sm font-bold">إنشاء حزمة مقررات ولوازم مدرسية جديدة</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -296,18 +296,18 @@ export const SuppliesConfigView: React.FC = () => {
             <form onSubmit={handleCreatePack} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">رمز الحزمة (Pack Code)*</label>
+                  <label className="text-slate-500 block mb-1">رمز الحزمة (Pack Code)*</label>
                   <input
                     type="text"
                     required
                     placeholder="مثال: PACK-CE2-2026"
                     value={formData.pack_code}
                     onChange={(e) => setFormData({ ...formData, pack_code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono uppercase focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">المستوى الدراسي المستهدف*</label>
+                  <label className="text-slate-500 block mb-1">المستوى الدراسي المستهدف*</label>
                   <input
                     type="text"
                     required
@@ -320,7 +320,7 @@ export const SuppliesConfigView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">عنوان الحزمة بالعربية*</label>
+                <label className="text-slate-500 block mb-1">عنوان الحزمة بالعربية*</label>
                 <input
                   type="text"
                   required
@@ -332,7 +332,7 @@ export const SuppliesConfigView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-400 block mb-1">عنوان الحزمة بالفرنسية</label>
+                <label className="text-slate-500 block mb-1">عنوان الحزمة بالفرنسية</label>
                 <input
                   type="text"
                   placeholder="Pack Fournitures CE2"
@@ -344,7 +344,7 @@ export const SuppliesConfigView: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="text-slate-400 block mb-1">سعر التكلفة (MAD)*</label>
+                  <label className="text-slate-500 block mb-1">سعر التكلفة (MAD)*</label>
                   <input
                     type="number"
                     min="0"
@@ -352,11 +352,11 @@ export const SuppliesConfigView: React.FC = () => {
                     required
                     value={formData.cost_price}
                     onChange={(e) => setFormData({ ...formData, cost_price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">سعر البيع للأسرة (MAD)*</label>
+                  <label className="text-slate-500 block mb-1">سعر البيع للأسرة (MAD)*</label>
                   <input
                     type="number"
                     min="0"
@@ -364,25 +364,25 @@ export const SuppliesConfigView: React.FC = () => {
                     required
                     value={formData.selling_price}
                     onChange={(e) => setFormData({ ...formData, selling_price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="text-slate-400 block mb-1">المخزون المتوفر (كمية)*</label>
+                  <label className="text-slate-500 block mb-1">المخزون المتوفر (كمية)*</label>
                   <input
                     type="number"
                     min="0"
                     required
                     value={formData.stock_available}
                     onChange={(e) => setFormData({ ...formData, stock_available: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               {/* Items in Pack Section */}
-              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800">
-                <span className="text-slate-400 block mb-2 font-semibold">مكونات الحزمة (كتب ومستلزمات):</span>
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200">
+                <span className="text-slate-500 block mb-2 font-semibold">مكونات الحزمة (كتب ومستلزمات):</span>
                 <div className="flex gap-2 mb-2">
                   <input
                     type="text"
@@ -411,15 +411,15 @@ export const SuppliesConfigView: React.FC = () => {
                   {formData.items_breakdown.map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center justify-between p-1.5 rounded-lg bg-slate-800/60 text-xs text-slate-300"
+                      className="flex items-center justify-between p-1.5 rounded-lg bg-slate-800/60 text-xs text-slate-700"
                     >
                       <span>
-                        {item.name} <strong className="font-mono text-emerald-400">(x{item.qty})</strong>
+                        {item.name} <strong className="font-mono text-emerald-700">(x{item.qty})</strong>
                       </span>
                       <button
                         type="button"
                         onClick={() => handleRemoveItem(idx)}
-                        className="text-slate-500 hover:text-rose-400"
+                        className="text-slate-500 hover:text-rose-600"
                       >
                         <X className="w-3.5 h-3.5" />
                       </button>
@@ -428,11 +428,11 @@ export const SuppliesConfigView: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
                 >
                   إلغاء
                 </button>
