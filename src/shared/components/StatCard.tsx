@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { LucideIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface StatCardProps {
   title: string;
@@ -21,29 +22,32 @@ export const StatCard: React.FC<StatCardProps> = ({
   trend,
   variant = 'default',
 }) => {
+  const { i18n } = useTranslation();
+  const isRtl = i18n.language === 'ar' || !i18n.language?.startsWith('fr');
+
   const getVariantStyles = () => {
     switch (variant) {
       case 'income':
         return {
-          leftBorder: 'border-l-4 border-l-emerald-500',
+          accentStrip: 'bg-emerald-500',
           iconBg: 'bg-emerald-50 text-emerald-600',
           valColor: 'text-emerald-700',
         };
       case 'expense':
         return {
-          leftBorder: 'border-l-4 border-l-rose-500',
+          accentStrip: 'bg-rose-500',
           iconBg: 'bg-rose-50 text-rose-600',
           valColor: 'text-rose-700',
         };
       case 'pending':
         return {
-          leftBorder: 'border-l-4 border-l-amber-400',
-          iconBg: 'bg-amber-50 text-amber-500',
+          accentStrip: 'bg-amber-400',
+          iconBg: 'bg-amber-50 text-amber-600',
           valColor: 'text-slate-900',
         };
       default:
         return {
-          leftBorder: 'border-l-4 border-l-teal-400',
+          accentStrip: 'bg-teal-500',
           iconBg: 'bg-teal-50 text-teal-600',
           valColor: 'text-slate-900',
         };
@@ -57,7 +61,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   const renderValue = () => {
     if (typeof cleanNumericValue !== 'string') {
       return (
-        <span className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+        <span className={`kpi-number ${styles.valColor}`}>
           {cleanNumericValue}
         </span>
       );
@@ -68,7 +72,7 @@ export const StatCard: React.FC<StatCardProps> = ({
     if (match) {
       return (
         <div className="flex items-baseline gap-2">
-          <span className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+          <span className={`kpi-number ${styles.valColor}`}>
             {match[1]}
           </span>
           <span className={`text-xl font-bold font-sans ${styles.valColor}`}>
@@ -89,20 +93,28 @@ export const StatCard: React.FC<StatCardProps> = ({
 
     // Pattern 3: Pure numbers, currency, or percentages
     return (
-      <span className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+      <span className={`kpi-number ${styles.valColor}`}>
         {cleanNumericValue}
       </span>
     );
   };
 
   return (
-    <div className={`p-5 rounded-2xl border border-slate-200/80 bg-white shadow-xs hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between ${styles.leftBorder}`}>
+    <div className="standard-kpi-card group">
+      {/* Pure Stitch Thin Vertical Accent Strip */}
+      <div 
+        className={`w-1.5 h-full absolute top-0 ${
+          isRtl ? 'right-0' : 'left-0'
+        } ${styles.accentStrip}`} 
+      />
+
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs font-bold text-slate-500">{title}</span>
         <div className={`p-2 rounded-xl border border-slate-100 shadow-2xs ${styles.iconBg}`}>
           <Icon className="w-4 h-4" />
         </div>
       </div>
+
       <div>
         {hasMAD && (
           <span className="text-xs font-bold font-mono text-emerald-600 block mb-0.5">MAD</span>
@@ -111,6 +123,7 @@ export const StatCard: React.FC<StatCardProps> = ({
           {renderValue()}
         </div>
       </div>
+
       {(subtitle || trend) && (
         <div className="mt-2.5 flex items-center justify-between text-xs">
           {subtitle && <span className="text-slate-400 font-medium text-[11px]">{subtitle}</span>}
@@ -128,3 +141,5 @@ export const StatCard: React.FC<StatCardProps> = ({
     </div>
   );
 };
+
+export default StatCard;

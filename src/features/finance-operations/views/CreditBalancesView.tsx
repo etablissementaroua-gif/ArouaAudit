@@ -114,7 +114,7 @@ export const CreditBalancesView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-container animate-fade-in">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
@@ -129,7 +129,7 @@ export const CreditBalancesView: React.FC = () => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded-2xl font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
+          className="btn-primary"
         >
           <Plus className="w-5 h-5" />
           <span>تسجيل رصيد دائن جديد</span>
@@ -138,19 +138,19 @@ export const CreditBalancesView: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white border border-slate-200/80 border-l-4 border-l-emerald-500 p-5 rounded-2xl shadow-xs">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-emerald-500" />
           <span className="text-xs text-slate-500 font-bold block mb-1">إجمالي الفوائض المتاحة للخصم</span>
           <p className="text-3xl font-black text-emerald-700 font-mono tracking-tight">{formatMAD(totalCreditAvailable)}</p>
           <span className="text-[11px] text-slate-400 mt-1 block font-medium">رصيد متاح للاستخدام في الشهور القادمة</span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-l-4 border-l-teal-400 p-5 rounded-2xl shadow-xs">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
           <span className="text-xs text-slate-500 font-bold block mb-1">عدد التلاميذ أصحاب الأرصدة</span>
           <p className="text-3xl font-black text-slate-900 font-mono tracking-tight">{balances.filter(b => b.status === 'available').length}</p>
           <span className="text-[11px] text-slate-400 mt-1 block font-medium">تلاميذ لديهم مبالغ دائنة</span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-l-4 border-l-indigo-400 p-5 rounded-2xl shadow-xs">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-indigo-500" />
           <span className="text-xs text-slate-500 font-bold block mb-1">المبالغ المرحلة سابقاً</span>
           <p className="text-3xl font-black text-indigo-700 font-mono tracking-tight">
             {formatMAD(balances.filter(b => b.status === 'carried_over').reduce((s, b) => s + b.credit_amount, 0))}
@@ -172,7 +172,7 @@ export const CreditBalancesView: React.FC = () => {
       </div>
 
       {/* Credit Balances Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
+      <div className="standard-table-wrapper">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>

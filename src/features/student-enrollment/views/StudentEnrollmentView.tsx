@@ -72,7 +72,7 @@ export const StudentEnrollmentView: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-6 space-y-6 text-slate-800 animate-fade-in" dir="rtl">
+    <div className="page-container animate-fade-in" dir="rtl">
       {/* Toast Notification */}
       {notification && (
         <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center justify-between shadow-sm animate-fade-in">
@@ -84,7 +84,7 @@ export const StudentEnrollmentView: React.FC = () => {
       )}
 
       {/* 2. Page Header */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-[0_2px_10px_rgba(0,0,0,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="page-header-card">
         <div>
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-sky-50 text-sky-600 rounded-xl border border-sky-100">
@@ -129,7 +129,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <button
             disabled={syncing}
             onClick={() => triggerSyncFromArouaSchools()}
-            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="btn-primary"
           >
             <Sparkles className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
             <span>{syncing ? 'جاري الاستقبال...' : 'استقبال دفعة من arouaschools'}</span>
@@ -140,7 +140,7 @@ export const StudentEnrollmentView: React.FC = () => {
       {/* 3. KPI Financial Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Due */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-teal-400 flex flex-col justify-between">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">إجمالي الذمم والرسوم</span>
             <div className="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100">
@@ -154,7 +154,7 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
 
         {/* Collected */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-emerald-500 flex flex-col justify-between">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-emerald-500" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">المستخلص الفعلي (المقبوض)</span>
             <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
@@ -168,7 +168,7 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
 
         {/* Balance Remaining */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-rose-500 flex flex-col justify-between">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-rose-500" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">الذمم المتبقية (قيد التحصيل)</span>
             <div className="p-2 rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
@@ -182,7 +182,7 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
 
         {/* Transport & Canteen Subscribers */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-l-4 border-l-amber-400 flex flex-col justify-between">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-amber-400" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">مشتركو النقل والمطعم</span>
             <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
@@ -258,7 +258,7 @@ export const StudentEnrollmentView: React.FC = () => {
       </div>
 
       {/* 5. The Core Financial Ledger Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] overflow-hidden">
+      <div className="standard-table-wrapper">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
             <thead className="bg-slate-100/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">

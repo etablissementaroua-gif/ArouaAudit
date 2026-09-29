@@ -92,9 +92,9 @@ export const PayrollDashboardView: React.FC = () => {
   const paidCount = slips.filter(s => s.payment_status === 'paid').length;
 
   return (
-    <div className="space-y-6 animate-fade-in" dir="rtl">
+    <div className="page-container animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="page-header-card">
         <div>
           <div className="flex items-center gap-2">
             <CreditCard className="w-6 h-6 text-emerald-700" />
@@ -117,14 +117,14 @@ export const PayrollDashboardView: React.FC = () => {
               type="month"
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="bg-transparent text-white text-xs font-mono font-bold focus:outline-none cursor-pointer"
+              className="bg-transparent text-slate-800 text-xs font-mono font-bold focus:outline-none cursor-pointer"
             />
           </div>
 
           <button
             onClick={handleBulkDisburse}
             disabled={disbursing || loading || slips.every(s => s.payment_status === 'paid')}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer disabled:opacity-50"
+            className="btn-primary disabled:opacity-50"
           >
             <Send className={`w-4 h-4 ${disbursing ? 'animate-pulse' : ''}`} />
             {disbursing ? 'جاري الصرف والتقييد...' : 'اعتماد وصرف رواتب الشهر'}
@@ -178,7 +178,7 @@ export const PayrollDashboardView: React.FC = () => {
       </div>
 
       {/* Payroll Calculation Matrix */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
+      <div className="standard-table-wrapper">
         <div className="p-4 px-6 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-emerald-700" />

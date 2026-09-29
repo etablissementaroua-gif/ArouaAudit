@@ -167,11 +167,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         />
       )}
 
-      {/* Sidebar Container */}
+      {/* Sidebar Container - Expanded to w-72 xl:w-80 */}
       <aside
         className={`fixed top-0 bottom-0 ${
           isRtl ? 'right-0 border-l' : 'left-0 border-r'
-        } z-50 w-72 bg-white border-slate-200/80 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-xs ${
+        } z-50 w-72 xl:w-80 bg-white border-slate-200/80 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-xs ${
           isOpen ? 'translate-x-0' : (isRtl ? 'translate-x-full' : '-translate-x-full')
         }`}
       >
@@ -240,17 +240,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                           onClick={() => {
                             if (window.innerWidth < 1024) onClose();
                           }}
-                          className={`flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-all ${
+                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all gap-2 ${
                             isActive
                               ? 'bg-emerald-50/80 text-emerald-800 font-bold shadow-2xs'
                               : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
                           }`}
                         >
-                          <div className="flex items-center gap-2 min-w-0">
+                          <div className="flex items-center gap-2 min-w-0 flex-1">
                             {isActive && (
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
                             )}
-                            <span className="truncate">{item.label}</span>
+                            <span className="leading-tight whitespace-normal text-start">{item.label}</span>
                           </div>
                           {item.badge && (
                             <span
@@ -285,4 +285,3 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 };
 
 export default Sidebar;
-

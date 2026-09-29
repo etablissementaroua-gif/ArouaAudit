@@ -102,7 +102,7 @@ export const BankAccountsView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-container animate-fade-in">
       {/* Header & Quick Actions */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div>
@@ -119,7 +119,7 @@ export const BankAccountsView: React.FC = () => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded-2xl font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
+          className="btn-primary"
         >
           <Plus className="w-5 h-5" />
           <span>إضافة حساب بنكي جديد</span>
@@ -128,7 +128,7 @@ export const BankAccountsView: React.FC = () => {
 
       {/* Financial Liquidity Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-emerald-500 p-5 rounded-2xl">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-emerald-500" />
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-emerald-700">إجمالي السيولة البنكية</span>
             <Wallet className="w-5 h-5 text-emerald-700" />
@@ -137,7 +137,7 @@ export const BankAccountsView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">موزعة على {activeCount} حسابات نشطة</p>
         </div>
 
-        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-teal-400 p-5 rounded-2xl">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">الحسابات النشطة</span>
             <Building2 className="w-5 h-5 text-emerald-700" />
@@ -146,7 +146,7 @@ export const BankAccountsView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">حسابات بنكية معتمدة</p>
         </div>
 
-        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-teal-400 p-5 rounded-2xl">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">الحساب الرئيسي (Attijari)</span>
             <ShieldCheck className="w-5 h-5 text-amber-700" />
@@ -157,7 +157,7 @@ export const BankAccountsView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">وكالة أكدال - الرباط</p>
         </div>
 
-        <div className="bg-white border border-slate-200/80 shadow-xs border-l-4 border-l-teal-400 p-5 rounded-2xl">
+        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">متوسط الرصيد للحساب</span>
             <ArrowUpRight className="w-5 h-5 text-emerald-800" />

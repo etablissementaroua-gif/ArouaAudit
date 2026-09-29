@@ -142,9 +142,9 @@ export const ApprovedStaffSyncView: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6 animate-fade-in" dir="rtl">
+    <div className="page-container animate-fade-in" dir="rtl">
       {/* 1. Header and Sync Action */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+      <div className="page-header-card">
         <div>
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700">

@@ -165,9 +165,9 @@ export const ChecksPortfolioView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-container animate-fade-in">
       {/* Header & Quick Action */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+      <div className="page-header-card">
         <div>
           <div className="flex items-center gap-3 mb-1">
             <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800">
@@ -182,52 +182,58 @@ export const ChecksPortfolioView: React.FC = () => {
 
         <button
           onClick={() => setIsNewCheckModalOpen(true)}
-          className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center justify-center gap-2"
+          className="btn-primary"
         >
           <Plus className="w-5 h-5" />
           <span>تسجيل شيك جديد بالمحفظة</span>
         </button>
       </div>
 
-      {/* Financial Status KPI Grid */}
+      {/* Financial Status KPI Grid - Pure Stitch Standard */}
       <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-        <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-xl">
-          <span className="text-xs text-slate-500 block mb-1">إجمالي المحفظة</span>
-          <p className="text-lg font-bold text-slate-900 font-mono">{formatMAD(stats.totalAmount)}</p>
-          <span className="text-[11px] text-slate-500">{stats.totalCount} شيك مسجل</span>
+        <div className="standard-kpi-card p-4">
+          <div className="w-1.5 h-full absolute top-0 right-0 bg-slate-400" />
+          <span className="text-xs text-slate-500 block mb-1 font-bold">إجمالي المحفظة</span>
+          <p className="text-lg font-black text-slate-900 font-mono tracking-tight">{formatMAD(stats.totalAmount)}</p>
+          <span className="text-[11px] text-slate-400 font-medium">{stats.totalCount} شيك مسجل</span>
         </div>
 
-        <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-xl">
-          <span className="text-xs text-slate-500 block mb-1 font-semibold">في الخزنة</span>
-          <p className="text-lg font-black text-indigo-700 font-mono">{formatMAD(stats.inVaultAmount)}</p>
-          <span className="text-[11px] text-slate-500">{stats.inVaultCount} شيك</span>
+        <div className="standard-kpi-card p-4">
+          <div className="w-1.5 h-full absolute top-0 right-0 bg-indigo-500" />
+          <span className="text-xs text-slate-500 block mb-1 font-bold">في الخزنة</span>
+          <p className="text-lg font-black text-indigo-700 font-mono tracking-tight">{formatMAD(stats.inVaultAmount)}</p>
+          <span className="text-[11px] text-slate-400 font-medium">{stats.inVaultCount} شيك</span>
         </div>
 
-        <div className="bg-white border border-amber-200 shadow-xs p-4 rounded-xl">
-          <span className="text-xs text-amber-700 block mb-1">حان موعد الإيداع</span>
-          <p className="text-lg font-bold text-amber-700 font-mono">{formatMAD(stats.toDepositAmount)}</p>
-          <span className="text-[11px] text-slate-500">{stats.toDepositCount} شيك مستحق</span>
+        <div className="standard-kpi-card p-4">
+          <div className="w-1.5 h-full absolute top-0 right-0 bg-amber-400" />
+          <span className="text-xs text-amber-700 block mb-1 font-bold">حان موعد الإيداع</span>
+          <p className="text-lg font-black text-amber-700 font-mono tracking-tight">{formatMAD(stats.toDepositAmount)}</p>
+          <span className="text-[11px] text-slate-400 font-medium">{stats.toDepositCount} شيك مستحق</span>
         </div>
 
-        <div className="bg-white border border-slate-200 shadow-xs p-4 rounded-xl">
-          <span className="text-xs text-emerald-700 block mb-1">أودع بالحوافظ</span>
-          <p className="text-lg font-bold text-emerald-700 font-mono">{formatMAD(stats.depositedAmount)}</p>
-          <span className="text-[11px] text-slate-500">{stats.depositedCount} شيك بالبنك</span>
+        <div className="standard-kpi-card p-4">
+          <div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
+          <span className="text-xs text-teal-700 block mb-1 font-bold">أودع بالحوافظ</span>
+          <p className="text-lg font-black text-teal-700 font-mono tracking-tight">{formatMAD(stats.depositedAmount)}</p>
+          <span className="text-[11px] text-slate-400 font-medium">{stats.depositedCount} شيك بالبنك</span>
         </div>
 
-        <div className="bg-white border border-emerald-200 shadow-xs p-4 rounded-xl">
-          <span className="text-xs text-emerald-700 block mb-1">تم صرفه بالكامل</span>
-          <p className="text-lg font-bold text-emerald-700 font-mono">{formatMAD(stats.clearedAmount)}</p>
-          <span className="text-[11px] text-slate-500">{stats.clearedCount} شيك ناجح</span>
+        <div className="standard-kpi-card p-4">
+          <div className="w-1.5 h-full absolute top-0 right-0 bg-emerald-500" />
+          <span className="text-xs text-emerald-700 block mb-1 font-bold">تم صرفه بالكامل</span>
+          <p className="text-lg font-black text-emerald-700 font-mono tracking-tight">{formatMAD(stats.clearedAmount)}</p>
+          <span className="text-[11px] text-slate-400 font-medium">{stats.clearedCount} شيك ناجح</span>
         </div>
 
-        <div className="bg-rose-50 border border-rose-200 p-4 rounded-xl">
-          <span className="text-xs text-rose-600 block mb-1 font-semibold flex items-center gap-1">
+        <div className="standard-kpi-card p-4">
+          <div className="w-1.5 h-full absolute top-0 right-0 bg-rose-500" />
+          <span className="text-xs text-rose-600 block mb-1 font-bold flex items-center gap-1">
             <AlertOctagon className="w-3.5 h-3.5" />
             <span>شيكات راجعة (خطر)</span>
           </span>
-          <p className="text-lg font-bold text-rose-600 font-mono">{formatMAD(stats.rejectedAmount)}</p>
-          <span className="text-[11px] text-rose-600/80">{stats.rejectedCount} شيك مرفوض</span>
+          <p className="text-lg font-black text-rose-600 font-mono tracking-tight">{formatMAD(stats.rejectedAmount)}</p>
+          <span className="text-[11px] text-slate-400 font-medium">{stats.rejectedCount} شيك مرفوض</span>
         </div>
       </div>
 
@@ -274,7 +280,7 @@ export const ChecksPortfolioView: React.FC = () => {
       </div>
 
       {/* Checks Interactive Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
+      <div className="standard-table-wrapper">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>

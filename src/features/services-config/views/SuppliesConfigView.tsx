@@ -94,9 +94,9 @@ export const SuppliesConfigView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="page-container animate-fade-in" dir="rtl">
       {/* 1. Header Matching Benchmark Image */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="page-header-card">
         <div>
           <div className="flex items-center gap-2.5">
             <h2 className="text-2xl font-black text-slate-900 tracking-tight">
@@ -126,7 +126,7 @@ export const SuppliesConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-md shadow-emerald-700/20 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+            className="btn-primary"
           >
             <Plus className="w-4 h-4" />
             <span>إنشاء حزمة لوازم جديدة</span>

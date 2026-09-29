@@ -100,9 +100,9 @@ export const PaymentsJournalView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-container animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
+      <div className="page-header-card">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800">
             <FileSpreadsheet className="w-6 h-6" />
@@ -125,7 +125,7 @@ export const PaymentsJournalView: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-teal-400 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-teal-500`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'إجمالي العمليات المسجلة' : 'Opérations Enregistrées'}
           </span>
@@ -135,7 +135,7 @@ export const PaymentsJournalView: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-emerald-500 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-emerald-500`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'استخلاصات التمدرس' : 'Recettes Scolarité'}
           </span>
@@ -145,7 +145,7 @@ export const PaymentsJournalView: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-amber-400 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-amber-400`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'استخلاصات النقل المدرسي' : 'Recettes Transport'}
           </span>
@@ -155,7 +155,7 @@ export const PaymentsJournalView: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-sky-500 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-sky-500`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'استخلاصات المطعم' : 'Recettes Restauration'}
           </span>
@@ -196,7 +196,7 @@ export const PaymentsJournalView: React.FC = () => {
       </div>
 
       {/* Ledger Table */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
+      <div className="standard-table-wrapper">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>

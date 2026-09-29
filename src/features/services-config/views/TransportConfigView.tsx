@@ -102,9 +102,9 @@ export const TransportConfigView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="page-container animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="page-header-card">
         <div>
           <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
             <Bus className="w-5 h-5 text-amber-700" />
@@ -127,7 +127,7 @@ export const TransportConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
+            className="btn-primary"
           >
             <Plus className="w-4 h-4" />
             <span>إضافة خط حافلة جديد</span>

@@ -9,7 +9,7 @@ export const MainLayout: React.FC = () => {
   const { t } = useTranslation(['common']);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-row font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-row font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
       {/* Dynamic Accordion Sidebar (RTL: Right side, LTR: Left side) */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -18,8 +18,8 @@ export const MainLayout: React.FC = () => {
         {/* Sticky Header */}
         <Header onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
-        {/* Main Body */}
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-slate-50">
+        {/* Main Body - Unified Canvas */}
+        <main className="flex-1 overflow-y-auto bg-[#F8FAFC]">
           <Outlet />
         </main>
 

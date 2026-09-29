@@ -210,7 +210,7 @@ export const UsersPermissionsView: React.FC = () => {
 
       {/* KPI Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-emerald-500 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-emerald-500`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'إجمالي الحسابات المسجلة' : 'Total Utilisateurs'}
           </span>
@@ -220,7 +220,7 @@ export const UsersPermissionsView: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-teal-500 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-teal-500`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'الأدوار النظامية المعرفة' : 'Rôles Définis'}
           </span>
@@ -230,7 +230,7 @@ export const UsersPermissionsView: React.FC = () => {
           </span>
         </div>
 
-        <div className="bg-white border border-slate-200/80 border-s-4 border-s-rose-400 p-5 rounded-2xl shadow-xs text-start">
+        <div className="standard-kpi-card text-start"><div className={`w-1.5 h-full absolute top-0 ${isRtl ? 'right-0' : 'left-0'} bg-rose-500`} />
           <span className="text-xs text-slate-500 font-bold block mb-1">
             {isRtl ? 'الحسابات المعلقة' : 'Comptes Suspendus'}
           </span>

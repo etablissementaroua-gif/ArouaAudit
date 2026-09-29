@@ -50,9 +50,9 @@ export const MonthlyCAView: React.FC = () => {
   const totalMonthlyTheoretical = levelCA.reduce((acc, c) => acc + c.monthly_total, 0);
 
   return (
-    <div className="space-y-6 animate-fade-in" dir="rtl">
+    <div className="page-container animate-fade-in" dir="rtl">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+      <div className="page-header-card">
         <div>
           <div className="flex items-center gap-2">
             <DollarSign className="w-6 h-6 text-emerald-700" />
@@ -72,7 +72,7 @@ export const MonthlyCAView: React.FC = () => {
           <select
             value={academicYear}
             onChange={(e) => setAcademicYear(e.target.value)}
-            className="bg-transparent text-white text-xs font-mono font-bold focus:outline-none cursor-pointer"
+            className="bg-transparent text-slate-800 text-xs font-mono font-bold focus:outline-none cursor-pointer"
           >
             <option value="2026/2027" className="bg-white text-slate-900">2026/2027 (النشطة)</option>
             <option value="2025/2026" className="bg-white text-slate-900">2025/2026</option>
@@ -162,7 +162,7 @@ export const MonthlyCAView: React.FC = () => {
       </div>
 
       {/* Level by Level Matrix */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
+      <div className="standard-table-wrapper">
         <div className="p-4 px-6 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Layers className="w-5 h-5 text-emerald-700" />
