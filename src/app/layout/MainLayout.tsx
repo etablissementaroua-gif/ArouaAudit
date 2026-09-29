@@ -7,7 +7,7 @@ export const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-row font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-row font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
       {/* Right Collapsible Accordion Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -21,12 +21,14 @@ export const MainLayout: React.FC = () => {
           <Outlet />
         </main>
 
-        {/* Footer */}
-        <footer className="border-t border-slate-200 bg-white py-3.5 px-6 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xs">
-          <span>منظومة ArouaAudit المالية &copy; 2026 - مجموعة مدارس أروى للتعليم الخصوصي</span>
-          <div className="flex items-center gap-4 text-[11px] font-mono">
-            <span className="text-slate-600">Branch: main</span>
-            <span className="text-emerald-700 font-semibold">Design System: Royal Emerald & Slate (Supplies Benchmark)</span>
+        {/* Footer Matching Benchmark Image */}
+        <footer className="border-t border-slate-200/80 bg-white py-3 px-6 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xs" dir="rtl">
+          <div className="text-slate-500 text-xs">
+            نظام التدبير المالي والتربوي — Groupe Scolaire Aroua Audit v1.0
+          </div>
+          <div className="flex items-center gap-2 text-[11px] text-slate-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span>آخر تحديث لقاعدة البيانات والمخزون: اليوم، 13:19</span>
           </div>
         </footer>
       </div>

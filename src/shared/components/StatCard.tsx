@@ -25,43 +25,50 @@ export const StatCard: React.FC<StatCardProps> = ({
     switch (variant) {
       case 'income':
         return {
-          badge: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-          iconBg: 'bg-emerald-100/70 text-emerald-700',
+          leftBorder: 'border-l-4 border-l-emerald-500',
+          iconBg: 'bg-emerald-50 text-emerald-600',
           valColor: 'text-emerald-700',
         };
       case 'expense':
         return {
-          badge: 'bg-rose-50 text-rose-700 border-rose-200',
-          iconBg: 'bg-rose-100/70 text-rose-700',
+          leftBorder: 'border-l-4 border-l-rose-500',
+          iconBg: 'bg-rose-50 text-rose-600',
           valColor: 'text-rose-700',
         };
       case 'pending':
         return {
-          badge: 'bg-amber-50 text-amber-700 border-amber-200',
-          iconBg: 'bg-amber-100/70 text-amber-700',
-          valColor: 'text-amber-700',
+          leftBorder: 'border-l-4 border-l-amber-400',
+          iconBg: 'bg-amber-50 text-amber-500',
+          valColor: 'text-slate-900',
         };
       default:
         return {
-          badge: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-          iconBg: 'bg-emerald-50 text-emerald-800 border border-emerald-200/60',
+          leftBorder: 'border-l-4 border-l-teal-400',
+          iconBg: 'bg-teal-50 text-teal-600',
           valColor: 'text-slate-900',
         };
     }
   };
 
   const styles = getVariantStyles();
+  const hasMAD = typeof value === 'string' && value.includes('MAD');
+  const cleanNumericValue = hasMAD ? value.replace(/MAD/g, '').trim() : value;
 
   return (
-    <div className="p-5 rounded-2xl border border-slate-200/80 bg-white shadow-xs hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between">
+    <div className={`p-5 rounded-2xl border border-slate-200/80 bg-white shadow-xs hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between ${styles.leftBorder}`}>
+      <div className="flex items-center justify-between mb-2">
         <span className="text-xs font-bold text-slate-500">{title}</span>
-        <div className={`p-2 rounded-xl border border-slate-200/60 shadow-2xs ${styles.iconBg}`}>
+        <div className={`p-2 rounded-xl border border-slate-100 shadow-2xs ${styles.iconBg}`}>
           <Icon className="w-4 h-4" />
         </div>
       </div>
-      <div className="mt-3 flex items-baseline gap-2">
-        <h3 className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>{value}</h3>
+      <div>
+        {hasMAD && (
+          <span className="text-xs font-bold font-mono text-emerald-600 block mb-0.5">MAD</span>
+        )}
+        <h3 className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+          {cleanNumericValue}
+        </h3>
       </div>
       {(subtitle || trend) && (
         <div className="mt-2.5 flex items-center justify-between text-xs">

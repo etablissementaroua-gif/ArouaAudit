@@ -6,15 +6,12 @@ import {
   Package,
   Layers,
   TrendingUp,
-  Tag,
-  CheckCircle2,
-  AlertCircle,
-  X,
   ShoppingBag,
+  X,
 } from 'lucide-react';
 import { StatCard } from '../../../shared/components/StatCard';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
-import { SuppliesPack, NewSuppliesPackFormData, SuppliesItemDetail } from '../models/services.types';
+import { SuppliesPack, NewSuppliesPackFormData } from '../models/services.types';
 import { servicesConfigService } from '../services/servicesConfig.service';
 
 export const SuppliesConfigView: React.FC = () => {
@@ -22,6 +19,7 @@ export const SuppliesConfigView: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [levelFilter, setLevelFilter] = useState<string>('all');
 
   // Form State
   const [formData, setFormData] = useState<NewSuppliesPackFormData>({
@@ -40,9 +38,6 @@ export const SuppliesConfigView: React.FC = () => {
     ],
     academic_year: '2026/2027',
   });
-
-  const [newItemName, setNewItemName] = useState<string>('');
-  const [newItemQty, setNewItemQty] = useState<number>(1);
 
   const loadData = async () => {
     setLoading(true);
@@ -64,26 +59,6 @@ export const SuppliesConfigView: React.FC = () => {
   const totalSold = packs.reduce((sum, p) => sum + p.stock_sold, 0);
   const totalStockLeft = packs.reduce((sum, p) => sum + p.stock_available, 0);
   const totalMarginProfit = packs.reduce((sum, p) => sum + (p.margin_total || 0), 0);
-
-  const handleAddItem = () => {
-    if (!newItemName.trim()) return;
-    setFormData({
-      ...formData,
-      items_breakdown: [...formData.items_breakdown, { name: newItemName.trim(), qty: newItemQty }],
-      items_count: formData.items_breakdown.length + 1,
-    });
-    setNewItemName('');
-    setNewItemQty(1);
-  };
-
-  const handleRemoveItem = (index: number) => {
-    const updated = formData.items_breakdown.filter((_, i) => i !== index);
-    setFormData({
-      ...formData,
-      items_breakdown: updated,
-      items_count: updated.length,
-    });
-  };
 
   const handleCreatePack = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,16 +94,23 @@ export const SuppliesConfigView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-6" dir="rtl">
+      {/* 1. Header Matching Benchmark Image */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-emerald-700" />
-            <span>اللوازم والمحفظة والزي المدرسي (Fournitures & Packs Scolaires)</span>
-          </h2>
+          <div className="flex items-center gap-2.5">
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+              اللوازم والمحفظة والزي المدرسي
+            </h2>
+            <span className="text-xs font-semibold text-slate-400">
+              Fournitures & Packs (Scolaires)
+            </span>
+            <div className="w-6 h-6 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center">
+              <BookOpen className="w-3.5 h-3.5" />
+            </div>
+          </div>
           <p className="text-xs text-slate-500 mt-1">
-            إعداد حزم الكتب والمقررات، تتبع مخزون المآزر والمحافظ، وتدقيق هوامش الربحية التجارية
+            إعداد حزم الكتب والمقررات، تتبع مخزون المآزر والمحافظ، وتدقيق هوامش الربحية التجارية للمؤسسة
           </p>
         </div>
 
@@ -136,7 +118,7 @@ export const SuppliesConfigView: React.FC = () => {
           <button
             onClick={loadData}
             disabled={loading}
-            className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl border border-slate-200 transition-colors disabled:opacity-50"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition shadow-xs cursor-pointer disabled:opacity-50"
             title="تحديث البيانات"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -144,7 +126,7 @@ export const SuppliesConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
+            className="px-5 py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-md shadow-emerald-700/20 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>إنشاء حزمة لوازم جديدة</span>
@@ -152,44 +134,84 @@ export const SuppliesConfigView: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* 2. KPI Cards Matching Benchmark Left Borders and Typography */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="الحزم المدرسية المفعلة"
-          value={`${totalPacksCount} حزم`}
-          subtitle="مصنفة حسب المستويات"
-          icon={Package}
-          variant="default"
-        />
-        <StatCard
-          title="الحزم الموزعة والمسددة"
-          value={`${totalSold} حزمة`}
-          subtitle="سلمت لأولياء الأمور"
-          icon={ShoppingBag}
+          title="إجمالي الهامش الربحي المحقق"
+          value={formatMAD(totalMarginProfit)}
+          subtitle="عائد مالي صاف ومستخلص للمؤسسة"
+          icon={TrendingUp}
           variant="income"
         />
         <StatCard
           title="المخزون المتوفر المتبقي"
           value={`${totalStockLeft} وحدة`}
-          subtitle="جاهزة في مستودع الإدارة"
+          subtitle="جاهزة ومفرزة في مستودع الإدارة"
           icon={Layers}
           variant="pending"
         />
         <StatCard
-          title="إجمالي الهامش الربحي المحقق"
-          value={formatMAD(totalMarginProfit)}
-          subtitle="عائد مالي صاف للمؤسسة"
-          icon={TrendingUp}
-          variant="income"
+          title="الحزم الموزعة والمسددة"
+          value={`${totalSold} حزمة`}
+          subtitle="سلمت بالكامل لأولياء الأمور"
+          icon={ShoppingBag}
+          variant="default"
+        />
+        <StatCard
+          title="الحزم المدرسية المفعلة"
+          value={`${totalPacksCount} حزم`}
+          subtitle="مصنفة حسب المستويات المقررة"
+          icon={Package}
+          variant="default"
         />
       </div>
 
-      {/* Packs Grid */}
+      {/* 3. Filter Tabs Bar Matching Benchmark */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+        <div className="text-sm font-bold text-slate-900">
+          الباقات والحزم المعتمدة لجميع الأسلاك: {packs.length} مستويات
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLevelFilter('all')}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              levelFilter === 'all'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            الكل ({packs.length})
+          </button>
+          <button
+            onClick={() => setLevelFilter('primary')}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              levelFilter === 'primary'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            التعليم الابتدائي
+          </button>
+          <button
+            onClick={() => setLevelFilter('middle')}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              levelFilter === 'middle'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            التعليم الإعدادي
+          </button>
+        </div>
+      </div>
+
+      {/* 4. Pack Cards 3-Column Grid Matching Benchmark */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {packs.map((pack) => {
           const totalStock = pack.stock_available + pack.stock_sold;
           const soldRate = totalStock > 0 ? Math.round((pack.stock_sold / totalStock) * 100) : 0;
           const items = Array.isArray(pack.items_breakdown) ? pack.items_breakdown : [];
+          const isBlueBadge = pack.academic_level.includes('6') || pack.academic_level.includes('AEP');
 
           return (
             <div
@@ -197,58 +219,61 @@ export const SuppliesConfigView: React.FC = () => {
               className="p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-emerald-300 hover:shadow-md transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
+                {/* Top Code and Level Badges */}
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-slate-50 text-slate-600 border border-slate-200">
                     {pack.pack_code}
                   </span>
 
-                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80">
+                  <span
+                    className={`px-3 py-1 rounded-lg text-xs font-bold ${
+                      isBlueBadge
+                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                        : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                    }`}
+                  >
                     مستوى: {pack.academic_level}
                   </span>
                 </div>
 
-                <h3 className="text-sm font-bold text-slate-900 mb-0.5">{pack.title_ar}</h3>
-                <p className="text-[11px] text-slate-500 mb-4">{pack.title_fr}</p>
+                <h3 className="text-base font-black text-slate-900 text-center mt-2 mb-0.5">{pack.title_ar}</h3>
+                <p className="text-xs text-slate-400 text-center mb-3">{pack.title_fr}</p>
 
-                {/* Pricing & Margin Box */}
-                <div className="grid grid-cols-3 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs mb-4 text-center font-mono">
+                {/* 3-Column Pricing Breakdown Matrix */}
+                <div className="grid grid-cols-3 gap-2 bg-slate-50/90 p-3 rounded-xl border border-slate-200/70 text-center font-mono my-3">
                   <div>
-                    <span className="text-slate-500 text-[10px] block">سعر التكلفة:</span>
-                    <span className="text-slate-700 font-bold">{formatMAD(pack.cost_price)}</span>
+                    <span className="text-[11px] text-slate-400 font-bold mb-0.5 block">سعر التكلفة:</span>
+                    <span className="text-xs font-bold text-slate-800">{formatMAD(pack.cost_price)}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 text-[10px] block">سعر البيع:</span>
-                    <span className="text-emerald-700 font-bold">{formatMAD(pack.selling_price)}</span>
+                    <span className="text-[11px] text-slate-400 font-bold mb-0.5 block">سعر البيع:</span>
+                    <span className="text-xs font-bold text-slate-900">{formatMAD(pack.selling_price)}</span>
                   </div>
                   <div>
-                    <span className="text-slate-500 text-[10px] block">هامش الربح:</span>
-                    <span className="text-amber-700 font-bold">+{formatMAD(pack.margin_unit || 0)}</span>
+                    <span className="text-[11px] text-slate-400 font-bold mb-0.5 block">هامش الربح:</span>
+                    <span className="text-[10px] text-emerald-700 font-extrabold block">MAD</span>
+                    <span className="text-xs font-extrabold text-emerald-700">+{pack.margin_unit || 0},00</span>
                   </div>
                 </div>
 
                 {/* Items Breakdown list */}
                 {items.length > 0 && (
                   <div className="mb-4">
-                    <span className="text-slate-500 text-[10px] block mb-1.5">مكونات ومحتويات الحزمة:</span>
-                    <div className="space-y-1">
-                      {items.slice(0, 3).map((it, idx) => {
-                        const isBook = /كتاب|مقرر|livre|manuel|lecture|قصة|قصص/i.test(it.name || '');
-                        return (
-                          <div
-                            key={idx}
-                            className={`flex items-center justify-between text-xs px-3 py-1.5 rounded-xl border transition-colors ${
-                              isBook
-                                ? 'bg-teal-50/70 text-teal-900 border-teal-200/60 font-medium'
-                                : 'bg-slate-100 text-slate-800 border-slate-200'
-                            }`}
-                          >
-                            <span className="truncate max-w-[180px]">{it.name}</span>
-                            <span className="font-mono text-[11px] opacity-75">x{it.qty}</span>
-                          </div>
-                        );
-                      })}
+                    <span className="text-slate-500 text-xs font-medium block mb-2">مكونات ومحتويات الحزمة:</span>
+                    <div className="space-y-1.5">
+                      {items.slice(0, 3).map((it, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100 text-xs text-slate-800"
+                        >
+                          <span className="truncate max-w-[200px]">{it.name}</span>
+                          <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono text-[11px] font-bold border border-slate-200">
+                            x{it.qty}
+                          </span>
+                        </div>
+                      ))}
                       {items.length > 3 && (
-                        <div className="text-[10px] text-slate-500 text-center pt-0.5">
+                        <div className="text-xs font-bold text-emerald-600 text-center py-1">
                           + {items.length - 3} مستلزمات إضافية
                         </div>
                       )}
@@ -260,22 +285,22 @@ export const SuppliesConfigView: React.FC = () => {
               {/* Stock and Sales Progress */}
               <div>
                 <div className="flex items-center justify-between text-xs mb-1.5 font-mono">
-                  <span className="text-slate-500">التوزيع والمبيعات:</span>
-                  <span className="font-bold text-slate-900">
+                  <span className="text-slate-500 font-medium">التوزيع والمبيعات:</span>
+                  <span className="font-bold text-slate-800">
                     {pack.stock_sold} بيعت / {pack.stock_available} متبقية
                   </span>
                 </div>
 
-                <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex mb-3">
+                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden flex my-2">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500"
                     style={{ width: `${Math.min(100, soldRate)}%` }}
                   />
                 </div>
 
-                <div className="pt-2 border-t border-slate-200 flex items-center justify-between font-mono text-xs">
-                  <span className="text-slate-500">الأرباح التراكمية:</span>
-                  <span className="font-bold text-emerald-700">{formatMAD(pack.margin_total || 0)}</span>
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between font-mono">
+                  <span className="text-xs text-slate-500">الأرباح التراكمية:</span>
+                  <span className="text-sm font-black text-emerald-700">{formatMAD(pack.margin_total || 0)}</span>
                 </div>
               </div>
             </div>
@@ -318,7 +343,7 @@ export const SuppliesConfigView: React.FC = () => {
                   <input
                     type="text"
                     required
-                    placeholder="مثال: CE2 أو 1ère Année Collège"
+                    placeholder="مثال: CE2 أو 1AC"
                     value={formData.academic_level}
                     onChange={(e) => setFormData({ ...formData, academic_level: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
@@ -327,11 +352,11 @@ export const SuppliesConfigView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-500 block mb-1">عنوان الحزمة بالعربية*</label>
+                <label className="text-slate-500 block mb-1">تسمية الحزمة (بالعربية)*</label>
                 <input
                   type="text"
                   required
-                  placeholder="مثال: حزمة كتب ومستلزمات الثالث ابتدائي"
+                  placeholder="مثال: حزمة كتب ومستلزمات الثاني ابتدائي"
                   value={formData.title_ar}
                   onChange={(e) => setFormData({ ...formData, title_ar: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
@@ -339,10 +364,10 @@ export const SuppliesConfigView: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-slate-500 block mb-1">عنوان الحزمة بالفرنسية</label>
+                <label className="text-slate-500 block mb-1">التسمية بالفرنسية</label>
                 <input
                   type="text"
-                  placeholder="Pack Fournitures CE2"
+                  placeholder="Ex: Pack Scolaire CE2 Intégral"
                   value={formData.title_fr}
                   onChange={(e) => setFormData({ ...formData, title_fr: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
@@ -354,8 +379,6 @@ export const SuppliesConfigView: React.FC = () => {
                   <label className="text-slate-500 block mb-1">سعر التكلفة (MAD)*</label>
                   <input
                     type="number"
-                    min="0"
-                    step="10"
                     required
                     value={formData.cost_price}
                     onChange={(e) => setFormData({ ...formData, cost_price: Number(e.target.value) })}
@@ -363,11 +386,9 @@ export const SuppliesConfigView: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-slate-500 block mb-1">سعر البيع للأسرة (MAD)*</label>
+                  <label className="text-slate-500 block mb-1">سعر البيع (MAD)*</label>
                   <input
                     type="number"
-                    min="0"
-                    step="10"
                     required
                     value={formData.selling_price}
                     onChange={(e) => setFormData({ ...formData, selling_price: Number(e.target.value) })}
@@ -375,10 +396,9 @@ export const SuppliesConfigView: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-slate-500 block mb-1">المخزون المتوفر (كمية)*</label>
+                  <label className="text-slate-500 block mb-1">المخزون المتوفر*</label>
                   <input
                     type="number"
-                    min="0"
                     required
                     value={formData.stock_available}
                     onChange={(e) => setFormData({ ...formData, stock_available: Number(e.target.value) })}
@@ -387,68 +407,20 @@ export const SuppliesConfigView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Items in Pack Section */}
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200">
-                <span className="text-slate-500 block mb-2 font-semibold">مكونات الحزمة (كتب ومستلزمات):</span>
-                <div className="flex gap-2 mb-2">
-                  <input
-                    type="text"
-                    placeholder="اسم الكتاب أو المستلزم..."
-                    value={newItemName}
-                    onChange={(e) => setNewItemName(e.target.value)}
-                    className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-emerald-500"
-                  />
-                  <input
-                    type="number"
-                    min="1"
-                    value={newItemQty}
-                    onChange={(e) => setNewItemQty(Number(e.target.value))}
-                    className="w-16 px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs text-center font-mono focus:outline-none focus:border-emerald-500"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddItem}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold"
-                  >
-                    إضافة
-                  </button>
-                </div>
-
-                <div className="space-y-1 max-h-32 overflow-y-auto">
-                  {formData.items_breakdown.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800"
-                    >
-                      <span>
-                        {item.name} <strong className="font-mono text-emerald-700">(x{item.qty})</strong>
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveItem(idx)}
-                        className="text-slate-500 hover:text-rose-600"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-200">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-colors"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-slate-900 font-bold transition-all disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold transition-all shadow-md shadow-emerald-700/20 active:scale-95 disabled:opacity-50"
                 >
-                  {submitting ? 'جاري الحفظ...' : 'حفظ وتفعيل الحزمة'}
+                  {submitting ? 'جاري الحفظ...' : 'حفظ وإضافة الحزمة'}
                 </button>
               </div>
             </form>
