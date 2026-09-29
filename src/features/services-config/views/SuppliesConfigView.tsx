@@ -136,7 +136,7 @@ export const SuppliesConfigView: React.FC = () => {
           <button
             onClick={loadData}
             disabled={loading}
-            className="p-2 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-700 hover:text-white transition-all disabled:opacity-50"
+            className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl border border-slate-200 transition-colors disabled:opacity-50"
             title="تحديث البيانات"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -144,7 +144,7 @@ export const SuppliesConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs flex items-center gap-2 shadow-lg shadow-emerald-600/20 active:scale-95 transition-all"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             <span>إنشاء حزمة لوازم جديدة</span>
@@ -266,7 +266,7 @@ export const SuppliesConfigView: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
+                <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex mb-3">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                     style={{ width: `${Math.min(100, soldRate)}%` }}

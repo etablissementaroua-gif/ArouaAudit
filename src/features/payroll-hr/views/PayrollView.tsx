@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { usePayroll } from '../controllers/usePayroll';
 import { PayrollTable } from '../components/PayrollTable';
 import { StatCard } from '../../../shared/components/StatCard';
@@ -19,7 +19,7 @@ export const PayrollView: React.FC = () => {
           <button onClick={() => refresh()} className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-lg shadow-indigo-950/40 transition">
+          <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95">
             <FileText className="w-4 h-4" /> إصدار مسير رواتب جديد
           </button>
         </div>

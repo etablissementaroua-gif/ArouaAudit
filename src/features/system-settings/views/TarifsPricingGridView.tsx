@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   DollarSign, 
   Search, 
@@ -243,7 +243,7 @@ export const TarifsPricingGridView: React.FC = () => {
           <button
             onClick={handleSaveAll}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             حفظ كافة التعديلات
@@ -303,7 +303,7 @@ export const TarifsPricingGridView: React.FC = () => {
             onClick={() => setCycleFilter('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               cycleFilter === 'all'
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                 : 'bg-white text-slate-500 hover:text-white border border-slate-200'
             }`}
           >
@@ -315,7 +315,7 @@ export const TarifsPricingGridView: React.FC = () => {
               onClick={() => setCycleFilter(c.code)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                 cycleFilter === c.code
-                  ? 'bg-indigo-600 text-white shadow-sm'
+                  ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                   : 'bg-white text-slate-500 hover:text-white border border-slate-200'
               }`}
             >
@@ -489,7 +489,7 @@ export const TarifsPricingGridView: React.FC = () => {
                         className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                           isSaved
                             ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30'
-                            : 'bg-indigo-600/80 hover:bg-indigo-600 text-white shadow-sm'
+                            : 'bg-emerald-700 hover:bg-emerald-800 text-white shadow-sm'
                         }`}
                       >
                         {isSaved ? (
@@ -565,7 +565,7 @@ export const TarifsPricingGridView: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleAddSupplyItem}
-                    className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-1 cursor-pointer transition-all"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-all shadow-xs"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     إضافة
@@ -598,7 +598,7 @@ export const TarifsPricingGridView: React.FC = () => {
                       className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 border border-slate-200/80 flex items-center justify-between text-xs"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-indigo-600/20 text-emerald-700 font-mono text-[10px] flex items-center justify-center">
+                        <span className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono text-[10px] flex items-center justify-center">
                           {index + 1}
                         </span>
                         <span className="font-bold text-slate-900">{item.item_name}</span>
@@ -636,7 +636,7 @@ export const TarifsPricingGridView: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleSaveSuppliesModal}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-1.5 cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   حفظ وتأكيد قائمة اللوازم

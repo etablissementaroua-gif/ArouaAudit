@@ -17,7 +17,7 @@ export const MainLayout: React.FC = () => {
         <Header onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
         {/* Main Body */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#F8FAFC]">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-slate-50">
           <Outlet />
         </main>
 
@@ -26,7 +26,7 @@ export const MainLayout: React.FC = () => {
           <span>منظومة ArouaAudit المالية &copy; 2026 - مجموعة مدارس أروى للتعليم الخصوصي</span>
           <div className="flex items-center gap-4 text-[11px] font-mono">
             <span className="text-slate-600">Branch: main</span>
-            <span className="text-emerald-700 font-semibold">Design System: Royal Emerald & Slate</span>
+            <span className="text-emerald-700 font-semibold">Design System: Royal Emerald & Slate (Supplies Benchmark)</span>
           </div>
         </footer>
       </div>

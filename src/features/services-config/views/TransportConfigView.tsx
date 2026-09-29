@@ -119,7 +119,7 @@ export const TransportConfigView: React.FC = () => {
           <button
             onClick={loadData}
             disabled={loading}
-            className="p-2 rounded-xl bg-white border border-slate-200 shadow-xs text-slate-700 hover:text-white transition-all disabled:opacity-50"
+            className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl border border-slate-200 transition-colors disabled:opacity-50"
             title="تحديث البيانات"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -127,7 +127,7 @@ export const TransportConfigView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+            className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             <span>إضافة خط حافلة جديد</span>
@@ -247,10 +247,10 @@ export const TransportConfigView: React.FC = () => {
                 </div>
 
                 {/* Occupancy Progress Bar */}
-                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
+                <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex mb-3">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
-                      isFull ? 'bg-rose-500' : isMid ? 'bg-amber-500' : 'bg-emerald-500'
+                      isFull ? 'bg-gradient-to-r from-teal-500 to-emerald-500' : isMid ? 'bg-gradient-to-r from-teal-500 to-emerald-500' : 'bg-emerald-500'
                     }`}
                     style={{ width: `${Math.min(100, rate)}%` }}
                   />
@@ -429,7 +429,7 @@ export const TransportConfigView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold transition-all disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:bg-amber-600 text-slate-950 font-bold transition-all disabled:opacity-50"
                 >
                   {submitting ? 'جاري الحفظ...' : 'حفظ وإدراج الخط في الأسطول'}
                 </button>

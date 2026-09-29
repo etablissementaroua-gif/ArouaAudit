@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   RefreshCw, 
@@ -144,7 +144,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
   return (
     <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* 1. Header and Sync Action */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
         <div>
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700">
@@ -168,7 +168,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
         <button
           onClick={handleSyncFromArouaSchools}
           disabled={syncing}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
+          className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
           <span>{syncing ? 'جاري جلب وتحديث الأطر...' : '🔄 مزامنة الموظفين من arouaschools'}</span>
@@ -227,8 +227,8 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('all')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'all' 
-                ? 'bg-emerald-600 text-white shadow-sm' 
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs' 
+                : 'px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-xs hover:text-slate-900'
             }`}
           >
             الجميع ({employees.length})
@@ -237,8 +237,8 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('Pedagogique')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'Pedagogique' 
-                ? 'bg-emerald-600 text-white shadow-sm' 
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs' 
+                : 'px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-xs hover:text-slate-900'
             }`}
           >
             الهيئة التربوية ({employees.filter(e => e.department === 'Pedagogique').length})
@@ -247,8 +247,8 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('Transport')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'Transport' 
-                ? 'bg-emerald-600 text-white shadow-sm' 
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs' 
+                : 'px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-xs hover:text-slate-900'
             }`}
           >
             النقل واللوجستيك ({employees.filter(e => e.department === 'Transport').length})
@@ -257,8 +257,8 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('Administration')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'Administration' 
-                ? 'bg-emerald-600 text-white shadow-sm' 
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs' 
+                : 'px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-xs hover:text-slate-900'
             }`}
           >
             الإدارة والصندوق ({employees.filter(e => e.department === 'Administration').length})

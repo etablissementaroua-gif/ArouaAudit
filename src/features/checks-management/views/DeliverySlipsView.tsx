@@ -160,7 +160,7 @@ export const DeliverySlipsView: React.FC = () => {
                     <td className="py-4 px-4 text-center">
                       <button
                         onClick={() => handleOpenSlip(rem)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold shadow-xs transition-all hover:scale-105 active:scale-95 shadow-sm"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold shadow-xs transition-all hover:scale-105 active:scale-95 shadow-sm"
                       >
                         <Printer className="w-3.5 h-3.5" />
                         <span>معاينة وطباعة الحافظة</span>
@@ -188,7 +188,7 @@ export const DeliverySlipsView: React.FC = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrint}
-                  className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/20 transition-all hover:scale-105"
+                  className="flex items-center gap-1.5 px-4 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-700/20 transition-all active:scale-95"
                 >
                   <Printer className="w-4 h-4" />
                   <span>طباعة الحافظة (A4 Print)</span>

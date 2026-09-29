@@ -254,7 +254,7 @@ export const PaymentsJournalView: React.FC = () => {
                     <td className="py-4 px-4 text-center">
                       <button
                         onClick={() => handleOpenReceipt(p)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-emerald-700 hover:text-white border border-indigo-500/30 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold transition-all active:scale-95 shadow-xs"
                         title="معاينة وإعادة طباعة الوصل الرسمي"
                       >
                         <Printer className="w-3.5 h-3.5" />

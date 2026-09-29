@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   CreditCard, 
   Banknote, 
@@ -124,7 +124,7 @@ export const PayrollDashboardView: React.FC = () => {
           <button
             onClick={handleBulkDisburse}
             disabled={disbursing || loading || slips.every(s => s.payment_status === 'paid')}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer disabled:opacity-50"
           >
             <Send className={`w-4 h-4 ${disbursing ? 'animate-pulse' : ''}`} />
             {disbursing ? 'جاري الصرف والتقييد...' : 'اعتماد وصرف رواتب الشهر'}
@@ -286,7 +286,7 @@ export const PayrollDashboardView: React.FC = () => {
                         ) : (
                           <button
                             onClick={() => handleSingleDisburse(slip)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition cursor-pointer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-xs cursor-pointer"
                           >
                             <Send className="w-3 h-3" />
                             صرف الراتب

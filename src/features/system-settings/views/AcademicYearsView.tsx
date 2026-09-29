@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Calendar, 
   Plus, 
@@ -125,7 +125,7 @@ export const AcademicYearsView: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/20 transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             إضافة سنة دراسية جديدة
@@ -219,7 +219,7 @@ export const AcademicYearsView: React.FC = () => {
                 years.map((year) => (
                   <tr 
                     key={year.id || year.code}
-                    className={`hover:bg-slate-50/80 transition-colors ${year.is_current ? 'bg-indigo-950/20' : ''}`}
+                    className={`hover:bg-slate-50/80 transition-colors ${year.is_current ? 'bg-emerald-50/70' : ''}`}
                   >
                     <td className="py-4 px-4 font-mono font-bold text-sm text-slate-900 flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${year.is_current ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' : 'bg-slate-600'}`} />
@@ -376,7 +376,7 @@ export const AcademicYearsView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
                 >
                   حفظ وتثبيت السنة
                 </button>

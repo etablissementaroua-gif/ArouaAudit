@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   AlertTriangle, 
   Users, 
@@ -185,7 +185,7 @@ export const StaffDebtsView: React.FC = () => {
                           setRepayAmount(Math.min(emp.credit_ancien, 1000));
                           setRepayNotes('');
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-xs cursor-pointer"
                       >
                         <Banknote className="w-3.5 h-3.5" />
                         تسجيل استرداد
@@ -264,7 +264,7 @@ export const StaffDebtsView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={repayLoading}
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-md shadow-emerald-600/30 transition cursor-pointer"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
                 >
                   {repayLoading ? 'جاري التسجيل...' : 'تأكيد الاسترداد بالصندوق'}
                 </button>

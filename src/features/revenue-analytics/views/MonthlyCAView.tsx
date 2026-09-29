@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   DollarSign, 
   TrendingUp, 
@@ -140,7 +140,7 @@ export const MonthlyCAView: React.FC = () => {
               <div className="text-sm font-bold font-mono text-white">{totalTransport.toLocaleString()} MAD</div>
             </div>
           </div>
-          <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300">
+          <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
             {comparison?.service_breakdown.transport_share || 18}%
           </span>
         </div>

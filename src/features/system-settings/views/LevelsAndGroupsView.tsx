@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Layers, 
   Users, 
@@ -116,7 +116,7 @@ export const LevelsAndGroupsView: React.FC = () => {
             onClick={() => setSelectedCycle('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
               selectedCycle === 'all'
-                ? 'bg-indigo-600 text-white shadow-sm'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                 : 'text-slate-500 hover:text-white'
             }`}
           >
@@ -128,7 +128,7 @@ export const LevelsAndGroupsView: React.FC = () => {
               onClick={() => setSelectedCycle(c.code)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                 selectedCycle === c.code
-                  ? 'bg-indigo-600 text-white shadow-sm'
+                  ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                   : 'text-slate-500 hover:text-white'
               }`}
             >
@@ -177,7 +177,7 @@ export const LevelsAndGroupsView: React.FC = () => {
       </div>
 
       {/* Info Notice */}
-      <div className="p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/20 text-indigo-300 text-xs flex items-start gap-3">
+      <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-xs flex items-start gap-3">
         <Info className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
         <div>
           <span className="font-bold text-slate-900 block mb-0.5">تطابق الأفواج التلقائي (Sync Groupes):</span>
@@ -199,7 +199,7 @@ export const LevelsAndGroupsView: React.FC = () => {
                 {/* Cycle Banner */}
                 <div className="p-4 px-6 bg-slate-50 border border-slate-200 border-b border-slate-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-lg bg-indigo-600/20 text-emerald-700 font-mono font-bold text-xs flex items-center justify-center border border-indigo-500/30">
+                    <span className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono font-bold text-xs flex items-center justify-center border border-indigo-500/30">
                       0{cycle.display_order}
                     </span>
                     <div>
@@ -242,7 +242,7 @@ export const LevelsAndGroupsView: React.FC = () => {
                             lvl.groups.map((grp, idx) => (
                               <span 
                                 key={idx}
-                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200/80 font-bold text-xs"
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 border border-teal-200 font-bold text-xs"
                               >
                                 <Tag className="w-3 h-3 text-emerald-700" />
                                 {grp}
@@ -301,7 +301,7 @@ export const LevelsAndGroupsView: React.FC = () => {
                     editedGroups.map((grp, idx) => (
                       <span 
                         key={idx}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200/80 font-bold text-xs"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-50 text-teal-700 border border-teal-200 font-bold text-xs"
                       >
                         {grp}
                         <button
@@ -339,7 +339,7 @@ export const LevelsAndGroupsView: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleAddGroup}
-                    className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1 cursor-pointer transition-all"
+                    className="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
                   >
                     <Plus className="w-4 h-4" />
                     إضافة
@@ -359,7 +359,7 @@ export const LevelsAndGroupsView: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleSaveGroups}
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   حفظ وتأكيد الأفواج

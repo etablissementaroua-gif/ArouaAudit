@@ -134,7 +134,7 @@ export const ChecksToDepositView: React.FC = () => {
         {selectedCheckIds.length > 0 && (
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
           >
             <Send className="w-5 h-5" />
             <span>إنشاء حافظة تسليم للبنك ({selectedCheckIds.length})</span>
@@ -165,7 +165,7 @@ export const ChecksToDepositView: React.FC = () => {
             onClick={() => setActiveTab('all')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'all'
-                ? 'bg-emerald-600 text-white shadow-xs font-bold'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200/60'
             }`}
           >
@@ -187,7 +187,7 @@ export const ChecksToDepositView: React.FC = () => {
             onClick={() => setActiveTab('this_week')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'this_week'
-                ? 'bg-emerald-600 text-white shadow-xs font-bold'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200/60'
             }`}
           >
@@ -198,7 +198,7 @@ export const ChecksToDepositView: React.FC = () => {
             onClick={() => setActiveTab('this_month')}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               activeTab === 'this_month'
-                ? 'bg-emerald-600 text-white shadow-xs font-bold'
+                ? 'px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200/60'
             }`}
           >
@@ -254,7 +254,7 @@ export const ChecksToDepositView: React.FC = () => {
                       key={chk.id} 
                       onClick={() => handleToggleCheck(chk.id)}
                       className={`cursor-pointer transition-colors ${
-                        isSelected ? 'bg-indigo-950/30' : 'hover:bg-slate-50/80'
+                        isSelected ? 'bg-emerald-50/60' : 'hover:bg-slate-50/80'
                       }`}
                     >
                       <td className="py-4 px-4 text-center" onClick={e => e.stopPropagation()}>
@@ -347,7 +347,7 @@ export const ChecksToDepositView: React.FC = () => {
 
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-xl text-sm font-bold shadow-lg shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95"
+            className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
           >
             <Send className="w-4 h-4" />
             <span>إنشاء حافظة تسليم للبنك</span>
@@ -433,7 +433,7 @@ export const ChecksToDepositView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-sm font-medium shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 disabled:opacity-50"
                 >
                   {submitting ? 'جاري الإصدار والتوليد...' : 'تأكيد وتوليد الحافظة الرسمية'}
                 </button>

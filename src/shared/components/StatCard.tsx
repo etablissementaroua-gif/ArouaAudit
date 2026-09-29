@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface StatCardProps {
@@ -53,7 +53,7 @@ export const StatCard: React.FC<StatCardProps> = ({
   const styles = getVariantStyles();
 
   return (
-    <div className="p-5 rounded-2xl border border-slate-200/90 bg-white shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+    <div className="p-5 rounded-2xl border border-slate-200/80 bg-white shadow-xs hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between">
         <span className="text-xs font-bold text-slate-500">{title}</span>
         <div className={`p-2 rounded-xl border border-slate-200/60 shadow-2xs ${styles.iconBg}`}>
@@ -61,7 +61,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
       </div>
       <div className="mt-3 flex items-baseline gap-2">
-        <h3 className={`text-2xl font-black tracking-tight font-mono ${styles.valColor}`}>{value}</h3>
+        <h3 className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>{value}</h3>
       </div>
       {(subtitle || trend) && (
         <div className="mt-2.5 flex items-center justify-between text-xs">

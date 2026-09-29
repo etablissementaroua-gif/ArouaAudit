@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   DollarSign, 
   Plus, 
@@ -101,7 +101,7 @@ export const CateringStatsView: React.FC = () => {
             setFormAmount(20000);
             setFormMotif('تغذية سيولة الصندوق المركزية');
           }}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-600/20 transition cursor-pointer"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           إيداع تغذية جديدة بالصندوق

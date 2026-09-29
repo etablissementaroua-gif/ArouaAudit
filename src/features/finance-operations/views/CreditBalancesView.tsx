@@ -129,7 +129,7 @@ export const CreditBalancesView: React.FC = () => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
         >
           <Plus className="w-5 h-5" />
           <span>تسجيل رصيد دائن جديد</span>
@@ -233,7 +233,7 @@ export const CreditBalancesView: React.FC = () => {
                         <div className="flex items-center justify-center gap-2">
                           <button
                             onClick={() => handleCarryOver(item.id)}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-emerald-700 rounded-xl text-xs font-semibold border border-indigo-500/30 transition-all hover:scale-105 active:scale-95"
+                            className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold border border-slate-200 transition-all hover:scale-105 active:scale-95"
                             title="ترحيل للخصم من الشهر الموالي"
                           >
                             <ArrowRightLeft className="w-3.5 h-3.5" />
@@ -363,7 +363,7 @@ export const CreditBalancesView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold shadow-lg shadow-indigo-600/20"
+                  className="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-sm font-bold shadow-md shadow-emerald-700/20 active:scale-95 transition-all"
                 >
                   تأكيد وحفظ الرصيد
                 </button>

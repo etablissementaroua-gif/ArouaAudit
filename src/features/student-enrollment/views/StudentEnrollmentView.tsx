@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useEnrollment } from '../controllers/useEnrollment';
 import { StudentRecord } from '../models/enrollmentModels';
 import { OfficialReceiptModal } from '../../treasury-caisse/components/OfficialReceiptModal';
@@ -107,7 +107,7 @@ export const StudentEnrollmentView: React.FC = () => {
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={() => refresh()}
-            className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition shadow-xs cursor-pointer"
+            className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl border border-slate-200 transition-colors cursor-pointer"
             title="تحديث القائمة"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -129,7 +129,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <button
             disabled={syncing}
             onClick={() => triggerSyncFromArouaSchools()}
-            className="bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-slate-900 font-bold text-xs px-5 py-2.5 rounded-xl shadow-[0_4px_12px_rgba(2,132,199,0.25)] transition-all active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Sparkles className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
             <span>{syncing ? 'جاري الاستقبال...' : 'استقبال دفعة من arouaschools'}</span>
@@ -140,7 +140,7 @@ export const StudentEnrollmentView: React.FC = () => {
       {/* 3. KPI Financial Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Due */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.03)] relative overflow-hidden border-r-4 border-r-sky-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-sky-500 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">إجمالي الذمم والرسوم</span>
             <div className="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100">
@@ -148,13 +148,13 @@ export const StudentEnrollmentView: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="text-slate-900 font-black font-mono text-2xl">{formatMAD(summary.totalDue)}</div>
+            <div className="text-slate-900 font-black font-mono text-3xl tracking-tight">{formatMAD(summary.totalDue)}</div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">مستحقات السنة الدراسية المعتمدة</div>
           </div>
         </div>
 
         {/* Collected */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.03)] relative overflow-hidden border-r-4 border-r-emerald-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-emerald-500 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">المستخلص الفعلي (المقبوض)</span>
             <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
@@ -162,13 +162,13 @@ export const StudentEnrollmentView: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="text-emerald-600 font-black font-mono text-2xl">{formatMAD(summary.totalPaid)}</div>
+            <div className="text-emerald-700 font-black font-mono text-3xl tracking-tight">{formatMAD(summary.totalPaid)}</div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">المسدد فعلياً في الحسابات</div>
           </div>
         </div>
 
         {/* Balance Remaining */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.03)] relative overflow-hidden border-r-4 border-r-rose-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-rose-500 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">الذمم المتبقية (قيد التحصيل)</span>
             <div className="p-2 rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
@@ -176,13 +176,13 @@ export const StudentEnrollmentView: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="text-rose-600 font-black font-mono text-2xl">{formatMAD(summary.totalBalance)}</div>
+            <div className="text-rose-700 font-black font-mono text-3xl tracking-tight">{formatMAD(summary.totalBalance)}</div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">ديون دراسية مفتوحة للمتابعة</div>
           </div>
         </div>
 
         {/* Transport & Canteen Subscribers */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.03)] relative overflow-hidden border-r-4 border-r-amber-500 flex flex-col justify-between">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow relative overflow-hidden border-r-4 border-r-amber-500 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">مشتركو النقل والمطعم</span>
             <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
@@ -190,7 +190,7 @@ export const StudentEnrollmentView: React.FC = () => {
             </div>
           </div>
           <div>
-            <div className="text-amber-600 font-black font-mono text-2xl">
+            <div className="text-amber-700 font-black font-mono text-3xl tracking-tight">
               {summary.transportSubscribers} نقل | {summary.canteenSubscribers} مطعم
             </div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">
@@ -222,7 +222,7 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, transportOnly: !prev.transportOnly }))}
             className={
               filters.transportOnly
-                ? "bg-sky-600 text-slate-900 font-bold rounded-xl px-3.5 py-2 text-xs shadow-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                ? "px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
                 : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
@@ -236,7 +236,7 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, canteenOnly: !prev.canteenOnly }))}
             className={
               filters.canteenOnly
-                ? "bg-sky-600 text-slate-900 font-bold rounded-xl px-3.5 py-2 text-xs shadow-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                ? "px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
                 : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
@@ -370,7 +370,7 @@ export const StudentEnrollmentView: React.FC = () => {
 
                         <button
                           onClick={() => handleOpenReceipt(st)}
-                          className="px-3 py-1.5 rounded-xl bg-sky-50 hover:bg-sky-600 hover:text-white text-sky-700 border border-sky-200 text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                           title="إصدار وطباعة وصل مالي رسمي بالشعار"
                         >
                           <FileText className="w-3 h-3" />
@@ -454,7 +454,7 @@ export const StudentEnrollmentView: React.FC = () => {
                   setSelectedStudent(null);
                   handleOpenReceipt(st);
                 }}
-                className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold shadow-md transition-all cursor-pointer"
+                className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
               >
                 طباعة وصل أداء رسمي بالشعار
               </button>

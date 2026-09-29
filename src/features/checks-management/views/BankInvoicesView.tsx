@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { checksManagementService } from '../services/checksManagement.service';
 import { BankReconciliationItem } from '../models/check.types';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
@@ -49,7 +49,7 @@ export const BankInvoicesView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3.5">
-          <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-700">
+          <div className="p-3 bg-teal-50 border border-teal-200 rounded-xl text-teal-700">
             <Scale className="w-6 h-6" />
           </div>
           <div>
@@ -61,7 +61,7 @@ export const BankInvoicesView: React.FC = () => {
         <button
           onClick={loadData}
           disabled={loading}
-          className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-xs disabled:opacity-50"
+          className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           <span>تحديث المطابقة اللحظية</span>
@@ -116,7 +116,7 @@ export const BankInvoicesView: React.FC = () => {
       </div>
 
       {/* Explanation Banner */}
-      <div className="p-4 bg-indigo-50/70 border border-indigo-200/80 rounded-2xl text-indigo-900 text-xs flex items-center gap-3 shadow-xs">
+      <div className="p-4 bg-teal-50/70 border border-teal-200/80 rounded-2xl text-teal-900 text-xs flex items-center gap-3 shadow-xs">
         <AlertCircle className="w-5 h-5 shrink-0 text-indigo-600" />
         <p className="leading-relaxed">
           المطابقة البنكية تضمن توافق كافة الشيكات المودعة بالحوافظ مع كشوفات الحساب المسلمة من الأبناك، وتبرير فروق التوقيت الناتجة عن مدة المقاصة (Délai de compensation interbancaire).
