@@ -27,7 +27,7 @@ export const FinanceOperationsView: React.FC = () => {
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-right">
-            <thead className="text-xs text-slate-500 border-b border-slate-700/60">
+            <thead className="text-xs text-slate-500 border-b border-slate-200">
               <tr>
                 <th className="py-2 text-right">التلميذ ورمز مسار</th>
                 <th className="py-2 text-right">المستوى</th>
@@ -36,9 +36,9 @@ export const FinanceOperationsView: React.FC = () => {
                 <th className="py-2 text-left">الإجراء المالي</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-xs">
+            <tbody className="divide-y divide-slate-100 text-xs">
               <tr>
-                <td className="py-3 font-semibold text-white">حمزة الشرايبي (R134567890)</td>
+                <td className="py-3 font-bold text-slate-900">حمزة الشرايبي (R134567890)</td>
                 <td className="py-3 text-slate-700">2Bac SM-A</td>
                 <td className="py-3 font-mono text-slate-800">41,500 MAD</td>
                 <td className="py-3 font-mono font-bold text-rose-600">21,500 MAD</td>
@@ -47,7 +47,7 @@ export const FinanceOperationsView: React.FC = () => {
                 </td>
               </tr>
               <tr>
-                <td className="py-3 font-semibold text-white">سامي الإدريسي العلمي (K138765432)</td>
+                <td className="py-3 font-bold text-slate-900">سامي الإدريسي العلمي (K138765432)</td>
                 <td className="py-3 text-slate-700">3Collège-2</td>
                 <td className="py-3 font-mono text-slate-800">29,000 MAD</td>
                 <td className="py-3 font-mono font-bold text-rose-600">15,000 MAD</td>
@@ -56,7 +56,7 @@ export const FinanceOperationsView: React.FC = () => {
                 </td>
               </tr>
               <tr>
-                <td className="py-3 font-semibold text-white">هبة بلقاسم (G149922110)</td>
+                <td className="py-3 font-bold text-slate-900">هبة بلقاسم (G149922110)</td>
                 <td className="py-3 text-slate-700">1Bac ScExp</td>
                 <td className="py-3 font-mono text-slate-800">39,500 MAD</td>
                 <td className="py-3 font-mono font-bold text-rose-600">20,000 MAD</td>

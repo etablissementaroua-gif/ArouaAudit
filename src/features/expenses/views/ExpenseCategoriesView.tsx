@@ -155,7 +155,7 @@ export const ExpenseCategoriesView: React.FC = () => {
           return (
             <div
               key={cat.id}
-              className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-emerald-300 hover:shadow-xs transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
@@ -231,8 +231,8 @@ export const ExpenseCategoriesView: React.FC = () => {
 
       {/* New Category Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-xs shadow-2xl p-6 text-white animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs">
+          <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-xl p-6 text-slate-900 animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-2">
                 <Tag className="w-4 h-4 text-emerald-700" />
@@ -338,7 +338,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-all disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-slate-900 font-bold transition-all disabled:opacity-50"
                 >
                   {submitting ? 'جاري الحفظ...' : 'حفظ الباب في الميزانية'}
                 </button>

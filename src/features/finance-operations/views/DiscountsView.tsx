@@ -136,7 +136,7 @@ export const DiscountsView: React.FC = () => {
           placeholder="بحث سريع باسم التلميذ، سبب التخفيض، أو المعرف..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
+          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 shadow-lg"
         />
       </div>
 
@@ -145,7 +145,7 @@ export const DiscountsView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-4">الخدمة المعنية</th>
@@ -167,7 +167,7 @@ export const DiscountsView: React.FC = () => {
               ) : (
                 filteredDiscounts.map(d => (
                   <tr key={d.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-4 px-4 font-medium text-white">
+                    <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{d.student_name}</span>
@@ -264,7 +264,7 @@ export const DiscountsView: React.FC = () => {
                     placeholder="الاسم الكامل"
                     value={newDiscount.student_name}
                     onChange={e => setNewDiscount({ ...newDiscount, student_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -275,7 +275,7 @@ export const DiscountsView: React.FC = () => {
                     placeholder="مثال: STU-2026-002"
                     value={newDiscount.student_id}
                     onChange={e => setNewDiscount({ ...newDiscount, student_id: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono"
                   />
                 </div>
               </div>
@@ -286,7 +286,7 @@ export const DiscountsView: React.FC = () => {
                   <select
                     value={newDiscount.service_type}
                     onChange={e => setNewDiscount({ ...newDiscount, service_type: e.target.value as any })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   >
                     <option value="scolarite">التمدرس (Scolarité)</option>
                     <option value="transport">النقل المدرسي (Transport)</option>
@@ -305,7 +305,7 @@ export const DiscountsView: React.FC = () => {
                     placeholder="10"
                     value={newDiscount.rate_or_amount || ''}
                     onChange={e => setNewDiscount({ ...newDiscount, rate_or_amount: Number(e.target.value) })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono font-bold text-left dir-ltr"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono font-bold text-left dir-ltr"
                   />
                 </div>
               </div>
@@ -317,7 +317,7 @@ export const DiscountsView: React.FC = () => {
                   placeholder="مثال: أخ ثان (10%)، أخ ثالث (20%)، اتفاقية نقابة التعليم"
                   value={newDiscount.beneficiary_relation}
                   onChange={e => setNewDiscount({ ...newDiscount, beneficiary_relation: e.target.value })}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
@@ -328,7 +328,7 @@ export const DiscountsView: React.FC = () => {
                   placeholder="مثال: الإدارة العامة، مجلس الإدارة"
                   value={newDiscount.approved_by}
                   onChange={e => setNewDiscount({ ...newDiscount, approved_by: e.target.value })}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 

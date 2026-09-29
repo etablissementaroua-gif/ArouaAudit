@@ -177,7 +177,7 @@ export const TransportConfigView: React.FC = () => {
           return (
             <div
               key={line.id}
-              className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-emerald-300 hover:shadow-xs transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
                 {/* Top Badge & Line Code */}
@@ -210,7 +210,7 @@ export const TransportConfigView: React.FC = () => {
                 <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 border border-slate-200/80 text-xs space-y-1.5 mb-3">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-500">السائق المعتمد:</span>
-                    <span className="font-semibold text-white">{line.driver_name}</span>
+                    <span className="font-bold text-slate-900">{line.driver_name}</span>
                   </div>
                   {line.driver_phone && (
                     <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono">

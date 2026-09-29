@@ -175,7 +175,7 @@ export const MonthlyCAView: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
               <tr>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-3 text-center">التلاميذ المسجلون</th>
@@ -227,7 +227,7 @@ export const MonthlyCAView: React.FC = () => {
                 ))
               )}
             </tbody>
-            <tfoot className="bg-slate-50 font-bold border-t border-slate-700 text-white">
+            <tfoot className="bg-slate-50 font-bold border-t border-slate-200 text-white">
               <tr>
                 <td className="py-3.5 px-4">المجموع العام الشهري</td>
                 <td className="py-3.5 px-3 text-center font-mono text-emerald-700">{totalStudents}</td>

@@ -224,7 +224,7 @@ export const ChecksToDepositView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4 w-12 text-center">اختيار</th>
                 <th className="py-4 px-4">رقم الشيك</th>
                 <th className="py-4 px-4">البنك الساحب</th>
@@ -262,7 +262,7 @@ export const ChecksToDepositView: React.FC = () => {
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => handleToggleCheck(chk.id)}
-                          className="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-white border-slate-700 cursor-pointer"
+                          className="w-4 h-4 rounded text-indigo-600 focus:ring-0 bg-white border-slate-200 cursor-pointer"
                         />
                       </td>
 
@@ -331,7 +331,7 @@ export const ChecksToDepositView: React.FC = () => {
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md border border-indigo-500/40 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-6 animate-in slide-in-from-bottom duration-200">
           <div className="flex items-center gap-2">
             <span className="w-3 h-3 rounded-full bg-indigo-500 animate-ping" />
-            <span className="text-sm font-semibold text-white">
+            <span className="text-sm font-bold text-slate-900">
               تم تحديد <span className="font-mono text-emerald-700 text-base">{selectedCheckIds.length}</span> شيكات
             </span>
           </div>
@@ -389,7 +389,7 @@ export const ChecksToDepositView: React.FC = () => {
                 <select
                   value={selectedAccountId}
                   onChange={e => setSelectedAccountId(e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                   required
                 >
                   {bankAccounts.map(acc => (
@@ -418,7 +418,7 @@ export const ChecksToDepositView: React.FC = () => {
                   value={remiseNotes}
                   onChange={e => setRemiseNotes(e.target.value)}
                   placeholder="مثال: إيداع دفعة شتنبر لشيكات التمدرس"
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                 />
               </div>
 

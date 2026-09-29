@@ -18,7 +18,7 @@ export const PayrollTable: React.FC<{ slips: StaffPayrollSlip[] }> = ({ slips })
             <th className="px-4 py-3 text-left">الحالة</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800/60">
+        <tbody className="divide-y divide-slate-100">
           {slips.map(s => (
             <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
               <td className="px-4 py-3">
@@ -37,8 +37,8 @@ export const PayrollTable: React.FC<{ slips: StaffPayrollSlip[] }> = ({ slips })
                 )}
               </td>
               <td className="px-4 py-3 text-left">
-                {s.status === 'paye' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-950/80 text-emerald-700 border border-emerald-500/20"><Check className="w-3.5 h-3.5" /> مدفوع</span>}
-                {s.status === 'valide' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-950/80 text-sky-400 border border-sky-500/20"><Clock className="w-3.5 h-3.5" /> معتمد</span>}
+                {s.status === 'paye' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold"><Check className="w-3.5 h-3.5" /> مدفوع</span>}
+                {s.status === 'valide' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-50 text-sky-800 border border-sky-200 font-bold"><Clock className="w-3.5 h-3.5" /> معتمد</span>}
                 {s.status === 'brouillon' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-slate-100 text-slate-600 border border-slate-200"><AlertCircle className="w-3.5 h-3.5" /> مسودة</span>}
               </td>
             </tr>

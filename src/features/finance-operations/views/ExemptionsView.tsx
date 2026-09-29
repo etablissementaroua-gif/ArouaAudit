@@ -136,7 +136,7 @@ export const ExemptionsView: React.FC = () => {
           placeholder="بحث سريع باسم التلميذ، سبب الإعفاء، أو المعرف..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
+          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 shadow-lg"
         />
       </div>
 
@@ -145,7 +145,7 @@ export const ExemptionsView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-4">نوع الإعفاء</th>
@@ -167,7 +167,7 @@ export const ExemptionsView: React.FC = () => {
               ) : (
                 filteredExemptions.map(e => (
                   <tr key={e.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-4 px-4 font-medium text-white">
+                    <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{e.student_name}</span>
@@ -265,7 +265,7 @@ export const ExemptionsView: React.FC = () => {
                     placeholder="الاسم الكامل"
                     value={newExemption.student_name}
                     onChange={e => setNewExemption({ ...newExemption, student_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ export const ExemptionsView: React.FC = () => {
                     placeholder="مثال: STU-2026-008"
                     value={newExemption.student_id}
                     onChange={e => setNewExemption({ ...newExemption, student_id: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono"
                   />
                 </div>
               </div>
@@ -287,7 +287,7 @@ export const ExemptionsView: React.FC = () => {
                   <select
                     value={newExemption.type}
                     onChange={e => setNewExemption({ ...newExemption, type: e.target.value as any })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   >
                     <option value="gratuite_totale">إعفاء دراسي كامل (100%)</option>
                     <option value="gratuite_partielle">إعفاء جزئي لخدمة محددة</option>
@@ -299,7 +299,7 @@ export const ExemptionsView: React.FC = () => {
                   <select
                     value={newExemption.service_type}
                     onChange={e => setNewExemption({ ...newExemption, service_type: e.target.value as any })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   >
                     <option value="scolarite">واجبات التمدرس (Scolarité)</option>
                     <option value="cantine">المطعم المدرسي (Cantine)</option>
@@ -316,7 +316,7 @@ export const ExemptionsView: React.FC = () => {
                   placeholder="مثال: ابن أستاذ(ة)، منحة تشجيعية، دعم اجتماعي معتمد"
                   value={newExemption.beneficiary_relation}
                   onChange={e => setNewExemption({ ...newExemption, beneficiary_relation: e.target.value })}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
@@ -327,7 +327,7 @@ export const ExemptionsView: React.FC = () => {
                   placeholder="مثال: مجلس الإدارة، الإدارة العامة"
                   value={newExemption.approved_by}
                   onChange={e => setNewExemption({ ...newExemption, approved_by: e.target.value })}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 

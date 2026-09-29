@@ -15,7 +15,7 @@ export const ExternalSyncView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">مطابقة التلاميذ والموظفين والرسوم عبر المعرف المرجعي external_source_id وضمان اتساق البيانات</p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => refresh()} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-white font-medium text-xs border border-slate-700 transition">
+          <button onClick={() => refresh()} className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-white font-medium text-xs border border-slate-200 transition">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             بدء فحص المزامنة الحية
           </button>
@@ -40,7 +40,7 @@ export const ExternalSyncView: React.FC = () => {
               <th className="px-4 py-3 text-left">الحالة</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-slate-100">
             {mappings.map(m => (
               <tr key={m.id} className="hover:bg-slate-50/80 transition-colors">
                 <td className="px-4 py-3 text-slate-800 font-medium">
@@ -51,9 +51,9 @@ export const ExternalSyncView: React.FC = () => {
                 <td className="px-4 py-3 font-mono text-xs text-slate-700">{formatDateFR(m.last_synced_at)}</td>
                 <td className="px-4 py-3 text-left">
                   {m.sync_status === 'synced' ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-950/80 text-emerald-700 border border-emerald-500/20"><CheckCircle2 className="w-3 h-3" /> متزامن</span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold"><CheckCircle2 className="w-3 h-3" /> متزامن</span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-amber-950/80 text-amber-700 border border-amber-500/20"><Clock className="w-3 h-3" /> قيد المزامنة</span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-amber-50 text-amber-800 border border-amber-200 font-bold"><Clock className="w-3 h-3" /> قيد المزامنة</span>
                   )}
                 </td>
               </tr>

@@ -314,7 +314,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                         <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
                           <span>{emp.full_name}</span>
                           <span 
-                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200"
                             title="إطار معتمد ومطابق رسمياً من منظومة arouaschools"
                           >
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />

@@ -58,7 +58,7 @@ export const StudentEnrollmentView: React.FC = () => {
   const getSourceBadge = (platform: string) => {
     if (platform === 'arouaschools') {
       return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           منظومة أروى (arouaschools)
         </span>
@@ -129,7 +129,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <button
             disabled={syncing}
             onClick={() => triggerSyncFromArouaSchools()}
-            className="bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-[0_4px_12px_rgba(2,132,199,0.25)] transition-all active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-slate-900 font-bold text-xs px-5 py-2.5 rounded-xl shadow-[0_4px_12px_rgba(2,132,199,0.25)] transition-all active:scale-95 flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Sparkles className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
             <span>{syncing ? 'جاري الاستقبال...' : 'استقبال دفعة من arouaschools'}</span>
@@ -222,7 +222,7 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, transportOnly: !prev.transportOnly }))}
             className={
               filters.transportOnly
-                ? "bg-sky-600 text-white font-bold rounded-xl px-3.5 py-2 text-xs shadow-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                ? "bg-sky-600 text-slate-900 font-bold rounded-xl px-3.5 py-2 text-xs shadow-xs cursor-pointer flex items-center gap-1.5 transition-all"
                 : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
@@ -236,7 +236,7 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, canteenOnly: !prev.canteenOnly }))}
             className={
               filters.canteenOnly
-                ? "bg-sky-600 text-white font-bold rounded-xl px-3.5 py-2 text-xs shadow-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                ? "bg-sky-600 text-slate-900 font-bold rounded-xl px-3.5 py-2 text-xs shadow-xs cursor-pointer flex items-center gap-1.5 transition-all"
                 : "bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >

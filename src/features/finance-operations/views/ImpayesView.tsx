@@ -252,7 +252,7 @@ export const ImpayesView: React.FC = () => {
             onClick={() => setFilters({ ...filters, service_type: 'all' })}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'all'
-                ? 'bg-indigo-600 text-white font-bold shadow-xs'
+                ? 'bg-indigo-600 text-slate-900 font-bold shadow-xs'
                 : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
             }`}
           >

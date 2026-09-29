@@ -35,10 +35,10 @@ export const RevenueAnalyticsView: React.FC = () => {
               <th className="px-4 py-3 text-left">مؤشر الربحية</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-slate-100">
             {metrics.map((m, idx) => (
               <tr key={idx} className="hover:bg-slate-50/80 transition-colors">
-                <td className="px-4 py-3 text-white font-semibold">{m.period}</td>
+                <td className="px-4 py-3 text-slate-900 font-bold">{m.period}</td>
                 <td className="px-4 py-3 font-mono text-emerald-700 font-bold">{formatMAD(m.income)}</td>
                 <td className="px-4 py-3 font-mono text-rose-600 font-bold">{formatMAD(m.expense)}</td>
                 <td className="px-4 py-3 font-mono text-sky-400 font-bold">{formatMAD(m.margin)}</td>

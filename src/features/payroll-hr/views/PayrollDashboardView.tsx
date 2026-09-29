@@ -191,7 +191,7 @@ export const PayrollDashboardView: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
               <tr>
                 <th className="py-4 px-4">الموظف والمنصب</th>
                 <th className="py-4 px-3 text-center">الراتب الأساسي (Base)</th>

@@ -180,7 +180,7 @@ export const DeliverySlipsView: React.FC = () => {
           <div className="bg-white border border-slate-200 shadow-xs w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-8">
             {/* Modal Control Header */}
             <div className="flex items-center justify-between p-4 border-b border-slate-200 bg-white print:hidden">
-              <div className="flex items-center gap-2 text-white font-bold text-sm">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
                 <Printer className="w-4 h-4 text-emerald-700" />
                 <span>معاينة الحافظة البنكية الرسمية قبل الطباعة</span>
               </div>

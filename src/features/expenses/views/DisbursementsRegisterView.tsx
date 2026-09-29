@@ -309,7 +309,7 @@ export const DisbursementsRegisterView: React.FC = () => {
 
       {/* Direct Create Voucher Modal */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs overflow-y-auto">
           <div className="w-full max-w-lg bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 text-slate-900 my-8 animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
               <div className="flex items-center gap-2">

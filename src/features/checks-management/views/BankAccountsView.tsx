@@ -181,7 +181,7 @@ export const BankAccountsView: React.FC = () => {
             return (
               <div 
                 key={acc.id}
-                className="bg-white border border-slate-200 shadow-xs hover:border-slate-700 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-all duration-200"
+                className="bg-white border border-slate-200 shadow-xs hover:border-emerald-300 rounded-2xl p-6 shadow-xl relative overflow-hidden transition-all duration-200"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -286,7 +286,7 @@ export const BankAccountsView: React.FC = () => {
                   placeholder="مثال: الحساب الجاري للمصاريف - بنك CIH"
                   value={newAccount.account_name}
                   onChange={e => setNewAccount({ ...newAccount, account_name: e.target.value })}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                   required
                 />
               </div>
@@ -297,7 +297,7 @@ export const BankAccountsView: React.FC = () => {
                   <select
                     value={newAccount.bank_name}
                     onChange={e => setNewAccount({ ...newAccount, bank_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                   >
                     <option value="Attijariwafa Bank">Attijariwafa Bank</option>
                     <option value="Banque Populaire">Banque Populaire (البنك الشعبي)</option>
@@ -316,7 +316,7 @@ export const BankAccountsView: React.FC = () => {
                     placeholder="مثال: وكالة أكدال - الرباط"
                     value={newAccount.agency}
                     onChange={e => setNewAccount({ ...newAccount, agency: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>

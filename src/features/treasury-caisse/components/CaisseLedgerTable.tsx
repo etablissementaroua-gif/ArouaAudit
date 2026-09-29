@@ -7,12 +7,12 @@ import { ArrowDownLeft, ArrowUpRight, Banknote, CreditCard, FileSpreadsheet } fr
 export const CaisseLedgerTable: React.FC<{ transactions: CaisseTransaction[] }> = ({ transactions }) => {
   const getBadge = (m: string) => {
     if (m === 'especes') {
-      return <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-950/80 text-emerald-700 border border-emerald-500/20"><Banknote className="w-3 h-3" /> نقد</span>;
+      return <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold"><Banknote className="w-3 h-3" /> نقد</span>;
     }
     if (m === 'cheque') {
-      return <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-amber-950/80 text-amber-700 border border-amber-500/20"><FileSpreadsheet className="w-3 h-3" /> شيك</span>;
+      return <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-amber-50 text-amber-800 border border-amber-200 font-bold"><FileSpreadsheet className="w-3 h-3" /> شيك</span>;
     }
-    return <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-950/80 text-sky-400 border border-sky-500/20"><CreditCard className="w-3 h-3" /> تحويل</span>;
+    return <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-50 text-sky-800 border border-sky-200 font-bold"><CreditCard className="w-3 h-3" /> تحويل</span>;
   };
 
   return (
@@ -28,7 +28,7 @@ export const CaisseLedgerTable: React.FC<{ transactions: CaisseTransaction[] }> 
             <th className="px-4 py-3 text-left">المبلغ</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-800/60">
+        <tbody className="divide-y divide-slate-100">
           {transactions.map(t => (
             <tr key={t.id} className="hover:bg-slate-50/80 transition-colors">
               <td className="px-4 py-3 text-slate-700 font-mono text-xs">{formatDateFR(t.transaction_date)}</td>

@@ -152,7 +152,7 @@ export const CreditBalancesView: React.FC = () => {
 
         <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl">
           <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">المبالغ المرحلة سابقاً</span>
-          <p className="text-2xl font-bold text-indigo-300 font-mono">
+          <p className="text-2xl font-bold text-indigo-700 font-mono font-bold">
             {formatMAD(balances.filter(b => b.status === 'carried_over').reduce((s, b) => s + b.credit_amount, 0))}
           </p>
           <span className="text-xs text-slate-500 mt-1 block">تم خصمها في دورات سابقة</span>
@@ -167,7 +167,7 @@ export const CreditBalancesView: React.FC = () => {
           placeholder="بحث سريع باسم التلميذ، المعرف، أو مرجع الوصل..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
+          className="w-full bg-white border border-slate-200 rounded-2xl shadow-xs pr-10 pl-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 shadow-lg"
         />
       </div>
 
@@ -176,7 +176,7 @@ export const CreditBalancesView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-4">مبلغ الرصيد الدائن</th>
@@ -198,7 +198,7 @@ export const CreditBalancesView: React.FC = () => {
               ) : (
                 filteredBalances.map(item => (
                   <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="py-4 px-4 font-medium text-white">
+                    <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-slate-500 flex-shrink-0" />
                         <span>{item.student_name}</span>
@@ -288,7 +288,7 @@ export const CreditBalancesView: React.FC = () => {
                     placeholder="اسم التلميذ الثلاثي"
                     value={newCredit.student_name}
                     onChange={e => setNewCredit({ ...newCredit, student_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -299,7 +299,7 @@ export const CreditBalancesView: React.FC = () => {
                     placeholder="مثال: STU-2026-001"
                     value={newCredit.student_id}
                     onChange={e => setNewCredit({ ...newCredit, student_id: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono"
                   />
                 </div>
               </div>
@@ -312,7 +312,7 @@ export const CreditBalancesView: React.FC = () => {
                     placeholder="مثال: CE1"
                     value={newCredit.academic_level}
                     onChange={e => setNewCredit({ ...newCredit, academic_level: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -326,7 +326,7 @@ export const CreditBalancesView: React.FC = () => {
                     placeholder="0.00"
                     value={newCredit.credit_amount || ''}
                     onChange={e => setNewCredit({ ...newCredit, credit_amount: Number(e.target.value) })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono font-bold text-left dir-ltr"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono font-bold text-left dir-ltr"
                   />
                 </div>
               </div>
@@ -338,7 +338,7 @@ export const CreditBalancesView: React.FC = () => {
                   placeholder="مثال: REC-2026-0891 أو رقم الشيك/التحويل"
                   value={newCredit.source_payment_reference}
                   onChange={e => setNewCredit({ ...newCredit, source_payment_reference: e.target.value })}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono"
                 />
               </div>
 
@@ -349,7 +349,7 @@ export const CreditBalancesView: React.FC = () => {
                   value={newCredit.notes}
                   onChange={e => setNewCredit({ ...newCredit, notes: e.target.value })}
                   placeholder="مثال: تسديد واجب شهرين دفعة واحدة مع زيادة في المبلغ..."
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 

@@ -130,7 +130,7 @@ export const AnnualCAView: React.FC = () => {
           <h2 className="text-sm font-bold text-slate-900">تفصيل مكونات رقم المعاملات السنوي التقديري (10 أشهر)</h2>
         </div>
 
-        <div className="divide-y divide-slate-800/60 text-xs">
+        <div className="divide-y divide-slate-100 text-xs">
           <div className="p-4 px-6 flex items-center justify-between hover:bg-slate-50/80">
             <span className="font-medium text-slate-800">1. مجموع أقساط التمدرس السنوية (Tuition × 10 mois)</span>
             <span className="font-mono font-bold text-slate-900 text-sm">{(summary?.monthly_tuition_x10 || 0).toLocaleString()} MAD</span>
@@ -151,7 +151,7 @@ export const AnnualCAView: React.FC = () => {
             <span className="font-medium text-slate-800">5. واجبات المحفظة واللوازم (Frais des fournitures scolaires)</span>
             <span className="font-mono font-bold text-slate-700 text-sm">{(summary?.total_supplies_fees || 0).toLocaleString()} MAD</span>
           </div>
-          <div className="p-4 px-6 flex items-center justify-between bg-slate-50 font-bold border-t border-slate-700">
+          <div className="p-4 px-6 flex items-center justify-between bg-slate-50 font-bold border-t border-slate-200">
             <span className="text-white">الإجمالي السنوي التقديري الشامل</span>
             <span className="font-mono font-bold text-base text-emerald-700">{(summary?.annual_theoretical_ca || 0).toLocaleString()} MAD</span>
           </div>

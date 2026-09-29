@@ -35,18 +35,18 @@ export const PreInscriptionView: React.FC = () => {
               <th className="px-4 py-3 text-left">الحالة</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-slate-100">
             {candidates.map(c => (
               <tr key={c.id} className="hover:bg-slate-50/80 transition-colors">
-                <td className="px-4 py-3 text-white font-semibold">{c.candidate_name}</td>
+                <td className="px-4 py-3 text-slate-900 font-bold">{c.candidate_name}</td>
                 <td className="px-4 py-3 text-slate-700">{c.grade_level}</td>
                 <td className="px-4 py-3 text-slate-500 font-mono text-xs">{c.parent_phone}</td>
                 <td className="px-4 py-3 text-slate-500 font-mono text-xs">{formatDateFR(c.application_date)}</td>
                 <td className="px-4 py-3 font-mono font-bold text-emerald-700">{formatMAD(c.application_fee)}</td>
                 <td className="px-4 py-3 text-left">
-                  {c.status === 'accepted' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-950/80 text-emerald-700 border border-emerald-500/20">مقبول</span>}
-                  {c.status === 'interview_scheduled' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-950/80 text-sky-400 border border-sky-500/20">موعد مقابلة</span>}
-                  {c.status === 'pending' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-amber-950/80 text-amber-700 border border-amber-500/20">قيد الدراسة</span>}
+                  {c.status === 'accepted' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">مقبول</span>}
+                  {c.status === 'interview_scheduled' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-50 text-sky-800 border border-sky-200 font-bold">موعد مقابلة</span>}
+                  {c.status === 'pending' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-amber-50 text-amber-800 border border-amber-200 font-bold">قيد الدراسة</span>}
                 </td>
               </tr>
             ))}

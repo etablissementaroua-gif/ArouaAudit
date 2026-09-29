@@ -221,7 +221,7 @@ export const AcademicYearsView: React.FC = () => {
                     key={year.id || year.code}
                     className={`hover:bg-slate-50/80 transition-colors ${year.is_current ? 'bg-indigo-950/20' : ''}`}
                   >
-                    <td className="py-4 px-4 font-mono font-bold text-sm text-white flex items-center gap-2">
+                    <td className="py-4 px-4 font-mono font-bold text-sm text-slate-900 flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${year.is_current ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' : 'bg-slate-600'}`} />
                       {year.code}
                     </td>
@@ -359,7 +359,7 @@ export const AcademicYearsView: React.FC = () => {
                   id="setCurrentCheckbox"
                   checked={formIsCurrent}
                   onChange={(e) => setFormIsCurrent(e.target.checked)}
-                  className="rounded border-slate-700 bg-white text-indigo-600 focus:ring-0 w-4 h-4 cursor-pointer"
+                  className="rounded border-slate-200 bg-white text-indigo-600 focus:ring-0 w-4 h-4 cursor-pointer"
                 />
                 <label htmlFor="setCurrentCheckbox" className="text-xs text-slate-700 cursor-pointer">
                   تعيين هذه السنة كسنة دراسية نشطة فوراً للحسابات

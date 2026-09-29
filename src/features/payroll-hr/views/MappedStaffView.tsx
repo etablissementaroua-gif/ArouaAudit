@@ -37,7 +37,7 @@ export const MappedStaffView: React.FC = () => {
               <th className="px-4 py-3 text-left">حالة المزامنة</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-slate-100">
             {staff.map((s) => (
               <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
                 <td className="px-4 py-3">

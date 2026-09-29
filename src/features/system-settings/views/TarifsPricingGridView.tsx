@@ -340,7 +340,7 @@ export const TarifsPricingGridView: React.FC = () => {
       <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
               <tr>
                 <th className="py-4 px-4">المستوى والسلك</th>
                 <th className="py-4 px-3 text-center">التمدرس الشهري (Scolarité)</th>
@@ -395,7 +395,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="50"
                           value={tarif.tuition_monthly}
                           onChange={(e) => handleInputChange(lvl.level_code, 'tuition_monthly', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-900 font-mono font-bold text-xs focus:border-indigo-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-200 text-slate-900 font-mono font-bold text-xs focus:border-indigo-500 focus:outline-none"
                         />
                         <span className="absolute left-2 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -409,7 +409,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="50"
                           value={tarif.transport_monthly}
                           onChange={(e) => handleInputChange(lvl.level_code, 'transport_monthly', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-amber-300 font-mono text-xs focus:border-amber-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-200 text-amber-700 font-mono font-bold text-xs focus:border-amber-500 focus:outline-none"
                         />
                         <span className="absolute left-2 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -423,7 +423,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="50"
                           value={tarif.canteen_monthly}
                           onChange={(e) => handleInputChange(lvl.level_code, 'canteen_monthly', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-200 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
                         />
                         <span className="absolute left-2 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -438,7 +438,7 @@ export const TarifsPricingGridView: React.FC = () => {
                             step="50"
                             value={tarif.supplies_fee}
                             onChange={(e) => handleInputChange(lvl.level_code, 'supplies_fee', e.target.value)}
-                            className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-200 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
                           />
                           <span className="absolute left-1.5 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                         </div>
@@ -461,7 +461,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="100"
                           value={tarif.registration_fee}
                           onChange={(e) => handleInputChange(lvl.level_code, 'registration_fee', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-emerald-700 font-mono text-xs focus:border-emerald-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-200 text-emerald-700 font-mono text-xs focus:border-emerald-500 focus:outline-none"
                         />
                         <span className="absolute left-1.5 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -475,7 +475,7 @@ export const TarifsPricingGridView: React.FC = () => {
                           step="100"
                           value={tarif.re_registration_fee}
                           onChange={(e) => handleInputChange(lvl.level_code, 're_registration_fee', e.target.value)}
-                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-700 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
+                          className="w-full text-center py-1.5 px-2 rounded-lg bg-white border border-slate-200 text-slate-800 font-mono text-xs focus:border-indigo-500 focus:outline-none"
                         />
                         <span className="absolute left-1.5 top-2 text-[9px] text-slate-500 font-mono">MAD</span>
                       </div>
@@ -552,7 +552,7 @@ export const TarifsPricingGridView: React.FC = () => {
                     placeholder="اسم المقرر، الدفتر، أو الوسيلة..."
                     value={newSupplyName}
                     onChange={(e) => setNewSupplyName(e.target.value)}
-                    className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-700 text-white text-xs focus:border-indigo-500 focus:outline-none"
+                    className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none"
                   />
                   <input 
                     type="number"
@@ -560,7 +560,7 @@ export const TarifsPricingGridView: React.FC = () => {
                     placeholder="الكمية"
                     value={newSupplyQty}
                     onChange={(e) => setNewSupplyQty(Number(e.target.value))}
-                    className="w-16 px-2 py-1.5 rounded-lg bg-white border border-slate-700 text-white text-xs text-center focus:border-indigo-500 focus:outline-none"
+                    className="w-16 px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs text-center focus:border-indigo-500 focus:outline-none"
                   />
                   <button
                     type="button"
@@ -577,7 +577,7 @@ export const TarifsPricingGridView: React.FC = () => {
                     id="mandCheckbox"
                     checked={newSupplyMandatory}
                     onChange={(e) => setNewSupplyMandatory(e.target.checked)}
-                    className="rounded border-slate-700 bg-white text-indigo-600 w-3.5 h-3.5 cursor-pointer"
+                    className="rounded border-slate-200 bg-white text-indigo-600 w-3.5 h-3.5 cursor-pointer"
                   />
                   <label htmlFor="mandCheckbox" className="text-[11px] text-slate-500 cursor-pointer">
                     بند إلزامي ضمن المحفظة المدرسية
@@ -601,7 +601,7 @@ export const TarifsPricingGridView: React.FC = () => {
                         <span className="w-5 h-5 rounded-full bg-indigo-600/20 text-emerald-700 font-mono text-[10px] flex items-center justify-center">
                           {index + 1}
                         </span>
-                        <span className="font-medium text-white">{item.item_name}</span>
+                        <span className="font-bold text-slate-900">{item.item_name}</span>
                         <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200/60 font-mono text-[10px]">
                           الكمية: {item.quantity}
                         </span>

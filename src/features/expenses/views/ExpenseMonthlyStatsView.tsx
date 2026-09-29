@@ -139,7 +139,7 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
               return (
                 <div key={item.month_key} className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-white">{item.month_label}</span>
+                    <span className="font-bold text-slate-900">{item.month_label}</span>
                     <div className="flex items-center gap-3 font-mono text-[11px]">
                       <span className="text-purple-400">ثابتة: {formatMAD(item.fixed_charges)}</span>
                       <span className="text-slate-600">|</span>
@@ -193,7 +193,7 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
                 <th className="py-3 px-4 text-center">النسبة من إجمالي النفقات</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 font-mono">
+            <tbody className="divide-y divide-slate-100 font-mono">
               {monthlyStats.map((item) => {
                 const shareOfTotal = totalSpent > 0 ? (item.total_charges / totalSpent) * 100 : 0;
                 return (

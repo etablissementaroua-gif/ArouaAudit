@@ -127,7 +127,7 @@ export const StaffDebtsView: React.FC = () => {
       <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden backdrop-blur-md">
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
               <tr>
                 <th className="py-4 px-4">الموظف السابق</th>
                 <th className="py-4 px-3">المنصب السابق</th>

@@ -240,7 +240,7 @@ export const ChecksPortfolioView: React.FC = () => {
             placeholder="بحث برقم الشيك، اسم الساحب، أو معرف التلميذ..."
             value={filters.search}
             onChange={e => setFilters({ ...filters, search: e.target.value })}
-            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
           />
         </div>
 
@@ -278,7 +278,7 @@ export const ChecksPortfolioView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">رقم الشيك</th>
                 <th className="py-4 px-4">البنك المسحوب عليه</th>
                 <th className="py-4 px-4">الساحب / التلميذ المرتبط</th>
@@ -431,7 +431,7 @@ export const ChecksPortfolioView: React.FC = () => {
 
             <div className="space-y-4">
               <div className="p-3 bg-white rounded-xl text-xs space-y-1">
-                <p className="text-slate-500">الساحب: <span className="text-white font-semibold">{selectedCheckForReject.issuer_name}</span></p>
+                <p className="text-slate-500">الساحب: <span className="text-slate-900 font-bold">{selectedCheckForReject.issuer_name}</span></p>
                 <p className="text-slate-500">المبلغ: <span className="text-emerald-700 font-mono font-bold">{formatMAD(selectedCheckForReject.amount)}</span></p>
               </div>
 
@@ -440,7 +440,7 @@ export const ChecksPortfolioView: React.FC = () => {
                 <select
                   value={rejectionReason}
                   onChange={e => setRejectionReason(e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-rose-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-rose-500"
                 >
                   <option value="انعدام المؤونة الكافية في الحساب (Défaut de provision)">انعدام المؤونة الكافية في الحساب (Défaut de provision)</option>
                   <option value="توقيع غير مطابق (Signature non conforme)">توقيع غير مطابق (Signature non conforme)</option>
@@ -514,7 +514,7 @@ export const ChecksPortfolioView: React.FC = () => {
                   <select
                     value={newCheck.bank_name}
                     onChange={e => setNewCheck({ ...newCheck, bank_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                   >
                     <option value="Attijariwafa Bank">Attijariwafa Bank</option>
                     <option value="Banque Populaire">Banque Populaire (الشعبي)</option>
@@ -535,7 +535,7 @@ export const ChecksPortfolioView: React.FC = () => {
                     placeholder="مثال: ذ. عبد الرحيم العلمي"
                     value={newCheck.issuer_name}
                     onChange={e => setNewCheck({ ...newCheck, issuer_name: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                     required
                   />
                 </div>
@@ -547,7 +547,7 @@ export const ChecksPortfolioView: React.FC = () => {
                     placeholder="STU-2026-001 أو اسم التلميذ"
                     value={newCheck.student_id || ''}
                     onChange={e => setNewCheck({ ...newCheck, student_id: e.target.value })}
-                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>

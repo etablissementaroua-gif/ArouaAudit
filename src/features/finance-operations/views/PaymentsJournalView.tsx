@@ -151,7 +151,7 @@ export const PaymentsJournalView: React.FC = () => {
             placeholder="بحث برقم الوصل، اسم التلميذ، أو أمين الصندوق..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-indigo-500"
           />
         </div>
 
@@ -174,7 +174,7 @@ export const PaymentsJournalView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 border border-slate-200 text-slate-500 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">رقم الوصل والتاريخ</th>
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المبلغ المستخلص</th>
@@ -204,7 +204,7 @@ export const PaymentsJournalView: React.FC = () => {
                       </div>
                     </td>
 
-                    <td className="py-4 px-4 font-medium text-white">
+                    <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-1.5">
                         <User className="w-3.5 h-3.5 text-slate-500" />
                         <span>{p.student_name}</span>
@@ -230,17 +230,17 @@ export const PaymentsJournalView: React.FC = () => {
                     <td className="py-4 px-4 text-xs">
                       <div className="flex items-center gap-2">
                         {p.service_breakdown.scolarite > 0 && (
-                          <span className="bg-white px-2 py-0.5 rounded text-indigo-300 font-mono border border-slate-200">
+                          <span className="bg-white px-2 py-0.5 rounded text-indigo-700 font-mono font-bold border border-slate-200">
                             تمدرس: {formatMAD(p.service_breakdown.scolarite)}
                           </span>
                         )}
                         {p.service_breakdown.transport > 0 && (
-                          <span className="bg-white px-2 py-0.5 rounded text-amber-300 font-mono border border-slate-200">
+                          <span className="bg-white px-2 py-0.5 rounded text-amber-700 font-mono font-bold border border-slate-200">
                             نقل: {formatMAD(p.service_breakdown.transport)}
                           </span>
                         )}
                         {p.service_breakdown.cantine > 0 && (
-                          <span className="bg-white px-2 py-0.5 rounded text-cyan-300 font-mono border border-slate-200">
+                          <span className="bg-white px-2 py-0.5 rounded text-sky-700 font-mono font-bold border border-slate-200">
                             مطعم: {formatMAD(p.service_breakdown.cantine)}
                           </span>
                         )}

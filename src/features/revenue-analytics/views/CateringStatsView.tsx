@@ -155,7 +155,7 @@ export const CateringStatsView: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-right text-xs">
-            <thead className="bg-slate-50 text-slate-500 border-b border-slate-200 font-semibold uppercase">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
               <tr>
                 <th className="py-4 px-4">التاريخ والمرجع</th>
                 <th className="py-4 px-3">مصدر التغذية</th>
@@ -322,7 +322,7 @@ export const CateringStatsView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={formSubmitting}
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-md shadow-emerald-600/30 transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-900 font-bold shadow-md shadow-emerald-600/30 transition cursor-pointer"
                 >
                   {formSubmitting ? 'جاري الإيداع...' : 'تأكيد وإيداع التغذية'}
                 </button>

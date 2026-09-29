@@ -94,3 +94,32 @@
     print-color-adjust: exact !important;
   }
 }
+@layer components {
+  /* خلفية الحاوية العامة للشاشات */
+  .page-container {
+    @apply min-h-screen bg-[#F8FAFC] p-6 space-y-6 text-slate-800;
+  }
+  
+  /* البطاقات العلوية وحاويات العناوين */
+  .card-container {
+    @apply bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xs;
+  }
+
+  /* بطاقات الإحصائيات (KPI Cards) */
+  .kpi-card {
+    @apply bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs relative overflow-hidden transition-all duration-200 hover:shadow-sm;
+  }
+
+  /* الجداول المالية والبيانية */
+  .table-container {
+    @apply bg-white border border-slate-200/80 rounded-2xl shadow-xs overflow-hidden;
+  }
+
+  .table-header {
+    @apply bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider py-4 px-4;
+  }
+
+  .table-row {
+    @apply bg-white border-b border-slate-100 hover:bg-sky-50/30 transition-colors py-3.5 px-4;
+  }
+}

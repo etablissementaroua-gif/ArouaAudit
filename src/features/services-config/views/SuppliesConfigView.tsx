@@ -446,7 +446,7 @@ export const SuppliesConfigView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-all disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-slate-900 font-bold transition-all disabled:opacity-50"
                 >
                   {submitting ? 'جاري الحفظ...' : 'حفظ وتفعيل الحزمة'}
                 </button>
