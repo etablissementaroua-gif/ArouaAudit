@@ -2,12 +2,22 @@
 
 @layer base {
   :root {
-    --font-sans: 'Almarai', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Almarai', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-arabic: 'Readex Pro', 'Cairo', 'Almarai', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-latin: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: var(--font-arabic);
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  html[dir="rtl"] {
+    font-family: var(--font-arabic);
+  }
+
+  html[dir="ltr"] {
+    font-family: var(--font-latin);
   }
 
   body {
-    font-family: var(--font-sans);
+    font-family: inherit;
     background-color: #f8fafc; /* Slate 50 */
     color: #0f172a;            /* Slate 900 */
     min-height: 100vh;
@@ -19,6 +29,21 @@
   .font-mono, [class*="font-mono"] {
     font-family: var(--font-mono) !important;
   }
+}
+
+/* RTL / LTR Directional Text & Alignment Utilities */
+[dir="rtl"] .text-adaptive-start {
+  text-align: right;
+}
+[dir="ltr"] .text-adaptive-start {
+  text-align: left;
+}
+
+[dir="rtl"] .text-adaptive-end {
+  text-align: left;
+}
+[dir="ltr"] .text-adaptive-end {
+  text-align: right;
 }
 
 /* Royal Emerald & Slate Theme Utilities */
@@ -72,7 +97,7 @@
     background-color: #ffffff !important;
     color: #0f172a !important;
     font-size: 12pt;
-    font-family: var(--font-sans) !important;
+    font-family: inherit !important;
   }
   
   /* Hide application navigation bars and UI triggers */
@@ -99,6 +124,7 @@
     print-color-adjust: exact !important;
   }
 }
+
 @layer components {
   /* خلفية الحاوية العامة للشاشات */
   .page-container {
@@ -197,10 +223,10 @@
   }
 
   .table-header {
-    @apply bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider py-4 px-4;
+    @apply bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider py-4 px-4 text-start;
   }
 
   .table-row {
-    @apply bg-white border-b border-slate-100 hover:bg-sky-50/30 transition-colors py-3.5 px-4;
+    @apply bg-white border-b border-slate-100 hover:bg-sky-50/30 transition-colors py-3.5 px-4 text-start;
   }
 }

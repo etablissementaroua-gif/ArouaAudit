@@ -2,6 +2,12 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { MainLayout } from './layout/MainLayout';
 import { Loader2 } from 'lucide-react';
+import { ProtectedRoute } from '../features/system-security/components/ProtectedRoute';
+
+// 0. Auth View
+const LoginView = lazy(() =>
+  import('../features/auth/views/LoginView').then((m) => ({ default: m.LoginView }))
+);
 
 // Lazy-loaded Views
 const StudentEnrollmentView = lazy(() =>
@@ -28,9 +34,6 @@ const ReceiptsRegistryView = lazy(() =>
 const BankInvoicesView = lazy(() =>
   import('../features/checks-management/views/BankInvoicesView').then((m) => ({ default: m.BankInvoicesView }))
 );
-const PayrollView = lazy(() =>
-  import('../features/payroll-hr/views/PayrollView').then((m) => ({ default: m.PayrollView }))
-);
 const MonthlyCAView = lazy(() =>
   import('../features/revenue-analytics/views/MonthlyCAView').then((m) => ({ default: m.MonthlyCAView }))
 );
@@ -48,9 +51,6 @@ const GlobalRecettesView = lazy(() =>
 );
 const CateringStatsView = lazy(() =>
   import('../features/revenue-analytics/views/CateringStatsView').then((m) => ({ default: m.CateringStatsView }))
-);
-const SystemSettingsView = lazy(() =>
-  import('../features/system-settings/views/SystemSettingsView').then((m) => ({ default: m.SystemSettingsView }))
 );
 const AcademicYearsView = lazy(() =>
   import('../features/system-settings/views/AcademicYearsView').then((m) => ({ default: m.AcademicYearsView }))
@@ -113,14 +113,33 @@ const SuppliesConfigView = lazy(() =>
   import('../features/services-config/views/SuppliesConfigView').then((m) => ({ default: m.SuppliesConfigView }))
 );
 
+// 8. Security & RBAC Views (Stage 9)
+const UsersPermissionsView = lazy(() =>
+  import('../features/system-security/views/UsersPermissionsView').then((m) => ({ default: m.UsersPermissionsView }))
+);
+const AuditTrailView = lazy(() =>
+  import('../features/system-security/views/AuditTrailView').then((m) => ({ default: m.AuditTrailView }))
+);
+
 const PageLoader: React.FC = () => (
-  <div className="flex flex-col items-center justify-center min-h-[50vh] text-indigo-400 gap-3">
+  <div className="flex flex-col items-center justify-center min-h-[50vh] text-emerald-600 gap-3">
     <Loader2 className="w-8 h-8 animate-spin" />
     <span className="text-xs font-mono text-slate-400">جاري تحميل البيانات المحاسبية...</span>
   </div>
 );
 
 export const router = createBrowserRouter([
+  // Full-screen Corporate Login
+  {
+    path: '/login',
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <LoginView />
+      </Suspense>
+    ),
+  },
+
+  // Authenticated Main Application
   {
     path: '/',
     element: <MainLayout />,
@@ -129,7 +148,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <Navigate to="/hr/enrolled-students" replace />,
       },
-      // 1. Settings
+      // 1. Settings & Security
       {
         path: 'settings/academic-years',
         element: (
@@ -158,7 +177,29 @@ export const router = createBrowserRouter([
         path: 'settings/pricing-grid',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <TarifsPricingGridView />
+            <ProtectedRoute requiredPermission="system.settings">
+              <TarifsPricingGridView />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'settings/users-permissions',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ProtectedRoute requiredPermission="security.users">
+              <UsersPermissionsView />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'settings/audit-trail',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ProtectedRoute requiredPermission="security.audit">
+              <AuditTrailView />
+            </ProtectedRoute>
           </Suspense>
         ),
       },
@@ -184,7 +225,9 @@ export const router = createBrowserRouter([
         path: 'hr/payroll',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <PayrollDashboardView />
+            <ProtectedRoute requiredPermission="payroll.execute">
+              <PayrollDashboardView />
+            </ProtectedRoute>
           </Suspense>
         ),
       },
@@ -334,7 +377,9 @@ export const router = createBrowserRouter([
         path: 'finance/impayes',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <ImpayesView />
+            <ProtectedRoute requiredPermission="impayes.manage">
+              <ImpayesView />
+            </ProtectedRoute>
           </Suspense>
         ),
       },
@@ -368,7 +413,9 @@ export const router = createBrowserRouter([
         path: 'expenses/register',
         element: (
           <Suspense fallback={<PageLoader />}>
-            <DisbursementsRegisterView />
+            <ProtectedRoute requiredPermission="expenses.manage">
+              <DisbursementsRegisterView />
+            </ProtectedRoute>
           </Suspense>
         ),
       },

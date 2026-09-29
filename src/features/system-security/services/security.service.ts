@@ -1,0 +1,598 @@
+﻿import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
+import { 
+  SystemRole, 
+  SystemRoleCode, 
+  RolePermission, 
+  UserProfile, 
+  AuditLog, 
+  AuditFilterOptions,
+  PermissionAction,
+  PERMISSION_MODULES 
+} from '../models/security.types';
+
+// Mock Initial Data for Offline / Sandbox Mode
+const MOCK_SYSTEM_ROLES: SystemRole[] = [
+  {
+    id: 'role-1',
+    code: 'super_admin',
+    name_ar: 'المدير العام والمشرف الأعلى',
+    name_fr: 'Super Administrateur',
+    description_ar: 'كامل الصلاحيات غير المقيدة لإدارة ومراقبة المنظومة وضبط الأمان',
+    description_fr: 'Accès total sans restriction à l\'ensemble du système et sécurité',
+    is_system_role: true,
+    is_active: true,
+  },
+  {
+    id: 'role-2',
+    code: 'finance_director',
+    name_ar: 'المدير المالي والمحاسبي',
+    name_fr: 'Directeur Financier & Comptable',
+    description_ar: 'صلاحيات الإشراف المالي، المصادقة على الصرف، والتسويات البنكية',
+    description_fr: 'Supervision financière, validation des décaissements et rapprochements',
+    is_system_role: true,
+    is_active: true,
+  },
+  {
+    id: 'role-3',
+    code: 'accountant',
+    name_ar: 'المحاسب المعتمد',
+    name_fr: 'Comptable Agréé',
+    description_ar: 'تسجيل العمليات، مسير الأجور، إدارة النفقات والوثائق المحاسبية',
+    description_fr: 'Enregistrement des opérations, gestion de la paie et dépenses',
+    is_system_role: true,
+    is_active: true,
+  },
+  {
+    id: 'role-4',
+    code: 'cashier',
+    name_ar: 'أمين الصندوق والتحصيل',
+    name_fr: 'Caissier & Régisseur',
+    description_ar: 'استخلاص الرسوم المدرسية، إصدار وصولات الأداء، ويومية الصندوق',
+    description_fr: 'Encaissement des frais scolaires, émission des reçus officiels',
+    is_system_role: true,
+    is_active: true,
+  },
+  {
+    id: 'role-5',
+    code: 'hr_manager',
+    name_ar: 'مدير الموارد البشرية',
+    name_fr: 'Responsable RH',
+    description_ar: 'مزامنة الكوادر، كشوفات الرواتب، متابعة السلف والديون السابقة',
+    description_fr: 'Gestion du personnel, états de paie et suivi des avances',
+    is_system_role: true,
+    is_active: true,
+  },
+  {
+    id: 'role-6',
+    code: 'viewer',
+    name_ar: 'مستخدم للمعاينة والاطلاع',
+    name_fr: 'Lecteur / Consultation',
+    description_ar: 'صلاحيات قراءة واستعراض التقارير دون إمكانية التعديل أو الصرف',
+    description_fr: 'Consultation seule des tableaux de bord et rapports',
+    is_system_role: true,
+    is_active: true,
+  },
+];
+
+let mockUsers: UserProfile[] = [
+  {
+    id: 'usr-1',
+    employee_id: 'emp-101',
+    employee_name: 'أحمد بنشقرون (الإدارة المركزية)',
+    full_name: 'أحمد بنشقرون',
+    email: 'admin@arouaschools.ma',
+    role_code: 'super_admin',
+    is_suspended: false,
+    last_login_at: '2026-09-29 18:30:12',
+    created_at: '2026-09-01',
+  },
+  {
+    id: 'usr-2',
+    employee_id: 'emp-102',
+    employee_name: 'مريم التازي (الشؤون المالية)',
+    full_name: 'مريم التازي',
+    email: 'finance@arouaschools.ma',
+    role_code: 'finance_director',
+    is_suspended: false,
+    last_login_at: '2026-09-29 16:15:00',
+    created_at: '2026-09-01',
+  },
+  {
+    id: 'usr-3',
+    employee_id: 'emp-103',
+    employee_name: 'ياسين العلمي (المحاسبة)',
+    full_name: 'ياسين العلمي',
+    email: 'comptable@arouaschools.ma',
+    role_code: 'accountant',
+    is_suspended: false,
+    last_login_at: '2026-09-29 14:22:45',
+    created_at: '2026-09-05',
+  },
+  {
+    id: 'usr-4',
+    employee_id: 'emp-104',
+    employee_name: 'فاطمة الزهراء (صندوق 1)',
+    full_name: 'فاطمة الزهراء بلمقدم',
+    email: 'caisse1@arouaschools.ma',
+    role_code: 'cashier',
+    is_suspended: false,
+    last_login_at: '2026-09-29 17:05:10',
+    created_at: '2026-09-08',
+  },
+  {
+    id: 'usr-5',
+    employee_id: 'emp-105',
+    employee_name: 'عمر السبتي (صندوق 2)',
+    full_name: 'عمر السبتي',
+    email: 'caisse2@arouaschools.ma',
+    role_code: 'cashier',
+    is_suspended: false,
+    last_login_at: '2026-09-28 18:00:00',
+    created_at: '2026-09-08',
+  },
+  {
+    id: 'usr-6',
+    employee_id: 'emp-106',
+    employee_name: 'خديجة الوزاني (الموارد البشرية)',
+    full_name: 'خديجة الوزاني',
+    email: 'rh@arouaschools.ma',
+    role_code: 'hr_manager',
+    is_suspended: false,
+    last_login_at: '2026-09-29 11:40:19',
+    created_at: '2026-09-10',
+  },
+];
+
+// Initialize Mock Permissions Matrix
+const buildInitialPermissions = (): RolePermission[] => {
+  const result: RolePermission[] = [];
+  let idCounter = 1;
+
+  for (const role of MOCK_SYSTEM_ROLES) {
+    for (const mod of PERMISSION_MODULES) {
+      let canView = false;
+      let canCreate = false;
+      let canEdit = false;
+      let canDelete = false;
+      let canExport = false;
+      let canPrint = false;
+
+      if (role.code === 'super_admin') {
+        canView = canCreate = canEdit = canDelete = canExport = canPrint = true;
+      } else if (role.code === 'finance_director') {
+        canView = true;
+        canCreate = canEdit = canExport = canPrint = true;
+        canDelete = false;
+        if (mod.key === 'system.settings' || mod.key === 'security.users') {
+          canCreate = canEdit = false;
+        }
+      } else if (role.code === 'accountant') {
+        canView = !['system.settings', 'security.audit', 'security.users'].includes(mod.key);
+        canCreate = canEdit = ['caisse.operations', 'caisse.disburse', 'payroll.execute', 'payroll.advances', 'checks.portfolio', 'checks.reconcile', 'impayes.manage', 'expenses.manage'].includes(mod.key);
+        canExport = canPrint = canView;
+        canDelete = false;
+      } else if (role.code === 'cashier') {
+        canView = ['caisse.operations', 'enrollment.students', 'checks.portfolio', 'impayes.manage', 'services.config'].includes(mod.key);
+        canCreate = ['caisse.operations', 'checks.portfolio'].includes(mod.key);
+        canPrint = canView;
+        canEdit = canDelete = canExport = false;
+      } else if (role.code === 'hr_manager') {
+        canView = ['payroll.execute', 'payroll.advances', 'services.config'].includes(mod.key);
+        canCreate = canEdit = ['payroll.execute', 'payroll.advances'].includes(mod.key);
+        canExport = canPrint = canView;
+      } else if (role.code === 'viewer') {
+        canView = ['enrollment.students', 'caisse.operations', 'checks.portfolio', 'impayes.manage', 'expenses.manage', 'services.config'].includes(mod.key);
+      }
+
+      result.push({
+        id: `perm-${idCounter++}`,
+        role_code: role.code,
+        permission_key: mod.key,
+        can_view: canView,
+        can_create: canCreate,
+        can_edit: canEdit,
+        can_delete: canDelete,
+        can_export: canExport,
+        can_print: canPrint,
+      });
+    }
+  }
+
+  return result;
+};
+
+let mockPermissions: RolePermission[] = buildInitialPermissions();
+
+let mockAuditLogs: AuditLog[] = [
+  {
+    id: 'aud-001',
+    user_name: 'أحمد بنشقرون',
+    user_role: 'super_admin',
+    action_type: 'LOGIN',
+    target_entity: 'auth_session',
+    entity_id: 'SES-98210',
+    new_values: { ip: '192.168.1.100', browser: 'Chrome 128 / Windows', status: 'authenticated' },
+    ip_address: '192.168.1.100',
+    created_at: '2026-09-29 18:30:12',
+  },
+  {
+    id: 'aud-002',
+    user_name: 'فاطمة الزهراء بلمقدم',
+    user_role: 'cashier',
+    action_type: 'CREATE',
+    target_entity: 'caisse_transactions',
+    entity_id: 'REC-2026-0903',
+    new_values: { receipt_no: 'REC-2026-0903', amount: 2600.0, method: 'virement', student: 'سفيان بلمقدم' },
+    ip_address: '192.168.1.104',
+    created_at: '2026-09-29 17:05:10',
+  },
+  {
+    id: 'aud-003',
+    user_name: 'مريم التازي',
+    user_role: 'finance_director',
+    action_type: 'DISBURSEMENT',
+    target_entity: 'caisse_transactions',
+    entity_id: 'DEC-2026-0044',
+    new_values: { voucher_no: 'DEC-2026-0044', amount: 12500.0, beneficiary: 'Société Fournitures Scolaires SARL', category: 'FOURNITURES' },
+    ip_address: '192.168.1.102',
+    created_at: '2026-09-29 16:15:00',
+  },
+  {
+    id: 'aud-004',
+    user_name: 'ياسين العلمي',
+    user_role: 'accountant',
+    action_type: 'RECONCILE',
+    target_entity: 'bank_accounts',
+    entity_id: 'RIB-ATTIJARI-001',
+    new_values: { reconciled_month: '2026-09', cleared_checks_count: 14, balance_mad: 95000.0 },
+    ip_address: '192.168.1.103',
+    created_at: '2026-09-29 14:22:45',
+  },
+  {
+    id: 'aud-005',
+    user_name: 'أحمد بنشقرون',
+    user_role: 'super_admin',
+    action_type: 'ROLE_CHANGE',
+    target_entity: 'role_permissions',
+    entity_id: 'cashier:caisse.disburse',
+    old_values: { can_create: true },
+    new_values: { can_create: false, reason: 'حظر الصرف المالي عن أمناء الصناديق وحصره في الإدارة المالية' },
+    ip_address: '192.168.1.100',
+    created_at: '2026-09-29 12:00:00',
+  },
+  {
+    id: 'aud-006',
+    user_name: 'خديجة الوزاني',
+    user_role: 'hr_manager',
+    action_type: 'UPDATE',
+    target_entity: 'employees',
+    entity_id: 'EMP-TEACH-014',
+    old_values: { base_salary: 8200.0 },
+    new_values: { base_salary: 8500.0, note: 'تسوية الزيادة الدورية' },
+    ip_address: '192.168.1.106',
+    created_at: '2026-09-29 11:40:19',
+  }
+];
+
+class SecurityService {
+  /**
+   * Get all defined system roles
+   */
+  async getSystemRoles(): Promise<SystemRole[]> {
+    if (isSupabaseConfigured()) {
+      try {
+        const { data, error } = await supabase
+          .from('system_roles')
+          .select('*')
+          .order('created_at', { ascending: true });
+
+        if (!error && data && data.length > 0) {
+          return data as SystemRole[];
+        }
+      } catch (err) {
+        console.warn('Supabase getSystemRoles error, falling back to mock:', err);
+      }
+    }
+    return MOCK_SYSTEM_ROLES;
+  }
+
+  /**
+   * Get permissions matrix for a specific role or all roles
+   */
+  async getRolePermissions(roleCode?: SystemRoleCode): Promise<RolePermission[]> {
+    if (isSupabaseConfigured()) {
+      try {
+        let query = supabase.from('role_permissions').select('*');
+        if (roleCode) {
+          query = query.eq('role_code', roleCode);
+        }
+        const { data, error } = await query;
+        if (!error && data && data.length > 0) {
+          return data as RolePermission[];
+        }
+      } catch (err) {
+        console.warn('Supabase getRolePermissions error, falling back to mock:', err);
+      }
+    }
+
+    if (roleCode) {
+      return mockPermissions.filter(p => p.role_code === roleCode);
+    }
+    return mockPermissions;
+  }
+
+  /**
+   * Update an individual action permission in the matrix
+   */
+  async updateRolePermission(
+    roleCode: SystemRoleCode,
+    permissionKey: string,
+    action: PermissionAction,
+    value: boolean
+  ): Promise<boolean> {
+    // 1. Update in-memory mock
+    const existing = mockPermissions.find(
+      p => p.role_code === roleCode && p.permission_key === permissionKey
+    );
+    let oldVal = false;
+    if (existing) {
+      oldVal = existing[action];
+      existing[action] = value;
+    } else {
+      const newPerm: RolePermission = {
+        id: `perm-${Date.now()}`,
+        role_code: roleCode,
+        permission_key: permissionKey,
+        can_view: action === 'can_view' ? value : false,
+        can_create: action === 'can_create' ? value : false,
+        can_edit: action === 'can_edit' ? value : false,
+        can_delete: action === 'can_delete' ? value : false,
+        can_export: action === 'can_export' ? value : false,
+        can_print: action === 'can_print' ? value : false,
+      };
+      mockPermissions.push(newPerm);
+    }
+
+    // 2. Audit the permission modification
+    await this.logAuditEvent({
+      user_name: 'أحمد بنشقرون (المشرف)',
+      user_role: 'super_admin',
+      action_type: 'ROLE_CHANGE',
+      target_entity: 'role_permissions',
+      entity_id: `${roleCode}:${permissionKey}`,
+      old_values: { [action]: oldVal },
+      new_values: { [action]: value },
+    });
+
+    // 3. Sync to Supabase if configured
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase
+          .from('role_permissions')
+          .upsert({
+            role_code: roleCode,
+            permission_key: permissionKey,
+            [action]: value,
+            updated_at: new Date().toISOString(),
+          }, { onConflict: 'role_code,permission_key' });
+      } catch (err) {
+        console.warn('Supabase updateRolePermission error:', err);
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Get all user profiles with linked staff info
+   */
+  async getUserProfiles(): Promise<UserProfile[]> {
+    if (isSupabaseConfigured()) {
+      try {
+        const { data, error } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (!error && data && data.length > 0) {
+          return data as UserProfile[];
+        }
+      } catch (err) {
+        console.warn('Supabase getUserProfiles error, falling back to mock:', err);
+      }
+    }
+    return [...mockUsers];
+  }
+
+  /**
+   * Update user role
+   */
+  async updateUserRole(userId: string, newRoleCode: SystemRoleCode): Promise<boolean> {
+    const user = mockUsers.find(u => u.id === userId);
+    const oldRole = user ? user.role_code : 'viewer';
+    if (user) {
+      user.role_code = newRoleCode;
+    }
+
+    await this.logAuditEvent({
+      user_name: 'أحمد بنشقرون (المشرف)',
+      user_role: 'super_admin',
+      action_type: 'ROLE_CHANGE',
+      target_entity: 'user_profiles',
+      entity_id: userId,
+      old_values: { role_code: oldRole },
+      new_values: { role_code: newRoleCode },
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase
+          .from('user_profiles')
+          .update({ role_code: newRoleCode, updated_at: new Date().toISOString() })
+          .eq('id', userId);
+      } catch (err) {
+        console.warn('Supabase updateUserRole error:', err);
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Toggle user account suspension
+   */
+  async toggleUserSuspension(userId: string, isSuspended: boolean): Promise<boolean> {
+    const user = mockUsers.find(u => u.id === userId);
+    if (user) {
+      user.is_suspended = isSuspended;
+    }
+
+    await this.logAuditEvent({
+      user_name: 'أحمد بنشقرون (المشرف)',
+      user_role: 'super_admin',
+      action_type: 'SUSPEND',
+      target_entity: 'user_profiles',
+      entity_id: userId,
+      old_values: { is_suspended: !isSuspended },
+      new_values: { is_suspended: isSuspended },
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase
+          .from('user_profiles')
+          .update({ is_suspended: isSuspended, updated_at: new Date().toISOString() })
+          .eq('id', userId);
+      } catch (err) {
+        console.warn('Supabase toggleUserSuspension error:', err);
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Create a new user profile linked with an employee
+   */
+  async createUserProfile(profile: Omit<UserProfile, 'id' | 'created_at'>): Promise<UserProfile> {
+    const newProfile: UserProfile = {
+      ...profile,
+      id: `usr-${Date.now()}`,
+      created_at: new Date().toISOString().split('T')[0],
+    };
+
+    mockUsers.unshift(newProfile);
+
+    await this.logAuditEvent({
+      user_name: 'أحمد بنشقرون (المشرف)',
+      user_role: 'super_admin',
+      action_type: 'CREATE',
+      target_entity: 'user_profiles',
+      entity_id: newProfile.id,
+      new_values: newProfile,
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('user_profiles').insert(newProfile);
+      } catch (err) {
+        console.warn('Supabase createUserProfile error:', err);
+      }
+    }
+
+    return newProfile;
+  }
+
+  /**
+   * Get Audit Logs with search & filters
+   */
+  async getAuditLogs(filters?: AuditFilterOptions): Promise<AuditLog[]> {
+    if (isSupabaseConfigured()) {
+      try {
+        let query = supabase.from('audit_logs').select('*').order('created_at', { ascending: false });
+
+        if (filters?.action_type && filters.action_type !== 'ALL') {
+          query = query.eq('action_type', filters.action_type);
+        }
+        if (filters?.target_entity && filters.target_entity !== 'ALL') {
+          query = query.eq('target_entity', filters.target_entity);
+        }
+        if (filters?.search) {
+          query = query.or(`user_name.ilike.%${filters.search}%,entity_id.ilike.%${filters.search}%`);
+        }
+
+        const { data, error } = await query.limit(100);
+        if (!error && data && data.length > 0) {
+          return data as AuditLog[];
+        }
+      } catch (err) {
+        console.warn('Supabase getAuditLogs error, falling back to mock:', err);
+      }
+    }
+
+    let result = [...mockAuditLogs];
+
+    if (filters) {
+      if (filters.action_type && filters.action_type !== 'ALL') {
+        result = result.filter(log => log.action_type === filters.action_type);
+      }
+      if (filters.target_entity && filters.target_entity !== 'ALL') {
+        result = result.filter(log => log.target_entity === filters.target_entity);
+      }
+      if (filters.user_name) {
+        result = result.filter(log => log.user_name.includes(filters.user_name!));
+      }
+      if (filters.search) {
+        const q = filters.search.toLowerCase();
+        result = result.filter(
+          log =>
+            log.user_name.toLowerCase().includes(q) ||
+            log.target_entity.toLowerCase().includes(q) ||
+            (log.entity_id && log.entity_id.toLowerCase().includes(q))
+        );
+      }
+    }
+
+    return result.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  }
+
+  /**
+   * Record a new audit event (Strict immutability)
+   */
+  async logAuditEvent(logData: {
+    user_name: string;
+    user_role: string;
+    action_type: AuditLog['action_type'];
+    target_entity: string;
+    entity_id?: string;
+    old_values?: any;
+    new_values?: any;
+  }): Promise<AuditLog> {
+    const entry: AuditLog = {
+      id: `aud-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      user_name: logData.user_name,
+      user_role: logData.user_role,
+      action_type: logData.action_type,
+      target_entity: logData.target_entity,
+      entity_id: logData.entity_id,
+      old_values: logData.old_values || null,
+      new_values: logData.new_values || null,
+      ip_address: '192.168.1.100',
+      created_at: new Date().toISOString().replace('T', ' ').substring(0, 19),
+    };
+
+    mockAuditLogs.unshift(entry);
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('audit_logs').insert(entry);
+      } catch (err) {
+        console.warn('Supabase logAuditEvent insert error:', err);
+      }
+    }
+
+    return entry;
+  }
+}
+
+export const securityService = new SecurityService();
+export default securityService;
+

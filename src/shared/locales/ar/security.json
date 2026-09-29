@@ -1,0 +1,43 @@
+﻿{
+  "title": "إدارة الصلاحيات والأمان",
+  "audit_title": "سجل التدقيق والرقابة المالية",
+  "rbac_matrix": "مصفوفة الصلاحيات والأذونات (RBAC)",
+  "user_accounts": "حسابات المستخدمين والموظفين",
+  "roles": {
+    "super_admin": "المدير العام والمشرف الأعلى",
+    "finance_director": "المدير المالي والمحاسبي",
+    "accountant": "المحاسب المعتمد",
+    "cashier": "أمين الصندوق والتحصيل",
+    "hr_manager": "مدير الموارد البشرية",
+    "viewer": "مستخدم للمعاينة والاطلاع"
+  },
+  "actions": {
+    "can_view": "معاينة",
+    "can_create": "إنشاء",
+    "can_edit": "تعديل",
+    "can_delete": "حذف",
+    "can_export": "تصدير",
+    "can_print": "طباعة",
+    "toggle_suspension": "تعليق / تفعيل الحساب",
+    "new_user": "إضافة حساب مستخدم جديد",
+    "diff_view": "معاينة الفروقات",
+    "switch_role": "اختبار الدور"
+  },
+  "audit_actions": {
+    "LOGIN": "تسجيل دخول",
+    "CREATE": "إنشاء جديد",
+    "UPDATE": "تعديل بيانات",
+    "DELETE": "حذف سجل",
+    "DISBURSEMENT": "صرف مالي",
+    "EXPORT": "تصدير بيانات",
+    "RECONCILE": "مطابقة بنكية",
+    "ROLE_CHANGE": "تغيير صلاحيات",
+    "SUSPEND": "تعليق حساب"
+  },
+  "messages": {
+    "access_denied_title": "صلاحيات غير كافية • 403 Forbidden",
+    "access_denied_desc": "غير مصرح لك بالوصول إلى هذه الشاشة أو تنفيذ هذه العملية.",
+    "unauthorized_action": "غير مصرح لك بتنفيذ هذه العملية",
+    "immutable_banner": "سجل تدقيق مشفر ومحمي نهائياً بتقنية Triggers غير قابلة للحذف أو التعديل"
+  }
+}

@@ -1,0 +1,34 @@
+﻿{
+  "title": "Gestion de la Paie & Rémunérations",
+  "subtitle": "Gestion des salaires des enseignants et du personnel, déductions et avances",
+  "payroll_management": "Gestion de la Paie & Rémunérations",
+  "salary_advances": "Avances sur Salaire",
+  "old_debts": "Crédits Anciens / Dettes Antérieures",
+  "homologated_by_aroua": "Homologué par arouaschools",
+  "fields": {
+    "staff_name": "Nom de l'Employé / Enseignant",
+    "cin": "N° C.I.N",
+    "role": "Poste / Fonction",
+    "cycle_subject": "Cycle & Matière",
+    "base_salary": "Salaire de Base",
+    "allowances": "Primes & Indemnités",
+    "deductions": "Retenues & Déductions",
+    "advances_repayment": "Remboursement des Avances",
+    "net_payable": "Net à Payer",
+    "payment_status": "Statut de Règlement",
+    "month_year": "Mois de Paie"
+  },
+  "status": {
+    "draft": "Brouillon Non Validé",
+    "calculated": "Calcul Effectué",
+    "approved": "Approuvé pour Décaissement",
+    "paid": "Virement Effectué"
+  },
+  "actions": {
+    "calculate_payroll": "Calculer la Paie du Mois",
+    "add_advance": "Nouvelle Avance sur Salaire",
+    "sync_staff": "Synchroniser avec arouaschools",
+    "print_bulletin": "Imprimer Bulletin de Paie",
+    "export_bank_order": "Exporter Ordre de Virement"
+  }
+}

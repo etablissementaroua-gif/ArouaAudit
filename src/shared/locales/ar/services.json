@@ -1,0 +1,36 @@
+﻿{
+  "title": "الخدمات الملحقة والمخزون المدرسي",
+  "subtitle": "إدارة أسطول النقل، الإطعام، وحزم الكتب واللوازم المدرسية",
+  "transport_fleet": "خطوط وأسطول النقل المدرسي",
+  "canteen_half_board": "المطعم ونصف الإقامة الغذائية",
+  "supplies_books_packs": "حزم اللوازم والكتب والمحفظة",
+  "homologated_by_aroua": "معتمد من arouaschools",
+  "transport": {
+    "line_name": "اسم الخط ومسار الجولة",
+    "vehicle_plate": "رقم ترقيم الحافلة / المركبة",
+    "driver": "السائق المرافق",
+    "capacity": "السعة الاستيعابية",
+    "enrolled_count": "عدد التلاميذ المسجلين",
+    "monthly_fare": "الاشتراك الشهري للنقل"
+  },
+  "canteen": {
+    "plan_type": "نوع نظام الإطعام",
+    "daily_meal": "الوجبة اليومية",
+    "registered_students": "المستفيدون من نصف الإقامة",
+    "monthly_cost": "تسعيرة الاشتراك الشهري"
+  },
+  "supplies": {
+    "pack_name": "اسم الحزمة المدرسية",
+    "cycle_level": "المستوى والسلك المستهدف",
+    "stock_qty": "الكمية المتوفرة بالمخزن",
+    "unit_price": "سعر بيع الحزمة",
+    "delivered": "تم التسليم",
+    "pending_delivery": "في انتظار التسليم"
+  },
+  "actions": {
+    "add_line": "إضافة خط نقل جديد",
+    "add_pack": "إضافة حزمة لوازم",
+    "enroll_student": "تسجيل تلميذ في الخدمة",
+    "print_delivery_sheet": "طباعة وصل الاستلام والمحفظة"
+  }
+}

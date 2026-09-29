@@ -1,0 +1,34 @@
+﻿{
+  "title": "مسير الرواتب والأجور",
+  "subtitle": "إدارة مستحقات الأساتذة والموظفين، الاقتطاعات، والسلف المالية",
+  "payroll_management": "مسير الرواتب والأجور",
+  "salary_advances": "التسبيقات والسلفات المالية",
+  "old_debts": "الديون السابقة العالقة",
+  "homologated_by_aroua": "معتمد من arouaschools",
+  "fields": {
+    "staff_name": "اسم الموظف / الأستاذ",
+    "cin": "رقم البطاقة الوطنية (CIN)",
+    "role": "الصفة / الوظيفة",
+    "cycle_subject": "السلك والمادة",
+    "base_salary": "الراتب الأساسي",
+    "allowances": "التعويضات والمكافآت",
+    "deductions": "الاقتطاعات والخصومات",
+    "advances_repayment": "استرداد السلف والتسبيقات",
+    "net_payable": "صافي الراتب المستحق (Net à Payer)",
+    "payment_status": "حالة صرف الراتب",
+    "month_year": "شهر الصرف"
+  },
+  "status": {
+    "draft": "مسودة غير معتمدة",
+    "calculated": "تم احتساب المستحقات",
+    "approved": "معتمد للصرف",
+    "paid": "تم تحويل الراتب"
+  },
+  "actions": {
+    "calculate_payroll": "احتساب كشف الأجور",
+    "add_advance": "تسجيل تسليفة / سلفة جديدة",
+    "sync_staff": "مزامنة الكادر مع arouaschools",
+    "print_bulletin": "طباعة بيان الراتب (Bulletin de Paie)",
+    "export_bank_order": "تصدير أمر التحويل البنكي"
+  }
+}

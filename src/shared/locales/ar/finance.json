@@ -1,0 +1,52 @@
+﻿{
+  "title": "يومية الصندوق والعمليات المالية",
+  "subtitle": "إدارة وتتبع التدفقات النقدية والمصرفية والمستحقات المدرسية",
+  "journal_caisse": "يومية الصندوق والخزينة المركزية",
+  "official_receipt": "سند القبض / وصل الأداء الرسمي",
+  "payment_voucher": "سند الصرف المالي",
+  "checks_portfolio": "محفظة الشيكات والكمبيالات",
+  "check_deposit_slips": "حوافظ تسليم الشيكات للبنك",
+  "bank_reconciliation": "المطابقة والتسوية البنكية",
+  "credit_balances": "الأرصدة الزائدة والفوائض",
+  "discounts_exemptions": "التخفيضات والإعفاءات",
+  "unpaid_arrears": "المستحقات غير المؤداة والمتأخرات",
+  "monthly_turnover": "رقم المعاملات الشهري",
+  "annual_turnover": "رقم المعاملات السنوي (CA)",
+  "student_receivables": "التلاميذ المسجلون وملفات الذمم",
+  "cash_flow": {
+    "total_inflow": "إجمالي المقبوضات",
+    "total_outflow": "إجمالي المصروفات",
+    "net_balance": "الرصيد الصافي للخزينة",
+    "cash": "نقداً / سيولة",
+    "check": "شيك بنكي",
+    "transfer": "تحويل بنكي",
+    "deposit": "إيداع"
+  },
+  "status": {
+    "paid": "مؤدى بالكامل",
+    "partial": "أداء جزئي",
+    "unpaid": "غير مؤدى",
+    "bounced": "مرتجع / مرفوض",
+    "cleared": "تمت التسوية",
+    "pending": "قيد المعالجة"
+  },
+  "fields": {
+    "date": "التاريخ",
+    "receipt_no": "رقم السند / الوصل",
+    "student_name": "اسم التلميذ",
+    "amount": "المبلغ",
+    "payment_method": "طريقة الأداء",
+    "beneficiary": "المستفيد",
+    "notes": "ملاحظات",
+    "reference": "المرجع",
+    "bank_account": "الحساب البنكي",
+    "due_date": "تاريخ الاستحقاق"
+  },
+  "actions": {
+    "new_receipt": "إصدار سند قبض جديد",
+    "new_voucher": "إصدار سند صرف",
+    "export_pdf": "طباعة سند رسمي",
+    "reconcile": "إجراء المطابقة البنكية",
+    "search": "بحث في العمليات السابقة..."
+  }
+}

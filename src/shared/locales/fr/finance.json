@@ -1,0 +1,52 @@
+﻿{
+  "title": "Journal de Caisse & Opérations Financières",
+  "subtitle": "Gestion et suivi des flux de trésorerie, règlements et créances scolaires",
+  "journal_caisse": "Journal de Caisse & Trésorerie Centrale",
+  "official_receipt": "Reçu de Paiement Officiel",
+  "payment_voucher": "Bon de Décaissement",
+  "checks_portfolio": "Portefeuille des Chèques & Effets",
+  "check_deposit_slips": "Bordereaux de Remise de Chèques",
+  "bank_reconciliation": "Rapprochement Bancaire",
+  "credit_balances": "Soldes Créditeurs / Excédents Élèves",
+  "discounts_exemptions": "Réductions & Exonérations Scolaires",
+  "unpaid_arrears": "Impayés & Reste à Recouvrer",
+  "monthly_turnover": "Chiffre d'Affaires Mensuel",
+  "annual_turnover": "Chiffre d'Affaires Annuel (CA)",
+  "student_receivables": "Élèves Inscrits & Créances Scolaires",
+  "cash_flow": {
+    "total_inflow": "Total des Encaissements",
+    "total_outflow": "Total des Décaissements",
+    "net_balance": "Solde Net de Trésorerie",
+    "cash": "Espèces / Liquide",
+    "check": "Chèque Bancaire",
+    "transfer": "Virement Bancaire",
+    "deposit": "Versement"
+  },
+  "status": {
+    "paid": "Payé Intégralement",
+    "partial": "Paiement Partiel",
+    "unpaid": "Non Payé",
+    "bounced": "Rejeté / Impayé",
+    "cleared": "Rapproché / Compensé",
+    "pending": "En Cours de Traitement"
+  },
+  "fields": {
+    "date": "Date",
+    "receipt_no": "N° de Reçu / Pièce",
+    "student_name": "Nom de l'Élève",
+    "amount": "Montant",
+    "payment_method": "Mode de Règlement",
+    "beneficiary": "Bénéficiaire",
+    "notes": "Remarques",
+    "reference": "Référence",
+    "bank_account": "Compte Bancaire",
+    "due_date": "Date d'Échéance"
+  },
+  "actions": {
+    "new_receipt": "Émettre un Reçu de Paiement",
+    "new_voucher": "Émettre un Bon de Décaissement",
+    "export_pdf": "Imprimer Reçu Officiel",
+    "reconcile": "Effectuer le Rapprochement",
+    "search": "Rechercher une opération..."
+  }
+}

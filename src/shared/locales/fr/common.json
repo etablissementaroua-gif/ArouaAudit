@@ -1,0 +1,61 @@
+﻿{
+  "brand": {
+    "name": "Groupe Scolaire Aroua",
+    "sub_title": "Groupe Scolaire Aroua • ArouaAudit",
+    "version": "V1.0",
+    "synced_aroua": "Synchronisé avec arouaschools",
+    "homologated_aroua": "Homologué par arouaschools",
+    "school_year": "Année Scolaire : 2026-2027",
+    "caisse_balance_title": "Solde Instantané de Caisse",
+    "rls_active": "RLS Active",
+    "user_avatar": "AR"
+  },
+  "footer": {
+    "system_title": "Système de Gestion Financière & Pédagogique — Groupe Scolaire Aroua Audit v1.0",
+    "last_sync": "Dernière mise à jour BDD & Stocks : Aujourd'hui, 13:19",
+    "server_connected": "Serveur Connecté : Fast Cloud",
+    "accounting_date": "2026.09"
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "search": "Rechercher",
+    "refresh": "Actualiser",
+    "filter": "Filtrer",
+    "print": "Imprimer",
+    "export": "Exporter",
+    "sync": "Synchroniser",
+    "close": "Fermer",
+    "back": "Retour",
+    "view": "Détails",
+    "print_receipt": "Imprimer Reçu",
+    "all": "Tous",
+    "status": "Statut",
+    "actions": "Actions"
+  },
+  "status": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "pending": "En cours",
+    "settled": "Soldé / Réglé",
+    "rejected": "Rejeté",
+    "cleared": "Encaissé en Banque",
+    "deposited": "Remis en Banque",
+    "in_vault": "En Coffre",
+    "overdue": "Échu",
+    "connected": "Connecté",
+    "system_active": "Système Actif"
+  },
+  "documents": {
+    "official_receipt": "Reçu de Paiement Officiel",
+    "disbursement_voucher": "Bon de Décaissement"
+  },
+  "currency": {
+    "mad": "Dirham Marocain",
+    "symbol": "MAD"
+  }
+}

@@ -1,0 +1,43 @@
+﻿{
+  "title": "Gestion de la Sécurité & Droits",
+  "audit_title": "Piste d'Audit & Contrôle Financier",
+  "rbac_matrix": "Matrice des Permissions RBAC",
+  "user_accounts": "Comptes Utilisateurs & Collaborateurs",
+  "roles": {
+    "super_admin": "Super Administrateur",
+    "finance_director": "Directeur Financier & Comptable",
+    "accountant": "Comptable Agréé",
+    "cashier": "Caissier & Régisseur",
+    "hr_manager": "Responsable RH",
+    "viewer": "Lecteur / Consultation"
+  },
+  "actions": {
+    "can_view": "Voir",
+    "can_create": "Créer",
+    "can_edit": "Modifier",
+    "can_delete": "Supprimer",
+    "can_export": "Exporter",
+    "can_print": "Imprimer",
+    "toggle_suspension": "Suspendre / Activer",
+    "new_user": "Nouvel Utilisateur",
+    "diff_view": "Voir le Diff",
+    "switch_role": "Tester le Rôle"
+  },
+  "audit_actions": {
+    "LOGIN": "Connexion",
+    "CREATE": "Création",
+    "UPDATE": "Modification",
+    "DELETE": "Suppression",
+    "DISBURSEMENT": "Décaissement",
+    "EXPORT": "Exportation",
+    "RECONCILE": "Rapprochement",
+    "ROLE_CHANGE": "Modif. Droits",
+    "SUSPEND": "Suspension"
+  },
+  "messages": {
+    "access_denied_title": "Droits Insuffisants • 403 Forbidden",
+    "access_denied_desc": "Vous n'êtes pas autorisé à accéder à cette vue ou exécuter cette action.",
+    "unauthorized_action": "Opération non autorisée",
+    "immutable_banner": "Piste d'audit inaltérable protégée par Triggers contre toute suppression ou altération"
+  }
+}

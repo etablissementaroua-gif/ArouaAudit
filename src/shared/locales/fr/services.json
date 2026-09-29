@@ -1,0 +1,36 @@
+﻿{
+  "title": "Services Annexes & Stocks Scolaires",
+  "subtitle": "Gestion de la flotte de transport, restauration et packs de fournitures",
+  "transport_fleet": "Lignes & Flotte du Transport Scolaire",
+  "canteen_half_board": "Restauration Scolaire & Demi-Pension",
+  "supplies_books_packs": "Packs Fournitures, Manuels & Tabliers",
+  "homologated_by_aroua": "Homologué par arouaschools",
+  "transport": {
+    "line_name": "Nom de la Ligne & Circuit",
+    "vehicle_plate": "Immatriculation Véhicule",
+    "driver": "Chauffeur & Accompagnateur",
+    "capacity": "Capacité d'Accueil",
+    "enrolled_count": "Nombre d'Élèves Inscrits",
+    "monthly_fare": "Abonnement Mensuel Transport"
+  },
+  "canteen": {
+    "plan_type": "Formule de Restauration",
+    "daily_meal": "Menu & Repas du Jour",
+    "registered_students": "Bénéficiaires Demi-Pension",
+    "monthly_cost": "Tarif Mensuel Cantine"
+  },
+  "supplies": {
+    "pack_name": "Intitulé du Pack Scolaire",
+    "cycle_level": "Niveau & Cycle Concerné",
+    "stock_qty": "Quantité Disponible en Stock",
+    "unit_price": "Prix Unitaire du Pack",
+    "delivered": "Livré / Remis",
+    "pending_delivery": "En Attente de Livraison"
+  },
+  "actions": {
+    "add_line": "Ajouter une Ligne de Transport",
+    "add_pack": "Créer un Pack Fournitures",
+    "enroll_student": "Inscrire un Élève au Service",
+    "print_delivery_sheet": "Imprimer Bon de Remise"
+  }
+}

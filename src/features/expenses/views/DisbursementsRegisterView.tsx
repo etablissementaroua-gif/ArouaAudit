@@ -19,6 +19,7 @@ import { formatDateFR } from '../../../shared/lib/dateUtils';
 import { DisbursementVoucher, NewDisbursementFormData, ExpensePaymentMethod } from '../models/expenses.types';
 import { expensesService } from '../services/expenses.service';
 import { OfficialDisbursementModal } from '../components/OfficialDisbursementModal';
+import { PermissionGate } from '../../system-security/components/PermissionGate';
 
 export const DisbursementsRegisterView: React.FC = () => {
   const [disbursements, setDisbursements] = useState<DisbursementVoucher[]>([]);
@@ -461,3 +462,4 @@ export const DisbursementsRegisterView: React.FC = () => {
     </div>
   );
 };
+

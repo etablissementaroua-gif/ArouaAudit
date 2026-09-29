@@ -1,0 +1,61 @@
+﻿{
+  "brand": {
+    "name": "مجموعة مدارس أروى",
+    "sub_title": "Groupe Scolaire Aroua • ArouaAudit",
+    "version": "V1.0",
+    "synced_aroua": "متزامن مع arouaschools",
+    "homologated_aroua": "معتمد من arouaschools",
+    "school_year": "السنة الدراسية: 2026-2027",
+    "caisse_balance_title": "الرصيد العام اللحظي للصندوق",
+    "rls_active": "RLS Active",
+    "user_avatar": "AR"
+  },
+  "footer": {
+    "system_title": "نظام التدبير المالي والتربوي — Groupe Scolaire Aroua Audit v1.0",
+    "last_sync": "آخر تحديث لقاعدة البيانات والمخزون: اليوم، 13:19",
+    "server_connected": "السيرفر متصل: Fast Cloud",
+    "accounting_date": "2026.09"
+  },
+  "actions": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "add": "إضافة",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "search": "بحث",
+    "refresh": "تحديث",
+    "filter": "تصفية",
+    "print": "طباعة",
+    "export": "تصدير",
+    "sync": "مزامنة",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "view": "معاينة",
+    "print_receipt": "طباعة الوصل",
+    "all": "الكل",
+    "status": "الحالة",
+    "actions": "الإجراءات"
+  },
+  "status": {
+    "active": "نشط",
+    "inactive": "معطل",
+    "pending": "قيد المعالجة",
+    "settled": "تمت التسوية",
+    "rejected": "مرفوض",
+    "cleared": "مصروف بالبنك",
+    "deposited": "مودع بالحافظة",
+    "in_vault": "في الخزنة",
+    "overdue": "مستحق الصرف",
+    "connected": "متصل",
+    "system_active": "نظام نشط"
+  },
+  "documents": {
+    "official_receipt": "سند القبض / وصل الأداء الرسمي",
+    "disbursement_voucher": "سند الصرف المالي"
+  },
+  "currency": {
+    "mad": "درهم مغربي",
+    "symbol": "MAD"
+  }
+}

@@ -1,0 +1,65 @@
+﻿{
+  "admin": {
+    "title": "Groupe Scolaire Aroua",
+    "subtitle": "Compte Administratif & Pédagogique Central",
+    "system_active": "Système Actif"
+  },
+  "sections": {
+    "settings": {
+      "title": "Configuration & Sécurité",
+      "academic_years": "Années Scolaires",
+      "cycles": "Cycles d'Enseignement",
+      "levels_groups": "Niveaux & Groupes",
+      "pricing_grid": "Grille Tarifaire & Frais",
+      "users_permissions": "Comptes & Permissions RBAC",
+      "audit_trail": "Piste d'Audit & Contrôle"
+    },
+    "hr": {
+      "title": "Ressources Humaines & Synchro",
+      "mapped_staff": "Personnel Homologué",
+      "enrolled_students": "Élèves Inscrits & Créances Scolaires",
+      "payroll": "Gestion de la Paie & Rémunérations",
+      "staff_debts": "Crédits Anciens / Dettes Antérieures"
+    },
+    "revenue": {
+      "title": "Revenus & Chiffre d'Affaires",
+      "monthly_ca": "Chiffre d'Affaires Mensuel",
+      "annual_ca": "Chiffre d'Affaires Annuel (CA)",
+      "regisseurs": "Recettes Régisseurs & Caisses",
+      "global_recettes": "Registre Global des Recettes"
+    },
+    "checks": {
+      "title": "Comptes & Chèques",
+      "accounts": "Comptes Bancaires & Coffres",
+      "portfolio": "Portefeuille des Chèques & Effets",
+      "delivery_slips": "Bordereaux de Remise de Chèques"
+    },
+    "finance": {
+      "title": "Opérations Financières & Créances",
+      "impayes": "Impayés & Reste à Recouvrer",
+      "credit_balances": "Soldes Créditeurs / Excédents Élèves",
+      "discounts": "Réductions & Exonérations Scolaires",
+      "payments_journal": "Journal de Caisse & Trésorerie Centrale"
+    },
+    "expenses": {
+      "title": "Dépenses & Décaissements",
+      "categories": "Types & Rubriques de Dépenses",
+      "list": "Liste des Dépenses",
+      "monthly_stats": "Statistiques Mensuelles",
+      "register": "Bons & Registre de Décaissement"
+    },
+    "services": {
+      "title": "Services Annexes & Stocks",
+      "supplies": "Packs Fournitures, Manuels & Tabliers",
+      "transport": "Lignes & Flotte du Transport Scolaire",
+      "canteen": "Restauration Scolaire & Demi-Pension"
+    }
+  },
+  "badges": {
+    "linked": "Lié",
+    "active": "Actif",
+    "followup": "Suivi",
+    "important": "Important",
+    "security": "Sécurité"
+  }
+}

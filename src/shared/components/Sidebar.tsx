@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Settings,
   Users,
@@ -33,6 +34,8 @@ interface NavSection {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
+  const { t, i18n } = useTranslation(['sidebar', 'common']);
+  const isRtl = i18n.language === 'ar' || !i18n.language?.startsWith('fr');
 
   // Collapsible Accordion State
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -48,77 +51,79 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const sections: NavSection[] = [
     {
       id: 'settings',
-      title: 'إعدادات المنظومة',
+      title: t('sidebar:sections.settings.title'),
       icon: Settings,
       items: [
-        { label: 'السنوات الدراسية', path: '/settings/academic-years' },
-        { label: 'الأسلاك التعليمية', path: '/settings/cycles' },
-        { label: 'المستويات والأفواج', path: '/settings/levels-groups' },
-        { label: 'جدول الأسعار والرسوم', path: '/settings/pricing-grid' },
+        { label: t('sidebar:sections.settings.academic_years'), path: '/settings/academic-years' },
+        { label: t('sidebar:sections.settings.cycles'), path: '/settings/cycles' },
+        { label: t('sidebar:sections.settings.levels_groups'), path: '/settings/levels-groups' },
+        { label: t('sidebar:sections.settings.pricing_grid'), path: '/settings/pricing-grid' },
+        { label: t('sidebar:sections.settings.users_permissions'), path: '/settings/users-permissions', badge: t('sidebar:badges.security'), badgeColor: 'emerald' },
+        { label: t('sidebar:sections.settings.audit_trail'), path: '/settings/audit-trail', badge: 'WORM', badgeColor: 'teal' },
       ],
     },
     {
       id: 'rh',
-      title: 'الموارد البشرية والمزامنة',
+      title: t('sidebar:sections.hr.title'),
       icon: Users,
       items: [
-        { label: 'الموظفون المعتمدون', path: '/hr/mapped-staff', badge: 'مربوط', badgeColor: 'emerald' },
-        { label: 'التلاميذ المسجلون والذمم', path: '/hr/enrolled-students', badge: 'نشط', badgeColor: 'emerald' },
-        { label: 'مسير الرواتب', path: '/hr/payroll' },
-        { label: 'سجل السلفات والديون', path: '/hr/staff-debts' },
+        { label: t('sidebar:sections.hr.mapped_staff'), path: '/hr/mapped-staff', badge: t('sidebar:badges.linked'), badgeColor: 'emerald' },
+        { label: t('sidebar:sections.hr.enrolled_students'), path: '/hr/enrolled-students', badge: t('sidebar:badges.active'), badgeColor: 'emerald' },
+        { label: t('sidebar:sections.hr.payroll'), path: '/hr/payroll' },
+        { label: t('sidebar:sections.hr.staff_debts'), path: '/hr/staff-debts' },
       ],
     },
     {
       id: 'revenue',
-      title: 'المداخيل ورقم المعاملات',
+      title: t('sidebar:sections.revenue.title'),
       icon: TrendingUp,
       items: [
-        { label: 'رقم المعاملات الشهري', path: '/revenue/monthly-ca' },
-        { label: 'الهدف السنوي (CA Annuel)', path: '/revenue/annual-ca' },
-        { label: 'مداخيل الوكلاء والصناديق', path: '/revenue/regisseurs' },
-        { label: 'سجل المقبوضات الشامل', path: '/revenue/global-recettes' },
+        { label: t('sidebar:sections.revenue.monthly_ca'), path: '/revenue/monthly-ca' },
+        { label: t('sidebar:sections.revenue.annual_ca'), path: '/revenue/annual-ca', badge: 'CA', badgeColor: 'emerald' },
+        { label: t('sidebar:sections.revenue.regisseurs'), path: '/revenue/regisseurs' },
+        { label: t('sidebar:sections.revenue.global_recettes'), path: '/revenue/global-recettes' },
       ],
     },
     {
       id: 'checks',
-      title: 'الحسابات والشيكات',
+      title: t('sidebar:sections.checks.title'),
       icon: Landmark,
       items: [
-        { label: 'الحسابات البنكية والخزائن', path: '/checks/accounts' },
-        { label: 'محفظة الشيكات والكمبيالات', path: '/checks/portfolio', badge: 'متابعة', badgeColor: 'teal' },
-        { label: 'حوافظ تسليم الشيكات (Remises)', path: '/checks/delivery-slips' },
+        { label: t('sidebar:sections.checks.accounts'), path: '/checks/accounts' },
+        { label: t('sidebar:sections.checks.portfolio'), path: '/checks/portfolio', badge: t('sidebar:badges.followup'), badgeColor: 'teal' },
+        { label: t('sidebar:sections.checks.delivery_slips'), path: '/checks/delivery-slips' },
       ],
     },
     {
       id: 'finance',
-      title: 'العمليات المالية والذمم',
+      title: t('sidebar:sections.finance.title'),
       icon: FileSpreadsheet,
       items: [
-        { label: 'سجل الديون والمتأخرات (Impayés)', path: '/finance/impayes', badge: 'هام', badgeColor: 'rose' },
-        { label: 'الأرصدة الزائدة (Soldes en plus)', path: '/finance/credit-balances' },
-        { label: 'تخفيضات الإخوة والاتفاقيات', path: '/finance/discounts' },
-        { label: 'دفتر المقبوضات التاريخي', path: '/finance/payments-journal' },
+        { label: t('sidebar:sections.finance.impayes'), path: '/finance/impayes', badge: t('sidebar:badges.important'), badgeColor: 'rose' },
+        { label: t('sidebar:sections.finance.credit_balances'), path: '/finance/credit-balances' },
+        { label: t('sidebar:sections.finance.discounts'), path: '/finance/discounts' },
+        { label: t('sidebar:sections.finance.payments_journal'), path: '/finance/payments-journal' },
       ],
     },
     {
       id: 'expenses',
-      title: 'النفقات والمصروفات',
+      title: t('sidebar:sections.expenses.title'),
       icon: Receipt,
       items: [
-        { label: 'أنواع وأبواب النفقات', path: '/expenses/categories' },
-        { label: 'قائمة النفقات', path: '/expenses/list' },
-        { label: 'الإحصائيات الشهرية', path: '/expenses/monthly-stats' },
-        { label: 'سجل المصروفات (Décaissements)', path: '/expenses/register' },
+        { label: t('sidebar:sections.expenses.categories'), path: '/expenses/categories' },
+        { label: t('sidebar:sections.expenses.list'), path: '/expenses/list' },
+        { label: t('sidebar:sections.expenses.monthly_stats'), path: '/expenses/monthly-stats' },
+        { label: t('sidebar:sections.expenses.register'), path: '/expenses/register' },
       ],
     },
     {
       id: 'services',
-      title: 'الخدمات الملحقة والمخزون',
+      title: t('sidebar:sections.services.title'),
       icon: Bus,
       items: [
-        { label: 'اللوازم والزي والمحفظة', path: '/services/supplies' },
-        { label: 'خدمات النقل المدرسي', path: '/services/transport' },
-        { label: 'المطعم والإطعام الداخلي', path: '/services/canteen' },
+        { label: t('sidebar:sections.services.supplies'), path: '/services/supplies' },
+        { label: t('sidebar:sections.services.transport'), path: '/services/transport' },
+        { label: t('sidebar:sections.services.canteen'), path: '/services/canteen' },
       ],
     },
   ];
@@ -164,23 +169,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 bottom-0 right-0 z-50 w-72 bg-white border-l border-slate-200/80 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-xs ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 bottom-0 ${
+          isRtl ? 'right-0 border-l' : 'left-0 border-r'
+        } z-50 w-72 bg-white border-slate-200/80 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-xs ${
+          isOpen ? 'translate-x-0' : (isRtl ? 'translate-x-full' : '-translate-x-full')
         }`}
-        dir="rtl"
       >
         {/* Top Administration Account Card */}
         <div className="p-3.5 mx-3 mt-3 mb-2 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-center justify-between">
-          <div>
-            <div className="font-bold text-xs text-slate-900">مجموعة مدارس أروى</div>
-            <div className="text-[10px] text-slate-400 mt-0.5">الحساب الإداري المالي والتربوي المركزي</div>
+          <div className="text-start">
+            <div className="font-bold text-xs text-slate-900">{t('sidebar:admin.title')}</div>
+            <div className="text-[10px] text-slate-400 mt-0.5">{t('sidebar:admin.subtitle')}</div>
           </div>
           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
-            نظام نشط
+            {t('sidebar:admin.system_active')}
           </span>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 lg:hidden mr-1 cursor-pointer"
+            className={`p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 lg:hidden cursor-pointer ${
+              isRtl ? 'mr-1' : 'ml-1'
+            }`}
           >
             <X className="w-4 h-4" />
           </button>
@@ -219,7 +227,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
                 {/* Sub-Items */}
                 {isOpen && (
-                  <div className="mt-1 mr-3 pr-2.5 border-r border-slate-200/80 space-y-0.5 py-0.5">
+                  <div className={`mt-1 space-y-0.5 py-0.5 ${
+                    isRtl ? 'mr-3 pr-2.5 border-r border-slate-200/80' : 'ml-3 pl-2.5 border-l border-slate-200/80'
+                  }`}>
                     {section.items.map((item) => {
                       const isActive = location.pathname.startsWith(item.path);
 
@@ -265,11 +275,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="p-3 border-t border-slate-200/80 bg-slate-50/60 flex items-center justify-between text-[11px] text-slate-500 font-mono">
           <span className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            السيرفر متصل: Fast Cloud
+            {t('common:footer.server_connected')}
           </span>
-          <span className="font-bold text-slate-600">2026.09</span>
+          <span className="font-bold text-slate-600">{t('common:footer.accounting_date')}</span>
         </div>
       </aside>
     </>
   );
 };
+
+export default Sidebar;
+
