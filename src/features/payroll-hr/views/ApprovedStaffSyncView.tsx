@@ -147,7 +147,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700">
+            <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700">
               <Users className="w-6 h-6" />
             </div>
             <div>
@@ -168,7 +168,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
         <button
           onClick={handleSyncFromArouaSchools}
           disabled={syncing}
-          className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
+          className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition-all cursor-pointer disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
           <span>{syncing ? 'جاري جلب وتحديث الأطر...' : '🔄 مزامنة الموظفين من arouaschools'}</span>
@@ -227,7 +227,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('all')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'all' 
-                ? 'bg-indigo-600 text-white shadow-sm' 
+                ? 'bg-emerald-600 text-white shadow-sm' 
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
@@ -237,7 +237,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('Pedagogique')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'Pedagogique' 
-                ? 'bg-indigo-600 text-white shadow-sm' 
+                ? 'bg-emerald-600 text-white shadow-sm' 
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
@@ -247,7 +247,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('Transport')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'Transport' 
-                ? 'bg-indigo-600 text-white shadow-sm' 
+                ? 'bg-emerald-600 text-white shadow-sm' 
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
@@ -257,7 +257,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
             onClick={() => setDeptFilter('Administration')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition cursor-pointer ${
               deptFilter === 'Administration' 
-                ? 'bg-indigo-600 text-white shadow-sm' 
+                ? 'bg-emerald-600 text-white shadow-sm' 
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
@@ -272,7 +272,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
             placeholder="بحث بالاسم أو CIN أو المعرف..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 shadow-sm text-xs"
+            className="w-full bg-white border border-slate-200 rounded-xl pr-10 pl-4 py-2 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 shadow-sm text-xs"
           />
         </div>
       </div>
@@ -318,11 +318,11 @@ export const ApprovedStaffSyncView: React.FC = () => {
                             title="إطار معتمد ومطابق رسمياً من منظومة arouaschools"
                           >
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            <span>معتمد من arouaschools</span>
+                            <span>🟢 معتمد من arouaschools</span>
                           </span>
                         </div>
                         <div className="text-xs font-mono text-slate-500 mt-1 flex items-center gap-2">
-                          <span className="text-indigo-600 font-semibold">{emp.external_staff_id}</span>
+                          <span className="text-emerald-700 font-semibold">{emp.external_staff_id}</span>
                           {emp.cin && <span>• CIN: {emp.cin}</span>}
                           {emp.phone && <span>• {emp.phone}</span>}
                         </div>
@@ -404,7 +404,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                             setAdvanceAmount(1000);
                             setAdvanceNotes('');
                           }}
-                          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-600 hover:text-white border border-indigo-200 text-xs font-bold transition cursor-pointer shadow-xs"
+                          className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-600 hover:text-white border border-emerald-200 text-xs font-bold transition cursor-pointer shadow-xs"
                           title="تسجيل تسبيق مالي فوري (Avance)"
                         >
                           <Banknote className="w-3.5 h-3.5" />
@@ -445,11 +445,11 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       {/* Advance Modal */}
       {advanceModalEmployee && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
           <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-md p-6 shadow-xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-indigo-50 text-indigo-700 rounded-xl border border-indigo-200">
+                <div className="p-2 bg-emerald-50 text-emerald-700 rounded-xl border border-indigo-200">
                   <Banknote className="w-5 h-5" />
                 </div>
                 <div>
@@ -475,7 +475,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                   required
                   value={advanceAmount}
                   onChange={(e) => setAdvanceAmount(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono font-bold text-sm focus:border-indigo-500 focus:outline-none shadow-xs"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono font-bold text-sm focus:border-emerald-500 focus:outline-none shadow-xs"
                 />
               </div>
 
@@ -487,7 +487,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                     required
                     value={advanceDate}
                     onChange={(e) => setAdvanceDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none font-mono shadow-xs"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-emerald-500 focus:outline-none font-mono shadow-xs"
                   />
                 </div>
                 <div>
@@ -495,7 +495,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                   <select 
                     value={advanceMethod}
                     onChange={(e) => setAdvanceMethod(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none shadow-xs"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-emerald-500 focus:outline-none shadow-xs"
                   >
                     <option value="espece">نقداً (Espèces)</option>
                     <option value="cheque">شيك بنكي (Chèque)</option>
@@ -513,7 +513,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                     placeholder="CHQ-..."
                     value={advanceCheckNumber}
                     onChange={(e) => setAdvanceCheckNumber(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none font-mono shadow-xs"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-emerald-500 focus:outline-none font-mono shadow-xs"
                   />
                 </div>
               )}
@@ -525,7 +525,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                   required
                   value={advanceMonth}
                   onChange={(e) => setAdvanceMonth(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none font-mono shadow-xs"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-emerald-500 focus:outline-none font-mono shadow-xs"
                 />
               </div>
 
@@ -536,7 +536,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                   placeholder="سبب التسبيق أو توضيحات إضافية..."
                   value={advanceNotes}
                   onChange={(e) => setAdvanceNotes(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none resize-none shadow-xs"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-emerald-500 focus:outline-none resize-none shadow-xs"
                 />
               </div>
 
@@ -551,7 +551,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 <button
                   type="submit"
                   disabled={advanceLoading}
-                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-xs disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-xs disabled:opacity-50"
                 >
                   <Save className="w-4 h-4" />
                   <span>{advanceLoading ? 'جاري الصرف والتقييد...' : 'تأكيد وصرف التسبيق'}</span>
@@ -564,11 +564,11 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       {/* Edit Financials Modal */}
       {editEmp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
           <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-md p-6 shadow-xl relative">
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-indigo-50 text-indigo-700 rounded-xl border border-indigo-200">
+                <div className="p-2 bg-emerald-50 text-emerald-700 rounded-xl border border-indigo-200">
                   <Edit3 className="w-5 h-5" />
                 </div>
                 <div>
@@ -594,7 +594,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                   required
                   value={editSalary}
                   onChange={(e) => setEditSalary(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono font-bold text-sm focus:border-indigo-500 focus:outline-none shadow-xs"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono font-bold text-sm focus:border-emerald-500 focus:outline-none shadow-xs"
                 />
               </div>
 
@@ -606,7 +606,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                   step="50"
                   value={editDebt}
                   onChange={(e) => setEditDebt(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-rose-600 font-mono text-sm focus:border-indigo-500 focus:outline-none font-bold shadow-xs"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-rose-600 font-mono text-sm focus:border-emerald-500 focus:outline-none font-bold shadow-xs"
                 />
                 <span className="text-[10px] text-slate-500 mt-1 block">تقتطع تدريجياً أو عند التسوية الشاملة للراتب</span>
               </div>
@@ -616,7 +616,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 <select 
                   value={editStatus}
                   onChange={(e) => setEditStatus(e.target.value as any)}
-                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-indigo-500 focus:outline-none shadow-xs"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs focus:border-emerald-500 focus:outline-none shadow-xs"
                 >
                   <option value="active">نشط بالخدمة (Active)</option>
                   <option value="departed">مغادر للمؤسسة (Departed)</option>
@@ -634,7 +634,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-xs"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-xs"
                 >
                   <Save className="w-4 h-4" />
                   حفظ البيانات المالية
@@ -647,7 +647,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       {/* Financial Statement Modal */}
       {statementEmp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
           <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-lg p-6 shadow-xl relative space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2.5">
@@ -690,11 +690,11 @@ export const ApprovedStaffSyncView: React.FC = () => {
             {/* Bank details */}
             <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-2">
               <div className="flex items-center gap-2 text-slate-600 font-medium">
-                <Building className="w-4 h-4 text-indigo-600" />
+                <Building className="w-4 h-4 text-emerald-700" />
                 <span>البنك المعتمد: <strong className="text-slate-900">{statementEmp.bank_name || 'غير محدد'}</strong></span>
               </div>
               <div className="flex items-center gap-2 text-slate-600 font-medium">
-                <CreditCard className="w-4 h-4 text-indigo-600" />
+                <CreditCard className="w-4 h-4 text-emerald-700" />
                 <span>رقم الحساب (RIB): <strong className="text-slate-900 font-mono">{statementEmp.rib_account || 'غير مسجل'}</strong></span>
               </div>
             </div>
