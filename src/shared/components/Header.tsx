@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { 
   Menu, 
   Calendar, 
@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
             <img
               src="/assets/logo-aroua.png"
               alt="شعار مجموعة مدارس أروى"
-              className="h-8 w-auto object-contain"
+              className="h-8 max-h-8 w-auto max-w-[100px] object-contain shrink-0" style={{ maxHeight: "32px", maxWidth: "100px" }}
             />
           </div>
           <div className="hidden sm:block text-right">

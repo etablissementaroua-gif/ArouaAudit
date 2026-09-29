@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   Settings,
@@ -183,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <img
                 src="/assets/logo-aroua.png"
                 alt="شعار مجموعة مدارس أروى"
-                className="h-11 w-auto object-contain"
+                className="h-11 max-h-11 w-auto max-w-[120px] object-contain shrink-0" style={{ maxHeight: "44px", maxWidth: "120px" }}
               />
             </div>
             <div className="min-w-0">
