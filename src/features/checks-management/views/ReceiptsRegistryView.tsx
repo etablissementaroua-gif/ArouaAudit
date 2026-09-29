@@ -74,21 +74,21 @@ export const ReceiptsRegistryView: React.FC = () => {
     switch (method) {
       case 'especes':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
             <Banknote className="w-3.5 h-3.5" />
             <span>نقداً (Espèces)</span>
           </span>
         );
       case 'cheque':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
             <FileText className="w-3.5 h-3.5" />
             <span>شيك بنكي (Chèque)</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200">
             <CreditCard className="w-3.5 h-3.5" />
             <span>تحويل بنكي (Virement)</span>
           </span>
@@ -99,18 +99,18 @@ export const ReceiptsRegistryView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-indigo-600/20 border border-indigo-500/30 rounded-xl text-indigo-400">
             <Receipt className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-wide">سجل الوصولات وسندات القبض</h1>
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">سجل الوصولات وسندات القبض</h1>
             <p className="text-slate-400 text-sm">الأرشيف المركزي لجميع وصولات الأداء المالي، الرسوم المدرسية، وسندات الصندوق</p>
           </div>
         </div>
 
-        <div className="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-sm text-slate-300 font-mono">
+        <div className="bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-200 text-sm text-emerald-800 font-mono">
           <span>إجمالي الوصولات: </span>
           <span className="font-bold text-emerald-400">{formatMAD(totalAmount)}</span>
         </div>
@@ -118,31 +118,31 @@ export const ReceiptsRegistryView: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
           <span className="text-xs text-slate-400 uppercase font-semibold block mb-1">العدد الإجمالي للوصولات</span>
-          <p className="text-2xl font-bold text-white font-mono">{filteredReceipts.length}</p>
+          <p className="text-2xl font-black text-slate-900 font-mono">{filteredReceipts.length}</p>
           <span className="text-xs text-slate-500">سند قبض صادر</span>
         </div>
 
-        <div className="bg-slate-900 border border-emerald-500/20 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
           <span className="text-xs text-emerald-400 uppercase font-semibold block mb-1">وصولات الأداء النقدي</span>
-          <p className="text-2xl font-bold text-emerald-400 font-mono">
+          <p className="text-2xl font-black text-emerald-600 font-mono">
             {formatMAD(receipts.filter(r => r.payment_method === 'especes').reduce((s, r) => s + r.amount, 0))}
           </p>
           <span className="text-xs text-slate-500">{receipts.filter(r => r.payment_method === 'especes').length} وصل نقدي</span>
         </div>
 
-        <div className="bg-slate-900 border border-indigo-500/20 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
           <span className="text-xs text-indigo-400 uppercase font-semibold block mb-1">وصولات الشيكات</span>
-          <p className="text-2xl font-bold text-indigo-400 font-mono">
+          <p className="text-2xl font-black text-indigo-600 font-mono">
             {formatMAD(receipts.filter(r => r.payment_method === 'cheque').reduce((s, r) => s + r.amount, 0))}
           </p>
           <span className="text-xs text-slate-500">{receipts.filter(r => r.payment_method === 'cheque').length} وصل شيك</span>
         </div>
 
-        <div className="bg-slate-900 border border-cyan-500/20 p-5 rounded-2xl">
+        <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-xs">
           <span className="text-xs text-cyan-400 uppercase font-semibold block mb-1">التحويلات البنكية</span>
-          <p className="text-2xl font-bold text-cyan-400 font-mono">
+          <p className="text-2xl font-black text-cyan-600 font-mono">
             {formatMAD(receipts.filter(r => r.payment_method === 'virement').reduce((s, r) => s + r.amount, 0))}
           </p>
           <span className="text-xs text-slate-500">{receipts.filter(r => r.payment_method === 'virement').length} وصل تحويل</span>
@@ -150,7 +150,7 @@ export const ReceiptsRegistryView: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-lg">
+      <div className="bg-white border border-slate-200/90 p-4 rounded-2xl flex flex-wrap gap-3 items-center justify-between shadow-xs">
         <div className="flex-1 min-w-[260px] relative">
           <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2" />
           <input
@@ -158,7 +158,7 @@ export const ReceiptsRegistryView: React.FC = () => {
             placeholder="بحث برقم الوصل، اسم الدافع، أو المرجع..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pr-10 pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="w-full bg-white border border-slate-300 rounded-xl pr-10 pl-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 shadow-xs"
           />
         </div>
 
@@ -166,7 +166,7 @@ export const ReceiptsRegistryView: React.FC = () => {
           <select
             value={methodFilter}
             onChange={e => setMethodFilter(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-700 font-medium focus:outline-none focus:border-indigo-500 shadow-xs"
           >
             <option value="all">كافة وسائل الأداء</option>
             <option value="especes">نقداً (Espèces)</option>
@@ -177,11 +177,11 @@ export const ReceiptsRegistryView: React.FC = () => {
       </div>
 
       {/* Receipts Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/90 text-slate-700 text-xs font-bold uppercase tracking-wider">
                 <th className="py-4 px-4">رقم الوصل الرسمي</th>
                 <th className="py-4 px-4">تاريخ الإصدار</th>
                 <th className="py-4 px-4">الدافع / المعني بالأداء</th>
@@ -191,7 +191,7 @@ export const ReceiptsRegistryView: React.FC = () => {
                 <th className="py-4 px-4 text-center">الإجراء</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">جاري تحميل سجل الوصولات...</td>
@@ -202,8 +202,8 @@ export const ReceiptsRegistryView: React.FC = () => {
                 </tr>
               ) : (
                 filteredReceipts.map(rec => (
-                  <tr key={rec.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-4 px-4 font-mono font-bold text-white tracking-wider">
+                  <tr key={rec.id} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-4 px-4 font-mono font-bold text-slate-900 tracking-wider">
                       {rec.receipt_number}
                     </td>
 
@@ -214,7 +214,7 @@ export const ReceiptsRegistryView: React.FC = () => {
                       </div>
                     </td>
 
-                    <td className="py-4 px-4 font-medium text-slate-200">
+                    <td className="py-4 px-4 font-bold text-slate-900">
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
                         <span>{rec.payer_name}</span>
@@ -225,7 +225,7 @@ export const ReceiptsRegistryView: React.FC = () => {
                       {getMethodBadge(rec.payment_method)}
                     </td>
 
-                    <td className="py-4 px-4 text-slate-300 text-xs">
+                    <td className="py-4 px-4 text-slate-700 text-xs font-medium">
                       <span>{rec.purpose}</span>
                       {rec.reference && (
                         <span className="block font-mono text-[11px] text-slate-500 mt-0.5">
@@ -234,14 +234,14 @@ export const ReceiptsRegistryView: React.FC = () => {
                       )}
                     </td>
 
-                    <td className="py-4 px-4 font-mono font-black text-emerald-400 text-base">
+                    <td className="py-4 px-4 font-mono font-black text-emerald-600 text-base">
                       {formatMAD(rec.amount)}
                     </td>
 
                     <td className="py-4 px-4 text-center">
                       <button
                         onClick={() => handleOpenReceipt(rec)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 hover:text-white border border-indigo-500/30 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-sm"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-bold shadow-xs transition-all hover:scale-105 active:scale-95 shadow-sm"
                         title="معاينة وإعادة طباعة الوصل"
                       >
                         <Printer className="w-3.5 h-3.5" />

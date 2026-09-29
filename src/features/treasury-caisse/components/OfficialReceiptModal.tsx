@@ -67,7 +67,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
           {/* Header with Official Logo */}
           <div className="border-b-2 border-cyan-600 pb-5">
             <div className="flex flex-col items-center text-center">
-              <div className="mb-2">
+              <div className="mb-2 inline-block p-1.5 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <img
                   src={INSTITUTION_INFO.logoPath}
                   alt={INSTITUTION_INFO.nameAr}

@@ -18,10 +18,13 @@ import {
   GraduationCap, 
   Bus, 
   Briefcase, 
-  HeartHandshake
+  HeartHandshake,
+  FileText,
+  CreditCard,
+  Building
 } from 'lucide-react';
 import { StatCard } from '../../../shared/components/StatCard';
-import { staffSyncService } from '../services/staffSync.service';
+import { arouaStaffSyncService } from '../services/arouaStaffSync.service';
 import { payrollService } from '../services/payroll.service';
 import { Employee, StaffAdvance } from '../models/payroll.types';
 
@@ -51,6 +54,9 @@ export const ApprovedStaffSyncView: React.FC = () => {
   const [editDebt, setEditDebt] = useState<number>(0);
   const [editStatus, setEditStatus] = useState<'active' | 'departed' | 'suspended'>('active');
 
+  // Statement Drawer / Modal State
+  const [statementEmp, setStatementEmp] = useState<Employee | null>(null);
+
   useEffect(() => {
     loadStaff();
   }, []);
@@ -70,7 +76,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
   const handleSyncFromArouaSchools = async () => {
     setSyncing(true);
     try {
-      const result = await staffSyncService.syncStaffFromArouaSchools();
+      const result = await arouaStaffSyncService.syncApprovedStaffFromArouaSchools();
       await loadStaff();
       showToast(`${result.details} (تمت في ${result.timestamp})`);
     } catch (err) {
@@ -130,7 +136,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
   // Aggregated Stats
   const activeStaff = employees.filter(e => e.employment_status === 'active');
   const teachersCount = activeStaff.filter(e => e.role === 'teacher').length;
-  const driversCount = activeStaff.filter(e => e.role === 'driver' || e.department === 'Transport').length;
+  const driversCount = activeStaff.filter(e => e.role === 'driver' || e.department === 'Transport' || e.role === 'assistant').length;
   const totalBaseSalary = activeStaff.reduce((sum, e) => sum + (Number(e.base_salary) || 0), 0);
 
   // Filtering
@@ -150,23 +156,23 @@ export const ApprovedStaffSyncView: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Users className="w-6 h-6 text-indigo-400" />
-            <h1 className="text-xl font-bold text-white tracking-tight">الموظفون المعتمدون والمزامنة (Personnel Mappé)</h1>
+            <h1 className="text-xl font-bold text-white tracking-tight">الموظفون المعتمدون ومسير الرواتب (Personnel Mappé)</h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              المرحلة 3: مزامنة الأطر والأساتذة
+              مزامنة الأطر والأساتذة
             </span>
           </div>
           <p className="text-xs text-slate-400 mt-1">
-            تدقيق ومطابقة الأطر التربوية والإدارية وسائقي النقل المعتمدين من منظومة arouaschools وإدارة كتل الرواتب.
+            جلب وتدقيق لائحة الموظفين والأساتذة وسائقي النقل المعتمدين من منظومة arouaschools وإدارة كتل الرواتب المحاسبية.
           </p>
         </div>
 
         <button
           onClick={handleSyncFromArouaSchools}
           disabled={syncing}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-600/20 transition-all cursor-pointer disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
-          {syncing ? 'جاري المزامنة...' : '🔄 مزامنة الموظفين من arouaschools'}
+          {syncing ? 'جاري جلب وتحديث الأطر...' : '🔄 مزامنة الموظفين من arouaschools'}
         </button>
       </div>
 
@@ -200,7 +206,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
           variant="default" 
         />
         <StatCard 
-          title="السائقون والخدمات" 
+          title="السائقون والمرافقات" 
           value={`${driversCount} أطر`} 
           subtitle="النقل واللوجستيك والمطعمة" 
           icon={Bus} 
@@ -209,54 +215,54 @@ export const ApprovedStaffSyncView: React.FC = () => {
         <StatCard 
           title="إجمالي كتلة الأجور الأساسية" 
           value={`${totalBaseSalary.toLocaleString()} MAD`} 
-          subtitle="الكتلة الخام الشهرية المعتمدة" 
-          icon={DollarSign} 
+          subtitle="الرواتب الشهرية الثابتة للأطر النشطة" 
+          icon={Banknote} 
           variant="expense" 
         />
       </div>
 
-      {/* Filter and Search Bar */}
+      {/* Filter Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
           <button
             onClick={() => setDeptFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              deptFilter === 'all'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              deptFilter === 'all' 
+                ? 'bg-indigo-600 text-white' 
+                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            كافة الأقسام
+            الجميع ({employees.length})
           </button>
           <button
             onClick={() => setDeptFilter('Pedagogique')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              deptFilter === 'Pedagogique'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              deptFilter === 'Pedagogique' 
+                ? 'bg-indigo-600 text-white' 
+                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            الهيئة التربوية (Pedagogique)
+            الهيئة التربوية ({employees.filter(e => e.department === 'Pedagogique').length})
           </button>
           <button
             onClick={() => setDeptFilter('Transport')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              deptFilter === 'Transport'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              deptFilter === 'Transport' 
+                ? 'bg-indigo-600 text-white' 
+                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            النقل واللوجستيك (Transport)
+            النقل واللوجستيك ({employees.filter(e => e.department === 'Transport').length})
           </button>
           <button
             onClick={() => setDeptFilter('Administration')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
-              deptFilter === 'Administration'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition ${
+              deptFilter === 'Administration' 
+                ? 'bg-indigo-600 text-white' 
+                : 'bg-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            الإدارة والحسابات (Administration)
+            الإدارة والصندوق ({employees.filter(e => e.department === 'Administration').length})
           </button>
         </div>
 
@@ -307,9 +313,12 @@ export const ApprovedStaffSyncView: React.FC = () => {
                     <td className="py-3.5 px-4">
                       <div>
                         <div className="font-bold text-white text-sm flex items-center gap-2">
-                          {emp.full_name}
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            🟢 معتمد
+                          <span>{emp.full_name}</span>
+                          <span 
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shadow-sm"
+                            title="إطار معتمد ومطابق رسمياً من منظومة arouaschools"
+                          >
+                            <span>🟢 معتمد من arouaschools</span>
                           </span>
                         </div>
                         <div className="text-[11px] font-mono text-slate-400 mt-0.5 flex items-center gap-2">
@@ -334,16 +343,22 @@ export const ApprovedStaffSyncView: React.FC = () => {
                     {/* Subjects & Classes */}
                     <td className="py-3.5 px-3">
                       <div className="flex flex-wrap gap-1 max-w-xs">
-                        {emp.subjects?.map((sub, idx) => (
-                          <span key={idx} className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 text-[10px] border border-indigo-500/20">
-                            {sub}
-                          </span>
-                        ))}
-                        {emp.assigned_classes?.map((cls, idx) => (
-                          <span key={idx} className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] border border-slate-700">
-                            {cls}
-                          </span>
-                        ))}
+                        {emp.subjects && emp.subjects.length > 0 ? (
+                          emp.subjects.map((sub, idx) => (
+                            <span key={idx} className="px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 text-[10px] border border-indigo-500/20">
+                              {sub}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-[10px] text-slate-500">عام</span>
+                        )}
+                        {emp.assigned_classes && emp.assigned_classes.length > 0 && (
+                          emp.assigned_classes.map((cls, idx) => (
+                            <span key={idx} className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] border border-slate-700">
+                              {cls}
+                            </span>
+                          ))
+                        )}
                       </div>
                     </td>
 
@@ -381,7 +396,8 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
                     {/* Actions */}
                     <td className="py-3.5 px-4 text-center">
-                      <div className="flex items-center justify-center gap-2">
+                      <div className="flex items-center justify-center gap-1.5">
+                        {/* 1. Record Advance Action */}
                         <button
                           onClick={() => {
                             setAdvanceModalEmployee(emp);
@@ -389,12 +405,13 @@ export const ApprovedStaffSyncView: React.FC = () => {
                             setAdvanceNotes('');
                           }}
                           className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-600/80 hover:bg-indigo-600 text-white text-xs font-medium transition cursor-pointer"
-                          title="تسجيل تسبيق (Avance)"
+                          title="تسجيل تسبيق مالي فوري (Avance)"
                         >
                           <Banknote className="w-3.5 h-3.5" />
                           تسبيق
                         </button>
 
+                        {/* 2. Edit Base Salary and Credit Action */}
                         <button
                           onClick={() => {
                             setEditEmp(emp);
@@ -403,9 +420,18 @@ export const ApprovedStaffSyncView: React.FC = () => {
                             setEditStatus(emp.employment_status);
                           }}
                           className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition cursor-pointer"
-                          title="تعديل الراتب والبيانات المالية"
+                          title="تعديل الراتب الأساسي والديون السابقة"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
+                        </button>
+
+                        {/* 3. Open Financial Statement Slip */}
+                        <button
+                          onClick={() => setStatementEmp(emp)}
+                          className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 hover:text-emerald-300 border border-slate-700 transition cursor-pointer"
+                          title="فتح كشف الحساب المالي للموظف"
+                        >
+                          <FileText className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </td>
@@ -439,110 +465,99 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
             <form onSubmit={handleSaveAdvance} className="space-y-4 mt-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  مبلغ التسبيق (MAD) *
-                </label>
+                <label className="block text-xs font-medium text-slate-400 mb-1">المبلغ المطلوب (MAD)</label>
                 <input 
                   type="number"
-                  step="100"
                   min="100"
+                  step="50"
+                  required
                   value={advanceAmount}
                   onChange={(e) => setAdvanceAmount(Number(e.target.value))}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono font-bold text-sm focus:border-indigo-500 focus:outline-none"
-                  required
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono font-bold text-sm focus:border-indigo-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    تاريخ الصرف
-                  </label>
+                  <label className="block text-xs font-medium text-slate-400 mb-1">تاريخ الصرف</label>
                   <input 
                     type="date"
+                    required
                     value={advanceDate}
                     onChange={(e) => setAdvanceDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none"
-                    required
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none font-mono"
                   />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    خصم عن شهر
-                  </label>
-                  <input 
-                    type="month"
-                    value={advanceMonth}
-                    onChange={(e) => setAdvanceMonth(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none"
-                    required
-                  />
+                  <label className="block text-xs font-medium text-slate-400 mb-1">طريقة الصرف</label>
+                  <select 
+                    value={advanceMethod}
+                    onChange={(e) => setAdvanceMethod(e.target.value as any)}
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none"
+                  >
+                    <option value="espece">نقداً (Espèces)</option>
+                    <option value="cheque">شيك بنكي (Chèque)</option>
+                    <option value="virement">تحويل بنكي (Virement)</option>
+                  </select>
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  طريقة السداد وصرف التسبيق
-                </label>
-                <select
-                  value={advanceMethod}
-                  onChange={(e: any) => setAdvanceMethod(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none"
-                >
-                  <option value="espece">نقداً من الصندوق (Espèces)</option>
-                  <option value="cheque">شيك بنكي (Chèque)</option>
-                  <option value="virement">تحويل بنكي (Virement)</option>
-                </select>
               </div>
 
               {advanceMethod === 'cheque' && (
                 <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">
-                    رقم الشيك البنكي
-                  </label>
+                  <label className="block text-xs font-medium text-slate-400 mb-1">رقم الشيك البنكي</label>
                   <input 
                     type="text"
+                    required
                     placeholder="CHQ-..."
                     value={advanceCheckNumber}
                     onChange={(e) => setAdvanceCheckNumber(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs font-mono focus:border-indigo-500 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none font-mono"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  ملاحظات أو سبب التسبيق
-                </label>
+                <label className="block text-xs font-medium text-slate-400 mb-1">الشهر المحاسبي للخصم</label>
                 <input 
-                  type="text"
-                  placeholder="مثال: تسبيق استثنائي بموافقة الإدارة..."
-                  value={advanceNotes}
-                  onChange={(e) => setAdvanceNotes(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none"
+                  type="month"
+                  required
+                  value={advanceMonth}
+                  onChange={(e) => setAdvanceMonth(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none font-mono"
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-indigo-500/5 border border-indigo-500/20 text-indigo-300 text-[11px] flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0" />
-                <span>سيتم إدراج خصم الصندوق آلياً (Décaissement) واقتطاعه من مسير أجور شهر {advanceMonth}.</span>
+              <div>
+                <label className="block text-xs font-medium text-slate-400 mb-1">ملاحظات الصندوق</label>
+                <textarea 
+                  rows={2}
+                  placeholder="سبب التسبيق أو توضيحات إضافية..."
+                  value={advanceNotes}
+                  onChange={(e) => setAdvanceNotes(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none resize-none"
+                />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-400 text-xs flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>سيتم تسجيل هذا التسبيق تلقائياً كحركة سحب (Décaissement) في يومية الصندوق وخصمه من راتب شهر {advanceMonth}.</span>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
                 <button
                   type="button"
                   onClick={() => setAdvanceModalEmployee(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
                   disabled={advanceLoading}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-2 disabled:opacity-50"
                 >
-                  {advanceLoading ? 'جاري الصرف...' : 'تأكيد وصرف التسبيق'}
+                  <Save className="w-4 h-4" />
+                  {advanceLoading ? 'جاري التقييد...' : 'تأكيد وصرف التسبيق'}
                 </button>
               </div>
             </form>
@@ -558,8 +573,8 @@ export const ApprovedStaffSyncView: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Edit3 className="w-5 h-5 text-indigo-400" />
                 <div>
-                  <h3 className="text-sm font-bold text-white">تعديل البيانات المالية: {editEmp.full_name}</h3>
-                  <p className="text-xs text-slate-400 font-mono">{editEmp.external_staff_id}</p>
+                  <h3 className="text-sm font-bold text-white">تعديل البيانات المالية للأستاذ/الموظف</h3>
+                  <p className="text-xs text-slate-400">{editEmp.full_name} ({editEmp.external_staff_id})</p>
                 </div>
               </div>
               <button 
@@ -572,40 +587,36 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
             <form onSubmit={handleSaveFinancials} className="space-y-4 mt-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  الراتب الأساسي الصافي (Base Salary MAD) *
-                </label>
+                <label className="block text-xs font-medium text-slate-400 mb-1">الراتب الأساسي الشهري (MAD)</label>
                 <input 
                   type="number"
+                  min="0"
                   step="100"
+                  required
                   value={editSalary}
                   onChange={(e) => setEditSalary(Number(e.target.value))}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono font-bold text-sm focus:border-indigo-500 focus:outline-none"
-                  required
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono font-bold text-sm focus:border-indigo-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  الديون السابقة العالقة (Crédit Ancien MAD)
-                </label>
+                <label className="block text-xs font-medium text-slate-400 mb-1">الديون والذمم السابقة العالقة (Crédit Ancien MAD)</label>
                 <input 
                   type="number"
-                  step="100"
+                  min="0"
+                  step="50"
                   value={editDebt}
                   onChange={(e) => setEditDebt(Number(e.target.value))}
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono text-sm focus:border-indigo-500 focus:outline-none"
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-mono text-sm focus:border-indigo-500 focus:outline-none text-rose-400 font-bold"
                 />
-                <p className="text-[10px] text-slate-500 mt-1">يتم اقتطاعها تدريجياً من الراتب الشهري حتى تصفير الذمة.</p>
+                <span className="text-[10px] text-slate-500 mt-1 block">تقتطع تدريجياً أو عند التسوية الشاملة للراتب</span>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  وضعية ونشاط الموظف
-                </label>
-                <select
+                <label className="block text-xs font-medium text-slate-400 mb-1">الحالة الوظيفية بالنظام المالي</label>
+                <select 
                   value={editStatus}
-                  onChange={(e: any) => setEditStatus(e.target.value)}
+                  onChange={(e) => setEditStatus(e.target.value as any)}
                   className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white text-xs focus:border-indigo-500 focus:outline-none"
                 >
                   <option value="active">نشط بالخدمة (Active)</option>
@@ -614,22 +625,93 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 </select>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
                 <button
                   type="button"
                   onClick={() => setEditEmp(null)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition flex items-center gap-2"
                 >
-                  حفظ وتثبيت التعديل
+                  <Save className="w-4 h-4" />
+                  حفظ البيانات المالية
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Financial Statement Modal */}
+      {statementEmp && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-emerald-400" />
+                <div>
+                  <h3 className="text-sm font-bold text-white">كشف الحساب المالي المعتمد للموظف</h3>
+                  <p className="text-xs text-slate-400">{statementEmp.full_name} • {statementEmp.external_staff_id}</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setStatementEmp(null)}
+                className="text-slate-400 hover:text-white transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Information Grid */}
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-3 bg-slate-950/70 border border-slate-800 rounded-xl space-y-1">
+                <span className="text-[11px] text-slate-400 block">رقم البطاقة الوطنية (CIN):</span>
+                <span className="font-mono font-bold text-white">{statementEmp.cin || 'غير محدد'}</span>
+              </div>
+              <div className="p-3 bg-slate-950/70 border border-slate-800 rounded-xl space-y-1">
+                <span className="text-[11px] text-slate-400 block">رقم الضمان الاجتماعي (CNSS):</span>
+                <span className="font-mono font-bold text-white">{statementEmp.cnss_number || 'غير مسجل'}</span>
+              </div>
+              <div className="p-3 bg-slate-950/70 border border-slate-800 rounded-xl space-y-1">
+                <span className="text-[11px] text-slate-400 block">الراتب الأساسي المعتمد:</span>
+                <span className="font-mono font-bold text-emerald-400 text-sm">{statementEmp.base_salary.toLocaleString()} MAD</span>
+              </div>
+              <div className="p-3 bg-slate-950/70 border border-slate-800 rounded-xl space-y-1">
+                <span className="text-[11px] text-slate-400 block">الديون السابقة العالقة:</span>
+                <span className="font-mono font-bold text-rose-400 text-sm">{statementEmp.credit_ancien.toLocaleString()} MAD</span>
+              </div>
+            </div>
+
+            {/* Bank details */}
+            <div className="p-3 bg-slate-950/70 border border-slate-800 rounded-xl text-xs space-y-1.5">
+              <div className="flex items-center gap-1.5 text-slate-400 font-medium">
+                <Building className="w-3.5 h-3.5 text-indigo-400" />
+                <span>البنك المعتمد: <strong className="text-white">{statementEmp.bank_name || 'غير محدد'}</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5 text-slate-400 font-medium">
+                <CreditCard className="w-3.5 h-3.5 text-indigo-400" />
+                <span>رقم الحساب (RIB): <strong className="text-white font-mono">{statementEmp.rib_account || 'غير مسجل'}</strong></span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 shrink-0" />
+              <span>هذا الإطار معتمد ومربوط مع منظومة arouaschools، ويتم تدقيق مدفوعاته آلياً مع الخزينة.</span>
+            </div>
+
+            <div className="flex justify-end pt-2">
+              <button
+                type="button"
+                onClick={() => setStatementEmp(null)}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition"
+              >
+                إغلاق
+              </button>
+            </div>
           </div>
         </div>
       )}

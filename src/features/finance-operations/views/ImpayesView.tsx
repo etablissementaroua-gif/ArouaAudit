@@ -96,21 +96,21 @@ export const ImpayesView: React.FC = () => {
     switch (service) {
       case 'transport':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
             <Bus className="w-3 h-3" />
             <span>نقل مدرسي</span>
           </span>
         );
       case 'cantine':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200">
             <Utensils className="w-3 h-3" />
             <span>مطعم مدرسي</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
             <GraduationCap className="w-3 h-3" />
             <span>تمدرس ورسوم</span>
           </span>
@@ -122,28 +122,28 @@ export const ImpayesView: React.FC = () => {
     switch (aging) {
       case '90_plus':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40 animate-pulse">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-300 animate-pulse">
             <AlertOctagon className="w-3.5 h-3.5" />
             <span>تأخر +90 يوماً (حرج)</span>
           </span>
         );
       case '60_days':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-orange-500/15 text-orange-400 border border-orange-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-700 border border-orange-200">
             <Clock className="w-3.5 h-3.5" />
             <span>تأخر 60 يوماً</span>
           </span>
         );
       case '30_days':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
             <Clock className="w-3.5 h-3.5" />
             <span>تأخر 30 يوماً</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
             <span>مستحق هذا الشهر</span>
           </span>
         );
@@ -154,34 +154,34 @@ export const ImpayesView: React.FC = () => {
     switch (status) {
       case 'settled':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
             <CheckCircle2 className="w-3 h-3" />
             <span>تمت التسوية</span>
           </span>
         );
       case 'promised':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-indigo-500/15 text-indigo-300 border border-indigo-500/30" title={`موعد الوعد: ${promiseDate || ''}`}>
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-200" title={`موعد الوعد: ${promiseDate || ''}`}>
             <Calendar className="w-3 h-3" />
             <span>وعد بالسداد ({promiseDate || 'محدد'})</span>
           </span>
         );
       case 'contacted':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-blue-500/15 text-blue-400 border border-blue-500/30">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
             <Phone className="w-3 h-3" />
             <span>تم الاتصال</span>
           </span>
         );
       case 'litigation':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-rose-950 text-rose-300 border border-rose-800">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-rose-100 text-rose-800 border border-rose-300">
             <span>متابعة إدارية وقانونية</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
             <span>غير مؤدى (جديد)</span>
           </span>
         );
@@ -191,52 +191,52 @@ export const ImpayesView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white border border-slate-200/90 p-6 rounded-2xl shadow-xs">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-rose-500/20 border border-rose-500/30 rounded-xl text-rose-400">
             <AlertOctagon className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-wide">المستحقات غير المؤداة والمتأخرات (Impayés)</h1>
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">المستحقات غير المؤداة والمتأخرات (Impayés)</h1>
             <p className="text-slate-400 text-sm">لوحة المراقبة والتحصيل المالي للذمم المدرسية، التمدرس، النقل، والمطعم</p>
           </div>
         </div>
 
-        <div className="bg-rose-950/40 border border-rose-500/40 px-5 py-3 rounded-2xl flex items-center gap-4">
+        <div className="bg-rose-50/80 border border-rose-200 px-5 py-3 rounded-2xl flex items-center gap-4">
           <div>
-            <span className="text-xs text-rose-300 block">إجمالي الديون العالقة</span>
-            <span className="text-2xl font-black text-rose-400 font-mono">{formatMAD(stats.totalDueAmount)}</span>
+            <span className="text-xs text-rose-700 font-semibold block">إجمالي الديون العالقة</span>
+            <span className="text-2xl font-black text-rose-600 font-mono">{formatMAD(stats.totalDueAmount)}</span>
           </div>
-          <div className="h-8 w-px bg-rose-500/30" />
+          <div className="h-8 w-px bg-rose-200" />
           <div>
-            <span className="text-xs text-rose-300 block">التلاميذ المدينين</span>
-            <span className="text-xl font-bold text-white font-mono">{stats.debtorsCount} تلميذ</span>
+            <span className="text-xs text-rose-700 font-semibold block">التلاميذ المدينين</span>
+            <span className="text-xl font-black text-slate-900 font-mono">{stats.debtorsCount} تلميذ</span>
           </div>
         </div>
       </div>
 
       {/* Financial Risk KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-slate-900 border border-indigo-500/20 p-4 rounded-xl">
-          <span className="text-xs text-indigo-400 block mb-1">متأخرات التمدرس</span>
-          <p className="text-xl font-bold text-white font-mono">{formatMAD(stats.scolariteDueAmount)}</p>
+        <div className="bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+          <span className="text-xs text-indigo-700 font-bold block mb-1">متأخرات التمدرس</span>
+          <p className="text-xl font-black text-slate-900 font-mono">{formatMAD(stats.scolariteDueAmount)}</p>
           <span className="text-[11px] text-slate-500">واجبات التمدرس الشهرية</span>
         </div>
 
-        <div className="bg-slate-900 border border-amber-500/20 p-4 rounded-xl">
-          <span className="text-xs text-amber-400 block mb-1">متأخرات النقل المدرسي</span>
-          <p className="text-xl font-bold text-amber-400 font-mono">{formatMAD(stats.transportDueAmount)}</p>
+        <div className="bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+          <span className="text-xs text-amber-700 font-bold block mb-1">متأخرات النقل المدرسي</span>
+          <p className="text-xl font-black text-amber-600 font-mono">{formatMAD(stats.transportDueAmount)}</p>
           <span className="text-[11px] text-slate-500">اشتراكات الحافلات العالقة</span>
         </div>
 
-        <div className="bg-slate-900 border border-cyan-500/20 p-4 rounded-xl">
-          <span className="text-xs text-cyan-400 block mb-1">متأخرات المطعم المدرسي</span>
-          <p className="text-xl font-bold text-cyan-400 font-mono">{formatMAD(stats.cantineDueAmount)}</p>
+        <div className="bg-white border border-slate-200/90 p-4 rounded-xl shadow-xs">
+          <span className="text-xs text-cyan-700 font-bold block mb-1">متأخرات المطعم المدرسي</span>
+          <p className="text-xl font-black text-cyan-600 font-mono">{formatMAD(stats.cantineDueAmount)}</p>
           <span className="text-[11px] text-slate-500">وجبات التغذية والمطعم</span>
         </div>
 
-        <div className="bg-rose-950/30 border border-rose-500/40 p-4 rounded-xl">
-          <span className="text-xs text-rose-400 font-semibold block mb-1 flex items-center gap-1">
+        <div className="bg-rose-50/70 border border-rose-200 p-4 rounded-xl shadow-xs">
+          <span className="text-xs text-rose-700 font-bold block mb-1 flex items-center gap-1">
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>ديون حرجة (+90 يوماً)</span>
           </span>
@@ -246,14 +246,14 @@ export const ImpayesView: React.FC = () => {
       </div>
 
       {/* Dual Tab Switcher: By Service */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setFilters({ ...filters, service_type: 'all' })}
             className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'all'
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                ? 'bg-indigo-600 text-white font-bold shadow-xs'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
             }`}
           >
             كافة المتأخرات والخدمات
@@ -264,7 +264,7 @@ export const ImpayesView: React.FC = () => {
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'scolarite'
                 ? 'bg-indigo-600 text-white'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
             }`}
           >
             <GraduationCap className="w-3.5 h-3.5" />
@@ -276,7 +276,7 @@ export const ImpayesView: React.FC = () => {
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'transport'
                 ? 'bg-amber-600 text-white'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
             }`}
           >
             <Bus className="w-3.5 h-3.5" />
@@ -288,7 +288,7 @@ export const ImpayesView: React.FC = () => {
             className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
               filters.service_type === 'cantine'
                 ? 'bg-cyan-600 text-white'
-                : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200 shadow-xs font-semibold'
             }`}
           >
             <Utensils className="w-3.5 h-3.5" />
@@ -300,7 +300,7 @@ export const ImpayesView: React.FC = () => {
           <select
             value={filters.aging_category}
             onChange={e => setFilters({ ...filters, aging_category: e.target.value as any })}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-700 font-medium shadow-xs focus:outline-none focus:border-indigo-500"
           >
             <option value="all">كافة فترات التقادم (Aging)</option>
             <option value="current">هذا الشهر</option>
@@ -312,7 +312,7 @@ export const ImpayesView: React.FC = () => {
           <select
             value={filters.sort_by}
             onChange={e => setFilters({ ...filters, sort_by: e.target.value as any })}
-            className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-300 focus:outline-none focus:border-indigo-500"
+            className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-700 font-medium shadow-xs focus:outline-none focus:border-indigo-500"
           >
             <option value="amount_desc">الأعلى مديونية (تنازلي)</option>
             <option value="amount_asc">الأقل مديونية (تصاعدي)</option>
@@ -329,16 +329,16 @@ export const ImpayesView: React.FC = () => {
           placeholder="بحث سريع باسم التلميذ، المعرف المدرسي (ID)، أو الفوج..."
           value={filters.search}
           onChange={e => setFilters({ ...filters, search: e.target.value })}
-          className="w-full bg-slate-900 border border-slate-800 rounded-2xl pr-10 pl-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 shadow-lg"
+          className="w-full bg-white border border-slate-300 rounded-2xl pr-10 pl-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 shadow-xs"
         />
       </div>
 
       {/* Debtors Interactive Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-950/60 text-slate-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/90 text-slate-700 text-xs font-bold uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى والفوج</th>
                 <th className="py-4 px-4">الخدمة المستحقة</th>
@@ -348,7 +348,7 @@ export const ImpayesView: React.FC = () => {
                 <th className="py-4 px-4 text-center">إجراءات المتابعة والتحصيل</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm">
               {loading ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">جاري تحميل سجل المتأخرات...</td>
@@ -364,9 +364,9 @@ export const ImpayesView: React.FC = () => {
                 </tr>
               ) : (
                 impayes.map(item => (
-                  <tr key={item.id} className="hover:bg-slate-800/40 transition-colors">
+                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-4 px-4">
-                      <div className="flex items-center gap-2 font-medium text-white">
+                      <div className="flex items-center gap-2 font-bold text-slate-900">
                         <User className="w-4 h-4 text-slate-400 flex-shrink-0" />
                         <span>{item.student_name}</span>
                       </div>
@@ -376,7 +376,7 @@ export const ImpayesView: React.FC = () => {
                     </td>
 
                     <td className="py-4 px-4">
-                      <span className="text-slate-300 font-medium block">{item.academic_level}</span>
+                      <span className="text-slate-800 font-semibold block">{item.academic_level}</span>
                       {item.classroom_group && (
                         <span className="text-[11px] text-indigo-400 block">{item.classroom_group}</span>
                       )}
@@ -388,7 +388,7 @@ export const ImpayesView: React.FC = () => {
                     </td>
 
                     <td className="py-4 px-4">
-                      <span className="font-mono font-black text-rose-400 text-base">
+                      <span className="font-mono font-black text-rose-600 text-base">
                         {formatMAD(item.amount_due)}
                       </span>
                     </td>
@@ -411,7 +411,7 @@ export const ImpayesView: React.FC = () => {
                         {/* WhatsApp Direct Reminder */}
                         <button
                           onClick={() => handleSendWhatsApp(item)}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 rounded-xl text-xs font-semibold border border-emerald-500/30 transition-all hover:scale-105 active:scale-95 shadow-sm"
+                          className="flex items-center gap-1 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl text-xs font-bold border border-emerald-300 shadow-xs transition-all hover:scale-105 active:scale-95 shadow-sm"
                           title="إرسال تذكير رسمي فوري عبر واتساب"
                         >
                           <MessageSquare className="w-3.5 h-3.5" />
@@ -421,7 +421,7 @@ export const ImpayesView: React.FC = () => {
                         {/* Promise of Payment */}
                         <button
                           onClick={() => handleOpenPromiseModal(item)}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 rounded-xl text-xs font-semibold border border-indigo-500/30 transition-all hover:scale-105 active:scale-95 shadow-sm"
+                          className="flex items-center gap-1 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold border border-indigo-200 shadow-xs transition-all hover:scale-105 active:scale-95 shadow-sm"
                           title="تسجيل وعد بالأداء"
                         >
                           <Calendar className="w-3.5 h-3.5" />
@@ -432,7 +432,7 @@ export const ImpayesView: React.FC = () => {
                         {item.recovery_status !== 'settled' && (
                           <button
                             onClick={() => handleMarkSettled(item.id)}
-                            className="p-1.5 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 rounded-xl transition-colors"
+                            className="p-1.5 hover:bg-emerald-50 text-slate-400 hover:text-emerald-600 rounded-xl transition-colors border border-transparent hover:border-emerald-200"
                             title="تسجيل السداد والتسوية"
                           >
                             <CheckCircle2 className="w-4 h-4" />
@@ -450,54 +450,54 @@ export const ImpayesView: React.FC = () => {
 
       {/* Promise of payment modal */}
       {isPromiseModalOpen && selectedImpaye && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border border-slate-200 w-full max-w-md rounded-2xl shadow-2xl p-6 text-slate-900">
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2.5 text-indigo-400">
                 <Calendar className="w-5 h-5" />
-                <h3 className="font-bold text-white text-base">تسجيل وعد بالسداد والمتابعة</h3>
+                <h3 className="font-bold text-slate-900 text-base">تسجيل وعد بالسداد والمتابعة</h3>
               </div>
               <button
                 onClick={() => setIsPromiseModalOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-600 hover:text-slate-900 font-medium rounded-lg hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-4">
-              <div className="p-3 bg-slate-950 rounded-xl text-xs space-y-1">
-                <p className="text-slate-400">التلميذ: <span className="text-white font-semibold">{selectedImpaye.student_name}</span></p>
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-1.5 p-3.5">
+                <p className="text-slate-400">التلميذ: <span className="text-slate-900 font-bold">{selectedImpaye.student_name}</span></p>
                 <p className="text-slate-400">المبلغ العالق: <span className="text-rose-400 font-mono font-bold">{formatMAD(selectedImpaye.amount_due)}</span></p>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">تاريخ الوعد بالسداد المحدد *</label>
+                <label className="block text-xs font-medium text-slate-700 font-bold mb-1.5">تاريخ الوعد بالسداد المحدد *</label>
                 <input
                   type="date"
                   value={promiseDate}
                   onChange={e => setPromiseDate(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 font-mono shadow-xs"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">ملاحظات ومخرجات التواصل مع ولي الأمر</label>
+                <label className="block text-xs font-medium text-slate-700 font-bold mb-1.5">ملاحظات ومخرجات التواصل مع ولي الأمر</label>
                 <textarea
                   rows={3}
                   value={promiseNotes}
                   onChange={e => setPromiseNotes(e.target.value)}
                   placeholder="مثال: تم الاتصال بالأب وأفاد بالحضور للصندوق يوم الإثنين لأداء المبلغ نقداً..."
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-indigo-500 shadow-xs"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setIsPromiseModalOpen(false)}
-                  className="px-4 py-2 text-sm text-slate-400 hover:text-white"
+                  className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 font-medium"
                 >
                   إلغاء
                 </button>

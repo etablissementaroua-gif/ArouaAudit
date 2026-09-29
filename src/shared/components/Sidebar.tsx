@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   Settings,
@@ -68,19 +68,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         { label: 'الموظفون المعتمدون (arouaschools)', path: '/hr/mapped-staff', badge: 'مربوط', badgeColor: 'emerald' },
         { label: 'التلاميذ المسجلون والذمم', path: '/hr/enrolled-students', badge: 'نشط', badgeColor: 'emerald' },
         { label: 'مسير الرواتب', path: '/hr/payroll' },
+        { label: 'سجل السلفات والديون', path: '/hr/staff-debts' },
       ],
     },
     {
       id: 'revenue',
-      title: 'رقم المعاملات والمداخيل',
+      title: 'المداخيل ورقم المعاملات',
       icon: TrendingUp,
       items: [
-        { label: 'CA شهري', path: '/revenue/monthly-ca' },
-        { label: 'CA سنوي', path: '/revenue/annual-ca' },
-        { label: 'مداخيل الوكلاء', path: '/revenue/regisseurs' },
-        { label: 'مداخيل الإدارة', path: '/revenue/administration' },
-        { label: 'المداخيل الشهرية والسنوية', path: '/revenue/global-recettes' },
-        { label: 'قوائم وإحصائيات التغذية', path: '/revenue/catering-stats' },
+        { label: 'رقم المعاملات الشهري', path: '/revenue/monthly-ca' },
+        { label: 'الهدف السنوي (CA Annuel)', path: '/revenue/annual-ca' },
+        { label: 'مداخيل الوكلاء والصناديق', path: '/revenue/regisseurs' },
+        { label: 'مداخيل الإدارة والتحويلات', path: '/revenue/administration' },
+        { label: 'سجل المقبوضات الشامل', path: '/revenue/global-recettes' },
+        { label: 'تغذية الصندوق ورأس المال', path: '/revenue/catering-stats' },
       ],
     },
     {
@@ -88,24 +89,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       title: 'الحسابات والشيكات',
       icon: Landmark,
       items: [
-        { label: 'الحسابات البنكية والخزينة', path: '/checks/accounts' },
-        { label: 'محفظة الشيكات', path: '/checks/portfolio', badge: '1 متأخر', badgeColor: 'rose' },
-        { label: 'حوافظ التسليم (Bordereaux)', path: '/checks/delivery-slips' },
-        { label: 'الوصولات وسندات الصندوق', path: '/checks/receipts' },
+        { label: 'الحسابات البنكية والخزائن', path: '/checks/accounts' },
+        { label: 'محفظة الشيكات والكمبيالات', path: '/checks/portfolio', badge: 'متابعة', badgeColor: 'indigo' },
+        { label: 'حوافظ تسليم الشيكات (Remises)', path: '/checks/delivery-slips' },
+        { label: 'سجل وصولات الدفع (Reçus)', path: '/checks/receipts' },
         { label: 'شيكات قيد الإيداع', path: '/checks/deposited' },
-        { label: 'كشوفات الفواتير', path: '/checks/invoices' },
+        { label: 'فواتير وكشوفات الحساب', path: '/checks/invoices' },
       ],
     },
     {
       id: 'finance',
-      title: 'القوائم والعمليات المالية',
+      title: 'العمليات المالية والذمم',
       icon: FileSpreadsheet,
       items: [
-        { label: 'الأرصدة الزائدة (Soldes Créditeurs)', path: '/finance/credit-balances' },
-        { label: 'التخفيضات الممنوحة', path: '/finance/discounts' },
-        { label: 'الإعفاءات الدراسية', path: '/finance/exemptions' },
-        { label: 'قائمة التسديدات', path: '/finance/payments-journal' },
-        { label: 'المتأخرات والديون (Impayés)', path: '/finance/impayes', badge: 'مفتوح', badgeColor: 'amber' },
+        { label: 'سجل الديون والمتأخرات (Impayés)', path: '/finance/impayes', badge: 'هام', badgeColor: 'rose' },
+        { label: 'الأرصدة الزائدة (Soldes en plus)', path: '/finance/credit-balances' },
+        { label: 'تخفيضات الإخوة والاتفاقيات', path: '/finance/discounts' },
+        { label: 'الإعفاءات والمنح (100%)', path: '/finance/exemptions' },
+        { label: 'دفتر المقبوضات التاريخي', path: '/finance/payments-journal' },
       ],
     },
     {
@@ -149,13 +150,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const getBadgeClass = (color?: string) => {
     switch (color) {
       case 'rose':
-        return 'bg-rose-500/15 text-rose-400 border border-rose-500/30';
+        return 'bg-rose-50 text-rose-700 border border-rose-200';
       case 'amber':
-        return 'bg-amber-500/15 text-amber-400 border border-amber-500/30';
+        return 'bg-amber-50 text-amber-700 border border-amber-200';
       case 'emerald':
-        return 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+        return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
       default:
-        return 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/30';
+        return 'bg-indigo-50 text-indigo-700 border border-indigo-200';
     }
   };
 
@@ -165,20 +166,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs lg:hidden"
         />
       )}
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 bottom-0 right-0 z-50 w-72 bg-slate-950 border-l border-slate-800 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 right-0 z-50 w-72 bg-white border-l border-slate-200 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-sm ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Brand Header */}
-        <div className="h-20 px-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-950/70">
+        {/* Brand Header with Pristine White Logo Container */}
+        <div className="h-20 px-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/70">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 rounded-xl bg-white/95 shadow-md shadow-cyan-500/10 border border-slate-700/50 flex items-center justify-center shrink-0">
+            <div className="p-2 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center shrink-0">
               <img
                 src="/assets/logo-aroua.png"
                 alt="شعار مجموعة مدارس أروى"
@@ -187,57 +188,58 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1.5">
-                <span className="text-base font-bold text-white tracking-tight">ArouaAudit</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+                <span className="text-base font-black text-slate-900 tracking-tight">ArouaAudit</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
                   V1.0
                 </span>
               </div>
-              <p className="text-[11px] text-cyan-400 font-semibold truncate">Groupe Scolaire Aroua</p>
-              <p className="text-[10px] text-slate-400 truncate">مجموعة مدارس أروى</p>
+              <p className="text-[11px] text-cyan-700 font-bold truncate">Groupe Scolaire Aroua</p>
+              <p className="text-[10px] text-slate-500 truncate">مجموعة مدارس أروى</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 lg:hidden"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 lg:hidden"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Navigation Sections */}
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1.5 scrollbar-thin scrollbar-thumb-slate-800">
-          {sections.map((sec) => {
-            const Icon = sec.icon;
-            const isOpenSection = openSections[sec.id];
-            const hasActiveChild = sec.items.some((item) => location.pathname === item.path);
+        <nav className="flex-1 overflow-y-auto p-3 space-y-1.5 custom-scrollbar">
+          {sections.map((section) => {
+            const Icon = section.icon;
+            const isOpen = openSections[section.id];
+            const hasActiveChild = section.items.some((item) =>
+              location.pathname.startsWith(item.path)
+            );
 
             return (
-              <div key={sec.id} className="rounded-xl overflow-hidden border border-slate-800/60 bg-slate-900/30">
-                {/* Accordion Header */}
+              <div key={section.id} className="rounded-xl overflow-hidden">
+                {/* Section Accordion Trigger */}
                 <button
-                  type="button"
-                  onClick={() => toggleSection(sec.id)}
-                  className={`w-full px-3 py-2.5 flex items-center justify-between text-xs font-semibold transition-colors ${
+                  onClick={() => toggleSection(section.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
                     hasActiveChild
-                      ? 'text-indigo-400 bg-indigo-950/20'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/50'
+                      ? 'text-indigo-700 bg-indigo-50/60 font-black'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100/70'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${hasActiveChild ? 'text-indigo-400' : 'text-slate-400'}`} />
-                    <span>{sec.title}</span>
+                    <Icon className={`w-4 h-4 ${hasActiveChild ? 'text-indigo-600' : 'text-slate-500'}`} />
+                    <span>{section.title}</span>
                   </div>
                   <ChevronDown
-                    className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
-                      isOpenSection ? 'rotate-180 text-indigo-400' : ''
+                    className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-indigo-600' : ''
                     }`}
                   />
                 </button>
 
-                {/* Submenu Items */}
-                {isOpenSection && (
-                  <div className="px-2 py-1.5 space-y-0.5 border-t border-slate-800/60 bg-slate-950/40">
-                    {sec.items.map((item) => (
+                {/* Sub-Items */}
+                {isOpen && (
+                  <div className="mt-1 mr-4 pr-3 border-r-2 border-slate-200 space-y-1 py-1">
+                    {section.items.map((item) => (
                       <NavLink
                         key={item.path}
                         to={item.path}
@@ -245,17 +247,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                           if (window.innerWidth < 1024) onClose();
                         }}
                         className={({ isActive }) =>
-                          `flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all duration-150 ${
+                          `flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all ${
                             isActive
-                              ? 'bg-indigo-600/15 text-indigo-300 font-semibold border border-indigo-500/30 shadow-sm'
-                              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                              ? 'bg-indigo-50 text-indigo-700 font-bold border-r-4 border-indigo-600 shadow-2xs'
+                              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60 font-medium'
                           }`
                         }
                       >
                         <span className="truncate">{item.label}</span>
                         {item.badge && (
                           <span
-                            className={`text-[9px] px-1.5 py-0.2 rounded font-mono font-bold mr-1.5 ${getBadgeClass(
+                            className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold leading-none ${getBadgeClass(
                               item.badgeColor
                             )}`}
                           >
@@ -271,14 +273,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           })}
         </nav>
 
-        {/* Sidebar Footer */}
-        <div className="p-3 border-t border-slate-800/80 bg-slate-950/80 text-[11px] text-slate-400">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5 text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              قاعدة البيانات متصلة
-            </span>
-            <span className="font-mono text-slate-500">2026/2027</span>
+        {/* Sidebar Footer Info */}
+        <div className="border-t border-slate-200 p-3 bg-slate-50/80 text-[11px] text-slate-500 font-sans space-y-1">
+          <div className="flex items-center justify-between text-slate-700 font-semibold">
+            <span>الرقابة والتدقيق المستقل</span>
+            <span className="font-mono text-emerald-600 font-bold">100% متزامن</span>
+          </div>
+          <div className="text-[10px] text-slate-400 font-mono">
+            Supabase DB &middot; Firebase Synced
           </div>
         </div>
       </aside>
