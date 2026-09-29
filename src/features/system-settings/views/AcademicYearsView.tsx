@@ -241,7 +241,7 @@ export const AcademicYearsView: React.FC = () => {
                           السنة الحالية النشطة
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs text-slate-500 bg-slate-800/60 border border-slate-700/40">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs text-slate-500 bg-slate-100 border border-slate-200">
                           فترة مؤرشفة / ثانوية
                         </span>
                       )}
@@ -254,7 +254,7 @@ export const AcademicYearsView: React.FC = () => {
                       ) : (
                         <button
                           onClick={() => handleSetActive(year.code)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-medium border border-slate-700 hover:border-indigo-500 transition-all cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 text-slate-700 text-xs font-medium border border-slate-200 hover:border-emerald-300 transition-all cursor-pointer"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
                           تعيين كسنة معتمدة للحسابات

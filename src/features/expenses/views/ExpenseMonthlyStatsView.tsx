@@ -204,7 +204,7 @@ export const ExpenseMonthlyStatsView: React.FC = () => {
                     <td className="py-3 px-4 text-left text-emerald-800">{formatMAD(item.variable_charges)}</td>
                     <td className="py-3 px-4 text-left font-bold text-rose-600">{formatMAD(item.total_charges)}</td>
                     <td className="py-3 px-4 text-center text-slate-700">
-                      <span className="px-2 py-0.5 rounded-full bg-slate-800 text-[11px] font-bold">
+                      <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 text-[11px] font-bold">
                         {shareOfTotal.toFixed(1)}%
                       </span>
                     </td>

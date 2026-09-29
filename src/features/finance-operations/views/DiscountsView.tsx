@@ -223,7 +223,7 @@ export const DiscountsView: React.FC = () => {
                         className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${
                           d.is_active
                             ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 border-emerald-500/30 hover:bg-emerald-500/20'
-                            : 'bg-slate-800 text-slate-500 border-slate-700 hover:bg-slate-700'
+                            : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
                         }`}
                       >
                         {d.is_active ? 'نشط ومعتمد' : 'معطل مؤقتاً'}
@@ -248,7 +248,7 @@ export const DiscountsView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1.5 text-slate-500 hover:text-white rounded-lg hover:bg-slate-800"
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100"
               >
                 <X className="w-5 h-5" />
               </button>

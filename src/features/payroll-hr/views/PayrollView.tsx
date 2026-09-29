@@ -16,7 +16,7 @@ export const PayrollView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">احتساب الكتلة الأجرية، التسبيقات المالية، ومتابعة ديون الموظفين المغادرين العالقة</p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => refresh()} className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-800 transition">
+          <button onClick={() => refresh()} className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-lg shadow-indigo-950/40 transition">

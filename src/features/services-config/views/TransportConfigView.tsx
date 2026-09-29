@@ -247,7 +247,7 @@ export const TransportConfigView: React.FC = () => {
                 </div>
 
                 {/* Occupancy Progress Bar */}
-                <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-3">
+                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       isFull ? 'bg-rose-500' : isMid ? 'bg-amber-500' : 'bg-emerald-500'
@@ -268,8 +268,8 @@ export const TransportConfigView: React.FC = () => {
 
       {/* Add Transport Line Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-xs shadow-2xl p-6 text-white my-8 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs overflow-y-auto">
+          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-xl p-6 text-slate-900 my-8 animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-2">
                 <Bus className="w-4 h-4 text-amber-700" />
@@ -277,7 +277,7 @@ export const TransportConfigView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -293,7 +293,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="مثال: LIGNE-04"
                     value={formData.line_code}
                     onChange={(e) => setFormData({ ...formData, line_code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono uppercase focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
@@ -304,7 +304,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="مثال: خط جيليز - إزيكي"
                     value={formData.line_name}
                     onChange={(e) => setFormData({ ...formData, line_name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -318,7 +318,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="مثال: 28-أ-12345"
                     value={formData.bus_registration}
                     onChange={(e) => setFormData({ ...formData, bus_registration: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
@@ -328,7 +328,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="Mercedes Sprinter"
                     value={formData.bus_brand}
                     onChange={(e) => setFormData({ ...formData, bus_brand: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
@@ -340,7 +340,7 @@ export const TransportConfigView: React.FC = () => {
                     required
                     value={formData.capacity}
                     onChange={(e) => setFormData({ ...formData, capacity: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -354,7 +354,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="الاسم الكامل للسائق"
                     value={formData.driver_name}
                     onChange={(e) => setFormData({ ...formData, driver_name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
@@ -364,7 +364,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="06XXXXXXXX"
                     value={formData.driver_phone}
                     onChange={(e) => setFormData({ ...formData, driver_phone: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -377,7 +377,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="الاسم الكامل للمرافقة"
                     value={formData.assistant_name}
                     onChange={(e) => setFormData({ ...formData, assistant_name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
@@ -387,7 +387,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="06XXXXXXXX"
                     value={formData.assistant_phone}
                     onChange={(e) => setFormData({ ...formData, assistant_phone: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -401,7 +401,7 @@ export const TransportConfigView: React.FC = () => {
                     placeholder="مثال: الداوديات، الوحدة الرابعة، ديور المساكين"
                     value={formData.zone_coverage}
                     onChange={(e) => setFormData({ ...formData, zone_coverage: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
@@ -413,7 +413,7 @@ export const TransportConfigView: React.FC = () => {
                     required
                     value={formData.monthly_fee}
                     onChange={(e) => setFormData({ ...formData, monthly_fee: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>

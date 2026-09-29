@@ -307,18 +307,18 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 </tr>
               ) : (
                 filteredEmployees.map((emp) => (
-                  <tr key={emp.id} className="bg-white hover:bg-slate-50/80 transition-colors">
+                  <tr key={emp.id} className="bg-white hover:bg-slate-50/90 text-slate-800 border-b border-slate-100 transition-colors">
                     {/* Name & UID */}
                     <td className="py-3.5 px-4">
                       <div>
                         <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
                           <span>{emp.full_name}</span>
                           <span 
-                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200"
                             title="إطار معتمد ومطابق رسمياً من منظومة arouaschools"
                           >
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            <span>🟢 معتمد من arouaschools</span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            <span>معتمد من arouaschools</span>
                           </span>
                         </div>
                         <div className="text-xs font-mono text-slate-500 mt-1 flex items-center gap-2">

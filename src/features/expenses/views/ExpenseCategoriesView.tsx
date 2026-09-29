@@ -206,7 +206,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all duration-500 ${
                       isHigh ? 'bg-rose-500' : isMid ? 'bg-amber-500' : 'bg-emerald-500'
@@ -240,7 +240,7 @@ export const ExpenseCategoriesView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -256,7 +256,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                     placeholder="مثال: PEDAGOGIE"
                     value={formData.code}
                     onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono uppercase focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
@@ -264,7 +264,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                   <select
                     value={formData.charge_type}
                     onChange={(e) => setFormData({ ...formData, charge_type: e.target.value as 'fixe' | 'variable' })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-indigo-500"
                   >
                     <option value="variable">تكلفة متغيرة (Charge Variable)</option>
                     <option value="fixe">تكلفة قارة/ثابتة (Charge Fixe)</option>
@@ -280,7 +280,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                   placeholder="مثال: الأنشطة الموازية والرحلات التربوية"
                   value={formData.name_ar}
                   onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
@@ -291,7 +291,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                   placeholder="ex: Activités parascolaires & sorties"
                   value={formData.name_fr}
                   onChange={(e) => setFormData({ ...formData, name_fr: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
@@ -305,7 +305,7 @@ export const ExpenseCategoriesView: React.FC = () => {
                     required
                     value={formData.budget_allocation}
                     onChange={(e) => setFormData({ ...formData, budget_allocation: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
@@ -315,13 +315,13 @@ export const ExpenseCategoriesView: React.FC = () => {
                       type="color"
                       value={formData.color_hex}
                       onChange={(e) => setFormData({ ...formData, color_hex: e.target.value })}
-                      className="w-10 h-9 p-0.5 rounded-lg bg-slate-800 border border-slate-700 cursor-pointer"
+                      className="w-10 h-9 p-0.5 rounded-lg bg-white border border-slate-200 cursor-pointer"
                     />
                     <input
                       type="text"
                       value={formData.color_hex}
                       onChange={(e) => setFormData({ ...formData, color_hex: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono text-xs focus:outline-none"
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono text-xs focus:outline-none"
                     />
                   </div>
                 </div>

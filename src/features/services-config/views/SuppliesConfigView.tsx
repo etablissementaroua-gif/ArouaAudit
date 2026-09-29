@@ -194,7 +194,7 @@ export const SuppliesConfigView: React.FC = () => {
           return (
             <div
               key={pack.id}
-              className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md hover:border-slate-700/80 transition-all flex flex-col justify-between"
+              className="p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-emerald-300 hover:shadow-md transition-all flex flex-col justify-between shadow-xs"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
@@ -202,7 +202,7 @@ export const SuppliesConfigView: React.FC = () => {
                     {pack.pack_code}
                   </span>
 
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/20 font-mono">
+                  <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80">
                     مستوى: {pack.academic_level}
                   </span>
                 </div>
@@ -231,15 +231,22 @@ export const SuppliesConfigView: React.FC = () => {
                   <div className="mb-4">
                     <span className="text-slate-500 text-[10px] block mb-1.5">مكونات ومحتويات الحزمة:</span>
                     <div className="space-y-1">
-                      {items.slice(0, 3).map((it, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center justify-between text-[11px] p-1.5 rounded-lg bg-slate-800/40 border border-slate-200"
-                        >
-                          <span className="text-slate-700 truncate max-w-[180px]">{it.name}</span>
-                          <span className="text-slate-500 font-mono">x{it.qty}</span>
-                        </div>
-                      ))}
+                      {items.slice(0, 3).map((it, idx) => {
+                        const isBook = /كتاب|مقرر|livre|manuel|lecture|قصة|قصص/i.test(it.name || '');
+                        return (
+                          <div
+                            key={idx}
+                            className={`flex items-center justify-between text-xs px-3 py-1.5 rounded-xl border transition-colors ${
+                              isBook
+                                ? 'bg-teal-50/70 text-teal-900 border-teal-200/60 font-medium'
+                                : 'bg-slate-100 text-slate-800 border-slate-200'
+                            }`}
+                          >
+                            <span className="truncate max-w-[180px]">{it.name}</span>
+                            <span className="font-mono text-[11px] opacity-75">x{it.qty}</span>
+                          </div>
+                        );
+                      })}
                       {items.length > 3 && (
                         <div className="text-[10px] text-slate-500 text-center pt-0.5">
                           + {items.length - 3} مستلزمات إضافية
@@ -259,9 +266,9 @@ export const SuppliesConfigView: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden mb-3">
+                <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden mb-3">
                   <div
-                    className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                     style={{ width: `${Math.min(100, soldRate)}%` }}
                   />
                 </div>
@@ -278,8 +285,8 @@ export const SuppliesConfigView: React.FC = () => {
 
       {/* Add Supplies Pack Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-xs shadow-2xl p-6 text-white my-8 animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs overflow-y-auto">
+          <div className="w-full max-w-xl bg-white border border-slate-200 rounded-2xl shadow-xl p-6 text-slate-900 my-8 animate-in fade-in duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-5">
               <div className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-emerald-700" />
@@ -287,7 +294,7 @@ export const SuppliesConfigView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -303,7 +310,7 @@ export const SuppliesConfigView: React.FC = () => {
                     placeholder="مثال: PACK-CE2-2026"
                     value={formData.pack_code}
                     onChange={(e) => setFormData({ ...formData, pack_code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono uppercase focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
                 </div>
                 <div>
@@ -314,7 +321,7 @@ export const SuppliesConfigView: React.FC = () => {
                     placeholder="مثال: CE2 أو 1ère Année Collège"
                     value={formData.academic_level}
                     onChange={(e) => setFormData({ ...formData, academic_level: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
                 </div>
               </div>
@@ -327,7 +334,7 @@ export const SuppliesConfigView: React.FC = () => {
                   placeholder="مثال: حزمة كتب ومستلزمات الثالث ابتدائي"
                   value={formData.title_ar}
                   onChange={(e) => setFormData({ ...formData, title_ar: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                 />
               </div>
 
@@ -338,7 +345,7 @@ export const SuppliesConfigView: React.FC = () => {
                   placeholder="Pack Fournitures CE2"
                   value={formData.title_fr}
                   onChange={(e) => setFormData({ ...formData, title_fr: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                 />
               </div>
 
@@ -352,7 +359,7 @@ export const SuppliesConfigView: React.FC = () => {
                     required
                     value={formData.cost_price}
                     onChange={(e) => setFormData({ ...formData, cost_price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
                 </div>
                 <div>
@@ -364,7 +371,7 @@ export const SuppliesConfigView: React.FC = () => {
                     required
                     value={formData.selling_price}
                     onChange={(e) => setFormData({ ...formData, selling_price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
                 </div>
                 <div>
@@ -375,7 +382,7 @@ export const SuppliesConfigView: React.FC = () => {
                     required
                     value={formData.stock_available}
                     onChange={(e) => setFormData({ ...formData, stock_available: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-emerald-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                   />
                 </div>
               </div>
@@ -389,14 +396,14 @@ export const SuppliesConfigView: React.FC = () => {
                     placeholder="اسم الكتاب أو المستلزم..."
                     value={newItemName}
                     onChange={(e) => setNewItemName(e.target.value)}
-                    className="flex-1 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white text-xs focus:outline-none"
+                    className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs focus:outline-none focus:border-emerald-500"
                   />
                   <input
                     type="number"
                     min="1"
                     value={newItemQty}
                     onChange={(e) => setNewItemQty(Number(e.target.value))}
-                    className="w-16 px-2 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white text-xs text-center font-mono"
+                    className="w-16 px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs text-center font-mono focus:outline-none focus:border-emerald-500"
                   />
                   <button
                     type="button"
@@ -411,7 +418,7 @@ export const SuppliesConfigView: React.FC = () => {
                   {formData.items_breakdown.map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center justify-between p-1.5 rounded-lg bg-slate-800/60 text-xs text-slate-700"
+                      className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800"
                     >
                       <span>
                         {item.name} <strong className="font-mono text-emerald-700">(x{item.qty})</strong>

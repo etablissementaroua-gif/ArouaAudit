@@ -256,23 +256,23 @@ export const CanteenConfigView: React.FC = () => {
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs">
-          <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-emerald-800 block mb-1">الاثنين</span>
             <p className="text-slate-700">سلطة خضراء + طاجين اللحم البقري بالبرقوق + تفاح طازج + لمجة</p>
           </div>
-          <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-emerald-800 block mb-1">الثلاثاء</span>
             <p className="text-slate-700">حساء خضر + دجاج محمر مع أرز مبخر + ياغورت بالفواكه + لمجة</p>
           </div>
-          <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-emerald-800 block mb-1">الأربعاء</span>
             <p className="text-slate-700">سلطة معكرونة وتونة + كفتة مشوية بصلصة الطماطم + موز + لمجة</p>
           </div>
-          <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-emerald-800 block mb-1">الخميس</span>
             <p className="text-slate-700">سلطة جزر ومقبلات + طاجين سمك بالخضار + برتقال محلى + لمجة</p>
           </div>
-          <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <span className="font-bold text-emerald-800 block mb-1">الجمعة</span>
             <p className="text-slate-700">كسكس تقليدي بالسبع خضار ولحم العجل + لبن رائب + فاكهة الموسم</p>
           </div>
@@ -290,7 +290,7 @@ export const CanteenConfigView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-500 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -306,7 +306,7 @@ export const CanteenConfigView: React.FC = () => {
                     placeholder="مثال: PLAN-AN-FULL"
                     value={formData.plan_code}
                     onChange={(e) => setFormData({ ...formData, plan_code: e.target.value.toUpperCase() })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono uppercase focus:outline-none focus:border-cyan-500"
                   />
                 </div>
                 <div>
@@ -314,7 +314,7 @@ export const CanteenConfigView: React.FC = () => {
                   <select
                     value={formData.frequency}
                     onChange={(e) => setFormData({ ...formData, frequency: e.target.value as CanteenFrequency })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-cyan-500"
                   >
                     <option value="mensuel">شهري (Mensuel)</option>
                     <option value="trimestriel">فصلي (Trimestriel)</option>
@@ -332,7 +332,7 @@ export const CanteenConfigView: React.FC = () => {
                   placeholder="مثال: نصف إقامة سنوية كاملة"
                   value={formData.name_ar}
                   onChange={(e) => setFormData({ ...formData, name_ar: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -343,7 +343,7 @@ export const CanteenConfigView: React.FC = () => {
                   placeholder="Demi-Pension Annuelle Complète"
                   value={formData.name_fr}
                   onChange={(e) => setFormData({ ...formData, name_fr: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -357,7 +357,7 @@ export const CanteenConfigView: React.FC = () => {
                     required
                     value={formData.fee_amount}
                     onChange={(e) => setFormData({ ...formData, fee_amount: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-cyan-500"
                   />
                 </div>
                 <div>
@@ -369,7 +369,7 @@ export const CanteenConfigView: React.FC = () => {
                     required
                     value={formData.max_capacity}
                     onChange={(e) => setFormData({ ...formData, max_capacity: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono focus:outline-none focus:border-cyan-500"
                   />
                 </div>
               </div>
@@ -381,7 +381,7 @@ export const CanteenConfigView: React.FC = () => {
                   placeholder="مقبلات، طبق رئيسي، فواكه الموسم، ولمجة مسائية..."
                   value={formData.daily_meal_desc}
                   onChange={(e) => setFormData({ ...formData, daily_meal_desc: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 focus:outline-none focus:border-cyan-500"
                 />
               </div>
 

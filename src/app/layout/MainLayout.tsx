@@ -7,7 +7,7 @@ export const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-row font-sans selection:bg-indigo-500/15 selection:text-indigo-700">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-row font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
       {/* Right Collapsible Accordion Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -17,7 +17,7 @@ export const MainLayout: React.FC = () => {
         <Header onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
         {/* Main Body */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-slate-50/70">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#F8FAFC]">
           <Outlet />
         </main>
 
@@ -26,7 +26,7 @@ export const MainLayout: React.FC = () => {
           <span>منظومة ArouaAudit المالية &copy; 2026 - مجموعة مدارس أروى للتعليم الخصوصي</span>
           <div className="flex items-center gap-4 text-[11px] font-mono">
             <span className="text-slate-600">Branch: main</span>
-            <span className="text-indigo-600 font-semibold">Design System: Clean Sovereign</span>
+            <span className="text-emerald-700 font-semibold">Design System: Royal Emerald & Slate</span>
           </div>
         </footer>
       </div>

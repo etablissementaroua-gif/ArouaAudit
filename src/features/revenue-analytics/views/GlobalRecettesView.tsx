@@ -115,8 +115,8 @@ export const GlobalRecettesView: React.FC = () => {
                 key={day.date}
                 className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between h-28 ${
                   hasAmount 
-                    ? 'bg-emerald-50/40 border-emerald-200 hover:border-emerald-500 hover:shadow-md shadow-2xs' 
-                    : 'bg-slate-50/60 border-slate-200/80 hover:bg-white hover:border-slate-300'
+                    ? 'bg-emerald-50/60 border-emerald-300 text-emerald-950 shadow-2xs hover:border-emerald-500 hover:shadow-md' 
+                    : 'bg-white border-slate-200 hover:border-emerald-300 shadow-2xs'
                 }`}
               >
                 <div className="flex items-center justify-between text-xs">

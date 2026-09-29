@@ -31,7 +31,7 @@ export const ExternalSyncView: React.FC = () => {
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white/60 backdrop-blur-md">
         <table className="w-full text-sm text-right">
-          <thead className="bg-slate-800/80 text-xs text-slate-500 border-b border-slate-700/60">
+          <thead className="bg-slate-50 text-xs text-slate-700 font-bold border-b border-slate-200">
             <tr>
               <th className="px-4 py-3 text-right">نوع الكيان</th>
               <th className="px-4 py-3 text-right">المعرف المحلي (Local ID)</th>

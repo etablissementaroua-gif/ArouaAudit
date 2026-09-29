@@ -59,7 +59,7 @@ export const OfficialDisbursementModal: React.FC<OfficialDisbursementModalProps>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg bg-slate-800 text-slate-500 hover:text-white transition-colors"
+              className="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>

@@ -104,7 +104,7 @@ export const StudentEnrollmentView: React.FC = () => {
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={() => refresh()}
-            className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:text-white hover:bg-slate-800 transition"
+            className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition"
             title="تحديث القائمة"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -114,7 +114,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <button
             disabled={generatingDues}
             onClick={() => generateServiceDues('both')}
-            className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-800 text-amber-700 border border-amber-500/30 text-xs font-medium transition shadow-sm"
+            className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white hover:bg-amber-50 text-amber-700 border border-amber-500/30 text-xs font-medium transition shadow-sm"
             title="توليد مستحقات النقل والإطعام تلقائياً في يومية الصندوق"
           >
             <Bus className="w-4 h-4" />
@@ -176,7 +176,7 @@ export const StudentEnrollmentView: React.FC = () => {
             value={filters.searchQuery}
             onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
             placeholder="بحث بالاسم، رمز مسار، أو المعرف..."
-            className="w-full pr-9 pl-3 py-2 rounded-lg bg-slate-800/80 border border-slate-700/80 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 transition"
+            className="w-full pr-9 pl-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-xs placeholder:text-slate-500 focus:outline-none focus:border-emerald-500 transition"
           />
         </div>
 
@@ -188,7 +188,7 @@ export const StudentEnrollmentView: React.FC = () => {
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
               filters.transportOnly 
                 ? 'bg-amber-500/20 text-amber-300 border-amber-500/40' 
-                : 'bg-slate-800/60 text-slate-500 border-slate-700 hover:text-white'
+                : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
             }`}
           >
             <Bus className="w-3.5 h-3.5" />
@@ -201,7 +201,7 @@ export const StudentEnrollmentView: React.FC = () => {
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition ${
               filters.canteenOnly 
                 ? 'bg-blue-500/20 text-blue-300 border-blue-500/40' 
-                : 'bg-slate-800/60 text-slate-500 border-slate-700 hover:text-white'
+                : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
             }`}
           >
             <Utensils className="w-3.5 h-3.5" />
@@ -212,7 +212,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <select
             value={filters.paymentStatus}
             onChange={(e) => setFilters(prev => ({ ...prev, paymentStatus: e.target.value as any }))}
-            className="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-xs text-slate-700 focus:outline-none"
+            className="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs text-slate-900 focus:outline-none"
           >
             <option value="all">كل الحالات المالية</option>
             <option value="pending">متبقي عليهم ذمم</option>
@@ -224,7 +224,7 @@ export const StudentEnrollmentView: React.FC = () => {
       {/* Main Students & Billing Ledger Table */}
       <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white/60 backdrop-blur-md">
         <table className="w-full text-sm text-right">
-          <thead className="bg-slate-800/80 text-xs text-slate-500 border-b border-slate-700/60">
+          <thead className="bg-slate-50 text-xs text-slate-700 font-bold border-b border-slate-200">
             <tr>
               <th className="px-4 py-3.5 text-right">المعرف ورمز مسار</th>
               <th className="px-4 py-3.5 text-right">التلميذ والمستوى</th>
@@ -367,33 +367,33 @@ export const StudentEnrollmentView: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="text-slate-500 block mb-1">المعرف الداخلي:</span>
                 <span className="font-mono font-bold text-emerald-700">{selectedStudent.student_id}</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="text-slate-500 block mb-1">رمز مسار (Massar):</span>
                 <span className="font-mono font-bold text-emerald-700">{selectedStudent.massar_code}</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="text-slate-500 block mb-1">رسم التمدرس السنوي:</span>
                 <span className="font-mono font-bold text-slate-900">{formatMAD(selectedStudent.tuition_fee)}</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="text-slate-500 block mb-1">رسم النقل المدرسي:</span>
                 <span className="font-mono font-bold text-amber-700">{formatMAD(selectedStudent.transport_fee)}</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="text-slate-500 block mb-1">رسم الإطعام والمطعم:</span>
                 <span className="font-mono font-bold text-blue-400">{formatMAD(selectedStudent.canteen_fee)}</span>
               </div>
-              <div className="p-3 rounded-xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="text-slate-500 block mb-1">الذمة الصافية المتبقية:</span>
                 <span className="font-mono font-bold text-rose-600">{formatMAD(selectedStudent.balance)}</span>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex items-center justify-between text-xs">
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
               <span className="text-slate-500">هاتف ولي الأمر:</span>
               <span className="font-mono text-white">{selectedStudent.parent_phone || selectedStudent.parent_whatsapp || 'غير مسجل'}</span>
             </div>

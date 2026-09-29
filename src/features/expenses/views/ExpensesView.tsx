@@ -23,15 +23,15 @@ export const ExpensesView: React.FC = () => {
       <div className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md">
         <h3 className="text-sm font-bold text-slate-900 mb-3">أبواب النفقات الرئيسية (Rubriques Budgétaires)</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-          <div className="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
             <span className="text-slate-500 block mb-1">الأجور والتعويضات (Masse Salariale)</span>
             <span className="text-base font-bold font-mono text-white">62.8%</span>
           </div>
-          <div className="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
             <span className="text-slate-500 block mb-1">المحروقات وصيانة الأسطول</span>
             <span className="text-base font-bold font-mono text-amber-700">11.4%</span>
           </div>
-          <div className="p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/60">
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
             <span className="text-slate-500 block mb-1">المستلزمات البيداغوجية والإدارية</span>
             <span className="text-base font-bold font-mono text-emerald-700">9.2%</span>
           </div>

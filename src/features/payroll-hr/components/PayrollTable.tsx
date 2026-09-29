@@ -7,7 +7,7 @@ export const PayrollTable: React.FC<{ slips: StaffPayrollSlip[] }> = ({ slips })
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white/60 backdrop-blur-md">
       <table className="w-full text-sm text-right">
-        <thead className="bg-slate-800/80 text-xs text-slate-500 border-b border-slate-700/60">
+        <thead className="bg-slate-50 text-xs text-slate-700 font-bold border-b border-slate-200">
           <tr>
             <th className="px-4 py-3 text-right">الموظف / الإطار</th>
             <th className="px-4 py-3 text-right">الشهر</th>
@@ -39,7 +39,7 @@ export const PayrollTable: React.FC<{ slips: StaffPayrollSlip[] }> = ({ slips })
               <td className="px-4 py-3 text-left">
                 {s.status === 'paye' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-950/80 text-emerald-700 border border-emerald-500/20"><Check className="w-3.5 h-3.5" /> مدفوع</span>}
                 {s.status === 'valide' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-sky-950/80 text-sky-400 border border-sky-500/20"><Clock className="w-3.5 h-3.5" /> معتمد</span>}
-                {s.status === 'brouillon' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-slate-800 text-slate-500 border border-slate-700"><AlertCircle className="w-3.5 h-3.5" /> مسودة</span>}
+                {s.status === 'brouillon' && <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-slate-100 text-slate-600 border border-slate-200"><AlertCircle className="w-3.5 h-3.5" /> مسودة</span>}
               </td>
             </tr>
           ))}

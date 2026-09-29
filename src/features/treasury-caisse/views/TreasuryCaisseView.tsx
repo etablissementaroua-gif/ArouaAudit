@@ -63,7 +63,7 @@ export const TreasuryCaisseView: React.FC = () => {
           <p className="text-xs text-slate-500 mt-1">تتبع التدفقات النقدية اللحظية، المقبوضات، والمصاريف واحتساب الرصيد الصافي</p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => refresh()} className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-800 transition">
+          <button onClick={() => refresh()} className="p-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition">
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button onClick={handlePrintDemoReceipt} className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-cyan-600/20 hover:bg-cyan-600/30 text-emerald-800 border border-cyan-500/30 font-medium text-xs shadow-sm transition">
@@ -98,20 +98,20 @@ export const TreasuryCaisseView: React.FC = () => {
             <h3 className="text-base font-bold text-slate-900">تسجيل حركة نقدية في الصندوق</h3>
             <form onSubmit={handleSave} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-2">
-                <button type="button" onClick={() => setType('encaissement')} className={`py-2 rounded-lg font-bold border ${type === 'encaissement' ? 'bg-emerald-600 text-white border-emerald-500' : 'bg-slate-800 text-slate-500 border-slate-700'}`}>
+                <button type="button" onClick={() => setType('encaissement')} className={`py-2 rounded-lg font-bold border ${type === 'encaissement' ? 'bg-emerald-600 text-white border-emerald-500' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'}`}>
                   قبض (Encaissement)
                 </button>
-                <button type="button" onClick={() => setType('decaissement')} className={`py-2 rounded-lg font-bold border ${type === 'decaissement' ? 'bg-rose-600 text-white border-rose-500' : 'bg-slate-800 text-slate-500 border-slate-700'}`}>
+                <button type="button" onClick={() => setType('decaissement')} className={`py-2 rounded-lg font-bold border ${type === 'decaissement' ? 'bg-rose-600 text-white border-rose-500' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'}`}>
                   صرف (Décaissement)
                 </button>
               </div>
               <div>
                 <label className="block text-slate-700 mb-1">المبلغ (بالدرهم MAD)</label>
-                <input type="number" step="0.01" required value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500 font-mono" />
+                <input type="number" step="0.01" required value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 text-sm focus:outline-none focus:border-emerald-500 font-mono" />
               </div>
               <div>
                 <label className="block text-slate-700 mb-1">طريقة السداد</label>
-                <select value={method} onChange={e => setMethod(e.target.value as PaymentMethod)} className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none">
+                <select value={method} onChange={e => setMethod(e.target.value as PaymentMethod)} className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 focus:outline-none">
                   <option value="especes">نقد (Espèces)</option>
                   <option value="virement">تحويل بنكي (Virement)</option>
                   <option value="cheque">شيك بنكي (Chèque)</option>
@@ -120,15 +120,15 @@ export const TreasuryCaisseView: React.FC = () => {
               </div>
               <div>
                 <label className="block text-slate-700 mb-1">الفئة المحاسبية</label>
-                <input type="text" value={category} onChange={e => setCategory(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none" />
+                <input type="text" value={category} onChange={e => setCategory(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 focus:outline-none" />
               </div>
               <div>
                 <label className="block text-slate-700 mb-1">البيان والشرح</label>
-                <input type="text" required value={description} onChange={e => setDescription(e.target.value)} placeholder="وصف العملية..." className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none" />
+                <input type="text" required value={description} onChange={e => setDescription(e.target.value)} placeholder="وصف العملية..." className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 focus:outline-none" />
               </div>
               <div>
                 <label className="block text-slate-700 mb-1">رقم الإيصال أو المرجع</label>
-                <input type="text" value={reference} onChange={e => setReference(e.target.value)} placeholder="REC-..." className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none font-mono" />
+                <input type="text" value={reference} onChange={e => setReference(e.target.value)} placeholder="REC-..." className="w-full px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-900 focus:outline-none font-mono" />
               </div>
               <div className="flex items-center justify-end gap-2 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 border border-slate-200/60 hover:bg-slate-700">إلغاء</button>

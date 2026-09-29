@@ -445,7 +445,7 @@ export const TarifsPricingGridView: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => openSuppliesModal(lvl)}
-                          className="p-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-700 hover:text-white border border-slate-700 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-800 border border-slate-200 transition-colors cursor-pointer"
                           title="تحديد تفاصيل ولوازم المحفظة"
                         >
                           <BookOpen className="w-3.5 h-3.5" />

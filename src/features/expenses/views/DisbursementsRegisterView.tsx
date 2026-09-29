@@ -344,7 +344,7 @@ export const DisbursementsRegisterView: React.FC = () => {
                     placeholder="مثال: AB123456"
                     value={formData.recipient_cin}
                     onChange={(e) => setFormData({ ...formData, recipient_cin: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono uppercase focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono uppercase focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -369,7 +369,7 @@ export const DisbursementsRegisterView: React.FC = () => {
                     required
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-900 font-mono text-sm font-bold focus:outline-none focus:border-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-slate-900 font-mono text-sm font-bold focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>

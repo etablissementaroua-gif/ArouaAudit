@@ -26,14 +26,14 @@ export const ServicesConfigView: React.FC = () => {
             خطوط النقل المدرسي النشطة
           </h3>
           <div className="space-y-2">
-            <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex justify-between items-center">
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <div>
                 <span className="font-bold text-slate-900 block">خط 1: وسط المدينة - النرجس</span>
                 <span className="text-[11px] text-slate-500">الحافلة A1 - السائق: حميد الناصري</span>
               </div>
               <span className="px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-mono">35 تلميذ</span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex justify-between items-center">
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <div>
                 <span className="font-bold text-slate-900 block">خط 2: طريق صفرو - زواغة</span>
                 <span className="text-[11px] text-slate-500">الحافلة B2 - السائق: محمد التازي</span>
@@ -49,14 +49,14 @@ export const ServicesConfigView: React.FC = () => {
             نظام الاشتراكات في المطعم (Cantine)
           </h3>
           <div className="space-y-2">
-            <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex justify-between items-center">
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <div>
                 <span className="font-bold text-slate-900 block">اشتراك سنوي كامل (Demi-pension)</span>
                 <span className="text-[11px] text-slate-500">وجبة غداء يومية طيلة الموسم الدراسي</span>
               </div>
               <span className="font-mono font-bold text-blue-400">4,500 MAD</span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 flex justify-between items-center">
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <div>
                 <span className="font-bold text-slate-900 block">اشتراك فصلي (Trimestriel)</span>
                 <span className="text-[11px] text-slate-500">يسدد مع بداية كل ثلاثي</span>

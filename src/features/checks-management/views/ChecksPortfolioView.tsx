@@ -144,7 +144,7 @@ export const ChecksPortfolioView: React.FC = () => {
         );
       case 'restitue':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-500 border border-slate-700">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
             <RotateCcw className="w-3.5 h-3.5" />
             <span>تم الإرجاع</span>
           </span>
