@@ -54,6 +54,47 @@ export const StatCard: React.FC<StatCardProps> = ({
   const hasMAD = typeof value === 'string' && value.includes('MAD');
   const cleanNumericValue = hasMAD ? value.replace(/MAD/g, '').trim() : value;
 
+  const renderValue = () => {
+    if (typeof cleanNumericValue !== 'string') {
+      return (
+        <span className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+          {cleanNumericValue}
+        </span>
+      );
+    }
+
+    // Pattern 1: Number + Arabic text (e.g. "21 أطر", "12 أساتذة", "0 موظفين")
+    const match = cleanNumericValue.match(/^([\d.,]+|\d+)\s+(.+)$/);
+    if (match) {
+      return (
+        <div className="flex items-baseline gap-2">
+          <span className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+            {match[1]}
+          </span>
+          <span className={`text-xl font-bold font-sans ${styles.valColor}`}>
+            {match[2]}
+          </span>
+        </div>
+      );
+    }
+
+    // Pattern 2: Pure Arabic word (e.g. "نشطة", "معطل")
+    if (/[\u0600-\u06FF]/.test(cleanNumericValue)) {
+      return (
+        <span className={`text-2xl font-black font-sans ${styles.valColor}`}>
+          {cleanNumericValue}
+        </span>
+      );
+    }
+
+    // Pattern 3: Pure numbers, currency, or percentages
+    return (
+      <span className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
+        {cleanNumericValue}
+      </span>
+    );
+  };
+
   return (
     <div className={`p-5 rounded-2xl border border-slate-200/80 bg-white shadow-xs hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between ${styles.leftBorder}`}>
       <div className="flex items-center justify-between mb-2">
@@ -66,9 +107,9 @@ export const StatCard: React.FC<StatCardProps> = ({
         {hasMAD && (
           <span className="text-xs font-bold font-mono text-emerald-600 block mb-0.5">MAD</span>
         )}
-        <h3 className={`text-3xl font-black tracking-tight font-mono ${styles.valColor}`}>
-          {cleanNumericValue}
-        </h3>
+        <div>
+          {renderValue()}
+        </div>
       </div>
       {(subtitle || trend) && (
         <div className="mt-2.5 flex items-center justify-between text-xs">

@@ -129,7 +129,7 @@ export const CreditBalancesView: React.FC = () => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
+          className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded-2xl font-bold text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95"
         >
           <Plus className="w-5 h-5" />
           <span>تسجيل رصيد دائن جديد</span>
@@ -138,24 +138,24 @@ export const CreditBalancesView: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-emerald-950/40 to-slate-900 border border-emerald-500/30 p-5 rounded-2xl">
-          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">إجمالي الفوائض المتاحة للخصم</span>
-          <p className="text-2xl font-black text-emerald-700 font-mono">{formatMAD(totalCreditAvailable)}</p>
-          <span className="text-xs text-slate-500 mt-1 block">رصيد متاح للاستخدام في الشهور القادمة</span>
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-emerald-500 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">إجمالي الفوائض المتاحة للخصم</span>
+          <p className="text-3xl font-black text-emerald-700 font-mono tracking-tight">{formatMAD(totalCreditAvailable)}</p>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">رصيد متاح للاستخدام في الشهور القادمة</span>
         </div>
 
-        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
-          <span className="text-xs text-slate-500 uppercase font-semibold block mb-1">عدد التلاميذ أصحاب الأرصدة</span>
-          <p className="text-2xl font-bold text-slate-900 font-mono">{balances.filter(b => b.status === 'available').length}</p>
-          <span className="text-xs text-slate-500 mt-1 block">تلاميذ لديهم مبالغ دائنة</span>
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-teal-400 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">عدد التلاميذ أصحاب الأرصدة</span>
+          <p className="text-3xl font-black text-slate-900 font-mono tracking-tight">{balances.filter(b => b.status === 'available').length}</p>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">تلاميذ لديهم مبالغ دائنة</span>
         </div>
 
-        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl">
-          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">المبالغ المرحلة سابقاً</span>
-          <p className="text-2xl font-bold text-indigo-700 font-mono font-bold">
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-indigo-400 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">المبالغ المرحلة سابقاً</span>
+          <p className="text-3xl font-black text-indigo-700 font-mono tracking-tight">
             {formatMAD(balances.filter(b => b.status === 'carried_over').reduce((s, b) => s + b.credit_amount, 0))}
           </p>
-          <span className="text-xs text-slate-500 mt-1 block">تم خصمها في دورات سابقة</span>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">تم خصمها في دورات سابقة</span>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ export const CreditBalancesView: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-right border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
+              <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-700 font-bold text-xs uppercase tracking-wider">
                 <th className="py-4 px-4">التلميذ / المعرف</th>
                 <th className="py-4 px-4">المستوى الدراسي</th>
                 <th className="py-4 px-4">مبلغ الرصيد الدائن</th>

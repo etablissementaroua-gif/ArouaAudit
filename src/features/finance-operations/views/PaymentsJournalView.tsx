@@ -109,36 +109,36 @@ export const PaymentsJournalView: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-700 font-mono">
-          <span>إجمالي المقبوضات: </span>
-          <span className="font-bold text-emerald-700">{formatMAD(totalCollected)}</span>
+        <div className="bg-white px-4 py-2 rounded-2xl border border-slate-200 text-sm text-slate-700 flex items-center gap-2 shadow-xs">
+          <span className="font-bold">إجمالي المقبوضات: </span>
+          <span className="font-black text-emerald-700 font-mono text-base">{formatMAD(totalCollected)}</span>
         </div>
       </div>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
-          <span className="text-xs text-slate-500 uppercase font-semibold block mb-1">إجمالي العمليات المسجلة</span>
-          <p className="text-2xl font-bold text-slate-900 font-mono">{filteredPayments.length}</p>
-          <span className="text-xs text-slate-500 mt-1 block">عملية استخلاص مؤكدة</span>
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-teal-400 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">إجمالي العمليات المسجلة</span>
+          <p className="text-3xl font-black text-slate-900 font-mono tracking-tight">{filteredPayments.length}</p>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">عملية استخلاص مؤكدة</span>
         </div>
 
-        <div className="bg-white border border-slate-200 shadow-xs p-5 rounded-2xl">
-          <span className="text-xs text-emerald-700 uppercase font-semibold block mb-1">استخلاصات التمدرس</span>
-          <p className="text-2xl font-bold text-slate-900 font-mono">{formatMAD(totalScolarite)}</p>
-          <span className="text-xs text-slate-500 mt-1 block">رسوم التعليم والتمدرس</span>
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-emerald-500 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">استخلاصات التمدرس</span>
+          <p className="text-3xl font-black text-emerald-700 font-mono tracking-tight">{formatMAD(totalScolarite)}</p>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">رسوم التعليم والتمدرس</span>
         </div>
 
-        <div className="bg-white border border-amber-200 shadow-xs p-5 rounded-2xl">
-          <span className="text-xs text-amber-700 uppercase font-semibold block mb-1">استخلاصات النقل المدرسي</span>
-          <p className="text-2xl font-bold text-amber-700 font-mono">{formatMAD(totalTransport)}</p>
-          <span className="text-xs text-slate-500 mt-1 block">اشتراكات خطوط الحافلات</span>
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-amber-400 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">استخلاصات النقل المدرسي</span>
+          <p className="text-3xl font-black text-amber-700 font-mono tracking-tight">{formatMAD(totalTransport)}</p>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">اشتراكات خطوط الحافلات</span>
         </div>
 
-        <div className="bg-white border border-cyan-500/20 p-5 rounded-2xl">
-          <span className="text-xs text-emerald-800 uppercase font-semibold block mb-1">استخلاصات المطعم</span>
-          <p className="text-2xl font-bold text-emerald-800 font-mono">{formatMAD(totalCantine)}</p>
-          <span className="text-xs text-slate-500 mt-1 block">وجبات التغذية المدرسية</span>
+        <div className="bg-white border border-slate-200/80 border-l-4 border-l-sky-500 p-5 rounded-2xl shadow-xs">
+          <span className="text-xs text-slate-500 font-bold block mb-1">استخلاصات المطعم</span>
+          <p className="text-3xl font-black text-sky-700 font-mono tracking-tight">{formatMAD(totalCantine)}</p>
+          <span className="text-[11px] text-slate-400 mt-1 block font-medium">وجبات التغذية المدرسية</span>
         </div>
       </div>
 
@@ -230,18 +230,21 @@ export const PaymentsJournalView: React.FC = () => {
                     <td className="py-4 px-4 text-xs">
                       <div className="flex items-center gap-2">
                         {p.service_breakdown.scolarite > 0 && (
-                          <span className="bg-white px-2 py-0.5 rounded text-indigo-700 font-mono font-bold border border-slate-200">
-                            تمدرس: {formatMAD(p.service_breakdown.scolarite)}
+                          <span className="bg-slate-50 px-2 py-0.5 rounded text-indigo-700 font-bold border border-slate-200 flex items-center gap-1">
+                            <span className="font-sans text-[11px] text-slate-500">تمدرس:</span>
+                            <span className="font-mono text-xs">{formatMAD(p.service_breakdown.scolarite)}</span>
                           </span>
                         )}
                         {p.service_breakdown.transport > 0 && (
-                          <span className="bg-white px-2 py-0.5 rounded text-amber-700 font-mono font-bold border border-slate-200">
-                            نقل: {formatMAD(p.service_breakdown.transport)}
+                          <span className="bg-slate-50 px-2 py-0.5 rounded text-amber-700 font-bold border border-slate-200 flex items-center gap-1">
+                            <span className="font-sans text-[11px] text-slate-500">نقل:</span>
+                            <span className="font-mono text-xs">{formatMAD(p.service_breakdown.transport)}</span>
                           </span>
                         )}
                         {p.service_breakdown.cantine > 0 && (
-                          <span className="bg-white px-2 py-0.5 rounded text-sky-700 font-mono font-bold border border-slate-200">
-                            مطعم: {formatMAD(p.service_breakdown.cantine)}
+                          <span className="bg-slate-50 px-2 py-0.5 rounded text-sky-700 font-bold border border-slate-200 flex items-center gap-1">
+                            <span className="font-sans text-[11px] text-slate-500">مطعم:</span>
+                            <span className="font-mono text-xs">{formatMAD(p.service_breakdown.cantine)}</span>
                           </span>
                         )}
                       </div>
