@@ -10,6 +10,8 @@ import {
   Receipt,
   Bus,
   CheckSquare,
+  LayoutDashboard,
+  BarChart3,
   ChevronDown,
   X
 } from 'lucide-react';
@@ -40,6 +42,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   // Collapsible Accordion State
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    dashboard: true,
+    workspace: true,
+    reports: true,
     settings: false,
     rh: false,
     revenue: false,
@@ -50,6 +55,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   });
 
   const sections: NavSection[] = [
+    {
+      id: 'dashboard',
+      title: t('sidebar:sections.dashboard.title'),
+      icon: LayoutDashboard,
+      items: [
+        { label: t('sidebar:sections.dashboard.overview'), path: '/' },
+      ],
+    },
+    {
+      id: 'reports',
+      title: t('sidebar:sections.reports.title'),
+      icon: BarChart3,
+      items: [
+        { label: t('sidebar:sections.reports.analytics'), path: '/reports/analytics', badge: t('sidebar:badges.audit'), badgeColor: 'teal' },
+      ],
+    },
     {
       id: 'workspace',
       title: t('sidebar:sections.workspace.title'),
@@ -294,4 +315,5 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 };
 
 export default Sidebar;
+
 

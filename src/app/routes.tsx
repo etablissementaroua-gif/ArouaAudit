@@ -12,6 +12,12 @@ const LoginView = lazy(() =>
 const TasksNotesView = lazy(() =>
   import('../features/tasks-notes/views/TasksNotesView').then((m) => ({ default: m.TasksNotesView }))
 );
+const DashboardOverviewView = lazy(() =>
+  import('../features/dashboard/views/DashboardOverviewView').then((m) => ({ default: m.DashboardOverviewView }))
+);
+const ReportsAnalyticsView = lazy(() =>
+  import('../features/reports-analytics/views/ReportsAnalyticsView').then((m) => ({ default: m.ReportsAnalyticsView }))
+);
 
 // Lazy-loaded Views
 const StudentEnrollmentView = lazy(() =>
@@ -148,9 +154,22 @@ export const router = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     children: [
-      {
+            {
         index: true,
-        element: <Navigate to="/hr/enrolled-students" replace />,
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <DashboardOverviewView />
+          </Suspense>
+        ),
+      },
+      // Reports & Advanced Analytics
+      {
+        path: 'reports/analytics',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <ReportsAnalyticsView />
+          </Suspense>
+        ),
       },
       // 0. Workspace: Tasks & Notes
       {
@@ -467,4 +486,5 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
 

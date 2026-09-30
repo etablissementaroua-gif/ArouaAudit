@@ -5,9 +5,17 @@
     "system_active": "نظام نشط"
   },
   "sections": {
+    "dashboard": {
+      "title": "الرئيسية",
+      "overview": "لوحة القيادة والمتابعة"
+    },
     "workspace": {
       "title": "مساحة العمل والمذكرات",
       "tasks": "مذكرة المهام والتذكيرات"
+    },
+    "reports": {
+      "title": "الإحصائيات والتقارير",
+      "analytics": "التقارير المالية والتحليلية"
     },
     "settings": {
       "title": "إعدادات المنظومة والأمان",
@@ -65,6 +73,7 @@
     "active": "نشط",
     "followup": "متابعة",
     "important": "هام",
-    "security": "أمان"
+    "security": "أمان",
+    "audit": "تقارير"
   }
 }

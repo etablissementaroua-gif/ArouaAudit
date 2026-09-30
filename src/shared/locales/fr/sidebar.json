@@ -5,9 +5,17 @@
     "system_active": "Système Actif"
   },
   "sections": {
+    "dashboard": {
+      "title": "Tableau de Bord",
+      "overview": "Vue d'ensemble & KPIs"
+    },
     "workspace": {
       "title": "Espace de Travail & Mémos",
       "tasks": "Tâches & Mémos"
+    },
+    "reports": {
+      "title": "Statistiques & Rapports",
+      "analytics": "Rapports & Analyses Financières"
     },
     "settings": {
       "title": "Configuration & Sécurité",
@@ -65,6 +73,7 @@
     "active": "Actif",
     "followup": "Suivi",
     "important": "Important",
-    "security": "Sécurité"
+    "security": "Sécurité",
+    "audit": "Rapports"
   }
 }
