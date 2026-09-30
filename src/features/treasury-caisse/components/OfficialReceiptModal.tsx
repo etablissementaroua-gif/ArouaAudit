@@ -25,19 +25,23 @@ import { formatMAD } from '../../../shared/lib/currencyFormatter';
 import { formatDateFR } from '../../../shared/lib/dateUtils';
 
 interface OfficialReceiptModalProps {
-  receipt: OfficialReceiptData;
+  receipt?: OfficialReceiptData;
+  receiptData?: OfficialReceiptData;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
   receipt,
+  receiptData,
   isOpen,
   onClose,
 }) => {
+  const activeReceipt = receipt || receiptData;
   const [printFormat, setPrintFormat] = useState<'a4' | 'ticket'>('a4');
 
-  if (!isOpen) return null;
+  if (!isOpen || !activeReceipt) return null;
+  const currentReceipt = activeReceipt;
 
   const handlePrint = () => {
     window.print();
@@ -58,24 +62,24 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
     }
   };
 
-  const methodBadge = getMethodBadge(receipt.paymentMethod);
+  const methodBadge = getMethodBadge(currentReceipt.paymentMethod);
   const MethodIcon = methodBadge.icon;
 
   // Breakdown items fallback if not provided
-  const feeBreakdown = receipt.feeBreakdown && receipt.feeBreakdown.length > 0
-    ? receipt.feeBreakdown
+  const feeBreakdown = currentReceipt.feeBreakdown && currentReceipt.feeBreakdown.length > 0
+    ? currentReceipt.feeBreakdown
     : [
         {
           id: 'fb-1',
           category: 'tuition' as const,
           labelAr: 'واجبات التمدرس الشهري',
           labelFr: 'Frais de Scolarité Mensuelle',
-          period: receipt.paymentFor,
-          amountMAD: receipt.amountMAD,
+          period: currentReceipt.paymentFor,
+          amountMAD: currentReceipt.amountMAD,
         }
       ];
 
-  const qrPayload = generateReceiptQRPayload(receipt);
+  const qrPayload = generateReceiptQRPayload(currentReceipt);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-2 sm:p-4 overflow-y-auto">
@@ -93,7 +97,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                 سند القبض المالي الرسمي • Reçu de Paiement Officiel
               </span>
               <span className="text-[10px] text-slate-400 font-mono block">
-                N° {receipt.receiptNumber} • Groupe Scolaire Aroua
+                N° {currentReceipt.receiptNumber} • Groupe Scolaire Aroua
               </span>
             </div>
           </div>
@@ -229,7 +233,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                     الرقم التسلسلي للوصل المحاسبي (Réf. Reçu) :
                   </span>
                   <span className="text-lg font-black font-mono text-slate-900 tracking-wider">
-                    {receipt.receiptNumber}
+                    {currentReceipt.receiptNumber}
                   </span>
                 </div>
 
@@ -239,7 +243,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                     <span>سند قبض واستخلاص رسمي • REÇU DE RÈGLEMENT</span>
                   </div>
                   <span className="text-[9px] text-slate-400 block mt-1 font-mono">
-                    السنة الدراسية: {receipt.academicYear || '2025 - 2026'}
+                    السنة الدراسية: {currentReceipt.academicYear || '2025 - 2026'}
                   </span>
                 </div>
 
@@ -248,7 +252,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                     Date de Règlement :
                   </span>
                   <span className="text-xs font-black font-mono text-slate-800">
-                    {formatDateFR(receipt.date)}
+                    {formatDateFR(currentReceipt.date)}
                   </span>
                 </div>
               </div>
@@ -259,22 +263,22 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                   <tbody>
                     <tr className="bg-slate-50/70">
                       <td className="px-4 py-3 font-bold text-slate-600 w-1/4">اسم التلميذ(ة) الكامل :</td>
-                      <td className="px-4 py-3 font-black text-slate-900 text-sm">{receipt.studentName}</td>
+                      <td className="px-4 py-3 font-black text-slate-900 text-sm">{currentReceipt.studentName}</td>
                       <td className="px-4 py-3 font-bold text-slate-600 w-1/4">رمز مسار (Code Massar) :</td>
-                      <td className="px-4 py-3 font-mono font-bold text-slate-900">{receipt.massarCode}</td>
+                      <td className="px-4 py-3 font-mono font-bold text-slate-900">{currentReceipt.massarCode}</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3 font-bold text-slate-600">المستوى الدراسي :</td>
-                      <td className="px-4 py-3 text-slate-800 font-semibold">{receipt.academicLevel}</td>
+                      <td className="px-4 py-3 text-slate-800 font-semibold">{currentReceipt.academicLevel}</td>
                       <td className="px-4 py-3 font-bold text-slate-600">القسم / الفوج :</td>
-                      <td className="px-4 py-3 font-mono font-bold text-slate-800">{receipt.classroom || 'عام'}</td>
+                      <td className="px-4 py-3 font-mono font-bold text-slate-800">{currentReceipt.classroom || 'عام'}</td>
                     </tr>
-                    {receipt.parentName && (
+                    {currentReceipt.parentName && (
                       <tr className="bg-slate-50/70">
                         <td className="px-4 py-3 font-bold text-slate-600">ولي الأمر / القائم بالأداء :</td>
-                        <td className="px-4 py-3 font-semibold text-slate-800">{receipt.parentName}</td>
+                        <td className="px-4 py-3 font-semibold text-slate-800">{currentReceipt.parentName}</td>
                         <td className="px-4 py-3 font-bold text-slate-600">الهاتف :</td>
-                        <td className="px-4 py-3 font-mono text-slate-800">{receipt.parentPhone || '—'}</td>
+                        <td className="px-4 py-3 font-mono text-slate-800">{currentReceipt.parentPhone || '—'}</td>
                       </tr>
                     )}
                   </tbody>
@@ -310,7 +314,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                             <span className="text-[10px] text-slate-500 font-mono block">{item.labelFr}</span>
                           </td>
                           <td className="px-4 py-2.5 text-center font-mono text-slate-700">
-                            {item.period || receipt.paymentFor}
+                            {item.period || currentReceipt.paymentFor}
                           </td>
                           <td className="px-4 py-2.5 text-end font-mono font-bold text-slate-900">
                             {formatMAD(item.amountMAD)}
@@ -324,7 +328,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                           المجموع الإجمالي المؤدى (Total Règlement) :
                         </td>
                         <td className="px-4 py-2.5 text-end font-mono text-sm font-black text-emerald-800">
-                          {formatMAD(receipt.amountMAD)}
+                          {formatMAD(currentReceipt.amountMAD)}
                         </td>
                       </tr>
                     </tfoot>
@@ -350,19 +354,19 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                     بيانات السند / الشيك / التحويل :
                   </span>
                   <div className="font-mono text-xs text-slate-800 space-y-0.5">
-                    {receipt.paymentMethod === 'cheque' ? (
+                    {currentReceipt.paymentMethod === 'cheque' ? (
                       <>
-                        <p><strong>رقم الشيك:</strong> {receipt.checkNumber || receipt.paymentReference || 'N/A'}</p>
-                        <p><strong>البنك المسحوب عليه:</strong> {receipt.bankName || 'شيك بنكي معتمد'}</p>
-                        {receipt.checkDueDate && <p><strong>تاريخ الاستحقاق:</strong> {formatDateFR(receipt.checkDueDate)}</p>}
+                        <p><strong>رقم الشيك:</strong> {currentReceipt.checkNumber || currentReceipt.paymentReference || 'N/A'}</p>
+                        <p><strong>البنك المسحوب عليه:</strong> {currentReceipt.bankName || 'شيك بنكي معتمد'}</p>
+                        {currentReceipt.checkDueDate && <p><strong>تاريخ الاستحقاق:</strong> {formatDateFR(currentReceipt.checkDueDate)}</p>}
                       </>
-                    ) : receipt.paymentMethod === 'virement' ? (
+                    ) : currentReceipt.paymentMethod === 'virement' ? (
                       <>
-                        <p><strong>مرجع التحويل:</strong> {receipt.paymentReference || 'Virement direct'}</p>
-                        {receipt.bankName && <p><strong>البنك:</strong> {receipt.bankName}</p>}
+                        <p><strong>مرجع التحويل:</strong> {currentReceipt.paymentReference || 'Virement direct'}</p>
+                        {currentReceipt.bankName && <p><strong>البنك:</strong> {currentReceipt.bankName}</p>}
                       </>
                     ) : (
-                      <p><strong>المرجع:</strong> {receipt.paymentReference || 'سداد فوري بصندوق المؤسسة'}</p>
+                      <p><strong>المرجع:</strong> {currentReceipt.paymentReference || 'سداد فوري بصندوق المؤسسة'}</p>
                     )}
                   </div>
                 </div>
@@ -373,25 +377,25 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-200/60 pb-2">
                   <span className="text-xs font-bold text-emerald-950">المبلغ الإجمالي بالحروف (بالدرهم المغربي) :</span>
                   <span className="text-xl font-black font-mono text-emerald-900">
-                    {formatMAD(receipt.amountMAD)}
+                    {formatMAD(currentReceipt.amountMAD)}
                   </span>
                 </div>
                 <div className="space-y-1 text-xs font-semibold text-emerald-900">
                   <p className="leading-relaxed">
-                    « {numberToWordsMAD(receipt.amountMAD)} »
+                    « {numberToWordsMAD(currentReceipt.amountMAD)} »
                   </p>
                   <p className="text-[11px] font-mono text-emerald-800 leading-relaxed" dir="ltr">
-                    Arrêté le présent reçu à la somme de : {numberToWordsFrenchMAD(receipt.amountMAD)}
+                    Arrêté le présent reçu à la somme de : {numberToWordsFrenchMAD(currentReceipt.amountMAD)}
                   </p>
                 </div>
               </div>
 
               {/* Remaining Balance if applicable */}
-              {receipt.remainingBalanceMAD !== undefined && (
+              {currentReceipt.remainingBalanceMAD !== undefined && (
                 <div className="flex items-center justify-between text-xs px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-600 font-bold">الذمة الصافية المتبقية بعد هذا السداد (Solde Restant) :</span>
                   <span className="font-mono font-black text-amber-700 text-sm">
-                    {formatMAD(receipt.remainingBalanceMAD)}
+                    {formatMAD(currentReceipt.remainingBalanceMAD)}
                   </span>
                 </div>
               )}
@@ -402,7 +406,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                 <div className="col-span-4 h-32 border border-dashed border-slate-300 rounded-2xl p-3 flex flex-col justify-between text-center text-xs">
                   <span className="font-bold text-slate-700">توقيع ولي الأمر</span>
                   <span className="text-[10px] text-slate-400 font-mono">Émargement Parent</span>
-                  <span className="text-[9px] text-slate-400">حرر بمراكش في {formatDateFR(receipt.date)}</span>
+                  <span className="text-[9px] text-slate-400">حرر بمراكش في {formatDateFR(currentReceipt.date)}</span>
                 </div>
 
                 {/* Security QR Code & Cryptographic Verification Box */}
@@ -418,7 +422,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                   </div>
 
                   <span className="text-[8px] font-mono text-slate-400 truncate max-w-full">
-                    SEC: {receipt.receiptNumber}
+                    SEC: {currentReceipt.receiptNumber}
                   </span>
                 </div>
 
@@ -430,7 +434,7 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
                     <span>مجموعة مدارس أروى — مراكش</span>
                   </div>
                   <span className="text-[9px] text-slate-500 font-mono">
-                    {receipt.cashierName || 'أمين الصندوق المركزي'}
+                    {currentReceipt.cashierName || 'أمين الصندوق المركزي'}
                   </span>
                 </div>
               </div>
@@ -475,27 +479,27 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
               <div className="text-center space-y-0.5 py-1">
                 <span className="font-black text-xs block">وصل أداء مدرسي رسمي</span>
                 <span className="text-[10px] text-slate-600 font-black block">REÇU DE CAISSE</span>
-                <span className="font-bold text-xs block mt-1">N°: {receipt.receiptNumber}</span>
-                <span className="text-[10px] text-slate-500 block">Date: {formatDateFR(receipt.date)}</span>
+                <span className="font-bold text-xs block mt-1">N°: {currentReceipt.receiptNumber}</span>
+                <span className="text-[10px] text-slate-500 block">Date: {formatDateFR(currentReceipt.date)}</span>
               </div>
 
               {/* Student Details */}
               <div className="border-t border-b border-dashed border-slate-400 py-2 space-y-1 text-[11px]">
                 <div className="flex justify-between">
                   <span className="text-slate-500">التلميذ:</span>
-                  <span className="font-black">{receipt.studentName}</span>
+                  <span className="font-black">{currentReceipt.studentName}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">مسار:</span>
-                  <span className="font-bold">{receipt.massarCode}</span>
+                  <span className="font-bold">{currentReceipt.massarCode}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">المستوى:</span>
-                  <span>{receipt.academicLevel} ({receipt.classroom || 'عام'})</span>
+                  <span>{currentReceipt.academicLevel} ({currentReceipt.classroom || 'عام'})</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">الدفعة:</span>
-                  <span className="font-bold">{receipt.paymentFor}</span>
+                  <span className="font-bold">{currentReceipt.paymentFor}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">الطريقة:</span>
@@ -507,10 +511,10 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
               <div className="text-center py-2 space-y-1">
                 <span className="text-[10px] text-slate-500 block">المبلغ الصافي المؤدى:</span>
                 <span className="text-lg font-black block text-emerald-800">
-                  {formatMAD(receipt.amountMAD)}
+                  {formatMAD(currentReceipt.amountMAD)}
                 </span>
                 <p className="text-[9px] text-slate-700 italic px-2">
-                  « {numberToWordsMAD(receipt.amountMAD)} »
+                  « {numberToWordsMAD(currentReceipt.amountMAD)} »
                 </p>
               </div>
 

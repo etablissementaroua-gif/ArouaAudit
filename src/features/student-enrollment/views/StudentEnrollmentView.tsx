@@ -37,11 +37,11 @@ export const StudentEnrollmentView: React.FC = () => {
   } = useEnrollment();
 
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
-  const [collectingStudent, setCollectingStudent] = useState<StudentRecord | null>(null);
-  const [receiptData, setReceiptData] = useState<OfficialReceiptData | null>(null);
+  const [selectedStudentForCollection, setSelectedStudentForCollection] = useState<StudentRecord | null>(null);
+  const [currentReceiptData, setCurrentReceiptData] = useState<OfficialReceiptData | null>(null);
 
   const handleOpenReceipt = (st: StudentRecord) => {
-    setReceiptData({
+    setCurrentReceiptData({
       receiptNumber: 'REC-' + (st.student_id ? st.student_id.replace('STU-', '') : '2026-001'),
       date: new Date().toISOString().split('T')[0],
       studentName: st.full_name_ar,
@@ -387,7 +387,7 @@ export const StudentEnrollmentView: React.FC = () => {
 
                         {/* Collection / Encaissement Action */}
                         <button
-                          onClick={() => setCollectingStudent(st)}
+                          onClick={() => setSelectedStudentForCollection(st)}
                           className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
                           title="استخلاص وتحصيل الرسوم المدرسية (نقداً / شيك / مختلط)"
                         >
@@ -421,24 +421,24 @@ export const StudentEnrollmentView: React.FC = () => {
       </div>
 
       {/* Student Collection Dialog */}
-      {collectingStudent && (
+      {selectedStudentForCollection && (
         <StudentCollectionModal
-          student={collectingStudent}
-          isOpen={Boolean(collectingStudent)}
-          onClose={() => setCollectingStudent(null)}
+          student={selectedStudentForCollection}
+          isOpen={Boolean(selectedStudentForCollection)}
+          onClose={() => setSelectedStudentForCollection(null)}
           onSuccess={(receipt) => {
-            setReceiptData(receipt);
+            setCurrentReceiptData(receipt);
             refresh();
           }}
         />
       )}
 
       {/* Official Receipt Dialog */}
-      {receiptData && (
+      {currentReceiptData && (
         <OfficialReceiptModal
-          receipt={receiptData}
-          isOpen={Boolean(receiptData)}
-          onClose={() => setReceiptData(null)}
+          receiptData={currentReceiptData}
+          isOpen={Boolean(currentReceiptData)}
+          onClose={() => setCurrentReceiptData(null)}
         />
       )}
 

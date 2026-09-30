@@ -11,7 +11,8 @@ import {
   Loader2, 
   Building2,
   Receipt,
-  FileCheck
+  FileCheck,
+  AlertTriangle
 } from 'lucide-react';
 import { StudentRecord } from '../models/enrollmentModels';
 import { caisseService } from '../../treasury-caisse/services/caisseService';
@@ -71,15 +72,26 @@ export const StudentCollectionModal: React.FC<StudentCollectionModalProps> = ({
     (transportChecked ? Number(transportAmount) || 0 : 0) +
     (canteenChecked ? Number(canteenAmount) || 0 : 0);
 
+  // Validation Check: does cash + check equal totalAmount in mixed mode?
+  const isMixedValid = paymentMode !== 'mixte' || (cashPart + checkPart === totalAmount);
+
   const handleConfirm = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1. Strict Accounting Validation Check for Mixed Payment
+    if (paymentMode === 'mixte' && (cashPart + checkPart !== totalAmount)) {
+      alert(`تنبيه محاسبي: مجموع النقد (${cashPart}) والشيك (${checkPart}) لا يساوي مجموع الرسوم المستحقة (${totalAmount}) MAD`);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
 
     try {
       const receiptNumber = 'REC-' + Date.now().toString().slice(-6);
       const today = new Date().toISOString().split('T')[0];
 
-      // 1. If Mixte or Especes: Add cash portion to General Caisse
+      // 2. If Mixte or Especes: Add cash portion to General Caisse
       if (paymentMode === 'mixte' && cashPart > 0) {
         await caisseService.addTransaction({
           transaction_date: today,
@@ -102,7 +114,7 @@ export const StudentCollectionModal: React.FC<StudentCollectionModalProps> = ({
         });
       }
 
-      // 2. If Mixte or Cheque: Register check in Checks Portfolio
+      // 3. If Mixte or Cheque: Register check in Checks Portfolio
       if (paymentMode === 'mixte' && checkPart > 0) {
         await checksManagementService.registerCheck({
           check_number: checkNumber,
@@ -131,18 +143,18 @@ export const StudentCollectionModal: React.FC<StudentCollectionModalProps> = ({
         });
       }
 
-      // 3. Update student balance in enrollment service
+      // 4. Update student balance in enrollment service
       try {
         await enrollmentService.recordPayment(student.id, totalAmount);
       } catch (enrollErr) {
         console.warn('Local enrollment update notice:', enrollErr);
       }
 
-      // 4. Dispatch Realtime Custom Events for instant dashboard synchronization
+      // 5. Dispatch Realtime Custom Events for instant dashboard synchronization
       window.dispatchEvent(new CustomEvent('aroua_caisse_updated'));
       window.dispatchEvent(new CustomEvent('aroua_checks_updated'));
 
-      // 5. Construct Official Receipt Data with full fee breakdown & mixed payment details
+      // 6. Construct Official Receipt Data with full fee breakdown & mixed payment details
       const feeBreakdown = [];
       if (tuitionChecked && tuitionAmount > 0) {
         feeBreakdown.push({
@@ -445,6 +457,25 @@ export const StudentCollectionModal: React.FC<StudentCollectionModalProps> = ({
                 </div>
               </div>
 
+              {/* Inline Accounting Warning & Auto-Balance Helper */}
+              {!isMixedValid && (
+                <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                    <span>
+                      تنبيه محاسبي: مجموع النقد والشيك ({formatMAD(cashPart + checkPart)}) لا يساوي المطلوب ({formatMAD(totalAmount)}).
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setCheckPart(Math.max(0, totalAmount - cashPart))}
+                    className="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] shrink-0 transition cursor-pointer"
+                  >
+                    موازنة تلقائية
+                  </button>
+                </div>
+              )}
+
               {/* Check Metadata */}
               <div className="grid grid-cols-3 gap-2 pt-1">
                 <div className="space-y-1">
@@ -547,7 +578,7 @@ export const StudentCollectionModal: React.FC<StudentCollectionModalProps> = ({
 
             <button
               type="submit"
-              disabled={loading || totalAmount <= 0}
+              disabled={loading || totalAmount <= 0 || !isMixedValid}
               className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black shadow-md shadow-emerald-600/20 flex items-center gap-2 transition active:scale-95 cursor-pointer disabled:opacity-50"
             >
               {loading ? (
