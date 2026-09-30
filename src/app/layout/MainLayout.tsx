@@ -9,22 +9,22 @@ export const MainLayout: React.FC = () => {
   const { t } = useTranslation(['common']);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-800 flex flex-row font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
+    <div className="h-screen w-screen overflow-hidden bg-[#F8FAFC] flex font-sans selection:bg-emerald-500/15 selection:text-emerald-800">
       {/* Dynamic Accordion Sidebar (RTL: Right side, LTR: Left side) */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* Main Content Area - Prevents table overflow clipping */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+      {/* Main Content Area - Strictly contained */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Sticky Header */}
         <Header onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
         {/* Main Body - Unified Canvas */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-[#F8FAFC]">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8 space-y-6">
           <Outlet />
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-slate-200/80 bg-white py-3 px-6 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xs">
+        <footer className="border-t border-slate-200/80 bg-white py-3 px-6 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xs shrink-0">
           <div className="text-slate-500 text-xs">
             {t('footer.system_title')}
           </div>
