@@ -32,6 +32,7 @@ import { taskService } from '../../tasks-notes/services/task.service';
 import { CheckItem } from '../../checks-management/models/check.types';
 import { SystemTask } from '../../tasks-notes/models/task.types';
 import { usePermissions } from '../../system-security/context/PermissionsContext';
+import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 
 export const DashboardOverviewView: React.FC = () => {
   const navigate = useNavigate();
@@ -84,8 +85,28 @@ export const DashboardOverviewView: React.FC = () => {
     }
   };
 
-  useEffect(() => {
+    useEffect(() => {
     loadDashboardData();
+
+    if (!isSupabaseConfigured()) return;
+
+    const channel = supabase
+      .channel('dashboard-realtime-feed')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'checks_portfolio' }, () => {
+        loadDashboardData();
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'system_tasks' }, () => {
+        loadDashboardData();
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'caisse_transactions' }, () => {
+        loadDashboardData();
+        refreshCaisse();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [currentUser]);
 
   // Handle Quick Task Toggle Completion from Dashboard
@@ -129,6 +150,13 @@ export const DashboardOverviewView: React.FC = () => {
               </h1>
               <span className="px-2.5 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-mono">
                 {isRtl ? 'مباشر' : 'LIVE'}
+              </span>
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full font-mono">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-600"></span>
+                </span>
+                <span>{isRtl ? 'مزامنة لحظية نشطة (Realtime Sync)' : 'Sync Realtime Active'}</span>
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">

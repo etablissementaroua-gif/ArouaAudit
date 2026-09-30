@@ -1,4 +1,4 @@
-﻿export type SystemRoleCode = 
+export type SystemRoleCode = 
   | 'super_admin' 
   | 'finance_director' 
   | 'accountant' 
@@ -53,7 +53,8 @@ export interface UserProfile {
 }
 
 export type AuditActionType = 
-  | 'LOGIN' 
+  | 'LOGIN'
+  | 'LOGOUT' 
   | 'CREATE' 
   | 'UPDATE' 
   | 'DELETE' 

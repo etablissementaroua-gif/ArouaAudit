@@ -1,8 +1,28 @@
-import React from 'react';
-import { Printer, X, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  X, 
+  Printer, 
+  CheckCircle2, 
+  Building2, 
+  Receipt, 
+  FileText, 
+  QrCode, 
+  ShieldCheck, 
+  Stamp, 
+  CreditCard,
+  Banknote,
+  Landmark,
+  Layers
+} from 'lucide-react';
+import { 
+  OfficialReceiptData, 
+  INSTITUTION_INFO, 
+  numberToWordsMAD, 
+  numberToWordsFrenchMAD,
+  generateReceiptQRPayload 
+} from '../../../shared/lib/receiptPdfGenerator';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
 import { formatDateFR } from '../../../shared/lib/dateUtils';
-import { OfficialReceiptData, INSTITUTION_INFO, numberToWordsMAD } from '../../../shared/lib/receiptPdfGenerator';
 
 interface OfficialReceiptModalProps {
   receipt: OfficialReceiptData;
@@ -15,170 +35,497 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const [printFormat, setPrintFormat] = useState<'a4' | 'ticket'>('a4');
+
   if (!isOpen) return null;
 
   const handlePrint = () => {
     window.print();
   };
 
-  const getMethodLabel = (m: string) => {
-    switch (m) {
+  const getMethodBadge = (method: string) => {
+    switch (method) {
       case 'especes':
-        return 'نقداً (Espèces)';
+        return { labelAr: 'نقداً بالصندوق', labelFr: 'Espèces', icon: Banknote };
       case 'cheque':
-        return 'شيك بنكي (Chèque)';
+        return { labelAr: 'شيك بنكي', labelFr: 'Chèque Bancaire', icon: Landmark };
       case 'virement':
-        return 'تحويل بنكي (Virement)';
+        return { labelAr: 'تحويل بنكي', labelFr: 'Virement Bancaire', icon: Building2 };
+      case 'carte':
+        return { labelAr: 'بطاقة بنكية', labelFr: 'Carte Bancaire', icon: CreditCard };
       default:
-        return 'بطاقة بنكية (Carte)';
+        return { labelAr: method, labelFr: method, icon: Banknote };
     }
   };
 
+  const methodBadge = getMethodBadge(receipt.paymentMethod);
+  const MethodIcon = methodBadge.icon;
+
+  // Breakdown items fallback if not provided
+  const feeBreakdown = receipt.feeBreakdown && receipt.feeBreakdown.length > 0
+    ? receipt.feeBreakdown
+    : [
+        {
+          id: 'fb-1',
+          category: 'tuition' as const,
+          labelAr: 'واجبات التمدرس الشهري',
+          labelFr: 'Frais de Scolarité Mensuelle',
+          period: receipt.paymentFor,
+          amountMAD: receipt.amountMAD,
+        }
+      ];
+
+  const qrPayload = generateReceiptQRPayload(receipt);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs overflow-y-auto">
-      <div className="w-full max-w-2xl bg-white text-slate-900 rounded-2xl shadow-2xl overflow-hidden my-8 border border-slate-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-2 sm:p-4 overflow-y-auto">
+      {/* Outer Card Container */}
+      <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[96vh] flex flex-col font-sans">
         
-        {/* Modal Top Actions */}
-        <div className="p-4 bg-white text-slate-900 flex items-center justify-between print:hidden">
-          <div className="flex items-center gap-2">
-            <Printer className="w-4 h-4 text-emerald-800" />
-            <span className="text-xs font-bold">معاينة وطباعة الوصل المالي الرسمي (Reçu de Paiement)</span>
+        {/* Top Control Bar (Hidden on Print) */}
+        <div className="p-4 px-6 bg-slate-900 text-white flex items-center justify-between shrink-0 print:hidden select-none">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <Receipt className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-xs font-black block leading-tight">
+                سند القبض المالي الرسمي • Reçu de Paiement Officiel
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono block">
+                N° {receipt.receiptNumber} • Groupe Scolaire Aroua
+              </span>
+            </div>
           </div>
+
           <div className="flex items-center gap-2">
+            {/* Format Switcher */}
+            <div className="flex items-center bg-slate-800 rounded-xl p-1 border border-slate-700 text-xs">
+              <button
+                type="button"
+                onClick={() => setPrintFormat('a4')}
+                className={`px-3 py-1.5 rounded-lg font-bold transition cursor-pointer ${
+                  printFormat === 'a4'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                A4 مخصص
+              </button>
+              <button
+                type="button"
+                onClick={() => setPrintFormat('ticket')}
+                className={`px-3 py-1.5 rounded-lg font-bold transition cursor-pointer ${
+                  printFormat === 'ticket'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                تذكرة صندوق (80mm)
+              </button>
+            </div>
+
+            {/* Print Button */}
             <button
+              type="button"
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-md transition"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-md shadow-emerald-900/30 transition cursor-pointer active:scale-95"
             >
               <Printer className="w-4 h-4" />
-              طباعة الوصل (Imprimer)
+              <span>طباعة الوصل (Imprimer)</span>
             </button>
+
+            {/* Close Button */}
             <button
+              type="button"
               onClick={onClose}
-              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* Printable Official Voucher Area */}
-        <div className="p-8 font-sans space-y-6 print:p-6 print:m-0" id="official-aroua-receipt">
+        {/* Printable Voucher Workspace */}
+        <div className="overflow-y-auto flex-1 p-6 sm:p-8 bg-slate-100/60 print:p-0 print:bg-white print:overflow-visible">
           
-          {/* Header with Official Logo */}
-          <div className="border-b-2 border-cyan-600 pb-5">
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-2 inline-block p-1.5 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                <img
-                  src={INSTITUTION_INFO.logoPath}
-                  alt={INSTITUTION_INFO.nameAr}
-                  className="h-24 w-auto object-contain mx-auto"
-                />
+          {printFormat === 'a4' ? (
+            /* =========================================================================
+               FORMAT 1: OFFICIAL INSTITUTIONAL A4 RECEIPT
+               ========================================================================= */
+            <div 
+              id="official-aroua-receipt-a4" 
+              className="bg-white border border-slate-200/90 rounded-2xl p-8 sm:p-10 shadow-lg print:border-none print:shadow-none print:p-8 max-w-3xl mx-auto space-y-6 text-slate-800"
+              dir="rtl"
+            >
+              {/* 1. Official State & Institutional Header */}
+              <div className="border-b-2 border-slate-900 pb-5">
+                <div className="grid grid-cols-12 items-center gap-4">
+                  {/* Left Side: French Ministry & Institution */}
+                  <div className="col-span-4 text-start font-sans" dir="ltr">
+                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-tighter leading-tight">
+                      ROYAUME DU MAROC
+                    </p>
+                    <p className="text-[8px] text-slate-500 leading-tight mb-1.5">
+                      Ministère de l'Éducation Nationale, du Préscolaire et des Sports
+                    </p>
+                    <h3 className="text-xs font-black text-slate-900 tracking-tight leading-tight">
+                      {INSTITUTION_INFO.nameFr}
+                    </h3>
+                    <p className="text-[8px] font-semibold text-emerald-800">
+                      {INSTITUTION_INFO.subTitleFr}
+                    </p>
+                  </div>
+
+                  {/* Center: Official High-Res Logo */}
+                  <div className="col-span-4 flex flex-col items-center text-center">
+                    <div className="w-20 h-20 p-1.5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs flex items-center justify-center">
+                      <img
+                        src={INSTITUTION_INFO.logoPath}
+                        alt="Logo Groupe Scolaire Aroua"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-[9px] font-mono font-bold text-slate-400 mt-1">
+                      AUTORISATION N° {INSTITUTION_INFO.autorisationMen}
+                    </span>
+                  </div>
+
+                  {/* Right Side: Arabic Ministry & Institution */}
+                  <div className="col-span-4 text-end">
+                    <p className="text-[10px] font-bold text-slate-700 leading-tight">
+                      المملكة المغربية
+                    </p>
+                    <p className="text-[9px] text-slate-500 leading-tight mb-1.5">
+                      وزارة التربية الوطنية والتعليم الأولي والرياضة
+                    </p>
+                    <h2 className="text-sm font-black text-slate-900 tracking-tight leading-tight">
+                      {INSTITUTION_INFO.nameAr}
+                    </h2>
+                    <p className="text-[9px] font-bold text-emerald-800">
+                      {INSTITUTION_INFO.cyclesAr}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Institutional Legal & Tax Identifiers Bar */}
+                <div className="mt-4 pt-2.5 border-t border-slate-100 flex flex-wrap items-center justify-between text-[9px] font-mono text-slate-500 px-1" dir="ltr">
+                  <span><strong>ICE:</strong> {INSTITUTION_INFO.ice}</span>
+                  <span>•</span>
+                  <span><strong>IF:</strong> {INSTITUTION_INFO.ifTax}</span>
+                  <span>•</span>
+                  <span><strong>RC:</strong> {INSTITUTION_INFO.rc}</span>
+                  <span>•</span>
+                  <span><strong>CNSS:</strong> {INSTITUTION_INFO.cnss}</span>
+                  <span>•</span>
+                  <span><strong>Tél:</strong> {INSTITUTION_INFO.phones}</span>
+                </div>
               </div>
 
-              <h1 className="text-lg font-black text-slate-900 tracking-tight">
-                {INSTITUTION_INFO.nameAr}
-              </h1>
-              <p className="text-xs font-bold text-amber-600 mb-1">
-                {INSTITUTION_INFO.cyclesAr}
-              </p>
-              <p className="text-[11px] text-slate-500 font-mono">
-                {INSTITUTION_INFO.address} | الهاتف: {INSTITUTION_INFO.phones} | البريد: {INSTITUTION_INFO.email}
-              </p>
-            </div>
-          </div>
+              {/* 2. Receipt Badge & Serial Number Section */}
+              <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 flex items-center justify-between">
+                <div>
+                  <span className="text-[11px] text-slate-500 font-bold block">
+                    الرقم التسلسلي للوصل المحاسبي (Réf. Reçu) :
+                  </span>
+                  <span className="text-lg font-black font-mono text-slate-900 tracking-wider">
+                    {receipt.receiptNumber}
+                  </span>
+                </div>
 
-          {/* Receipt Title and N° */}
-          <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl p-3.5">
-            <div>
-              <span className="text-xs text-slate-500 block">رقم الوصل المحاسبي:</span>
-              <span className="font-mono font-black text-base text-cyan-700">{receipt.receiptNumber}</span>
-            </div>
-            <div className="text-center">
-              <span className="px-3 py-1 rounded-full text-xs font-black bg-cyan-100 text-cyan-800 border border-cyan-300">
-                وصل أداء مدرسي (REÇU DE RÈGLEMENT)
-              </span>
-            </div>
-            <div className="text-left">
-              <span className="text-xs text-slate-500 block">تاريخ الإيداع:</span>
-              <span className="font-mono font-bold text-xs text-slate-800">{formatDateFR(receipt.date)}</span>
-            </div>
-          </div>
+                <div className="text-center">
+                  <div className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300 font-black text-xs shadow-2xs">
+                    <Receipt className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>سند قبض واستخلاص رسمي • REÇU DE RÈGLEMENT</span>
+                  </div>
+                  <span className="text-[9px] text-slate-400 block mt-1 font-mono">
+                    السنة الدراسية: {receipt.academicYear || '2025 - 2026'}
+                  </span>
+                </div>
 
-          {/* Student & Payment Metadata Table */}
-          <div className="border border-slate-200 rounded-xl overflow-hidden text-xs">
-            <table className="w-full text-right divide-y divide-slate-200">
-              <tbody>
-                <tr className="bg-slate-50/50">
-                  <td className="px-4 py-2.5 font-bold text-slate-600 w-1/4">اسم التلميذ(ة):</td>
-                  <td className="px-4 py-2.5 font-black text-slate-900 text-sm">{receipt.studentName}</td>
-                  <td className="px-4 py-2.5 font-bold text-slate-600 w-1/4">رمز مسار (Massar):</td>
-                  <td className="px-4 py-2.5 font-mono font-bold text-slate-800">{receipt.massarCode}</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2.5 font-bold text-slate-600">المستوى الدراسي:</td>
-                  <td className="px-4 py-2.5 text-slate-800 font-medium">{receipt.academicLevel}</td>
-                  <td className="px-4 py-2.5 font-bold text-slate-600">القسم / الفوج:</td>
-                  <td className="px-4 py-2.5 font-mono text-slate-800">{receipt.classroom || 'عام'}</td>
-                </tr>
-                <tr className="bg-slate-50/50">
-                  <td className="px-4 py-2.5 font-bold text-slate-600">موضوع الدفعة:</td>
-                  <td className="px-4 py-2.5 font-semibold text-cyan-800" colSpan={3}>
-                    {receipt.paymentFor}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2.5 font-bold text-slate-600">طريقة السداد:</td>
-                  <td className="px-4 py-2.5 font-medium text-slate-800">{getMethodLabel(receipt.paymentMethod)}</td>
-                  <td className="px-4 py-2.5 font-bold text-slate-600">المرجع / الشيك:</td>
-                  <td className="px-4 py-2.5 font-mono text-slate-800">{receipt.paymentReference || 'مباشر بالصندوق'}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                <div className="text-start" dir="ltr">
+                  <span className="text-[11px] text-slate-500 font-bold block">
+                    Date de Règlement :
+                  </span>
+                  <span className="text-xs font-black font-mono text-slate-800">
+                    {formatDateFR(receipt.date)}
+                  </span>
+                </div>
+              </div>
 
-          {/* Financial Amount Banner */}
-          <div className="p-4 rounded-xl bg-gradient-to-r from-cyan-50 via-amber-50/40 to-cyan-50 border-2 border-cyan-600/30 flex items-center justify-between">
-            <div>
-              <span className="text-xs font-bold text-slate-600 block mb-0.5">المبلغ المسدد بالأرقام:</span>
-              <span className="text-2xl font-black font-mono text-cyan-800">
-                {formatMAD(receipt.amountMAD)}
-              </span>
-            </div>
-            <div className="text-left max-w-xs">
-              <span className="text-[11px] text-slate-500 block mb-0.5">المبلغ الصافي بالحروف:</span>
-              <span className="text-xs font-bold text-slate-800 block">
-                {numberToWordsMAD(receipt.amountMAD)}
-              </span>
-            </div>
-          </div>
+              {/* 3. Student & Enrollment Identity Grid */}
+              <div className="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+                <table className="w-full text-start divide-y divide-slate-200">
+                  <tbody>
+                    <tr className="bg-slate-50/70">
+                      <td className="px-4 py-3 font-bold text-slate-600 w-1/4">اسم التلميذ(ة) الكامل :</td>
+                      <td className="px-4 py-3 font-black text-slate-900 text-sm">{receipt.studentName}</td>
+                      <td className="px-4 py-3 font-bold text-slate-600 w-1/4">رمز مسار (Code Massar) :</td>
+                      <td className="px-4 py-3 font-mono font-bold text-slate-900">{receipt.massarCode}</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-3 font-bold text-slate-600">المستوى الدراسي :</td>
+                      <td className="px-4 py-3 text-slate-800 font-semibold">{receipt.academicLevel}</td>
+                      <td className="px-4 py-3 font-bold text-slate-600">القسم / الفوج :</td>
+                      <td className="px-4 py-3 font-mono font-bold text-slate-800">{receipt.classroom || 'عام'}</td>
+                    </tr>
+                    {receipt.parentName && (
+                      <tr className="bg-slate-50/70">
+                        <td className="px-4 py-3 font-bold text-slate-600">ولي الأمر / القائم بالأداء :</td>
+                        <td className="px-4 py-3 font-semibold text-slate-800">{receipt.parentName}</td>
+                        <td className="px-4 py-3 font-bold text-slate-600">الهاتف :</td>
+                        <td className="px-4 py-3 font-mono text-slate-800">{receipt.parentPhone || '—'}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-          {receipt.remainingBalanceMAD !== undefined && (
-            <div className="flex items-center justify-between text-xs px-3 py-2 rounded-lg bg-slate-50 border border-slate-200">
-              <span className="text-slate-600 font-medium">الذمة الصافية المتبقية بعد هذا السداد:</span>
-              <span className="font-mono font-bold text-amber-700">{formatMAD(receipt.remainingBalanceMAD)}</span>
+              {/* 4. Official School Fees Breakdown Table (جدول تفكيك الرسوم المدرسية) */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between px-1">
+                  <h4 className="text-xs font-black text-slate-900 flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-emerald-700" />
+                    <span>تفكيك الرسوم المستخلصة (Ventilation des Droits et Frais) :</span>
+                  </h4>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    Devise: MAD (Dirham Marocain)
+                  </span>
+                </div>
+
+                <div className="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+                  <table className="w-full text-start divide-y divide-slate-200">
+                    <thead className="bg-slate-100 text-slate-700 font-bold text-[11px]">
+                      <tr>
+                        <th className="px-4 py-2.5 text-start">البيان / نوع الخدمة المدرسية (Désignation)</th>
+                        <th className="px-4 py-2.5 text-center">الفترة / الشهر (Période)</th>
+                        <th className="px-4 py-2.5 text-end">المبلغ المؤدى (Montant MAD)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {feeBreakdown.map((item, idx) => (
+                        <tr key={item.id || idx} className="hover:bg-slate-50/50">
+                          <td className="px-4 py-2.5">
+                            <span className="font-bold text-slate-900 block">{item.labelAr}</span>
+                            <span className="text-[10px] text-slate-500 font-mono block">{item.labelFr}</span>
+                          </td>
+                          <td className="px-4 py-2.5 text-center font-mono text-slate-700">
+                            {item.period || receipt.paymentFor}
+                          </td>
+                          <td className="px-4 py-2.5 text-end font-mono font-bold text-slate-900">
+                            {formatMAD(item.amountMAD)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot className="bg-slate-50 font-bold border-t border-slate-200">
+                      <tr>
+                        <td colSpan={2} className="px-4 py-2.5 text-slate-700 text-end">
+                          المجموع الإجمالي المؤدى (Total Règlement) :
+                        </td>
+                        <td className="px-4 py-2.5 text-end font-mono text-sm font-black text-emerald-800">
+                          {formatMAD(receipt.amountMAD)}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+              {/* 5. Payment Method & Transaction Reference */}
+              <div className="bg-slate-50/80 border border-slate-200 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <span className="text-[10px] text-slate-400 font-bold block mb-1">
+                    طريقة السداد المعتمدة (Mode de Règlement) :
+                  </span>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-900 font-bold shadow-2xs">
+                    <MethodIcon className="w-4 h-4 text-emerald-700" />
+                    <span>{methodBadge.labelAr}</span>
+                    <span className="text-[10px] text-slate-400 font-mono">({methodBadge.labelFr})</span>
+                  </div>
+                </div>
+
+                <div className="text-start">
+                  <span className="text-[10px] text-slate-400 font-bold block mb-1">
+                    بيانات السند / الشيك / التحويل :
+                  </span>
+                  <div className="font-mono text-xs text-slate-800 space-y-0.5">
+                    {receipt.paymentMethod === 'cheque' ? (
+                      <>
+                        <p><strong>رقم الشيك:</strong> {receipt.checkNumber || receipt.paymentReference || 'N/A'}</p>
+                        <p><strong>البنك المسحوب عليه:</strong> {receipt.bankName || 'شيك بنكي معتمد'}</p>
+                        {receipt.checkDueDate && <p><strong>تاريخ الاستحقاق:</strong> {formatDateFR(receipt.checkDueDate)}</p>}
+                      </>
+                    ) : receipt.paymentMethod === 'virement' ? (
+                      <>
+                        <p><strong>مرجع التحويل:</strong> {receipt.paymentReference || 'Virement direct'}</p>
+                        {receipt.bankName && <p><strong>البنك:</strong> {receipt.bankName}</p>}
+                      </>
+                    ) : (
+                      <p><strong>المرجع:</strong> {receipt.paymentReference || 'سداد فوري بصندوق المؤسسة'}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* 6. Amount in Words Banner (Ar & Fr) */}
+              <div className="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200 space-y-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-200/60 pb-2">
+                  <span className="text-xs font-bold text-emerald-950">المبلغ الإجمالي بالحروف (بالدرهم المغربي) :</span>
+                  <span className="text-xl font-black font-mono text-emerald-900">
+                    {formatMAD(receipt.amountMAD)}
+                  </span>
+                </div>
+                <div className="space-y-1 text-xs font-semibold text-emerald-900">
+                  <p className="leading-relaxed">
+                    « {numberToWordsMAD(receipt.amountMAD)} »
+                  </p>
+                  <p className="text-[11px] font-mono text-emerald-800 leading-relaxed" dir="ltr">
+                    Arrêté le présent reçu à la somme de : {numberToWordsFrenchMAD(receipt.amountMAD)}
+                  </p>
+                </div>
+              </div>
+
+              {/* Remaining Balance if applicable */}
+              {receipt.remainingBalanceMAD !== undefined && (
+                <div className="flex items-center justify-between text-xs px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <span className="text-slate-600 font-bold">الذمة الصافية المتبقية بعد هذا السداد (Solde Restant) :</span>
+                  <span className="font-mono font-black text-amber-700 text-sm">
+                    {formatMAD(receipt.remainingBalanceMAD)}
+                  </span>
+                </div>
+              )}
+
+              {/* 7. Signatures, Official Cachet & Security QR Code */}
+              <div className="pt-4 border-t border-slate-200 grid grid-cols-12 gap-4 items-center">
+                {/* Parent Signature Box */}
+                <div className="col-span-4 h-32 border border-dashed border-slate-300 rounded-2xl p-3 flex flex-col justify-between text-center text-xs">
+                  <span className="font-bold text-slate-700">توقيع ولي الأمر</span>
+                  <span className="text-[10px] text-slate-400 font-mono">Émargement Parent</span>
+                  <span className="text-[9px] text-slate-400">حرر بمراكش في {formatDateFR(receipt.date)}</span>
+                </div>
+
+                {/* Security QR Code & Cryptographic Verification Box */}
+                <div className="col-span-4 h-32 bg-slate-50 border border-slate-200 rounded-2xl p-2.5 flex flex-col items-center justify-between text-center">
+                  <div className="flex items-center gap-1 text-[9px] font-bold text-slate-600">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>رمز التحقق المشفر</span>
+                  </div>
+
+                  {/* High visual QR matrix representation */}
+                  <div className="w-16 h-16 bg-white p-1 rounded-lg border border-slate-200 flex items-center justify-center shadow-2xs">
+                    <QrCode className="w-14 h-14 text-slate-900" />
+                  </div>
+
+                  <span className="text-[8px] font-mono text-slate-400 truncate max-w-full">
+                    SEC: {receipt.receiptNumber}
+                  </span>
+                </div>
+
+                {/* Management & Caisse Official Stamp Box */}
+                <div className="col-span-4 h-32 border border-emerald-200 bg-emerald-50/30 rounded-2xl p-3 flex flex-col justify-between text-center text-xs">
+                  <span className="font-bold text-emerald-950">خاتم وتوقيع إدارة الصندوق</span>
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-emerald-800 font-bold">
+                    <Stamp className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>مجموعة مدارس أروى — مراكش</span>
+                  </div>
+                  <span className="text-[9px] text-slate-500 font-mono">
+                    {receipt.cashierName || 'أمين الصندوق المركزي'}
+                  </span>
+                </div>
+              </div>
+
+              {/* 8. Footer Legal Statement */}
+              <div className="pt-3 border-t border-slate-100 text-center text-[9px] text-slate-400 space-y-0.5">
+                <p>
+                  هذا الوصل وثيقة مالية رسمية صادرة آلياً عن منصة ArouaAudit للرقابة والتدقيق المستقل التابعة لمجموعة مدارس أروى.
+                </p>
+                <p className="font-mono" dir="ltr">
+                  Document officiel généré électroniquement • {INSTITUTION_INFO.addressFr}
+                </p>
+              </div>
+
+            </div>
+          ) : (
+            /* =========================================================================
+               FORMAT 2: COMPACT THERMAL TICKET (80mm)
+               ========================================================================= */
+            <div 
+              id="official-aroua-receipt-ticket"
+              className="bg-white border border-slate-300 rounded-xl p-5 shadow-lg max-w-xs mx-auto text-slate-900 font-mono text-xs space-y-3 print:border-none print:shadow-none print:p-2"
+              dir="rtl"
+            >
+              {/* Header */}
+              <div className="text-center pb-2 border-b border-dashed border-slate-400 space-y-1">
+                <div className="w-12 h-12 mx-auto p-1 bg-white border border-slate-200 rounded-lg flex items-center justify-center mb-1">
+                  <img
+                    src={INSTITUTION_INFO.logoPath}
+                    alt="Logo"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h2 className="font-black text-xs">{INSTITUTION_INFO.nameAr}</h2>
+                <p className="text-[10px] font-bold text-slate-600">{INSTITUTION_INFO.nameFr}</p>
+                <p className="text-[9px] text-slate-500">{INSTITUTION_INFO.address}</p>
+                <p className="text-[9px] text-slate-500">Tél: {INSTITUTION_INFO.phones}</p>
+                <p className="text-[9px] text-slate-500">ICE: {INSTITUTION_INFO.ice} • IF: {INSTITUTION_INFO.ifTax}</p>
+              </div>
+
+              {/* Title & Receipt Info */}
+              <div className="text-center space-y-0.5 py-1">
+                <span className="font-black text-xs block">وصل أداء مدرسي رسمي</span>
+                <span className="text-[10px] text-slate-600 font-black block">REÇU DE CAISSE</span>
+                <span className="font-bold text-xs block mt-1">N°: {receipt.receiptNumber}</span>
+                <span className="text-[10px] text-slate-500 block">Date: {formatDateFR(receipt.date)}</span>
+              </div>
+
+              {/* Student Details */}
+              <div className="border-t border-b border-dashed border-slate-400 py-2 space-y-1 text-[11px]">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">التلميذ:</span>
+                  <span className="font-black">{receipt.studentName}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">مسار:</span>
+                  <span className="font-bold">{receipt.massarCode}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">المستوى:</span>
+                  <span>{receipt.academicLevel} ({receipt.classroom || 'عام'})</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">الدفعة:</span>
+                  <span className="font-bold">{receipt.paymentFor}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">الطريقة:</span>
+                  <span>{methodBadge.labelAr}</span>
+                </div>
+              </div>
+
+              {/* Total Amount */}
+              <div className="text-center py-2 space-y-1">
+                <span className="text-[10px] text-slate-500 block">المبلغ الصافي المؤدى:</span>
+                <span className="text-lg font-black block text-emerald-800">
+                  {formatMAD(receipt.amountMAD)}
+                </span>
+                <p className="text-[9px] text-slate-700 italic px-2">
+                  « {numberToWordsMAD(receipt.amountMAD)} »
+                </p>
+              </div>
+
+              {/* QR Code and Footer */}
+              <div className="border-t border-dashed border-slate-400 pt-2 text-center space-y-2">
+                <div className="w-16 h-16 mx-auto bg-white p-1 border border-slate-200 rounded flex items-center justify-center">
+                  <QrCode className="w-14 h-14 text-slate-900" />
+                </div>
+                <p className="text-[8px] text-slate-400">
+                  شكراً لثقتكم بمجموعة مدارس أروى
+                </p>
+              </div>
+
             </div>
           )}
-
-          {/* Signatures & Stamps */}
-          <div className="pt-4 border-t border-slate-200 grid grid-cols-2 gap-8 text-xs text-center">
-            <div className="h-28 border border-dashed border-slate-300 rounded-xl p-3 flex flex-col justify-between">
-              <span className="font-bold text-slate-600">توقيع ولي الأمر (Signature du Parent)</span>
-              <span className="text-[10px] text-slate-500">حرر بمراكش، في {formatDateFR(receipt.date)}</span>
-            </div>
-
-            <div className="h-28 border border-dashed border-cyan-300 bg-cyan-50/20 rounded-xl p-3 flex flex-col justify-between">
-              <span className="font-bold text-cyan-900">خاتم وتوقيع إدارة المؤسسة / الصندوق</span>
-              <div className="flex items-center justify-center gap-1 text-[10px] text-cyan-700 font-semibold">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-600" />
-                <span>إدارة الشؤون المالية - أروى</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Legal Notice Footer */}
-          <div className="text-center text-[10px] text-slate-500 pt-2 border-t border-slate-100">
-            هذا الوصل وثيقة مالية رسمية صادرة عن منظومة ArouaAudit المحاسبية التابعة لمجموعة مدارس أروى.
-          </div>
 
         </div>
 
@@ -186,3 +533,5 @@ export const OfficialReceiptModal: React.FC<OfficialReceiptModalProps> = ({
     </div>
   );
 };
+
+export default OfficialReceiptModal;

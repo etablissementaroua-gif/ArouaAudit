@@ -15,13 +15,16 @@ import {
   CheckCheck,
   CheckSquare,
   Megaphone,
-  Clock
+  Clock,
+  Loader2
 } from 'lucide-react';
 import { useCaisse } from '../../features/treasury-caisse/controllers/useCaisse';
 import { formatMAD } from '../lib/currencyFormatter';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { usePermissions } from '../../features/system-security/context/PermissionsContext';
 import { SystemRoleCode } from '../../features/system-security/models/security.types';
+import { securityService } from '../../features/system-security/services/security.service';
+import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 import { taskService } from '../../features/tasks-notes/services/task.service';
 import { SystemNotification } from '../../features/tasks-notes/models/task.types';
 
@@ -39,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   // Role Dropdown State
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const roleDropdownRef = useRef<HTMLDivElement>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Notifications State
   const [notifications, setNotifications] = useState<SystemNotification[]>([]);
@@ -89,6 +93,48 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
     }
     setNotifMenuOpen(false);
     navigate(notif.link_url || '/workspace/tasks');
+  };
+
+  const handleAuditedLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      // 1. Immutable Audit Log Event
+      await securityService.logAuditEvent({
+        user_name: currentUser?.full_name || 'مستخدم مسجل',
+        user_role: currentUser?.role_code || currentRole || 'viewer',
+        action_type: 'LOGOUT',
+        target_entity: 'auth_session',
+        entity_id: currentUser?.email || 'session',
+        new_values: {
+          timestamp: new Date().toISOString(),
+          status: 'success',
+          userAgent: navigator.userAgent,
+        },
+      });
+
+      // 2. Sign out of Supabase if configured
+      if (isSupabaseConfigured()) {
+        try {
+          await supabase.auth.signOut();
+        } catch (supabaseSignOutErr) {
+          console.warn('Supabase sign out error:', supabaseSignOutErr);
+        }
+      }
+
+      // 3. Clear local context
+      logoutUser();
+      setRoleMenuOpen(false);
+
+      // 4. Navigate immediately to /login
+      navigate('/login', { replace: true });
+    } catch (err) {
+      console.error('Logout error:', err);
+      logoutUser();
+      setRoleMenuOpen(false);
+      navigate('/login', { replace: true });
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   const formatTimeAgo = (dateStr: string) => {
@@ -230,19 +276,24 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
                 </button>
               ))}
 
-              {/* Logout Option */}
+              {/* Logout Option with Audited Security */}
               <div className="pt-1.5 mt-1.5 border-t border-slate-100">
                 <button
                   type="button"
-                  onClick={() => {
-                    logoutUser();
-                    setRoleMenuOpen(false);
-                    navigate('/login');
-                  }}
-                  className="w-full px-3 py-2 text-xs font-bold text-rose-700 hover:bg-rose-50 flex items-center gap-2 transition-colors cursor-pointer"
+                  disabled={isLoggingOut}
+                  onClick={handleAuditedLogout}
+                  className="w-full px-3 py-2 text-xs font-bold text-rose-700 hover:bg-rose-50 flex items-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  <LogOut className="w-3.5 h-3.5 text-rose-600" />
-                  <span>{isRtl ? 'تسجيل الخروج' : 'Déconnexion'}</span>
+                  {isLoggingOut ? (
+                    <Loader2 className="w-3.5 h-3.5 text-rose-600 animate-spin" />
+                  ) : (
+                    <LogOut className="w-3.5 h-3.5 text-rose-600" />
+                  )}
+                  <span>
+                    {isLoggingOut 
+                      ? (isRtl ? 'جاري تسجيل الخروج...' : 'Déconnexion...') 
+                      : (isRtl ? 'تسجيل الخروج الموثق' : 'Déconnexion Sécurisée')}
+                  </span>
                 </button>
               </div>
             </div>

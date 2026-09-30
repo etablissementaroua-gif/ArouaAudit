@@ -1,5 +1,5 @@
-﻿import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { 
   Mail, 
@@ -25,8 +25,9 @@ import { UserProfile } from '../../system-security/models/security.types';
 
 export const LoginView: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, i18n } = useTranslation(['common', 'security']);
-  const { loginUser } = usePermissions();
+  const { loginUser, isAuthenticated, currentUser } = usePermissions();
   const isRtl = i18n.language === 'ar' || !i18n.language?.startsWith('fr');
 
   const [email, setEmail] = useState('admin@arouaschools.ma');
@@ -36,6 +37,25 @@ export const LoginView: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
+
+  // If user is already authenticated and active, redirect directly to dashboard or intended route
+  useEffect(() => {
+    if (isAuthenticated && currentUser && currentUser.email && !currentUser.is_suspended) {
+      const destination = (location.state as any)?.from?.pathname || '/';
+      navigate(destination, { replace: true });
+    }
+  }, [isAuthenticated, currentUser, navigate, location]);
+
+  // Display suspension notice if redirected by route guard
+  useEffect(() => {
+    if ((location.state as any)?.suspended) {
+      setErrorMessage(
+        isRtl
+          ? 'تم تعليق هذا الحساب إدارياً ومؤقتاً. يرجى مراجعة إدارة الرقابة والتدقيق المركزي.'
+          : "Ce compte a été suspendu par l'administration centrale. Veuillez contacter le service d'audit."
+      );
+    }
+  }, [location.state, isRtl]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,8 +137,9 @@ export const LoginView: React.FC = () => {
       // 5. Update Permissions Context
       await loginUser(matchedUser);
 
-      // 6. Navigate to main dashboard
-      navigate('/hr/enrolled-students');
+      // 6. Navigate to destination or root dashboard
+      const destination = (location.state as any)?.from?.pathname || '/';
+      navigate(destination, { replace: true });
     } catch (err: any) {
       console.error('Login process error:', err);
       setErrorMessage(
@@ -144,138 +165,130 @@ export const LoginView: React.FC = () => {
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-600/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-teal-600/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Top Bar with Language Switcher */}
-      <header className="w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between z-10">
+      {/* Top Bar with Language Selector */}
+      <header className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-center p-1">
-            <img 
-              src="/assets/logo-aroua.png" 
-              alt="Logo" 
+          <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200/90 shadow-sm p-1.5 flex items-center justify-center">
+            <img
+              src="/assets/logo-aroua.png"
+              alt="Groupe Scolaire Aroua"
               className="w-full h-full object-contain"
             />
           </div>
           <div>
-            <span className="font-black text-slate-900 text-xs block leading-tight tracking-tight">
+            <span className="font-black text-slate-900 text-sm tracking-tight block">
               {isRtl ? 'مجموعة مدارس أروى' : 'Groupe Scolaire Aroua'}
             </span>
-            <span className="text-[10px] text-slate-400 font-medium font-mono">
-              ArouaAudit • Portal
+            <span className="text-[10px] text-slate-500 font-medium block">
+              {isRtl ? 'منظومة التدقيق المالي والإداري المستقلة' : 'Système d\'Audit et de Contrôle Financier'}
             </span>
           </div>
         </div>
 
-        {/* Language Switcher */}
         <LanguageSwitcher />
       </header>
 
-      {/* Central Login Card */}
-      <main className="flex-1 flex items-center justify-center px-4 py-4 z-10">
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-7 sm:p-9 shadow-[0_10px_35px_rgba(0,0,0,0.04)] max-w-md w-full mx-auto relative">
+      {/* Main Login Card Container */}
+      <main className="w-full max-w-md mx-auto px-4 z-10 my-auto">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-8 shadow-xl shadow-slate-200/50 backdrop-blur-sm relative">
           
-          {/* Logo & Corporate Identity Header */}
-          <div className="text-center mb-6">
-            <div className="flex justify-center mb-3">
-              <img 
-                src="/assets/logo-aroua.png" 
-                alt="Groupe Scolaire Aroua" 
-                className="h-28 sm:h-32 w-auto object-contain transition-transform hover:scale-102 duration-300"
-              />
+          {/* Top Brand & Title Header */}
+          <div className="text-center space-y-2 mb-8">
+            <div className="inline-flex items-center justify-center p-2.5 bg-emerald-50 text-emerald-700 rounded-2xl border border-emerald-200/60 shadow-2xs mb-1">
+              <ShieldCheck className="w-6 h-6 text-emerald-600" />
             </div>
-
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-['Readex_Pro']">
-              ArouaAudit
+            
+            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+              {isRtl ? 'تسجيل الدخول المؤسساتي' : 'Connexion Institutionnelle'}
             </h1>
             
-            {/* Version & Governance Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200/80 mt-2 shadow-2xs">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>
-                {isRtl ? 'V1.0 • بوابة الحكامة والتدقيق المالي' : 'V1.0 • Portail de Gouvernance & Audit'}
-              </span>
-            </div>
+            <p className="text-xs text-slate-500 font-medium">
+              {isRtl 
+                ? 'المنصة المركزية للرقابة المحاسبية والامتيازات الممنوحة' 
+                : 'Portail centralisé de contrôle de gestion et d\'audit'}
+            </p>
           </div>
 
           {/* Error Message Box */}
           {errorMessage && (
-            <div className="mb-5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl p-3.5 flex items-start gap-2.5 animate-in fade-in duration-200">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
-              <div className="text-start leading-relaxed font-medium">
+            <div className="mb-6 p-3.5 bg-rose-50 border border-rose-200/80 rounded-2xl flex items-start gap-3 text-start animate-in fade-in duration-200">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <p className="text-xs text-rose-700 leading-relaxed font-medium">
                 {errorMessage}
-              </div>
+              </p>
             </div>
           )}
 
-          {/* Login Form */}
+          {/* Form */}
           <form onSubmit={handleLogin} className="space-y-4">
             {/* Email Field */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5 text-start">
-                {isRtl ? 'البريد الإلكتروني المهني' : 'Email Professionnel'}
+            <div className="space-y-1.5 text-start">
+              <label className="block text-xs font-bold text-slate-700">
+                {isRtl ? 'البريد الإلكتروني المهني' : 'Adresse Email Professionnelle'}
               </label>
               <div className="relative">
-                <Mail className={`w-4 h-4 text-slate-400 absolute ${isRtl ? 'right-3.5' : 'left-3.5'} top-1/2 -translate-y-1/2`} />
                 <input
                   type="email"
                   required
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="admin@arouaschools.ma"
-                  className={`w-full border border-slate-200 rounded-xl ${
-                    isRtl ? 'pr-10 pl-4' : 'pl-10 pr-4'
-                  } py-3 bg-slate-50/70 focus:bg-white focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 text-slate-900 text-sm font-medium transition-all font-mono`}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="nom@arouaschools.ma"
+                  className={`w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 text-slate-900 text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition placeholder:text-slate-400 ${
+                    isRtl ? 'pr-10' : 'pl-10'
+                  }`}
                 />
+                <Mail className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isRtl ? 'right-3.5' : 'left-3.5'}`} />
               </div>
             </div>
 
             {/* Password Field */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold text-slate-700 text-start">
-                  {isRtl ? 'كلمة المرور' : 'Mot de Passe'}
+            <div className="space-y-1.5 text-start">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold text-slate-700">
+                  {isRtl ? 'كلمة المرور' : 'Mot de passe'}
                 </label>
                 <button
                   type="button"
                   onClick={() => setIsForgotModalOpen(true)}
-                  className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 hover:underline cursor-pointer"
+                  className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 transition cursor-pointer"
                 >
                   {isRtl ? 'نسيت كلمة المرور؟' : 'Mot de passe oublié ?'}
                 </button>
               </div>
-
               <div className="relative">
-                <Lock className={`w-4 h-4 text-slate-400 absolute ${isRtl ? 'right-3.5' : 'left-3.5'} top-1/2 -translate-y-1/2`} />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className={`w-full border border-slate-200 rounded-xl ${
-                    isRtl ? 'pr-10 pl-11' : 'pl-10 pr-11'
-                  } py-3 bg-slate-50/70 focus:bg-white focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 text-slate-900 text-sm font-medium transition-all font-mono`}
+                  className={`w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 text-slate-900 text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition placeholder:text-slate-400 ${
+                    isRtl ? 'pr-10 pl-10' : 'pl-10 pr-10'
+                  }`}
                 />
+                <Lock className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isRtl ? 'right-3.5' : 'left-3.5'}`} />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className={`absolute ${isRtl ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer`}
-                  title={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
+                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer ${
+                    isRtl ? 'left-3.5' : 'right-3.5'
+                  }`}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            {/* Remember Me Checkbox */}
-            <div className="flex items-center gap-2 pt-1">
-              <input
-                type="checkbox"
-                id="remember"
-                checked={rememberMe}
-                onChange={e => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded text-emerald-600 border-slate-300 focus:ring-emerald-500 cursor-pointer"
-              />
-              <label htmlFor="remember" className="text-xs text-slate-600 font-medium cursor-pointer select-none">
-                {isRtl ? 'تذكر هذا الجهاز والدخول الآمن' : 'Mémoriser cet appareil (Session sécurisée)'}
+            {/* Remember Me Option */}
+            <div className="flex items-center justify-between text-xs pt-1">
+              <label className="flex items-center gap-2 cursor-pointer select-none text-slate-600">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300"
+                />
+                <span>{isRtl ? 'تذكر جلستي على هذا الجهاز' : 'Rester connecté'}</span>
               </label>
             </div>
 

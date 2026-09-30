@@ -1,8 +1,9 @@
-﻿import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { MainLayout } from './layout/MainLayout';
 import { Loader2 } from 'lucide-react';
 import { ProtectedRoute } from '../features/system-security/components/ProtectedRoute';
+import { RequireAuth } from '../features/system-security/components/RequireAuth';
 
 // 0. Auth View
 const LoginView = lazy(() =>
@@ -152,7 +153,11 @@ export const router = createBrowserRouter([
   // Authenticated Main Application
   {
     path: '/',
-    element: <MainLayout />,
+    element: (
+      <RequireAuth>
+        <MainLayout />
+      </RequireAuth>
+    ),
     children: [
             {
         index: true,
@@ -481,7 +486,7 @@ export const router = createBrowserRouter([
       // Catch-all
       {
         path: '*',
-        element: <Navigate to="/hr/enrolled-students" replace />,
+        element: <Navigate to="/" replace />,
       },
     ],
   },

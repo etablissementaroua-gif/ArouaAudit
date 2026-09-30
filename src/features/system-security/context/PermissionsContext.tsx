@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from 'react';
 import { 
   SystemRole, 
   SystemRoleCode, 
@@ -7,6 +7,15 @@ import {
   PermissionAction 
 } from '../models/security.types';
 import { securityService } from '../services/security.service';
+import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
+
+export const GUEST_USER_PROFILE: UserProfile = {
+  id: 'usr-guest',
+  full_name: 'مستخدم زائر',
+  email: '',
+  role_code: 'viewer',
+  is_suspended: false,
+};
 
 interface PermissionsContextType {
   currentUser: UserProfile;
@@ -42,19 +51,12 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
     } catch {
       // ignore
     }
-    return {
-      id: 'usr-1',
-      full_name: 'أحمد بنشقرون (المشرف الأعلى)',
-      email: 'admin@arouaschools.ma',
-      role_code: 'super_admin',
-      is_suspended: false,
-      employee_name: 'الإدارة المركزية العامة',
-    };
+    return GUEST_USER_PROFILE;
   });
 
   const [currentRole, setCurrentRole] = useState<SystemRoleCode>(() => {
     const saved = localStorage.getItem(STORAGE_ROLE_KEY);
-    return (saved as SystemRoleCode) || currentUser.role_code || 'super_admin';
+    return (saved as SystemRoleCode) || currentUser.role_code || 'viewer';
   });
 
   const [permissionsList, setPermissionsList] = useState<RolePermission[]>([]);
@@ -79,6 +81,55 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
   useEffect(() => {
     loadData(currentRole);
   }, [currentRole]);
+
+  // Synchronize with Supabase Auth Session
+  useEffect(() => {
+    let isMounted = true;
+    if (isSupabaseConfigured()) {
+      supabase.auth.getSession().then(async ({ data: { session } }) => {
+        if (!isMounted) return;
+        if (session?.user?.email && (!currentUser || currentUser.id === 'usr-guest')) {
+          try {
+            const profiles = await securityService.getUserProfiles();
+            const match = profiles.find(
+              (p) => p.email?.toLowerCase().trim() === session.user.email?.toLowerCase().trim()
+            );
+            if (match) {
+              await loginUser(match);
+            }
+          } catch (syncErr) {
+            console.warn('Error syncing profile with Supabase session:', syncErr);
+          }
+        }
+      }).catch(err => {
+        console.warn('Supabase getSession initial check error:', err);
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+        if (!isMounted) return;
+        if (event === 'SIGNED_OUT') {
+          logoutUser();
+        } else if (event === 'SIGNED_IN' && session?.user?.email) {
+          try {
+            const profiles = await securityService.getUserProfiles();
+            const match = profiles.find(
+              (p) => p.email?.toLowerCase().trim() === session.user.email?.toLowerCase().trim()
+            );
+            if (match) {
+              await loginUser(match);
+            }
+          } catch (syncErr) {
+            console.warn('Error syncing profile on auth change:', syncErr);
+          }
+        }
+      });
+
+      return () => {
+        isMounted = false;
+        subscription?.unsubscribe();
+      };
+    }
+  }, []);
 
   // Map permissions by module key for O(1) lookup
   const permissionsMap = useMemo(() => {
@@ -130,15 +181,7 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
   const logoutUser = () => {
     localStorage.removeItem(STORAGE_USER_KEY);
     localStorage.removeItem(STORAGE_ROLE_KEY);
-    // Set minimal viewer profile or reset
-    const defaultProfile: UserProfile = {
-      id: 'usr-guest',
-      full_name: 'مستخدم زائر',
-      email: '',
-      role_code: 'viewer',
-      is_suspended: false,
-    };
-    setCurrentUser(defaultProfile);
+    setCurrentUser(GUEST_USER_PROFILE);
     setCurrentRole('viewer');
   };
 
@@ -148,7 +191,12 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   const isSuperAdmin = currentRole === 'super_admin';
   const isFinanceDirector = currentRole === 'finance_director';
-  const isAuthenticated = Boolean(currentUser && currentUser.email);
+  const isAuthenticated = Boolean(
+    currentUser && 
+    currentUser.email && 
+    currentUser.email.trim().length > 0 && 
+    currentUser.id !== 'usr-guest'
+  );
 
   return (
     <PermissionsContext.Provider
