@@ -1,4 +1,4 @@
-export type PaymentMethod = 'especes' | 'cheque' | 'virement' | 'carte';
+﻿export type PaymentMethod = 'especes' | 'cheque' | 'virement' | 'carte' | 'mixte';
 
 export type TransactionType = 'encaissement' | 'decaissement';
 
@@ -63,3 +63,4 @@ export interface ExternalSyncMapping {
   last_synced_at: string;
   payload_hash?: string;
 }
+

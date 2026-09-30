@@ -1,101 +1,93 @@
+// ArouaAudit — Caisse Treasury Service (Production Clean)
 import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
-import { CaisseTransaction, CreateTransactionDTO, CaisseSummary } from '../models/caisseModels';
+import { CaisseTransaction, PaymentMethod, TransactionType } from '../../../shared/types';
+export type { CaisseTransaction, PaymentMethod, TransactionType };
 
-const initialDemoData: CaisseTransaction[] = [
-  {
-    id: 'trx-001',
-    transaction_date: '2026-09-27',
-    type: 'encaissement',
-    amount: 18500.00,
-    payment_method: 'virement',
-    category: 'رسوم دراسية (T1)',
-    reference_number: 'VIR-26-0901',
-    description: 'سداد الرسوم المدرسية للفصل الأول - المستوى التأهيلي',
-    solde_apres: 18500.00,
-    author_name: 'المحاسب المالي',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: 'trx-002',
-    transaction_date: '2026-09-27',
-    type: 'encaissement',
-    amount: 4200.00,
-    payment_method: 'especes',
-    category: 'النقل والمطعم',
-    reference_number: 'REC-26-003',
-    description: 'اشتراكات النقل والإطعام المدرسي',
-    solde_apres: 22700.00,
-    author_name: 'أمين الصندوق',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: 'trx-003',
-    transaction_date: '2026-09-26',
-    type: 'decaissement',
-    amount: 3150.00,
-    payment_method: 'especes',
-    category: 'الصيانة والمستلزمات',
-    reference_number: 'DEP-26-012',
-    description: 'فواتير الصيانة الدورية وتزويد الحافلات بالوقود',
-    solde_apres: 19550.00,
-    author_name: 'أمين الصندوق',
-    created_at: new Date().toISOString()
-  }
-];
+export interface CaisseBalance {
+  opening_balance: number;
+  total_encaissements: number;
+  total_decaissements: number;
+  closing_balance: number;
+}
+
+export interface CaisseSummary {
+  totalEncaissement: number;
+  totalDecaissement: number;
+  currentBalance: number;
+  cashInHand: number;
+  transactionsCount: number;
+}
 
 export const caisseService = {
-  async getTransactions(): Promise<CaisseTransaction[]> {
-    if (!isSupabaseConfigured()) {
-      return initialDemoData;
-    }
+  async getTransactions(filters?: {
+    type?: TransactionType;
+    startDate?: string;
+    endDate?: string;
+    search?: string;
+  }): Promise<CaisseTransaction[]> {
+    if (!isSupabaseConfigured()) return [];
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('caisse_transactions')
         .select('*')
-        .order('transaction_date', { ascending: false });
-      if (error || !data || data.length === 0) return initialDemoData;
-      return data as CaisseTransaction[];
-    } catch {
-      return initialDemoData;
-    }
-  },
-
-  async addTransaction(dto: CreateTransactionDTO): Promise<CaisseTransaction> {
-    const item: CaisseTransaction = {
-      id: 'trx-' + Date.now(),
-      ...dto,
-      created_at: new Date().toISOString()
-    };
-    if (isSupabaseConfigured()) {
-      try {
-        const { data, error } = await supabase.from('caisse_transactions').insert([dto]).select().single();
-        if (!error && data) return data as CaisseTransaction;
-      } catch (e) {
-        console.warn('Fallback local save:', e);
+        .order('transaction_date', { ascending: false })
+        .order('created_at', { ascending: false });
+      if (filters?.type) query = query.eq("type", filters.type);
+      if (filters?.startDate) query = query.gte("transaction_date", filters.startDate);
+      if (filters?.endDate) query = query.lte("transaction_date", filters.endDate);
+      if (filters?.search) {
+        const s = filters.search;
+        query = query.or("description.ilike.%" + s + "%,reference_number.ilike.%" + s + "%");
       }
-    }
-    return item;
+      const { data, error } = await query.limit(200);
+      if (error) { console.warn('[caisseService] getTransactions:', error.message); return []; }
+      return (data as CaisseTransaction[]) ?? [];
+    } catch { return []; }
   },
 
   calculateSummary(transactions: CaisseTransaction[]): CaisseSummary {
-    let totalEncaissement = 0;
-    let totalDecaissement = 0;
-    let cashInHand = 0;
-    for (const t of transactions) {
-      if (t.type === 'encaissement') {
-        totalEncaissement += t.amount;
-        if (t.payment_method === 'especes') cashInHand += t.amount;
-      } else {
-        totalDecaissement += t.amount;
-        if (t.payment_method === 'especes') cashInHand -= t.amount;
-      }
-    }
+    const enc = transactions.filter(t => t.type === "encaissement");
+    const dec = transactions.filter(t => t.type === "decaissement");
+    const totalEncaissement = enc.reduce((s, t) => s + Number(t.amount || 0), 0);
+    const totalDecaissement = dec.reduce((s, t) => s + Number(t.amount || 0), 0);
+    const cashInHand = enc
+      .filter(t => t.payment_method === "especes")
+      .reduce((s, t) => s + Number(t.amount || 0), 0);
     return {
       totalEncaissement,
       totalDecaissement,
       currentBalance: totalEncaissement - totalDecaissement,
       cashInHand,
-      transactionsCount: transactions.length
+      transactionsCount: transactions.length,
     };
+  },
+
+  async getBalance(date?: string): Promise<CaisseBalance> {
+    const all = await this.getTransactions();
+    const filtered = date ? all.filter(t => t.transaction_date <= date) : all;
+    const totalIn  = filtered.filter(t => t.type === "encaissement").reduce((s, t) => s + Number(t.amount || 0), 0);
+    const totalOut = filtered.filter(t => t.type === "decaissement").reduce((s, t) => s + Number(t.amount || 0), 0);
+    return { opening_balance: 0, total_encaissements: totalIn, total_decaissements: totalOut, closing_balance: totalIn - totalOut };
+  },
+
+  async addTransaction(payload: Omit<CaisseTransaction, "id" | "created_at">): Promise<CaisseTransaction | null> {
+    if (!isSupabaseConfigured()) return null;
+    try {
+      const { data, error } = await supabase
+        .from('caisse_transactions')
+        .insert([{ ...payload, created_at: new Date().toISOString() }])
+        .select().single();
+      if (error || !data) { console.warn('[caisseService] addTransaction:', error?.message); return null; }
+      return data as CaisseTransaction;
+    } catch { return null; }
+  },
+
+  async getDailyJournal(date: string): Promise<{
+    transactions: CaisseTransaction[]; totalIn: number; totalOut: number; net: number;
+  }> {
+    const txns = await this.getTransactions({ startDate: date, endDate: date });
+    const totalIn  = txns.filter(t => t.type === "encaissement").reduce((s, t) => s + Number(t.amount || 0), 0);
+    const totalOut = txns.filter(t => t.type === "decaissement").reduce((s, t) => s + Number(t.amount || 0), 0);
+    return { transactions: txns, totalIn, totalOut, net: totalIn - totalOut };
   }
 };

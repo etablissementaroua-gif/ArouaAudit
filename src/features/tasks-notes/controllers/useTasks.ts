@@ -13,7 +13,7 @@ export const useTasks = (initialFilter?: TaskFilter) => {
     try {
       const [taskData, notifData] = await Promise.all([
         taskService.getTasks(filter),
-        taskService.getNotifications()
+        taskService.getNotifications('')
       ]);
       setTasks(taskData);
       setNotifications(notifData);
@@ -32,7 +32,7 @@ export const useTasks = (initialFilter?: TaskFilter) => {
   }, [load]);
 
   const updateStatus = useCallback(async (taskId: string, status: TaskStatus) => {
-    await taskService.updateTaskStatus(taskId, status);
+    await taskService.toggleTaskCompletion(taskId, status === 'completed');
     await load();
   }, [load]);
 

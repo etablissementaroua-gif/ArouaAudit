@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 import { caisseService } from '../services/caisseService';
 import { CaisseTransaction, CaisseSummary, CreateTransactionDTO } from '../models/caisseModels';
 
@@ -26,7 +26,7 @@ export const useCaisse = () => {
 
   const addTransaction = async (dto: CreateTransactionDTO) => {
     const created = await caisseService.addTransaction(dto);
-    const updated = [created, ...transactions];
+    const updated = [created, ...transactions].filter(Boolean) as CaisseTransaction[];
     setTransactions(updated);
     setSummary(caisseService.calculateSummary(updated));
     return created;
