@@ -187,7 +187,7 @@ export const LoginView: React.FC = () => {
           
           {/* Official Logo, Title & Badge Header */}
           <div className="text-center flex flex-col items-center mb-7">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center p-1 mb-2">
+            <div className="w-48 h-32 sm:w-56 sm:h-36 flex items-center justify-center p-1 mb-2">
               <img
                 src="/assets/aroua-logo.png"
                 alt="Groupe Scolaire Aroua"
