@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @layer base {
   :root {
@@ -6,6 +6,10 @@
     --font-latin: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-sans: var(--font-arabic);
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  html {
+    font-size: 14px; /* مقاس مكتبي أنيق ومضغوط للمنظومات المالية */
   }
 
   html[dir="rtl"] {
@@ -27,8 +31,8 @@
   body {
     font-family: inherit;
     background-color: #f8fafc; /* Slate 50 */
-    color: #0f172a;            /* Slate 900 */
     letter-spacing: -0.01em;
+    @apply text-slate-800 text-xs;
   }
 
   .font-mono, [class*="font-mono"] {
@@ -77,8 +81,8 @@
 
 /* Custom Sleek Scrollbar in Slate & Emerald */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
@@ -101,7 +105,7 @@
   body {
     background-color: #ffffff !important;
     color: #0f172a !important;
-    font-size: 12pt;
+    font-size: 11pt;
     font-family: inherit !important;
   }
   
@@ -131,89 +135,89 @@
 }
 
 @layer components {
-  /* الحاوية الأساسية لكل صفحة */
+  /* الحاوية الأساسية لكل صفحة بمقياس مضغوط متوازن */
   .page-container {
-    @apply space-y-6 text-slate-800 font-sans w-full min-w-0;
+    @apply space-y-4 text-slate-800 font-sans w-full min-w-0;
   }
 
-  /* الترويسة العلوية لكل صفحة */
+  /* الترويسة العلوية المدمجة */
   .page-header-card {
-    @apply bg-white border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4;
+    @apply bg-white border border-slate-200/90 rounded-xl p-3.5 sm:p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3;
   }
 
-  /* بطاقة مؤشرات الأداء الموحدة (KPI Card) */
+  /* بطاقة مؤشرات الأداء الموحدة (Compact KPI Card) */
   .standard-kpi-card, .kpi-card {
-    @apply bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs relative overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col justify-between;
+    @apply bg-white border border-slate-200/90 rounded-xl p-3.5 shadow-xs relative overflow-hidden transition-all duration-200 hover:shadow-md flex flex-col justify-between;
   }
 
-  /* خطوط الأرقام المالية */
+  /* خطوط الأرقام المالية المضغوطة */
   .kpi-number {
-    @apply text-2xl sm:text-3xl font-black font-mono tracking-tight text-slate-900;
+    @apply text-xl font-black font-mono tracking-tight text-slate-900;
   }
 
-  /* الجداول الموحدة */
+  /* الجداول الموحدة المضغوطة */
   .standard-table-wrapper, .table-container {
-    @apply bg-white border border-slate-200/80 rounded-2xl shadow-xs overflow-hidden;
+    @apply bg-white border border-slate-200/90 rounded-xl shadow-xs overflow-hidden;
   }
 
   .standard-table th, .table-header {
-    @apply bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider py-4 px-4 text-start;
+    @apply bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-[11px] uppercase tracking-wider py-2.5 px-3.5 text-start;
   }
 
   .standard-table td, .table-row {
-    @apply border-b border-slate-100 py-3.5 px-4 text-slate-700 text-sm text-start;
+    @apply border-b border-slate-100 py-2 px-3.5 text-slate-700 text-xs text-start;
   }
 
-  /* معايير أزرار الإجراءات في كامل المنظومة */
+  /* معايير أزرار الإجراءات */
   .btn-primary, .aroua-btn-primary {
-    @apply bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all active:scale-95 flex items-center gap-2 cursor-pointer;
+    @apply bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-3 py-1.5 rounded-lg shadow-xs transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer;
   }
 
   .btn-secondary, .aroua-btn-secondary {
-    @apply bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3.5 py-2.5 rounded-xl border border-slate-200 transition-colors flex items-center gap-2 cursor-pointer;
+    @apply bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-3 py-1.5 rounded-lg border border-slate-200 transition-colors flex items-center gap-1.5 cursor-pointer;
   }
 
   /* البطاقات العلوية وحاويات العناوين المساعدة */
   .card-container, .aroua-card {
-    @apply bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs;
+    @apply bg-white border border-slate-200/90 rounded-xl p-3.5 shadow-xs;
   }
 
   .aroua-top-bar {
-    @apply bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs flex flex-col gap-4;
+    @apply bg-white border border-slate-200/90 rounded-xl p-3.5 shadow-xs flex flex-col gap-3;
   }
 
   .filter-pill-inactive, .aroua-filter-pill {
-    @apply px-3 py-1.5 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-xs transition-colors;
+    @apply px-2.5 py-1 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg font-medium text-xs transition-colors;
   }
 
   .filter-pill-active, .aroua-filter-pill-active {
-    @apply px-3 py-1.5 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs;
+    @apply px-2.5 py-1 bg-slate-900 text-white rounded-lg font-bold shadow-xs text-xs;
   }
 
-  /* الشارات */
+  /* الشارات المدمجة */
   .aroua-badge-teal {
-    @apply px-2.5 py-1 text-xs font-bold rounded-lg bg-teal-50 text-teal-700 border border-teal-200;
+    @apply px-2 py-0.5 text-[11px] font-bold rounded-md bg-teal-50 text-teal-700 border border-teal-200;
   }
 
   .aroua-badge-code {
-    @apply font-mono text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200;
+    @apply font-mono text-[11px] font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200;
   }
 
   .aroua-badge-version {
-    @apply px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md font-mono;
+    @apply px-1.5 py-0.5 text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 rounded font-mono;
   }
 
   /* العناصر المالية والبيانية */
   .aroua-kpi-value {
-    @apply text-3xl font-black text-slate-900 tracking-tight font-mono;
+    @apply text-xl font-black text-slate-900 tracking-tight font-mono;
   }
 
   .aroua-price-matrix {
-    @apply grid grid-cols-3 gap-2 bg-slate-50/80 p-3 rounded-xl border border-slate-200/70 text-center font-mono;
+    @apply grid grid-cols-3 gap-2 bg-slate-50/80 p-2.5 rounded-lg border border-slate-200/70 text-center font-mono;
   }
 
   .aroua-matrix-header {
-    @apply text-[11px] text-slate-400 font-bold mb-0.5;
+    @apply text-[10px] text-slate-400 font-bold mb-0.5;
   }
 
   .aroua-amount-profit {
@@ -221,16 +225,16 @@
   }
 
   .aroua-progress-track {
-    @apply w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex;
+    @apply w-full bg-slate-200 rounded-full h-2 overflow-hidden flex;
   }
 
   .aroua-progress-bar {
-    @apply bg-gradient-to-r from-teal-500 to-emerald-500 h-2.5 rounded-full transition-all duration-500;
+    @apply bg-gradient-to-r from-teal-500 to-emerald-500 h-2 rounded-full transition-all duration-500;
   }
 
   /* القوائم والمحتويات */
   .aroua-list-item {
-    @apply flex items-center justify-between p-2 rounded-lg bg-slate-100/70 hover:bg-slate-100 transition-colors;
+    @apply flex items-center justify-between p-1.5 rounded-lg bg-slate-100/70 hover:bg-slate-100 transition-colors text-xs;
   }
 
   .aroua-list-text {
@@ -238,12 +242,10 @@
   }
 
   .aroua-quantity-badge {
-    @apply px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 font-bold text-[10px] mr-2 font-mono;
+    @apply px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 font-bold text-[9px] mr-2 font-mono;
   }
 
   .aroua-footer {
-    @apply pt-4 border-t border-slate-200 flex flex-col items-center justify-between gap-3 text-xs text-slate-500;
+    @apply pt-3 border-t border-slate-200 flex flex-col items-center justify-between gap-2 text-[11px] text-slate-500;
   }
 }
-
-

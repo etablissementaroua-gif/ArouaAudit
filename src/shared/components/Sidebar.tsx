@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -98,8 +98,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       icon: Users,
       items: [
         { label: t('sidebar:sections.hr.mapped_staff'), path: '/hr/mapped-staff', badge: t('sidebar:badges.linked'), badgeColor: 'emerald' },
-        { label: t('sidebar:sections.hr.enrolled_students'), path: '/hr/enrolled-students', badge: t('sidebar:badges.active'), badgeColor: 'emerald' },
-        { label: t('sidebar:sections.hr.payroll'), path: '/hr/payroll' },
+        { label: t('sidebar:sections.hr.enrolled_students'), path: '/hr/enrolled-students' },
+        { label: t('sidebar:sections.hr.payroll'), path: '/hr/payroll', badge: t('sidebar:badges.salaries'), badgeColor: 'emerald' },
         { label: t('sidebar:sections.hr.staff_debts'), path: '/hr/staff-debts' },
       ],
     },
@@ -109,9 +109,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       icon: TrendingUp,
       items: [
         { label: t('sidebar:sections.revenue.monthly_ca'), path: '/revenue/monthly-ca' },
-        { label: t('sidebar:sections.revenue.annual_ca'), path: '/revenue/annual-ca', badge: 'CA', badgeColor: 'emerald' },
+        { label: t('sidebar:sections.revenue.annual_ca'), path: '/revenue/annual-ca' },
         { label: t('sidebar:sections.revenue.regisseurs'), path: '/revenue/regisseurs' },
+        { label: t('sidebar:sections.revenue.administration'), path: '/revenue/administration' },
         { label: t('sidebar:sections.revenue.global_recettes'), path: '/revenue/global-recettes' },
+        { label: t('sidebar:sections.revenue.catering_stats'), path: '/revenue/catering-stats' },
       ],
     },
     {
@@ -197,21 +199,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         />
       )}
 
-      {/* Sidebar Container - Expanded to w-72 xl:w-80 */}
+      {/* Sidebar Container - Compact Balanced Enterprise Width: w-60 xl:w-64 */}
       <aside
         className={`fixed top-0 bottom-0 ${
           isRtl ? 'right-0 border-l' : 'left-0 border-r'
-        } z-50 w-72 xl:w-80 bg-white border-slate-200/80 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-xs ${
+        } z-50 w-60 xl:w-64 bg-white border-slate-200/80 flex flex-col transition-transform duration-300 ease-in-out font-sans lg:static lg:translate-x-0 shadow-xs ${
           isOpen ? 'translate-x-0' : (isRtl ? 'translate-x-full' : '-translate-x-full')
         }`}
       >
-        {/* Top Administration Account Card */}
-        <div className="p-3.5 mx-3 mt-3 mb-2 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-center justify-between">
+        {/* Top Administration Account Card (Compact p-2.5 mx-2.5 my-2) */}
+        <div className="p-2.5 mx-2.5 my-2 rounded-xl bg-white border border-slate-200/90 shadow-2xs flex items-center justify-between">
           <div className="text-start">
             <div className="font-bold text-xs text-slate-900">{t('sidebar:admin.title')}</div>
-            <div className="text-[10px] text-slate-400 mt-0.5">{t('sidebar:admin.subtitle')}</div>
+            <div className="text-[9px] text-slate-400 mt-0.5">{t('sidebar:admin.subtitle')}</div>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+          <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
             {t('sidebar:admin.system_active')}
           </span>
           <button
@@ -224,8 +226,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Navigation Sections */}
-        <nav className="flex-1 overflow-y-auto px-3 py-1 space-y-1 custom-scrollbar">
+        {/* Navigation Sections (Compact space-y-0.5) */}
+        <nav className="flex-1 overflow-y-auto px-2 py-1 space-y-0.5 custom-scrollbar">
           {sections.map((section) => {
             const Icon = section.icon;
             const isOpen = openSections[section.id];
@@ -234,31 +236,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             );
 
             return (
-              <div key={section.id} className="rounded-xl overflow-hidden">
+              <div key={section.id} className="rounded-lg overflow-hidden">
                 {/* Section Accordion Trigger */}
                 <button
                   onClick={() => toggleSection(section.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     hasActiveChild
                       ? 'text-emerald-800 bg-emerald-50/60 font-black'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${hasActiveChild ? 'text-emerald-700' : 'text-slate-500'}`} />
+                  <div className="flex items-center gap-2">
+                    <Icon className={`w-3.5 h-3.5 ${hasActiveChild ? 'text-emerald-700' : 'text-slate-500'}`} />
                     <span>{section.title}</span>
                   </div>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                    className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${
                       isOpen ? 'rotate-180 text-emerald-700' : ''
                     }`}
                   />
                 </button>
 
-                {/* Sub-Items */}
+                {/* Sub-Items (Compact py-1.5 px-2.5 text-xs) */}
                 {isOpen && (
-                  <div className={`mt-1 space-y-0.5 py-0.5 ${
-                    isRtl ? 'mr-3 pr-2.5 border-r border-slate-200/80' : 'ml-3 pl-2.5 border-l border-slate-200/80'
+                  <div className={`mt-0.5 space-y-0.5 py-0.5 ${
+                    isRtl ? 'mr-2 pr-2 border-r border-slate-200/80' : 'ml-2 pl-2 border-l border-slate-200/80'
                   }`}>
                     {section.items.map((item) => {
                       const isActive = location.pathname.startsWith(item.path);
@@ -270,13 +272,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                           onClick={() => {
                             if (window.innerWidth < 1024) onClose();
                           }}
-                          className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all gap-2 ${
+                          className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all gap-1.5 ${
                             isActive
                               ? 'bg-emerald-50/80 text-emerald-800 font-bold shadow-2xs'
                               : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
                           }`}
                         >
-                          <div className="flex items-center gap-2 min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5 min-w-0 flex-1">
                             {isActive && (
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
                             )}
@@ -284,7 +286,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                           </div>
                           {item.badge && (
                             <span
-                              className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold leading-none shrink-0 ${getBadgeClass(
+                              className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold leading-none shrink-0 ${getBadgeClass(
                                 item.badgeColor
                               )}`}
                             >
@@ -302,7 +304,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </nav>
 
         {/* Sidebar Footer with Server Status */}
-        <div className="p-3 border-t border-slate-200/80 bg-slate-50/60 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+        <div className="p-2.5 px-3 border-t border-slate-200/80 bg-slate-50/60 flex items-center justify-between text-[10px] text-slate-500 font-mono">
           <span className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             {t('common:footer.server_connected')}
@@ -315,5 +317,3 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 };
 
 export default Sidebar;
-
-
