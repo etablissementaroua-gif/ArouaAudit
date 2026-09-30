@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { payrollService } from '../services/payrollService';
-import { StaffPayrollSlip, PayrollSummary } from '../models/payrollModels';
+﻿import { useState, useEffect, useCallback } from 'react';
+import { payrollService } from '../services/payroll.service';
+import { StaffPayrollSlip, PayrollSummary } from '../models/payroll.types';
 
 export const usePayroll = () => {
   const [slips, setSlips] = useState<StaffPayrollSlip[]>([]);

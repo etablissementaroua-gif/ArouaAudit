@@ -1,3 +1,14 @@
+﻿// ── Merged from payrollModels.ts (legacy) ──────────────────────────────────
+import { StaffPayrollSlip, PayrollStatus } from '../../../shared/types';
+export type { StaffPayrollSlip, PayrollStatus };
+
+export interface PayrollSummary {
+  totalSalariesNet: number;
+  totalAvances: number;
+  totalDepartedDebts: number;
+  slipsCount: number;
+}
+// ────────────────────────────────────────────────────────────────────────────
 export interface Employee {
   id: string;
   external_staff_id: string; // UID from arouaschools

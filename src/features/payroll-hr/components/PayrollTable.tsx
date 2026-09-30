@@ -1,5 +1,5 @@
-import React from 'react';
-import { StaffPayrollSlip } from '../models/payrollModels';
+﻿import React from 'react';
+import { StaffPayrollSlip } from '../models/payroll.types';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
 import { Check, Clock, AlertCircle } from 'lucide-react';
 

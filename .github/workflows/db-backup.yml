@@ -1,0 +1,179 @@
+﻿# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ArouaAudit — Automated Supabase Database Backup Pipeline
+# مجموعة مدارس أروى — نظام النسخ الاحتياطي التلقائي المشفر
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+name: "ArouaAudit — Automated DB Backup"
+
+on:
+  schedule:
+    # يعمل يومياً عند الساعة 02:00 UTC (= 03:00 بتوقيت المغرب)
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "سبب التشغيل اليدوي"
+        required: false
+        default: "نسخ احتياطي يدوي"
+
+env:
+  BACKUP_FORMAT: custom
+  BACKUP_SCHEMA: public
+  ARTIFACT_RETENTION_DAYS: 14
+
+jobs:
+  backup:
+    name: "Database Dump & Secure Storage"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Install PostgreSQL Client Tools"
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y postgresql-client-16
+          pg_dump --version
+
+      - name: "Validate Required Secrets"
+        run: |
+          missing=()
+          [ -z "${{ secrets.SUPABASE_DB_HOST }}" ]     && missing+=("SUPABASE_DB_HOST")
+          [ -z "${{ secrets.SUPABASE_DB_USER }}" ]     && missing+=("SUPABASE_DB_USER")
+          [ -z "${{ secrets.SUPABASE_DB_PASSWORD }}" ] && missing+=("SUPABASE_DB_PASSWORD")
+          [ -z "${{ secrets.SUPABASE_DB_NAME }}" ]     && missing+=("SUPABASE_DB_NAME")
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "Missing secrets: ${missing[*]}"
+            exit 1
+          fi
+          echo "All secrets present"
+
+      - name: "Execute Database Dump"
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          DB_HOST:    ${{ secrets.SUPABASE_DB_HOST }}
+          DB_USER:    ${{ secrets.SUPABASE_DB_USER }}
+          DB_NAME:    ${{ secrets.SUPABASE_DB_NAME }}
+        run: |
+          TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
+          BACKUP_BASE="aroua_audit_backup_${TIMESTAMP}"
+          BACKUP_FILE="${BACKUP_BASE}.dump"
+
+          pg_dump \
+            --host="${DB_HOST}" \
+            --port="5432" \
+            --username="${DB_USER}" \
+            --dbname="${DB_NAME}" \
+            --format=custom \
+            --clean \
+            --if-exists \
+            --schema=public \
+            --no-privileges \
+            --no-owner \
+            --file="${BACKUP_FILE}"
+
+          if [ ! -f "${BACKUP_FILE}" ]; then
+            echo "Backup file not created!"
+            exit 1
+          fi
+
+          gzip -9 "${BACKUP_FILE}"
+          COMPRESSED_FILE="${BACKUP_FILE}.gz"
+          FILESIZE=$(du -sh "${COMPRESSED_FILE}" | cut -f1)
+          CHECKSUM=$(sha256sum "${COMPRESSED_FILE}" | cut -d' ' -f1)
+
+          echo "BACKUP_FILE=${COMPRESSED_FILE}"  >> "$GITHUB_ENV"
+          echo "BACKUP_BASE=${BACKUP_BASE}"       >> "$GITHUB_ENV"
+          echo "TIMESTAMP=${TIMESTAMP}"           >> "$GITHUB_ENV"
+          echo "FILE_SIZE=${FILESIZE}"            >> "$GITHUB_ENV"
+          echo "BACKUP_CHECKSUM=${CHECKSUM}"      >> "$GITHUB_ENV"
+          echo "Backup complete: ${COMPRESSED_FILE} (${FILESIZE}) SHA256:${CHECKSUM}"
+
+      - name: "Verify Backup Integrity"
+        run: |
+          if ! gzip -t "${{ env.BACKUP_FILE }}" 2>/dev/null; then
+            echo "Backup file is corrupted!"
+            exit 1
+          fi
+          echo "Integrity check passed"
+
+      - name: "Generate Backup Metadata"
+        run: |
+          cat > backup_metadata.json << METAEOF
+          {
+            "backup_id": "${{ env.BACKUP_BASE }}",
+            "timestamp_utc": "${{ env.TIMESTAMP }}",
+            "database": "${{ secrets.SUPABASE_DB_NAME }}",
+            "schema": "public",
+            "format": "custom (pg_dump)",
+            "file": "${{ env.BACKUP_FILE }}",
+            "file_size": "${{ env.FILE_SIZE }}",
+            "sha256_checksum": "${{ env.BACKUP_CHECKSUM }}",
+            "triggered_by": "${{ github.event_name }}",
+            "workflow_run_id": "${{ github.run_id }}",
+            "retention_days": 14,
+            "institution": "Groupe Scolaire Aroua",
+            "system": "ArouaAudit v1.0",
+            "recovery_command": "pg_restore -h HOST -U postgres -d postgres --clean --no-acl --no-owner BACKUP_FILE.dump"
+          }
+          METAEOF
+
+      - name: "Upload Backup Artifact (14-Day Retention)"
+        uses: actions/upload-artifact@v4
+        with:
+          name: "db-backup-${{ env.TIMESTAMP }}"
+          path: |
+            ${{ env.BACKUP_FILE }}
+            backup_metadata.json
+          retention-days: ${{ env.ARTIFACT_RETENTION_DAYS }}
+          compression-level: 0
+
+      # (اختياري) رفع إلى Google Cloud Storage — فعّله بحذف السطر الأول (#)
+      # - name: "Push to GCS Cold Storage"
+      #   uses: google-github-actions/upload-cloud-storage@v2
+      #   with:
+      #     path: ${{ env.BACKUP_FILE }}
+      #     destination: "${{ secrets.GCS_BACKUP_BUCKET }}/arouaaudit/daily/"
+      #     credentials: ${{ secrets.GCS_SERVICE_ACCOUNT_KEY }}
+
+      # (اختياري) رفع إلى AWS S3
+      # - name: "Push to S3 Cold Storage"
+      #   uses: jakejarvis/s3-sync-action@master
+      #   with:
+      #     args: --acl private
+      #   env:
+      #     AWS_S3_BUCKET:         ${{ secrets.BACKUP_S3_BUCKET }}
+      #     AWS_ACCESS_KEY_ID:     ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: "Backup Summary"
+        if: always()
+        run: |
+          echo "## ArouaAudit — Backup Result" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Field | Value |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Date/Time (UTC) | $(date +'%Y-%m-%d %H:%M:%S') |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| File | \`${{ env.BACKUP_FILE }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Size | ${{ env.FILE_SIZE }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| SHA-256 | \`${{ env.BACKUP_CHECKSUM }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Retention | 14 days |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Recovery Command" >> "$GITHUB_STEP_SUMMARY"
+          echo '```bash' >> "$GITHUB_STEP_SUMMARY"
+          echo "gunzip ${{ env.BACKUP_FILE }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "pg_restore -h [DB_HOST] -U postgres -d postgres -p 5432 \\" >> "$GITHUB_STEP_SUMMARY"
+          echo "  --clean --no-acl --no-owner ${{ env.BACKUP_BASE }}.dump" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+  notify-on-failure:
+    name: "Failure Alert"
+    runs-on: ubuntu-latest
+    needs: backup
+    if: failure()
+    steps:
+      - name: "Log Failure"
+        run: |
+          echo "CRITICAL: ArouaAudit DB Backup FAILED"
+          echo "Time: $(date +'%Y-%m-%d %H:%M:%S UTC')"
+          echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

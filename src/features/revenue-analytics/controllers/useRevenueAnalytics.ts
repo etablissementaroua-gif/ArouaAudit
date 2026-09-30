@@ -1,17 +1,31 @@
-import { useState, useEffect } from 'react';
-import { revenueAnalyticsService } from '../services/revenueAnalyticsService';
-import { RevenueMetric } from '../models/analyticsModels';
+﻿import { useState, useEffect, useCallback } from 'react';
+import { revenueAnalyticsService } from '../services/revenueAnalytics.service';
+import { RevenueMetric, RevenueComparison, MonthlyTheoreticalCA, AnnualCASummary } from '../models/revenue.types';
 
-export const useRevenueAnalytics = () => {
-  const [metrics, setMetrics] = useState<RevenueMetric[]>([]);
+export const useRevenueAnalytics = (academicYear = '2026/2027') => {
+  const [comparison, setComparison] = useState<RevenueComparison | null>(null);
+  const [monthlyCA, setMonthlyCA] = useState<MonthlyTheoreticalCA[]>([]);
+  const [annualCA, setAnnualCA] = useState<AnnualCASummary | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    revenueAnalyticsService.getMetrics().then(data => {
-      setMetrics(data);
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const [comp, monthly, annual] = await Promise.all([
+        revenueAnalyticsService.getRevenueComparison(academicYear),
+        revenueAnalyticsService.getMonthlyTheoreticalCA(academicYear),
+        revenueAnalyticsService.getAnnualEstimatedCA(academicYear)
+      ]);
+      setComparison(comp);
+      setMonthlyCA(monthly);
+      setAnnualCA(annual);
+    } catch (err) {
+      console.warn('[useRevenueAnalytics] Load error:', err);
+    } finally {
       setLoading(false);
-    });
-  }, []);
+    }
+  }, [academicYear]);
 
-  return { metrics, loading };
+  useEffect(() => { load(); }, [load]);
+  return { comparison, monthlyCA, annualCA, loading, refresh: load };
 };

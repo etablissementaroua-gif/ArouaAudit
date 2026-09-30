@@ -1,5 +1,5 @@
-import React from 'react';
-import { CheckRecord } from '../models/checkModels';
+﻿import React from 'react';
+import { CheckRecord } from '../models/check.types';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
 import { formatDateFR, isDateOverdue, daysUntil } from '../../../shared/lib/dateUtils';
 import { AlertTriangle, CheckCircle2, Clock, XCircle } from 'lucide-react';

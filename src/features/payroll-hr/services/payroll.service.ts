@@ -1,3 +1,4 @@
+﻿import { StaffPayrollSlip, PayrollSummary } from '../models/payroll.types';
 import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 import { caisseService } from '../../treasury-caisse/services/caisseService';
 import { 
@@ -6,7 +7,7 @@ import {
   MonthlyPayrollSlip, 
   StaffFilter 
 } from '../models/payroll.types';
-import { arouaSchoolsExternalStaffRegistry } from './staffSync.service';
+import { arouaSchoolsExternalStaffRegistry } from './arouaStaffSync.service';
 
 const initialEmployees: Employee[] = arouaSchoolsExternalStaffRegistry.map((item, index) => ({
   id: 'emp-uuid-' + (index + 1),
@@ -365,5 +366,35 @@ export const payrollService = {
     }
 
     return true;
+  },
+
+  // ── Shim: backward-compat for usePayroll controller ──────────────────────
+  async getPayrollSlips(): Promise<StaffPayrollSlip[]> {
+    const slips = await this.calculateMonthlyPayroll();
+    return slips.map(s => ({
+      id: s.id,
+      staff_id: s.employee_id,
+      staff_name: s.employee?.full_name || 'موظف',
+      role: s.employee?.role || '',
+      month_year: s.month,
+      base_salary: s.base_salary,
+      primes: 0,
+      deductions: 0,
+      avances_deduites: s.advances_deducted,
+      net_payable: s.net_paid,
+      status: s.payment_status === 'paid' ? 'paye' : s.payment_status === 'cancelled' ? 'annule' : 'valide',
+      dettes_restantes: s.credit_deducted,
+      created_at: s.created_at || new Date().toISOString()
+    } as StaffPayrollSlip));
+  },
+
+  calculateSummary(slips: StaffPayrollSlip[]): PayrollSummary {
+    return {
+      totalSalariesNet: slips.reduce((s, x) => s + x.net_payable, 0),
+      totalAvances: slips.reduce((s, x) => s + x.avances_deduites, 0),
+      totalDepartedDebts: slips.reduce((s, x) => s + x.dettes_restantes, 0),
+      slipsCount: slips.length
+    };
   }
+  // ──────────────────────────────────────────────────────────────────────────
 };

@@ -1,3 +1,11 @@
+﻿// ── Merged from analyticsModels.ts (legacy) ─────────────────────────────────
+export interface RevenueMetric {
+  period: string;
+  income: number;
+  expense: number;
+  margin: number;
+}
+// ─────────────────────────────────────────────────────────────────────────────
 export interface MonthlyTheoreticalCA {
   academic_level: string;
   level_name_ar: string;
