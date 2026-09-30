@@ -13,13 +13,13 @@ export const MainLayout: React.FC = () => {
       {/* Dynamic Accordion Sidebar (RTL: Right side, LTR: Left side) */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      {/* Main Content Area - Prevents table overflow clipping */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
         {/* Sticky Header */}
         <Header onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
         {/* Main Body - Unified Canvas */}
-        <main className="flex-1 overflow-y-auto bg-[#F8FAFC]">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8 py-6 space-y-6 bg-[#F8FAFC]">
           <Outlet />
         </main>
 

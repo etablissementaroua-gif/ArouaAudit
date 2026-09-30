@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useEnrollment } from '../controllers/useEnrollment';
 import { StudentRecord } from '../models/enrollmentModels';
 import { OfficialReceiptModal } from '../../treasury-caisse/components/OfficialReceiptModal';
@@ -72,10 +72,10 @@ export const StudentEnrollmentView: React.FC = () => {
   };
 
   return (
-    <div className="page-container animate-fade-in" dir="rtl">
+    <div className="space-y-6 animate-fade-in" dir="rtl">
       {/* Toast Notification */}
       {notification && (
-        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center justify-between shadow-sm animate-fade-in">
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center justify-between shadow-xs animate-fade-in">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             <span className="font-bold">{notification}</span>
@@ -87,18 +87,20 @@ export const StudentEnrollmentView: React.FC = () => {
       <div className="page-header-card">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-sky-50 text-sky-600 rounded-xl border border-sky-100">
+            <div className="p-2.5 bg-emerald-50 text-emerald-700 rounded-xl border border-emerald-100">
               <Users className="w-6 h-6" />
             </div>
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-black text-slate-900 tracking-tight">التلاميذ المسجلون وملفات الذمم المدرسية (Student Billing)</h1>
-                <span className="px-3 py-1 bg-sky-50 text-sky-700 border border-sky-200/80 rounded-full font-bold text-xs">
+                <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                  التلاميذ المسجلون وملفات الذمم المدرسية (Student Billing)
+                </h1>
+                <span className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/80 rounded-full font-bold text-xs">
                   {students.length} / {rawCount} تلميذ
                 </span>
               </div>
-              <p className="text-xs text-slate-500 mt-1">
-                استقبال تلقائي للمسجلين من منظومة <strong className="text-sky-700 font-bold">arouaschools</strong> وربطهم بقيود الذمم واشتراكات النقل والإطعام
+              <p className="text-xs text-slate-500 mt-1 font-medium">
+                استقبال تلقائي للمسجلين من منظومة <strong className="text-emerald-700 font-bold">arouaschools</strong> وربطهم بقيود الذمم واشتراكات النقل والإطعام
               </p>
             </div>
           </div>
@@ -137,61 +139,73 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. KPI Financial Cards */}
+      {/* 3. Strict Unified KPI Financial Cards (Pure Stitch Design) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Total Due */}
-        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-teal-500" />
+        {/* Card 1: Total Due */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="absolute top-0 right-0 w-1.5 h-full bg-slate-300" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">إجمالي الذمم والرسوم</span>
-            <div className="p-2 rounded-xl bg-sky-50 text-sky-600 border border-sky-100">
-              <Wallet className="w-5 h-5" />
+            <div className="p-2 rounded-xl bg-slate-50 text-slate-600 border border-slate-100">
+              <Wallet className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <div className="text-slate-900 font-black font-mono text-3xl tracking-tight">{formatMAD(summary.totalDue)}</div>
+            <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight">
+              {formatMAD(summary.totalDue).replace('MAD', '').trim()} <span className="text-sm font-bold text-slate-500 font-sans">MAD</span>
+            </div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">مستحقات السنة الدراسية المعتمدة</div>
           </div>
         </div>
 
-        {/* Collected */}
-        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-emerald-500" />
+        {/* Card 2: Collected */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="absolute top-0 right-0 w-1.5 h-full bg-emerald-500" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">المستخلص الفعلي (المقبوض)</span>
             <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
-              <CreditCard className="w-5 h-5" />
+              <CreditCard className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <div className="text-emerald-700 font-black font-mono text-3xl tracking-tight">{formatMAD(summary.totalPaid)}</div>
+            <div className="text-2xl sm:text-3xl font-black text-emerald-700 font-mono tracking-tight">
+              {formatMAD(summary.totalPaid).replace('MAD', '').trim()} <span className="text-sm font-bold text-emerald-600 font-sans">MAD</span>
+            </div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">المسدد فعلياً في الحسابات</div>
           </div>
         </div>
 
-        {/* Balance Remaining */}
-        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-rose-500" />
+        {/* Card 3: Balance Remaining */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="absolute top-0 right-0 w-1.5 h-full bg-amber-400" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">الذمم المتبقية (قيد التحصيل)</span>
-            <div className="p-2 rounded-xl bg-rose-50 text-rose-600 border border-rose-100">
-              <GraduationCap className="w-5 h-5" />
+            <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
+              <GraduationCap className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <div className="text-rose-700 font-black font-mono text-3xl tracking-tight">{formatMAD(summary.totalBalance)}</div>
+            <div className="text-2xl sm:text-3xl font-black text-amber-600 font-mono tracking-tight">
+              {formatMAD(summary.totalBalance).replace('MAD', '').trim()} <span className="text-sm font-bold text-amber-500 font-sans">MAD</span>
+            </div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">ديون دراسية مفتوحة للمتابعة</div>
           </div>
         </div>
 
-        {/* Transport & Canteen Subscribers */}
-        <div className="standard-kpi-card"><div className="w-1.5 h-full absolute top-0 right-0 bg-amber-400" />
+        {/* Card 4: Transport & Canteen Subscribers */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs relative overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="absolute top-0 right-0 w-1.5 h-full bg-teal-500" />
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500">مشتركو النقل والمطعم</span>
-            <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
-              <Bus className="w-5 h-5" />
+            <div className="p-2 rounded-xl bg-teal-50 text-teal-600 border border-teal-100">
+              <Bus className="w-4 h-4" />
             </div>
           </div>
           <div>
-            <div className="text-amber-700 font-black font-mono text-3xl tracking-tight">
-              {summary.transportSubscribers} نقل | {summary.canteenSubscribers} مطعم
+            <div className="flex items-center gap-3 font-mono text-xl sm:text-2xl font-black text-slate-800">
+              <span>{summary.transportSubscribers} <span className="text-xs font-bold text-teal-700 font-sans">نقل</span></span>
+              <span className="text-slate-300">|</span>
+              <span>{summary.canteenSubscribers} <span className="text-xs font-bold text-amber-700 font-sans">مطعم</span></span>
             </div>
             <div className="text-[11px] text-slate-400 mt-1 font-medium">
               المزامنون من أروى: {summary.arouaSchoolsSyncedCount} تلميذاً
@@ -200,17 +214,17 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. Filter & Search Bar */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs flex flex-wrap items-center justify-between gap-3">
+      {/* 4. Balanced Search and Filter Bar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
         {/* Search Input */}
-        <div className="relative w-full sm:w-80">
+        <div className="flex-1 relative">
           <Search className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={filters.searchQuery}
             onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
             placeholder="بحث بالاسم، رمز مسار، أو المعرف..."
-            className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 pr-9 text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-sky-500 focus:outline-none w-full sm:w-80 shadow-inner transition-colors"
+            className="bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 pr-9 text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:border-emerald-600 focus:outline-none w-full shadow-inner transition-colors"
           />
         </div>
 
@@ -222,11 +236,11 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, transportOnly: !prev.transportOnly }))}
             className={
               filters.transportOnly
-                ? "px-4 py-1.5 bg-slate-900 text-white rounded-xl font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
-                : "px-4 py-1.5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl font-medium text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                ? "px-3 py-1.5 bg-slate-900 text-white rounded-xl font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                : "px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl font-bold text-xs transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
-            <Bus className="w-3.5 h-3.5" />
+            <Bus className="w-3.5 h-3.5 text-amber-600" />
             <span>مشتركو النقل</span>
           </button>
 
@@ -236,11 +250,11 @@ export const StudentEnrollmentView: React.FC = () => {
             onClick={() => setFilters(prev => ({ ...prev, canteenOnly: !prev.canteenOnly }))}
             className={
               filters.canteenOnly
-                ? "px-4 py-1.5 bg-slate-900 text-white rounded-xl font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
-                : "px-4 py-1.5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl font-medium text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                ? "px-3 py-1.5 bg-slate-900 text-white rounded-xl font-bold shadow-xs text-xs cursor-pointer flex items-center gap-1.5 transition-all"
+                : "px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-600 border border-slate-200 rounded-xl font-bold text-xs transition-colors cursor-pointer flex items-center gap-1.5"
             }
           >
-            <Utensils className="w-3.5 h-3.5" />
+            <Utensils className="w-3.5 h-3.5 text-sky-600" />
             <span>مشتركو المطعم</span>
           </button>
 
@@ -248,7 +262,7 @@ export const StudentEnrollmentView: React.FC = () => {
           <select
             value={filters.paymentStatus}
             onChange={(e) => setFilters(prev => ({ ...prev, paymentStatus: e.target.value as any }))}
-            className="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-700 font-bold focus:bg-white focus:border-sky-500 focus:outline-none cursor-pointer transition-colors"
+            className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-700 font-bold focus:bg-white focus:border-emerald-600 focus:outline-none cursor-pointer transition-colors"
           >
             <option value="all">كل الحالات المالية</option>
             <option value="pending">متبقي عليهم ذمم</option>
@@ -257,23 +271,23 @@ export const StudentEnrollmentView: React.FC = () => {
         </div>
       </div>
 
-      {/* 5. The Core Financial Ledger Table */}
-      <div className="standard-table-wrapper">
-        <div className="overflow-x-auto">
-          <table className="w-full text-right text-xs">
-            <thead className="bg-slate-100/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
-              <tr>
-                <th className="px-4 py-3.5 text-right">المعرف ورمز مسار</th>
-                <th className="px-4 py-3.5 text-right">التلميذ والمستوى</th>
-                <th className="px-4 py-3.5 text-right">المصدر</th>
-                <th className="px-4 py-3.5 text-right">الخدمات الملحقة</th>
-                <th className="px-4 py-3.5 text-right">إجمالي المستحق</th>
-                <th className="px-4 py-3.5 text-right">المسدد</th>
-                <th className="px-4 py-3.5 text-right">المتبقي (الذمة)</th>
-                <th className="px-4 py-3.5 text-left">الإجراءات</th>
+      {/* 5. The Core Financial Ledger Table with Dual Container */}
+      <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
+        <div className="overflow-x-auto w-full">
+          <table className="w-full min-w-[900px] border-collapse text-right">
+            <thead>
+              <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider">
+                <th className="py-3.5 px-4 text-start">المعرف ورمز مسار</th>
+                <th className="py-3.5 px-4 text-start">التلميذ والمستوى</th>
+                <th className="py-3.5 px-4 text-start">المصدر</th>
+                <th className="py-3.5 px-4 text-start">الخدمات الملحقة</th>
+                <th className="py-3.5 px-4 text-start">إجمالي المستحق</th>
+                <th className="py-3.5 px-4 text-start">المسدد</th>
+                <th className="py-3.5 px-4 text-start">المتبقي</th>
+                <th className="py-3.5 px-4 text-center">الإجراءات</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 text-xs">
               {students.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="py-12 text-center text-slate-500 text-xs">
@@ -282,11 +296,11 @@ export const StudentEnrollmentView: React.FC = () => {
                 </tr>
               ) : (
                 students.map((st) => (
-                  <tr key={st.id} className="bg-white hover:bg-sky-50/40 border-b border-slate-100 transition-colors">
+                  <tr key={st.id} className="bg-white hover:bg-slate-50/80 transition-colors">
                     {/* Identifiers */}
-                    <td className="px-4 py-3 whitespace-nowrap">
+                    <td className="py-3.5 px-4 whitespace-nowrap text-start">
                       <div>
-                        <span className="font-mono text-xs text-sky-700 font-bold bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100 inline-block mb-1">
+                        <span className="font-mono text-xs text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 inline-block mb-1">
                           {st.student_id}
                         </span>
                       </div>
@@ -296,20 +310,20 @@ export const StudentEnrollmentView: React.FC = () => {
                     </td>
 
                     {/* Student Name & Level */}
-                    <td className="px-4 py-3">
+                    <td className="py-3.5 px-4 text-start">
                       <div className="font-bold text-slate-900 text-sm">{st.full_name_ar}</div>
-                      <div className="text-xs text-slate-500 font-medium">
+                      <div className="text-xs text-slate-500 font-medium mt-0.5">
                         {st.academic_level} {st.classroom && <span className="font-mono text-slate-600 font-semibold">({st.classroom})</span>}
                       </div>
                     </td>
 
                     {/* Source Platform Badge */}
-                    <td className="px-4 py-3 whitespace-nowrap">
+                    <td className="py-3.5 px-4 whitespace-nowrap text-start">
                       {getSourceBadge(st.source_platform)}
                     </td>
 
                     {/* Auxiliary Services Subscriptions */}
-                    <td className="px-4 py-3 whitespace-nowrap">
+                    <td className="py-3.5 px-4 whitespace-nowrap text-start">
                       <div className="flex items-center gap-1.5">
                         {st.has_transport ? (
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">
@@ -330,19 +344,19 @@ export const StudentEnrollmentView: React.FC = () => {
                     </td>
 
                     {/* Total Due */}
-                    <td className="px-4 py-3 font-mono font-bold text-slate-800 text-xs whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono font-bold text-slate-900 text-xs whitespace-nowrap text-start">
                       {formatMAD(st.total_due)}
                     </td>
 
                     {/* Total Paid */}
-                    <td className="px-4 py-3 font-mono font-bold text-emerald-700 text-xs whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono font-bold text-emerald-700 text-xs whitespace-nowrap text-start">
                       {formatMAD(st.total_paid)}
                     </td>
 
                     {/* Remaining Balance */}
-                    <td className="px-4 py-3 font-mono text-xs whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-mono text-xs whitespace-nowrap text-start">
                       {st.balance > 0 ? (
-                        <span className="font-mono font-black text-rose-600 text-sm">
+                        <span className="font-mono font-black text-amber-600 text-sm">
                           {formatMAD(st.balance)}
                         </span>
                       ) : (
@@ -353,8 +367,8 @@ export const StudentEnrollmentView: React.FC = () => {
                     </td>
 
                     {/* Actions */}
-                    <td className="px-4 py-3 text-left whitespace-nowrap">
-                      <div className="flex items-center justify-end gap-1.5">
+                    <td className="py-3.5 px-4 text-center whitespace-nowrap">
+                      <div className="flex items-center justify-center gap-1.5">
                         {st.parent_whatsapp && st.balance > 0 && (
                           <a
                             href={`https://wa.me/${st.parent_whatsapp}?text=${encodeURIComponent(`السلام عليكم ولي أمر التلميذ(ة) ${st.full_name_ar} (رمز مسار: ${st.massar_code})، نود تذكيركم بأن الذمة المتبقية في حساب الرسوم المدرسية هي: ${st.balance} درهم. شكراً لتعاونكم - إدارة مؤسسة أروى`)}`}
@@ -370,7 +384,7 @@ export const StudentEnrollmentView: React.FC = () => {
 
                         <button
                           onClick={() => handleOpenReceipt(st)}
-                          className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                          className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                           title="إصدار وطباعة وصل مالي رسمي بالشعار"
                         >
                           <FileText className="w-3 h-3" />
@@ -379,7 +393,7 @@ export const StudentEnrollmentView: React.FC = () => {
 
                         <button
                           onClick={() => setSelectedStudent(st)}
-                          className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-medium transition-all cursor-pointer"
+                          className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-medium transition-all cursor-pointer"
                         >
                           تفاصيل
                         </button>
@@ -416,52 +430,35 @@ export const StudentEnrollmentView: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-slate-500 block mb-1">المعرف الداخلي:</span>
-                <span className="font-mono font-bold text-sky-700">{selectedStudent.student_id}</span>
+                <span className="text-slate-500 block mb-1 font-medium">المعرف الداخلي:</span>
+                <span className="font-mono font-bold text-emerald-800">{selectedStudent.student_id}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-slate-500 block mb-1">رمز مسار (Massar):</span>
-                <span className="font-mono font-bold text-sky-700">{selectedStudent.massar_code}</span>
+                <span className="text-slate-500 block mb-1 font-medium">رمز مسار (Massar):</span>
+                <span className="font-mono font-bold text-emerald-800">{selectedStudent.massar_code}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-slate-500 block mb-1">رسم التمدرس السنوي:</span>
+                <span className="text-slate-500 block mb-1 font-medium">رسم التمدرس السنوي:</span>
                 <span className="font-mono font-bold text-slate-900">{formatMAD(selectedStudent.tuition_fee)}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-slate-500 block mb-1">رسم النقل المدرسي:</span>
+                <span className="text-slate-500 block mb-1 font-medium">رسم النقل المدرسي:</span>
                 <span className="font-mono font-bold text-amber-700">{formatMAD(selectedStudent.transport_fee)}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-slate-500 block mb-1">رسم الإطعام والمطعم:</span>
+                <span className="text-slate-500 block mb-1 font-medium">رسم الإطعام والمطعم:</span>
                 <span className="font-mono font-bold text-sky-700">{formatMAD(selectedStudent.canteen_fee)}</span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <span className="text-slate-500 block mb-1">الذمة الصافية المتبقية:</span>
-                <span className="font-mono font-bold text-rose-600">{formatMAD(selectedStudent.balance)}</span>
+                <span className="text-slate-500 block mb-1 font-medium">الذمة الصافية المتبقية:</span>
+                <span className="font-mono font-bold text-amber-600">{formatMAD(selectedStudent.balance)}</span>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-              <span className="text-slate-500">هاتف ولي الأمر:</span>
-              <span className="font-mono font-bold text-slate-800">{selectedStudent.parent_phone || selectedStudent.parent_whatsapp || 'غير مسجل'}</span>
-            </div>
-
-            <div className="flex items-center justify-end gap-2 pt-2">
+            <div className="flex justify-end pt-2">
               <button
-                type="button"
-                onClick={() => {
-                  const st = selectedStudent;
-                  setSelectedStudent(null);
-                  handleOpenReceipt(st);
-                }}
-                className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
-              >
-                طباعة وصل أداء رسمي بالشعار
-              </button>
-              <button
-                type="button"
                 onClick={() => setSelectedStudent(null)}
-                className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold cursor-pointer"
+                className="btn-secondary px-5 py-2 text-xs cursor-pointer"
               >
                 إغلاق
               </button>
