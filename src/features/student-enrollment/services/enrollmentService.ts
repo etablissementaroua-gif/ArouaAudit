@@ -295,5 +295,19 @@ export const enrollmentService = {
     }
 
     return newStudent;
+  },
+
+  /**
+   * تسجيل أداء مالي وتحديث ذمة التلميذ
+   */
+  async recordPayment(studentId: string, amount: number): Promise<boolean> {
+    const list = await this.getStudents();
+    const st = list.find(s => s.id === studentId || s.student_id === studentId);
+    if (st) {
+      st.total_paid = (Number(st.total_paid) || 0) + Number(amount);
+      st.balance = Math.max(0, (Number(st.total_due) || 0) - st.total_paid);
+      localStorage.setItem('aroua_synced_students', JSON.stringify(list));
+    }
+    return true;
   }
 };

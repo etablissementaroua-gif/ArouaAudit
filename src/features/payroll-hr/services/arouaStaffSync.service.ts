@@ -112,6 +112,24 @@ export const arouaSchoolsExternalStaffRegistry: Partial<Employee>[] = [
     rib_account: '011780000321654987012345',
     employment_status: 'active',
     source_platform: 'arouaschools'
+  },
+  {
+    external_staff_id: 'STF-AROUA-007',
+    full_name: 'أحمد المنصوري',
+    cin: 'MA554433',
+    cnss_number: '77889900',
+    phone: '0667788990',
+    email: 'ahmed.mansouri@arouaschools.ma',
+    role: 'teacher',
+    department: 'Pedagogique',
+    subjects: ['الفيزياء والكيمياء'],
+    assigned_classes: ['الثانية إعدادي', 'الثالثة إعدادي'],
+    base_salary: 6000,
+    credit_ancien: 0,
+    bank_name: 'Attijariwafa Bank',
+    rib_account: '007810000445566778899001',
+    employment_status: 'active',
+    source_platform: 'arouaschools'
   }
 ];
 

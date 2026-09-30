@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEnrollment } from '../controllers/useEnrollment';
 import { StudentRecord } from '../models/enrollmentModels';
+import { StudentCollectionModal } from '../components/StudentCollectionModal';
 import { OfficialReceiptModal } from '../../treasury-caisse/components/OfficialReceiptModal';
 import { OfficialReceiptData } from '../../../shared/lib/receiptPdfGenerator';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
@@ -36,6 +37,7 @@ export const StudentEnrollmentView: React.FC = () => {
   } = useEnrollment();
 
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(null);
+  const [collectingStudent, setCollectingStudent] = useState<StudentRecord | null>(null);
   const [receiptData, setReceiptData] = useState<OfficialReceiptData | null>(null);
 
   const handleOpenReceipt = (st: StudentRecord) => {
@@ -383,6 +385,16 @@ export const StudentEnrollmentView: React.FC = () => {
                           </a>
                         )}
 
+                        {/* Collection / Encaissement Action */}
+                        <button
+                          onClick={() => setCollectingStudent(st)}
+                          className="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                          title="استخلاص وتحصيل الرسوم المدرسية (نقداً / شيك / مختلط)"
+                        >
+                          <Wallet className="w-3.5 h-3.5" />
+                          <span>استخلاص / تحصيل</span>
+                        </button>
+
                         <button
                           onClick={() => handleOpenReceipt(st)}
                           className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
@@ -407,6 +419,19 @@ export const StudentEnrollmentView: React.FC = () => {
           </table>
         </div>
       </div>
+
+      {/* Student Collection Dialog */}
+      {collectingStudent && (
+        <StudentCollectionModal
+          student={collectingStudent}
+          isOpen={Boolean(collectingStudent)}
+          onClose={() => setCollectingStudent(null)}
+          onSuccess={(receipt) => {
+            setReceiptData(receipt);
+            refresh();
+          }}
+        />
+      )}
 
       {/* Official Receipt Dialog */}
       {receiptData && (

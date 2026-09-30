@@ -88,24 +88,37 @@ export const DashboardOverviewView: React.FC = () => {
   useEffect(() => {
     loadDashboardData();
 
-    if (!isSupabaseConfigured()) return;
+    const handleRealtimeUpdate = () => {
+      loadDashboardData();
+      refreshCaisse();
+    };
 
-    const channel = supabase
-      .channel('dashboard-realtime-feed')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'checks_portfolio' }, () => {
-        loadDashboardData();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'system_tasks' }, () => {
-        loadDashboardData();
-      })
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'caisse_transactions' }, () => {
-        loadDashboardData();
-        refreshCaisse();
-      })
-      .subscribe();
+    window.addEventListener('aroua_caisse_updated', handleRealtimeUpdate);
+    window.addEventListener('aroua_checks_updated', handleRealtimeUpdate);
+
+    let channel: any = null;
+    if (isSupabaseConfigured()) {
+      channel = supabase
+        .channel('dashboard-realtime-feed')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'checks_portfolio' }, () => {
+          loadDashboardData();
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'system_tasks' }, () => {
+          loadDashboardData();
+        })
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'caisse_transactions' }, () => {
+          loadDashboardData();
+          refreshCaisse();
+        })
+        .subscribe();
+    }
 
     return () => {
-      supabase.removeChannel(channel);
+      window.removeEventListener('aroua_caisse_updated', handleRealtimeUpdate);
+      window.removeEventListener('aroua_checks_updated', handleRealtimeUpdate);
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
     };
   }, [currentUser]);
 
