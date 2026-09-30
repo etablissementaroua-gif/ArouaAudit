@@ -182,10 +182,14 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           <Menu className="w-4 h-4" />
         </button>
 
-        {/* Institution Brand Badge with Emerald Icon */}
+        {/* Institution Brand Badge with Official Logo */}
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold flex items-center justify-center shadow-xs text-xs shrink-0">
-            أ
+          <div className="w-8 h-8 rounded-xl bg-white border border-slate-200/90 p-0.5 flex items-center justify-center shadow-2xs shrink-0">
+            <img
+              src="/assets/aroua-logo.png"
+              alt="Groupe Scolaire Aroua"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="text-start">
             <div className="flex items-center gap-1.5">

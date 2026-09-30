@@ -6,12 +6,11 @@ import {
   Lock, 
   Eye, 
   EyeOff, 
-  ShieldCheck, 
+  KeyRound,
   ArrowRight, 
   ArrowLeft, 
   Loader2, 
   AlertCircle,
-  KeyRound,
   HelpCircle,
   X,
   Phone,
@@ -152,12 +151,6 @@ export const LoginView: React.FC = () => {
     }
   };
 
-  const handleQuickFill = (userEmail: string) => {
-    setEmail(userEmail);
-    setPassword('ArouaAudit2026!');
-    setErrorMessage(null);
-  };
-
   return (
     <div className="min-h-screen bg-[#F8FAFC] relative overflow-hidden flex flex-col justify-between font-sans selection:bg-emerald-500/20 selection:text-emerald-800">
       {/* Background Decorative Ambient Lighting */}
@@ -166,11 +159,11 @@ export const LoginView: React.FC = () => {
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-teal-600/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Bar with Language Selector */}
-      <header className="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+      <header className="w-full max-w-7xl mx-auto px-6 py-5 flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200/90 shadow-sm p-1.5 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-2xl bg-white border border-slate-200/90 shadow-2xs p-1 flex items-center justify-center">
             <img
-              src="/assets/logo-aroua.png"
+              src="/assets/aroua-logo.png"
               alt="Groupe Scolaire Aroua"
               className="w-full h-full object-contain"
             />
@@ -189,29 +182,36 @@ export const LoginView: React.FC = () => {
       </header>
 
       {/* Main Login Card Container */}
-      <main className="w-full max-w-md mx-auto px-4 z-10 my-auto">
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-8 shadow-xl shadow-slate-200/50 backdrop-blur-sm relative">
+      <main className="w-full max-w-[440px] mx-auto px-4 z-10 my-auto py-6">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-7 sm:p-9 shadow-xl shadow-slate-200/50 backdrop-blur-sm relative">
           
-          {/* Top Brand & Title Header */}
-          <div className="text-center space-y-2 mb-8">
-            <div className="inline-flex items-center justify-center p-2.5 bg-emerald-50 text-emerald-700 rounded-2xl border border-emerald-200/60 shadow-2xs mb-1">
-              <ShieldCheck className="w-6 h-6 text-emerald-600" />
+          {/* Official Logo, Title & Badge Header */}
+          <div className="text-center flex flex-col items-center mb-7">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center p-1 mb-2">
+              <img
+                src="/assets/aroua-logo.png"
+                alt="Groupe Scolaire Aroua"
+                className="w-full h-full object-contain filter drop-shadow-xs"
+              />
             </div>
             
             <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              {isRtl ? 'تسجيل الدخول المؤسساتي' : 'Connexion Institutionnelle'}
+              ArouaAudit
             </h1>
             
-            <p className="text-xs text-slate-500 font-medium">
-              {isRtl 
-                ? 'المنصة المركزية للرقابة المحاسبية والامتيازات الممنوحة' 
-                : 'Portail centralisé de contrôle de gestion et d\'audit'}
-            </p>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200/80 text-emerald-800 rounded-full text-xs font-bold font-sans mt-2 shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>
+                {isRtl 
+                  ? 'v1.0 • بوابة الحكامة والتدقيق المالي' 
+                  : 'v1.0 • Portail de Contrôle et d\'Audit Financier'}
+              </span>
+            </div>
           </div>
 
           {/* Error Message Box */}
           {errorMessage && (
-            <div className="mb-6 p-3.5 bg-rose-50 border border-rose-200/80 rounded-2xl flex items-start gap-3 text-start animate-in fade-in duration-200">
+            <div className="mb-5 p-3.5 bg-rose-50 border border-rose-200/80 rounded-2xl flex items-start gap-3 text-start animate-in fade-in duration-200">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <p className="text-xs text-rose-700 leading-relaxed font-medium">
                 {errorMessage}
@@ -219,9 +219,9 @@ export const LoginView: React.FC = () => {
             </div>
           )}
 
-          {/* Form */}
+          {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-4">
-            {/* Email Field */}
+            {/* Professional Email Field */}
             <div className="space-y-1.5 text-start">
               <label className="block text-xs font-bold text-slate-700">
                 {isRtl ? 'البريد الإلكتروني المهني' : 'Adresse Email Professionnelle'}
@@ -270,9 +270,10 @@ export const LoginView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer ${
-                    isRtl ? 'left-3.5' : 'right-3.5'
+                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1 ${
+                    isRtl ? 'left-2.5' : 'right-2.5'
                   }`}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -280,19 +281,21 @@ export const LoginView: React.FC = () => {
             </div>
 
             {/* Remember Me Option */}
-            <div className="flex items-center justify-between text-xs pt-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none text-slate-600">
+            <div className="flex items-center justify-between pt-1">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300"
+                  className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500/20 cursor-pointer accent-emerald-600"
                 />
-                <span>{isRtl ? 'تذكر جلستي على هذا الجهاز' : 'Rester connecté'}</span>
+                <span className="text-xs font-semibold text-slate-600">
+                  {isRtl ? 'تذكر هذا الجهاز والدخول الآمن' : 'Mémoriser cet appareil et connexion sécurisée'}
+                </span>
               </label>
             </div>
 
-            {/* Submit Button */}
+            {/* Emerald Green Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -312,68 +315,15 @@ export const LoginView: React.FC = () => {
               )}
             </button>
           </form>
-
-          {/* Quick Demo Accounts Selection */}
-          <div className="mt-6 pt-5 border-t border-slate-100">
-            <span className="text-[10px] font-bold text-slate-400 block mb-2 text-start uppercase tracking-wider">
-              {isRtl ? 'حسابات تجريبية سريعة (COMPTES DÉMO):' : 'Comptes de test rapide (DÉMO) :'}
-            </span>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <button
-                type="button"
-                onClick={() => handleQuickFill('admin@arouaschools.ma')}
-                className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-xl text-start transition cursor-pointer hover:border-emerald-300"
-              >
-                <span className="font-bold text-slate-900 block text-[11px] leading-tight">المدير العام</span>
-                <span className="text-[9px] text-slate-400 font-mono block">Super Admin</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickFill('finance@arouaschools.ma')}
-                className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-xl text-start transition cursor-pointer hover:border-emerald-300"
-              >
-                <span className="font-bold text-slate-900 block text-[11px] leading-tight">المديرة المالية</span>
-                <span className="text-[9px] text-slate-400 font-mono block">Dir. Financier</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickFill('comptable@arouaschools.ma')}
-                className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-xl text-start transition cursor-pointer hover:border-emerald-300"
-              >
-                <span className="font-bold text-slate-900 block text-[11px] leading-tight">المحاسب المعتمد</span>
-                <span className="text-[9px] text-slate-400 font-mono block">Comptable</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleQuickFill('caisse1@arouaschools.ma')}
-                className="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-xl text-start transition cursor-pointer hover:border-emerald-300"
-              >
-                <span className="font-bold text-slate-900 block text-[11px] leading-tight">أمينة الصندوق</span>
-                <span className="text-[9px] text-slate-400 font-mono block">Caissier</span>
-              </button>
-            </div>
-          </div>
         </div>
       </main>
 
-      {/* Footer Security Badges & Legal Notice */}
-      <footer className="w-full max-w-7xl mx-auto px-6 py-5 text-center space-y-2 z-10">
-        <div className="inline-flex items-center justify-center gap-2 text-xs font-semibold text-slate-500 bg-white/80 border border-slate-200/70 rounded-full px-4 py-1.5 shadow-2xs">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>
-            {isRtl 
-              ? 'نظام تدبير مالي ورقابي مشفر • جميع العمليات موثقة ومحمية بسجل تدقيق محاسبي غير قابل للتعديل (WORM Certified)' 
-              : 'Système financier chiffré • Toutes les opérations sont tracées dans un registre d\'audit inaltérable (WORM Certified)'}
-          </span>
-        </div>
-
-        <div className="text-[11px] text-slate-400">
+      {/* Footer Institution & Support Notice */}
+      <footer className="w-full max-w-7xl mx-auto px-6 py-4 text-center z-10">
+        <div className="text-xs text-slate-400 font-medium flex items-center justify-center gap-2 flex-wrap">
           <span>{isRtl ? 'مجموعة مدارس أروى — مراكش، المملكة المغربية' : 'Groupe Scolaire Aroua — Marrakech, Royaume du Maroc'}</span>
-          <span className="mx-2">•</span>
-          <span>support@arouaschools.ma</span>
+          <span className="text-slate-300">•</span>
+          <span className="font-mono text-slate-500">support@arouaschools.ma</span>
         </div>
       </footer>
 
