@@ -5,6 +5,10 @@
     "system_active": "Système Actif"
   },
   "sections": {
+    "workspace": {
+      "title": "Espace de Travail & Mémos",
+      "tasks": "Tâches & Mémos"
+    },
     "settings": {
       "title": "Configuration & Sécurité",
       "academic_years": "Années Scolaires",
@@ -56,6 +60,7 @@
     }
   },
   "badges": {
+    "new": "Nouveau",
     "linked": "Lié",
     "active": "Actif",
     "followup": "Suivi",

@@ -9,6 +9,7 @@ import {
   FileSpreadsheet,
   Receipt,
   Bus,
+  CheckSquare,
   ChevronDown,
   X
 } from 'lucide-react';
@@ -49,6 +50,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   });
 
   const sections: NavSection[] = [
+    {
+      id: 'workspace',
+      title: t('sidebar:sections.workspace.title'),
+      icon: CheckSquare,
+      items: [
+        { label: t('sidebar:sections.workspace.tasks'), path: '/workspace/tasks', badge: t('sidebar:badges.new'), badgeColor: 'emerald' },
+      ],
+    },
     {
       id: 'settings',
       title: t('sidebar:sections.settings.title'),
@@ -285,3 +294,4 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 };
 
 export default Sidebar;
+

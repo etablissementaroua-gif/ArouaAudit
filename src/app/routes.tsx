@@ -8,6 +8,10 @@ import { ProtectedRoute } from '../features/system-security/components/Protected
 const LoginView = lazy(() =>
   import('../features/auth/views/LoginView').then((m) => ({ default: m.LoginView }))
 );
+// Workspace View
+const TasksNotesView = lazy(() =>
+  import('../features/tasks-notes/views/TasksNotesView').then((m) => ({ default: m.TasksNotesView }))
+);
 
 // Lazy-loaded Views
 const StudentEnrollmentView = lazy(() =>
@@ -147,6 +151,15 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Navigate to="/hr/enrolled-students" replace />,
+      },
+      // 0. Workspace: Tasks & Notes
+      {
+        path: 'workspace/tasks',
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <TasksNotesView />
+          </Suspense>
+        ),
       },
       // 1. Settings & Security
       {
@@ -454,3 +467,4 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+

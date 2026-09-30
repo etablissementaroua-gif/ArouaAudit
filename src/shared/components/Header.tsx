@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { 
@@ -10,13 +10,20 @@ import {
   ChevronDown,
   UserCheck,
   Lock,
-  LogOut
+  LogOut,
+  Bell,
+  CheckCheck,
+  CheckSquare,
+  Megaphone,
+  Clock
 } from 'lucide-react';
 import { useCaisse } from '../../features/treasury-caisse/controllers/useCaisse';
 import { formatMAD } from '../lib/currencyFormatter';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { usePermissions } from '../../features/system-security/context/PermissionsContext';
 import { SystemRoleCode } from '../../features/system-security/models/security.types';
+import { taskService } from '../../features/tasks-notes/services/task.service';
+import { SystemNotification } from '../../features/tasks-notes/models/task.types';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -29,18 +36,74 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const { summary, loading, refresh } = useCaisse();
   const { currentRole, switchRole, logoutUser, currentUser } = usePermissions();
 
+  // Role Dropdown State
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const roleDropdownRef = useRef<HTMLDivElement>(null);
 
+  // Notifications State
+  const [notifications, setNotifications] = useState<SystemNotification[]>([]);
+  const [notifMenuOpen, setNotifMenuOpen] = useState(false);
+  const notifDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Load and subscribe to notifications
+  const loadNotifications = () => {
+    taskService.getNotifications(currentUser.id).then(setNotifications);
+  };
+
+  useEffect(() => {
+    loadNotifications();
+
+    const handleNotifUpdate = () => {
+      loadNotifications();
+    };
+
+    window.addEventListener('aroua_notifications_updated', handleNotifUpdate);
+    return () => window.removeEventListener('aroua_notifications_updated', handleNotifUpdate);
+  }, [currentUser]);
+
+  // Click outside listener for both dropdowns
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (roleDropdownRef.current && !roleDropdownRef.current.contains(event.target as Node)) {
         setRoleMenuOpen(false);
       }
+      if (notifDropdownRef.current && !notifDropdownRef.current.contains(event.target as Node)) {
+        setNotifMenuOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const unreadCount = notifications.filter((n) => !n.is_read).length;
+
+  const handleMarkAllRead = async () => {
+    await taskService.markAllNotificationsAsRead(currentUser.id);
+    loadNotifications();
+  };
+
+  const handleNotificationClick = async (notif: SystemNotification) => {
+    if (!notif.is_read) {
+      await taskService.markNotificationAsRead(notif.id);
+      loadNotifications();
+    }
+    setNotifMenuOpen(false);
+    navigate(notif.link_url || '/workspace/tasks');
+  };
+
+  const formatTimeAgo = (dateStr: string) => {
+    try {
+      const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 60000);
+      if (diff < 1) return isRtl ? 'الآن' : 'À l’instant';
+      if (diff < 60) return isRtl ? `منذ ${diff} دقيقة` : `Il y a ${diff} min`;
+      const hours = Math.floor(diff / 60);
+      if (hours < 24) return isRtl ? `منذ ${hours} ساعة` : `Il y a ${hours} h`;
+      const days = Math.floor(hours / 24);
+      return isRtl ? `منذ ${days} يوم` : `Il y a ${days} j`;
+    } catch {
+      return '';
+    }
+  };
 
   const getRoleDisplay = (code: SystemRoleCode) => {
     switch (code) {
@@ -106,7 +169,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         </div>
       </div>
 
-      {/* End Side: Caisse Balance, RLS, Role Switcher, Language Switcher, Refresh & Avatar */}
+      {/* End Side: Caisse Balance, RLS, Role Switcher, Notification Bell, Language Switcher, Refresh & Avatar */}
       <div className="flex items-center gap-3">
         {/* Real-Time General Caisse Balance Card */}
         <div className="flex flex-col items-center">
@@ -180,6 +243,131 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
                 >
                   <LogOut className="w-3.5 h-3.5 text-rose-600" />
                   <span>{isRtl ? 'تسجيل الخروج' : 'Déconnexion'}</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 🔔 Interactive Notification Bell with Live Counter & Dropdown */}
+        <div className="relative inline-block" ref={notifDropdownRef}>
+          <button
+            type="button"
+            onClick={() => setNotifMenuOpen(!notifMenuOpen)}
+            className="p-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition shadow-xs relative cursor-pointer"
+            title={isRtl ? 'الإشعارات والتنبيهات' : 'Notifications'}
+          >
+            <Bell className="w-4 h-4" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-black rounded-full w-4 h-4 flex items-center justify-center animate-pulse shadow-xs">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </button>
+
+          {/* Notifications Dropdown Panel */}
+          {notifMenuOpen && (
+            <div className={`absolute ${isRtl ? 'left-0' : 'right-0'} mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200/90 py-2 z-50 animate-in fade-in zoom-in-95 duration-150`}>
+              {/* Header */}
+              <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-black text-slate-900">
+                    {isRtl ? 'الإشعارات والتنبيهات' : 'Notifications'}
+                  </span>
+                  {unreadCount > 0 && (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                      {unreadCount} {isRtl ? 'جديد' : 'nouv.'}
+                    </span>
+                  )}
+                </div>
+                {unreadCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleMarkAllRead}
+                    className="text-[11px] font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer transition"
+                  >
+                    <CheckCheck className="w-3.5 h-3.5" />
+                    <span>{isRtl ? 'تحديد الكل كمقروء' : 'Tout marquer comme lu'}</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Notification List */}
+              <div className="max-h-72 overflow-y-auto divide-y divide-slate-100">
+                {notifications.length === 0 ? (
+                  <div className="py-8 text-center text-xs text-slate-400">
+                    {isRtl ? 'لا توجد إشعارات حالياً' : 'Aucune notification'}
+                  </div>
+                ) : (
+                  notifications.map((notif) => {
+                    const isNew = !notif.is_read;
+                    return (
+                      <div
+                        key={notif.id}
+                        onClick={() => handleNotificationClick(notif)}
+                        className={`px-4 py-3 text-start hover:bg-slate-50 transition cursor-pointer flex items-start gap-3 ${
+                          isNew ? 'bg-emerald-50/30' : ''
+                        }`}
+                      >
+                        {/* Icon */}
+                        <div
+                          className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
+                            notif.type === 'task_assigned'
+                              ? 'bg-emerald-100 text-emerald-700'
+                              : notif.type === 'announcement'
+                              ? 'bg-indigo-100 text-indigo-700'
+                              : notif.type === 'reminder'
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-slate-100 text-slate-600'
+                          }`}
+                        >
+                          {notif.type === 'task_assigned' ? (
+                            <CheckSquare className="w-3.5 h-3.5" />
+                          ) : notif.type === 'announcement' ? (
+                            <Megaphone className="w-3.5 h-3.5" />
+                          ) : (
+                            <Clock className="w-3.5 h-3.5" />
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-1">
+                            <span
+                              className={`text-xs leading-tight truncate ${
+                                isNew ? 'font-black text-slate-900' : 'font-bold text-slate-700'
+                              }`}
+                            >
+                              {notif.title}
+                            </span>
+                            {isNew && (
+                              <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0" />
+                            )}
+                          </div>
+                          <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2 leading-relaxed">
+                            {notif.message}
+                          </p>
+                          <span className="text-[10px] text-slate-400 mt-1 block font-mono">
+                            {formatTimeAgo(notif.created_at)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="px-4 py-2 border-t border-slate-100 bg-slate-50/60 text-center rounded-b-2xl">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotifMenuOpen(false);
+                    navigate('/workspace/tasks');
+                  }}
+                  className="text-xs font-bold text-emerald-700 hover:text-emerald-800 transition cursor-pointer"
+                >
+                  {isRtl ? 'عرض كافة المهام والمذكرات ←' : 'Voir toutes les tâches →'}
                 </button>
               </div>
             </div>

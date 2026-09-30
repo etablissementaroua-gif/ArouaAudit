@@ -5,6 +5,10 @@
     "system_active": "نظام نشط"
   },
   "sections": {
+    "workspace": {
+      "title": "مساحة العمل والمذكرات",
+      "tasks": "مذكرة المهام والتذكيرات"
+    },
     "settings": {
       "title": "إعدادات المنظومة والأمان",
       "academic_years": "السنوات الدراسية",
@@ -56,6 +60,7 @@
     }
   },
   "badges": {
+    "new": "جديد",
     "linked": "مربوط",
     "active": "نشط",
     "followup": "متابعة",
