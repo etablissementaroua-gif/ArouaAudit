@@ -28,19 +28,19 @@ export const SystemSettingsView: React.FC = () => {
           <div className="space-y-2 text-xs">
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">السلك التأهيلي (Lycée Qualifiant)</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">32,000 MAD / سنة</span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">0,00 MAD / سنة</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">الجذع المشترك (Tronc Commun)</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">28,000 MAD / سنة</span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">0,00 MAD / سنة</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">السلك الإعدادي (Collège)</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">24,000 MAD / سنة</span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">0,00 MAD / سنة</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">السلك الابتدائي (Primaire)</span>
-              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">20,000 MAD / سنة</span>
+              <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono">0,00 MAD / سنة</span>
             </div>
           </div>
         </div>
@@ -53,11 +53,11 @@ export const SystemSettingsView: React.FC = () => {
           <div className="space-y-2 text-xs">
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">النقل المدرسي - جميع الخطوط</span>
-              <span className="px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-mono">5,000 MAD / سنة</span>
+              <span className="px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 font-mono">0,00 MAD / سنة</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">الإطعام والمطعم المدرسي</span>
-              <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono">4,500 MAD / سنة</span>
+              <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono">0,00 MAD / سنة</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
               <span className="font-bold text-slate-900">رسوم التسجيل والتأمين السنوي</span>

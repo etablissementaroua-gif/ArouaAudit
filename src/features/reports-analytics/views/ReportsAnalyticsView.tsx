@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   BarChart3,
@@ -43,21 +43,13 @@ export const ReportsAnalyticsView: React.FC = () => {
   const [selectedCycle, setSelectedCycle] = useState('all');
   const [selectedPeriod, setSelectedPeriod] = useState<'monthly' | 'quarterly' | 'annual'>('annual');
 
-  // Sample Audit Analytics Data
-  const reportData: LevelReportItem[] = [
-    { cycle: 'التعليم الأولي', level: 'روض أول (PS)', studentsCount: 14, totalDue: 30950, totalCollected: 26300, remainingBalance: 4650, recoveryRate: 85.0, status: 'optimal' },
-    { cycle: 'التعليم الأولي', level: 'روض ثان (MS)', studentsCount: 16, totalDue: 37650, totalCollected: 31200, remainingBalance: 6450, recoveryRate: 82.8, status: 'optimal' },
-    { cycle: 'التعليم الأولي', level: 'تمهيدي كبار (GS)', studentsCount: 22, totalDue: 53850, totalCollected: 42000, remainingBalance: 11850, recoveryRate: 78.0, status: 'good' },
-    { cycle: 'التعليم الابتدائي', level: 'الأول ابتدائي (CP)', studentsCount: 26, totalDue: 69100, totalCollected: 51800, remainingBalance: 17300, recoveryRate: 75.0, status: 'good' },
-    { cycle: 'التعليم الابتدائي', level: 'الثاني ابتدائي (CE1)', studentsCount: 24, totalDue: 65350, totalCollected: 46400, remainingBalance: 18950, recoveryRate: 71.0, status: 'good' },
-    { cycle: 'التعليم الابتدائي', level: 'الثالث ابتدائي (CE2)', studentsCount: 25, totalDue: 69600, totalCollected: 47300, remainingBalance: 22300, recoveryRate: 68.0, status: 'good' },
-    { cycle: 'التعليم الابتدائي', level: 'الرابع ابتدائي (CM1)', studentsCount: 23, totalDue: 64650, totalCollected: 42000, remainingBalance: 22650, recoveryRate: 65.0, status: 'action_needed' },
-    { cycle: 'التعليم الابتدائي', level: 'الخامس ابتدائي (CM2)', studentsCount: 22, totalDue: 62650, totalCollected: 39500, remainingBalance: 23150, recoveryRate: 63.0, status: 'action_needed' },
-    { cycle: 'التعليم الابتدائي', level: 'السادس ابتدائي (CE6)', studentsCount: 24, totalDue: 71350, totalCollected: 49900, remainingBalance: 21450, recoveryRate: 70.0, status: 'good' },
-    { cycle: 'التعليم الإعدادي', level: 'الأولى إعدادي (1AC)', studentsCount: 20, totalDue: 61300, totalCollected: 35500, remainingBalance: 25800, recoveryRate: 57.9, status: 'action_needed' },
-    { cycle: 'التعليم الإعدادي', level: 'الثانية إعدادي (2AC)', studentsCount: 18, totalDue: 57350, totalCollected: 31000, remainingBalance: 26350, recoveryRate: 54.0, status: 'action_needed' },
-    { cycle: 'التعليم الإعدادي', level: 'الثالثة إعدادي (3AC)', studentsCount: 19, totalDue: 62700, totalCollected: 33800, remainingBalance: 28900, recoveryRate: 53.9, status: 'action_needed' }
-  ];
+  // Clean Slate Analytics Data - dynamically populated from real records
+  const [reportData, setReportData] = useState<LevelReportItem[]>([]);
+
+  useEffect(() => {
+    // Zero-data clean slate for live production
+    setReportData([]);
+  }, [selectedYear]);
 
   // Filtered rows
   const filteredData = useMemo(() => {
@@ -249,7 +241,7 @@ export const ReportsAnalyticsView: React.FC = () => {
                   {isRtl ? 'مصاريف التسيير والأجور:' : 'Charges & Masse Salariale :'}
                 </span>
                 <span className="text-sm font-black font-mono text-rose-600">
-                  - 412.000,00 MAD
+                  - 0,00 MAD
                 </span>
               </div>
 
@@ -260,15 +252,15 @@ export const ReportsAnalyticsView: React.FC = () => {
                     {isRtl ? 'فائض السيولة التشغيلي الصافي:' : 'Excédent Net d’Exploitation :'}
                   </span>
                   <span className="text-base font-black font-mono text-emerald-800">
-                    + 236.500,00 MAD
+                    + 0,00 MAD
                   </span>
                 </div>
                 <div className="w-full bg-emerald-200/60 h-2 rounded-full mt-2.5 overflow-hidden">
-                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: '36.5%' }} />
+                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: '0%' }} />
                 </div>
                 <div className="flex justify-between text-[10px] text-emerald-700 font-bold mt-1">
                   <span>{isRtl ? 'هامش الربحية الصافي' : 'Marge nette'}</span>
-                  <span>36.5%</span>
+                  <span>0.0%</span>
                 </div>
               </div>
             </div>
@@ -299,10 +291,10 @@ export const ReportsAnalyticsView: React.FC = () => {
                     <GraduationCap className="w-3.5 h-3.5 text-slate-500" />
                     {isRtl ? 'التمدرس والواجبات المدرسية' : 'Scolarité'}
                   </span>
-                  <span className="font-mono text-slate-900">72.0%</span>
+                  <span className="font-mono text-slate-900">0.0%</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: '72%' }} />
+                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: '0%' }} />
                 </div>
               </div>
 
@@ -313,10 +305,10 @@ export const ReportsAnalyticsView: React.FC = () => {
                     <Bus className="w-3.5 h-3.5 text-amber-600" />
                     {isRtl ? 'أسطول النقل المدرسي' : 'Transport'}
                   </span>
-                  <span className="font-mono text-slate-900">14.0%</span>
+                  <span className="font-mono text-slate-900">0.0%</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '14%' }} />
+                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '0%' }} />
                 </div>
               </div>
 
@@ -327,10 +319,10 @@ export const ReportsAnalyticsView: React.FC = () => {
                     <Utensils className="w-3.5 h-3.5 text-sky-600" />
                     {isRtl ? 'المطعم ونصف الإقامة' : 'Restauration'}
                   </span>
-                  <span className="font-mono text-slate-900">10.0%</span>
+                  <span className="font-mono text-slate-900">0.0%</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-sky-500 h-full rounded-full" style={{ width: '10%' }} />
+                  <div className="bg-sky-500 h-full rounded-full" style={{ width: '0%' }} />
                 </div>
               </div>
 
@@ -341,10 +333,10 @@ export const ReportsAnalyticsView: React.FC = () => {
                     <BookOpen className="w-3.5 h-3.5 text-indigo-600" />
                     {isRtl ? 'اللوازم والمحفظة والكتب' : 'Fournitures'}
                   </span>
-                  <span className="font-mono text-slate-900">4.0%</span>
+                  <span className="font-mono text-slate-900">0.0%</span>
                 </div>
                 <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: '4%' }} />
+                  <div className="bg-indigo-500 h-full rounded-full" style={{ width: '0%' }} />
                 </div>
               </div>
             </div>
@@ -370,7 +362,7 @@ export const ReportsAnalyticsView: React.FC = () => {
             <div className="flex items-center justify-center py-4">
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl font-black font-mono text-slate-900 tracking-tight">
-                  {totals.rate.toFixed(1)}%
+                  {totals.due > 0 ? totals.rate.toFixed(1) : '0.0'}%
                 </div>
                 <span className="text-xs font-bold text-emerald-700 mt-1 block">
                   {isRtl ? 'المعدل العام لتحصيل الرسوم المدرسية' : 'Taux global de recouvrement'}
@@ -437,70 +429,34 @@ export const ReportsAnalyticsView: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs">
-              {filteredData.map((item, idx) => (
-                <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
-                  {/* Cycle & Level */}
-                  <td className="py-3 px-4 text-start whitespace-nowrap">
-                    <span className="font-bold text-slate-900 block text-xs">{item.level}</span>
-                    <span className="text-[10px] text-slate-400 font-medium">{item.cycle}</span>
-                  </td>
-
-                  {/* Students Count */}
-                  <td className="py-3 px-4 text-center font-mono font-bold text-slate-700 whitespace-nowrap">
-                    {item.studentsCount}
-                  </td>
-
-                  {/* Total Due */}
-                  <td className="py-3 px-4 font-mono font-bold text-slate-900 whitespace-nowrap text-start">
-                    {formatMAD(item.totalDue)}
-                  </td>
-
-                  {/* Collected */}
-                  <td className="py-3 px-4 font-mono font-bold text-emerald-700 whitespace-nowrap text-start">
-                    {formatMAD(item.totalCollected)}
-                  </td>
-
-                  {/* Remaining Balance */}
-                  <td className="py-3 px-4 font-mono font-bold text-amber-600 whitespace-nowrap text-start">
-                    {formatMAD(item.remainingBalance)}
-                  </td>
-
-                  {/* Recovery Rate */}
-                  <td className="py-3 px-4 text-center whitespace-nowrap font-mono font-black">
-                    <span
-                      className={`inline-block px-2 py-0.5 rounded-full text-xs ${
-                        item.recoveryRate >= 80
-                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                          : item.recoveryRate >= 65
-                          ? 'bg-blue-50 text-blue-800 border border-blue-200'
-                          : 'bg-amber-50 text-amber-800 border border-amber-200'
-                      }`}
-                    >
-                      {item.recoveryRate.toFixed(1)}%
-                    </span>
-                  </td>
-
-                  {/* Status Badge */}
-                  <td className="py-3 px-4 text-center whitespace-nowrap">
-                    {item.status === 'optimal' ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
-                        <span>{isRtl ? 'ممتاز' : 'Optimal'}</span>
-                      </span>
-                    ) : item.status === 'good' ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
-                        <span>{isRtl ? 'جيد' : 'Bon'}</span>
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-700">
-                        <AlertTriangle className="w-3.5 h-3.5" />
-                        <span>{isRtl ? 'يحتاج متابعة' : 'À suivre'}</span>
-                      </span>
-                    )}
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">
+                    {isRtl ? 'لا توجد بيانات مسجلة في هذا التقرير حالياً (0 معاملات)' : 'Aucune donnée enregistrée pour cette période'}
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredData.map((d, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50/80 transition-colors">
+                    <td className="py-3 px-4 font-bold text-slate-900">{d.level}</td>
+                    <td className="py-3 px-4 text-slate-600 font-medium">{d.studentsCount}</td>
+                    <td className="py-3 px-4 font-mono font-bold text-slate-800">{formatMAD(d.totalDue)}</td>
+                    <td className="py-3 px-4 font-mono font-bold text-emerald-700">{formatMAD(d.totalCollected)}</td>
+                    <td className="py-3 px-4 font-mono font-bold text-amber-600">{formatMAD(d.remainingBalance)}</td>
+                    <td className="py-3 px-4">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-100 text-slate-700">
+                        {d.recoveryRate.toFixed(1)}%
+                      </span>
+                    </td>
+                    <td className="py-3 px-4">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800">
+                        <CheckCircle2 className="w-3 h-3" />
+                        {isRtl ? 'ممتاز' : 'Optimal'}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
             {/* Table Footer with Summary Totals */}
             <tfoot className="bg-slate-50/90 border-t-2 border-slate-200 font-bold text-xs">

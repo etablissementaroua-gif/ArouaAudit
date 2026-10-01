@@ -47,7 +47,7 @@ export const revenueAnalyticsService = {
     const monthlyList = await this.getMonthlyTheoreticalCA(academicYear);
     const years = await systemSettingsService.getAcademicYears();
     const currentYear = years.find(y => y.code === academicYear) || years[0];
-    const targetCA = currentYear?.target_annual_ca || 4800000;
+    const targetCA = Number(currentYear?.target_annual_ca) || 0;
 
     const monthlyTuitionTotal = monthlyList.reduce((acc, c) => acc + c.tuition_subtotal, 0);
     const monthlyTransportTotal = monthlyList.reduce((acc, c) => acc + c.transport_subtotal, 0);

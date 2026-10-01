@@ -17,7 +17,7 @@ try {
       'aroua_alimentations_2026/2027'
     ];
     keysToRemove.forEach((k) => localStorage.removeItem(k));
-    localStorage.setItem('aroua_production_clean_slate_2026', 'v1');
+    localStorage.setItem('aroua_production_clean_slate_2026', 'v2');
     console.info('[ArouaAudit] Clean-slate production mode active: stale demo storage purged.');
   }
 } catch (e) {

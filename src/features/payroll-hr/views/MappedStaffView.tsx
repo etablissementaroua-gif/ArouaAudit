@@ -3,12 +3,7 @@ import { StatCard } from '../../../shared/components/StatCard';
 import { Users, UserCheck, ShieldAlert, Sparkles } from 'lucide-react';
 
 export const MappedStaffView: React.FC = () => {
-  const staff = [
-    { id: 'STF-01', name: 'رشيد العلمي', role: 'أستاذ الرياضيات', cycle: 'ثانوي تأهيلي', cnss: '18992011', status: 'مربوط بنجاح' },
-    { id: 'STF-02', name: 'حميد الناصري', role: 'سائق حافلة النقل', cycle: 'الخدمات اللوجستية', cnss: '22883344', status: 'مربوط بنجاح' },
-    { id: 'STF-03', name: 'سناء بنكيران', role: 'أستاذة الفرنسية', cycle: 'إعدادي', cnss: '44556677', status: 'مربوط بنجاح' },
-    { id: 'STF-04', name: 'فاطمة الزهراء', role: 'مسؤولة الصندوق والإدارة', cycle: 'الإدارة العامة', cnss: '99887711', status: 'مربوط بنجاح' }
-  ];
+  const staff: any[] = [];
 
   return (
     <div className="space-y-6">
@@ -20,10 +15,10 @@ export const MappedStaffView: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="إجمالي الأطر المعتمدة" value="4 أطر" subtitle="مسجلون بالمنظومة" icon={Users} variant="default" />
-        <StatCard title="المطابقة مع arouaschools" value="100%" subtitle="اتساق كامل للبيانات" icon={UserCheck} variant="income" />
-        <StatCard title="المسجلون في CNSS" value="4 أطر" subtitle="التغطية الاجتماعية" icon={Sparkles} variant="pending" />
-        <StatCard title="ديون الموظفين المغادرين" value="2,400 MAD" subtitle="تحت المتابعة" icon={ShieldAlert} variant="expense" />
+        <StatCard title="إجمالي الأطر المعتمدة" value="0 أطر" subtitle="مسجلون بالمنظومة" icon={Users} variant="default" />
+        <StatCard title="المطابقة مع arouaschools" value="0%" subtitle="اتساق كامل للبيانات" icon={UserCheck} variant="income" />
+        <StatCard title="المسجلون في CNSS" value="0 أطر" subtitle="التغطية الاجتماعية" icon={Sparkles} variant="pending" />
+        <StatCard title="ديون الموظفين المغادرين" value="0,00 MAD" subtitle="تحت المتابعة" icon={ShieldAlert} variant="expense" />
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white/60 backdrop-blur-md">
@@ -38,22 +33,30 @@ export const MappedStaffView: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {staff.map((s) => (
-              <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
-                <td className="px-4 py-3">
-                  <div className="font-bold text-slate-900">{s.name}</div>
-                  <div className="font-mono text-xs text-emerald-700">{s.id}</div>
-                </td>
-                <td className="px-4 py-3 text-slate-700">{s.role}</td>
-                <td className="px-4 py-3 text-slate-500 text-xs">{s.cycle}</td>
-                <td className="px-4 py-3 font-mono text-xs text-slate-700">{s.cnss}</td>
-                <td className="px-4 py-3 text-left">
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    🟢 {s.status}
-                  </span>
+            {staff.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="py-8 text-center text-slate-400 text-xs">
+                  لا توجد أطر مربوطة حالياً
                 </td>
               </tr>
-            ))}
+            ) : (
+              staff.map((s) => (
+                <tr key={s.id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="px-4 py-3">
+                    <div className="font-bold text-slate-900">{s.name}</div>
+                    <div className="font-mono text-xs text-emerald-700">{s.id}</div>
+                  </td>
+                  <td className="px-4 py-3 text-slate-700">{s.role}</td>
+                  <td className="px-4 py-3 text-slate-500 text-xs">{s.cycle}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-slate-700">{s.cnss}</td>
+                  <td className="px-4 py-3 text-left">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      {s.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

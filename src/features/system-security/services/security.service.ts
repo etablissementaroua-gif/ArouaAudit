@@ -83,7 +83,6 @@ let mockUsers: UserProfile[] = [
     email: 'admin@arouaschools.ma',
     role_code: 'super_admin',
     is_suspended: false,
-    last_login_at: '2026-09-29 18:30:12',
     created_at: '2026-09-01',
   },
   {
@@ -94,7 +93,6 @@ let mockUsers: UserProfile[] = [
     email: 'finance@arouaschools.ma',
     role_code: 'finance_director',
     is_suspended: false,
-    last_login_at: '2026-09-29 16:15:00',
     created_at: '2026-09-01',
   },
   {
@@ -105,7 +103,6 @@ let mockUsers: UserProfile[] = [
     email: 'comptable@arouaschools.ma',
     role_code: 'accountant',
     is_suspended: false,
-    last_login_at: '2026-09-29 14:22:45',
     created_at: '2026-09-05',
   },
   {
@@ -116,7 +113,6 @@ let mockUsers: UserProfile[] = [
     email: 'caisse1@arouaschools.ma',
     role_code: 'cashier',
     is_suspended: false,
-    last_login_at: '2026-09-29 17:05:10',
     created_at: '2026-09-08',
   },
   {
@@ -127,7 +123,6 @@ let mockUsers: UserProfile[] = [
     email: 'caisse2@arouaschools.ma',
     role_code: 'cashier',
     is_suspended: false,
-    last_login_at: '2026-09-28 18:00:00',
     created_at: '2026-09-08',
   },
   {
@@ -138,7 +133,6 @@ let mockUsers: UserProfile[] = [
     email: 'rh@arouaschools.ma',
     role_code: 'hr_manager',
     is_suspended: false,
-    last_login_at: '2026-09-29 11:40:19',
     created_at: '2026-09-10',
   },
 ];

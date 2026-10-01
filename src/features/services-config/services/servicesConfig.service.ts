@@ -24,15 +24,11 @@ export const servicesConfigService = {
       if (error) throw error;
 
       // أعداد التلاميذ المسندين لكل خط
-      const mockAssignedCounts: Record<string, number> = {
-        'LIGNE-01': 24,
-        'LIGNE-02': 28,
-        'LIGNE-03': 18,
-      };
+      const mockAssignedCounts: Record<string, number> = {};
 
       return (data || []).map((line) => {
         const capacity = line.capacity || 25;
-        const enrolled = mockAssignedCounts[line.line_code] || Math.round(capacity * 0.75);
+        const enrolled = mockAssignedCounts[line.line_code] || 0;
         const rate = Math.round((enrolled / capacity) * 100);
 
         return {
@@ -116,16 +112,12 @@ export const servicesConfigService = {
       if (error) throw error;
 
       // أعداد المشتركين المسجلين لكل خطة
-      const mockEnrolled: Record<string, number> = {
-        'PLAN-MENS-FULL': 110,
-        'PLAN-TRIM-FULL': 68,
-        'PLAN-CARNET-10': 35,
-      };
+      const mockEnrolled: Record<string, number> = {};
 
       return (data || []).map((plan) => ({
         ...plan,
         fee_amount: Number(plan.fee_amount) || 0,
-        enrolled_count: mockEnrolled[plan.plan_code] || 25,
+        enrolled_count: mockEnrolled[plan.plan_code] || 0,
       }));
     } catch (err) {
       console.error('Error fetching canteen plans:', err);

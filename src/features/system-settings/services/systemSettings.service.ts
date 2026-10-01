@@ -8,9 +8,7 @@ import {
 
 // Initial Seeds in case of offline/local state
 const seedYears: AcademicYear[] = [
-  { id: 'yr-1', code: '2025/2026', start_date: '2025-09-01', end_date: '2026-06-30', is_current: false, target_annual_ca: 4200000 },
-  { id: 'yr-2', code: '2026/2027', start_date: '2026-09-01', end_date: '2027-06-30', is_current: true, target_annual_ca: 4800000 },
-  { id: 'yr-3', code: '2027/2028', start_date: '2027-09-01', end_date: '2028-06-30', is_current: false, target_annual_ca: 5200000 }
+  { id: 'yr-2', code: '2026/2027', start_date: '2026-09-01', end_date: '2027-06-30', is_current: true, target_annual_ca: 0 }
 ];
 
 const seedCycles: EducationalCycle[] = [
@@ -35,18 +33,18 @@ const seedLevels: AcademicLevelClass[] = [
 ];
 
 const seedTarifs: LevelTarif[] = [
-  { level_code: 'PS', academic_year_code: '2026/2027', tuition_monthly: 1600, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 600, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [{ id: '1', item_name: 'دفاتر رسم وتلوين', quantity: 2, mandatory: true }, { id: '2', item_name: 'صلصال طبيعي', quantity: 1, mandatory: true }] },
-  { level_code: 'MS', academic_year_code: '2026/2027', tuition_monthly: 1700, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 700, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [{ id: '1', item_name: 'أوراق مقواة وكراسات', quantity: 3, mandatory: true }] },
-  { level_code: 'GS', academic_year_code: '2026/2027', tuition_monthly: 1800, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 800, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [{ id: '1', item_name: 'كراسة الخط الأولي', quantity: 1, mandatory: true }] },
-  { level_code: 'CP', academic_year_code: '2026/2027', tuition_monthly: 2000, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 950, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [{ id: '1', item_name: 'المقرر البيداغوجي الأساسي', quantity: 1, mandatory: true }, { id: '2', item_name: 'دفاتر 50 ورقة', quantity: 6, mandatory: true }] },
-  { level_code: 'CE1', academic_year_code: '2026/2027', tuition_monthly: 2050, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1000, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [] },
-  { level_code: 'CE2', academic_year_code: '2026/2027', tuition_monthly: 2100, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1050, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [] },
-  { level_code: 'CM1', academic_year_code: '2026/2027', tuition_monthly: 2150, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1100, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [] },
-  { level_code: 'CM2', academic_year_code: '2026/2027', tuition_monthly: 2200, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1150, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [] },
-  { level_code: 'CE6', academic_year_code: '2026/2027', tuition_monthly: 2300, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1250, registration_fee: 1500, re_registration_fee: 1000, supplies_checklist: [] },
-  { level_code: '1AC', academic_year_code: '2026/2027', tuition_monthly: 2400, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1400, registration_fee: 1800, re_registration_fee: 1200, supplies_checklist: [] },
-  { level_code: '2AC', academic_year_code: '2026/2027', tuition_monthly: 2500, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1500, registration_fee: 1800, re_registration_fee: 1200, supplies_checklist: [] },
-  { level_code: '3AC', academic_year_code: '2026/2027', tuition_monthly: 2600, transport_monthly: 500, canteen_monthly: 450, supplies_fee: 1600, registration_fee: 1800, re_registration_fee: 1200, supplies_checklist: [] }
+  { level_code: 'PS', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'MS', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'GS', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'CP', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'CE1', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'CE2', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'CM1', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'CM2', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: 'CE6', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: '1AC', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: '2AC', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] },
+  { level_code: '3AC', academic_year_code: '2026/2027', tuition_monthly: 0, transport_monthly: 0, canteen_monthly: 0, supplies_fee: 0, registration_fee: 0, re_registration_fee: 0, supplies_checklist: [] }
 ];
 
 export const systemSettingsService = {
@@ -86,7 +84,7 @@ export const systemSettingsService = {
       start_date: year.start_date || '2028-09-01',
       end_date: year.end_date || '2029-06-30',
       is_current: Boolean(year.is_current),
-      target_annual_ca: Number(year.target_annual_ca) || 5000000,
+      target_annual_ca: Number(year.target_annual_ca) || 0,
       created_at: new Date().toISOString()
     };
 

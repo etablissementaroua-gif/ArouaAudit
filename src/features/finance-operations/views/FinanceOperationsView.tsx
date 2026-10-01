@@ -14,10 +14,10 @@ export const FinanceOperationsView: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="المتأخرات العالقة (Impayés)" value="56,500 MAD" subtitle="3 ملفات بانتظار التحصيل" icon={AlertTriangle} variant="expense" />
-        <StatCard title="التخفيضات الممنوحة (Remises)" value="12,000 MAD" subtitle="تخفيضات الأخوة والتميز" icon={Gift} variant="pending" />
+        <StatCard title="المتأخرات العالقة (Impayés)" value="0,00 MAD" subtitle="0 ملفات بانتظار التحصيل" icon={AlertTriangle} variant="expense" />
+        <StatCard title="التخفيضات الممنوحة (Remises)" value="0,00 MAD" subtitle="تخفيضات الأخوة والتميز" icon={Gift} variant="pending" />
         <StatCard title="الإعفاءات الدراسية" value="0.00 MAD" subtitle="حالات استثنائية" icon={FileSpreadsheet} variant="default" />
-        <StatCard title="الأرصدة الزائدة (Trop-perçus)" value="3,200 MAD" subtitle="أرصدة دائنة لأولياء الأمور" icon={DollarSign} variant="income" />
+        <StatCard title="الأرصدة الزائدة (Trop-perçus)" value="0,00 MAD" subtitle="أرصدة دائنة لأولياء الأمور" icon={DollarSign} variant="income" />
       </div>
 
       <div className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md">
@@ -38,30 +38,8 @@ export const FinanceOperationsView: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-slate-100 text-xs">
               <tr>
-                <td className="py-3 font-bold text-slate-900">حمزة الشرايبي (R134567890)</td>
-                <td className="py-3 text-slate-700">2Bac SM-A</td>
-                <td className="py-3 font-mono text-slate-800">41,500 MAD</td>
-                <td className="py-3 font-mono font-bold text-rose-600">21,500 MAD</td>
-                <td className="py-3 text-left">
-                  <span className="px-2.5 py-1 rounded bg-rose-50 text-rose-700 border border-rose-200 font-semibold">إشعار تذكير 2</span>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-bold text-slate-900">سامي الإدريسي العلمي (K138765432)</td>
-                <td className="py-3 text-slate-700">3Collège-2</td>
-                <td className="py-3 font-mono text-slate-800">29,000 MAD</td>
-                <td className="py-3 font-mono font-bold text-rose-600">15,000 MAD</td>
-                <td className="py-3 text-left">
-                  <span className="px-2.5 py-1 rounded bg-amber-50 text-amber-700 border border-amber-200 font-semibold">قيد المتابعة</span>
-                </td>
-              </tr>
-              <tr>
-                <td className="py-3 font-bold text-slate-900">هبة بلقاسم (G149922110)</td>
-                <td className="py-3 text-slate-700">1Bac ScExp</td>
-                <td className="py-3 font-mono text-slate-800">39,500 MAD</td>
-                <td className="py-3 font-mono font-bold text-rose-600">20,000 MAD</td>
-                <td className="py-3 text-left">
-                  <span className="px-2.5 py-1 rounded bg-amber-50 text-amber-700 border border-amber-200 font-semibold">قيد المتابعة</span>
+                <td colSpan={5} className="py-8 text-center text-slate-400 font-medium">
+                  لا توجد ملفات متأخرات عالقة حالياً (0 ملفات)
                 </td>
               </tr>
             </tbody>
