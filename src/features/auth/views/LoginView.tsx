@@ -29,8 +29,8 @@ export const LoginView: React.FC = () => {
   const { loginUser, isAuthenticated, currentUser } = usePermissions();
   const isRtl = i18n.language === 'ar' || !i18n.language?.startsWith('fr');
 
-  const [email, setEmail] = useState('admin@arouaschools.ma');
-  const [password, setPassword] = useState('ArouaAudit2026!');
+  const [email, setEmail] = useState('mossaabel@arouaaudit.com');
+  const [password, setPassword] = useState('Mo1356365508');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -63,6 +63,23 @@ export const LoginView: React.FC = () => {
 
     try {
       let matchedUser: UserProfile | undefined;
+
+      // 0. Direct match for administrator Mossaab
+      if (email.toLowerCase().trim() === 'mossaabel@arouaaudit.com') {
+        if (password !== 'Mo1356365508') {
+          setErrorMessage(isRtl ? 'كلمة المرور غير صحيحة. يرجى التحقق من كلمة المرور.' : 'Mot de passe incorrect.');
+          setLoading(false);
+          return;
+        }
+        matchedUser = {
+          id: 'usr-mossaabel',
+          full_name: 'مصعب (المدير العام والمشرف الأعلى)',
+          email: 'mossaabel@arouaaudit.com',
+          role_code: 'super_admin',
+          is_suspended: false,
+        };
+      }
+
 
       // 1. If Supabase is fully configured, attempt cloud sign in
       if (isSupabaseConfigured()) {

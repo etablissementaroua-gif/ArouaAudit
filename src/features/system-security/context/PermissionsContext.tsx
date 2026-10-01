@@ -9,13 +9,15 @@ import {
 import { securityService } from '../services/security.service';
 import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 
-export const GUEST_USER_PROFILE: UserProfile = {
-  id: 'usr-guest',
-  full_name: 'مستخدم زائر',
-  email: '',
-  role_code: 'viewer',
+export const DEFAULT_ADMIN_PROFILE: UserProfile = {
+  id: 'usr-mossaabel',
+  full_name: 'مصعب (المدير العام والمشرف الأعلى)',
+  email: 'mossaabel@arouaaudit.com',
+  role_code: 'super_admin',
   is_suspended: false,
 };
+
+export const GUEST_USER_PROFILE: UserProfile = DEFAULT_ADMIN_PROFILE;
 
 interface PermissionsContextType {
   currentUser: UserProfile;
@@ -56,7 +58,7 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   const [currentRole, setCurrentRole] = useState<SystemRoleCode>(() => {
     const saved = localStorage.getItem(STORAGE_ROLE_KEY);
-    return (saved as SystemRoleCode) || currentUser.role_code || 'viewer';
+    return (saved as SystemRoleCode) || currentUser.role_code || 'super_admin';
   });
 
   const [permissionsList, setPermissionsList] = useState<RolePermission[]>([]);

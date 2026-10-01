@@ -22,59 +22,18 @@ const MOCK_SYSTEM_ROLES: SystemRole[] = [
     is_system_role: true,
     is_active: true,
   },
-  {
-    id: 'role-2',
-    code: 'finance_director',
-    name_ar: 'المدير المالي والمحاسبي',
-    name_fr: 'Directeur Financier & Comptable',
-    description_ar: 'صلاحيات الإشراف المالي، المصادقة على الصرف، والتسويات البنكية',
-    description_fr: 'Supervision financière, validation des décaissements et rapprochements',
-    is_system_role: true,
-    is_active: true,
-  },
-  {
-    id: 'role-3',
-    code: 'accountant',
-    name_ar: 'المحاسب المعتمد',
-    name_fr: 'Comptable Agréé',
-    description_ar: 'تسجيل العمليات، مسير الأجور، إدارة النفقات والوثائق المحاسبية',
-    description_fr: 'Enregistrement des opérations, gestion de la paie et dépenses',
-    is_system_role: true,
-    is_active: true,
-  },
-  {
-    id: 'role-4',
-    code: 'cashier',
-    name_ar: 'أمين الصندوق والتحصيل',
-    name_fr: 'Caissier & Régisseur',
-    description_ar: 'استخلاص الرسوم المدرسية، إصدار وصولات الأداء، ويومية الصندوق',
-    description_fr: 'Encaissement des frais scolaires, émission des reçus officiels',
-    is_system_role: true,
-    is_active: true,
-  },
-  {
-    id: 'role-5',
-    code: 'hr_manager',
-    name_ar: 'مدير الموارد البشرية',
-    name_fr: 'Responsable RH',
-    description_ar: 'مزامنة الكوادر، كشوفات الرواتب، متابعة السلف والديون السابقة',
-    description_fr: 'Gestion du personnel, états de paie et suivi des avances',
-    is_system_role: true,
-    is_active: true,
-  },
-  {
-    id: 'role-6',
-    code: 'viewer',
-    name_ar: 'مستخدم للمعاينة والاطلاع',
-    name_fr: 'Lecteur / Consultation',
-    description_ar: 'صلاحيات قراءة واستعراض التقارير دون إمكانية التعديل أو الصرف',
-    description_fr: 'Consultation seule des tableaux de bord et rapports',
-    is_system_role: true,
-    is_active: true,
-  },
 ];
 
-let mockUsers: UserProfile[] = [];
+let mockUsers: UserProfile[] = [
+  {
+    id: 'usr-mossaabel',
+    full_name: 'مصعب (المدير العام والمشرف الأعلى)',
+    email: 'mossaabel@arouaaudit.com',
+    role_code: 'super_admin',
+    is_suspended: false,
+    created_at: '2026-10-01',
+  },
+];
 
 // Initialize Mock Permissions Matrix
 const buildInitialPermissions = (): RolePermission[] => {

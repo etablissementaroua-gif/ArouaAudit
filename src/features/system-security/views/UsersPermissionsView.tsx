@@ -33,8 +33,8 @@ export const UsersPermissionsView: React.FC = () => {
   const { reloadPermissions } = usePermissions();
   const isRtl = i18n.language === 'ar' || !i18n.language?.startsWith('fr');
 
-  const [activeTab, setActiveTab] = useState<'matrix' | 'users'>('matrix');
-  const [selectedRole, setSelectedRole] = useState<SystemRoleCode>('finance_director');
+  const [activeTab, setActiveTab] = useState<'matrix' | 'users'>('users');
+  const [selectedRole, setSelectedRole] = useState<SystemRoleCode>('super_admin');
   
   const [roles, setRoles] = useState<SystemRole[]>([]);
   const [permissions, setPermissions] = useState<RolePermission[]>([]);
