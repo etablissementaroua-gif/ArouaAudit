@@ -222,6 +222,82 @@ class SecurityService {
   /**
    * Update an individual action permission in the matrix
    */
+  
+  /**
+   * Batch update and save all permissions for a specific role
+   */
+  async saveRolePermissions(
+    roleCode: SystemRoleCode,
+    permissions: RolePermission[]
+  ): Promise<boolean> {
+    // 1. Update in-memory mockPermissions
+    permissions.forEach(p => {
+      const idx = mockPermissions.findIndex(
+        m => m.role_code === roleCode && m.permission_key === p.permission_key
+      );
+      if (idx >= 0) {
+        mockPermissions[idx] = { ...mockPermissions[idx], ...p };
+      } else {
+        mockPermissions.push({
+          id: `perm-${Date.now()}-${p.permission_key}`,
+          role_code: roleCode,
+          permission_key: p.permission_key,
+          can_view: Boolean(p.can_view),
+          can_create: Boolean(p.can_create),
+          can_edit: Boolean(p.can_edit),
+          can_delete: Boolean(p.can_delete),
+          can_export: Boolean(p.can_export),
+          can_print: Boolean(p.can_print),
+        });
+      }
+    });
+
+    try {
+      localStorage.setItem('aroua_role_permissions', JSON.stringify(mockPermissions));
+    } catch {
+      // ignore
+    }
+
+    // 2. Audit log
+    await this.logAuditEvent({
+      user_name: 'مصعب (المدير العام)',
+      user_role: 'super_admin',
+      action_type: 'PERMISSIONS_UPDATED',
+      target_entity: 'role_permissions',
+      entity_id: roleCode,
+      new_values: {
+        role_code: roleCode,
+        total_modules_updated: permissions.length,
+        note: `حفظ شامل وضبط صلاحيات الدور (${roleCode})`,
+      },
+    });
+
+    // 3. Supabase upsert batch
+    if (isSupabaseConfigured()) {
+      try {
+        const rows = permissions.map(p => ({
+          role_code: roleCode,
+          permission_key: p.permission_key,
+          can_view: Boolean(p.can_view),
+          can_create: Boolean(p.can_create),
+          can_edit: Boolean(p.can_edit),
+          can_delete: Boolean(p.can_delete),
+          can_export: Boolean(p.can_export),
+          can_print: Boolean(p.can_print),
+          updated_at: new Date().toISOString(),
+        }));
+
+        await supabase
+          .from('role_permissions')
+          .upsert(rows, { onConflict: 'role_code,permission_key' });
+      } catch (err) {
+        console.warn('Supabase saveRolePermissions error:', err);
+      }
+    }
+
+    return true;
+  }
+
   async updateRolePermission(
     roleCode: SystemRoleCode,
     permissionKey: string,

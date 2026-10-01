@@ -43,6 +43,7 @@ export interface UserProfile {
   id: string;
   auth_user_id?: string;
   employee_id?: string;
+  linked_employee_id?: string;
   employee_name?: string;
   full_name: string;
   email?: string;
@@ -66,6 +67,7 @@ export type AuditActionType =
   | 'RECONCILE' 
   | 'ROLE_CHANGE' 
   | 'PASSWORD_RESET'
+  | 'PERMISSIONS_UPDATED'
   | 'ROLE_CREATE'
   | 'ROLE_DELETE'
   | 'SUSPEND';
