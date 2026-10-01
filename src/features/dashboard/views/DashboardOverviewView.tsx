@@ -43,10 +43,10 @@ export const DashboardOverviewView: React.FC = () => {
 
   const [loading, setLoading] = useState(true);
   const [billingStats, setBillingStats] = useState({
-    totalDue: 142500,
-    totalPaid: 86000,
-    totalBalance: 56500,
-    studentsCount: 38
+    totalDue: 0,
+    totalPaid: 0,
+    totalBalance: 0,
+    studentsCount: 0
   });
   const [checksList, setChecksList] = useState<CheckItem[]>([]);
   const [criticalTasks, setCriticalTasks] = useState<SystemTask[]>([]);
@@ -64,10 +64,17 @@ export const DashboardOverviewView: React.FC = () => {
       if (allStudents && allStudents.length > 0) {
         const calculated = enrollmentService.calculateSummary(allStudents);
         setBillingStats({
-          totalDue: calculated.totalDue || 142500,
-          totalPaid: calculated.totalPaid || 86000,
-          totalBalance: calculated.totalBalance || 56500,
+          totalDue: Number(calculated.totalDue) || 0,
+          totalPaid: Number(calculated.totalPaid) || 0,
+          totalBalance: Number(calculated.totalBalance) || 0,
           studentsCount: allStudents.length
+        });
+      } else {
+        setBillingStats({
+          totalDue: 0,
+          totalPaid: 0,
+          totalBalance: 0,
+          studentsCount: 0
         });
       }
 
@@ -141,12 +148,12 @@ export const DashboardOverviewView: React.FC = () => {
   const totalChecksPendingAmount = React.useMemo(() => {
     return checksList
       .filter((c) => c.status === 'en_portefeuille' || c.status === 'a_deposer')
-      .reduce((sum, c) => sum + (Number(c.amount) || 0), 0) || 195400;
+      .reduce((sum, c) => sum + (Number(c.amount) || 0), 0);
   }, [checksList]);
 
   const pendingChecksCount = checksList.filter(
     (c) => c.status === 'en_portefeuille' || c.status === 'a_deposer'
-  ).length || 8;
+  ).length;
 
   return (
     <div className="space-y-4 animate-fade-in" dir={isRtl ? 'rtl' : 'ltr'}>
@@ -192,7 +199,7 @@ export const DashboardOverviewView: React.FC = () => {
                 {isRtl ? 'سيولة الصندوق' : 'Trésorerie'}
               </span>
               <span className="text-xs font-black font-mono text-slate-900 leading-tight">
-                {caisseSummary?.currentBalance ? formatMAD(caisseSummary.currentBalance) : '95.000,00 MAD'}
+                {caisseSummary?.currentBalance !== undefined ? formatMAD(caisseSummary.currentBalance) : '0,00 MAD'}
               </span>
             </div>
           </div>
@@ -242,7 +249,7 @@ export const DashboardOverviewView: React.FC = () => {
             </div>
           </div>
           <div className="flex items-baseline gap-1 font-mono">
-            <span className="text-xl font-mono font-black text-slate-900 tracking-tight">648.500,00</span>
+            <span className="text-xl font-mono font-black text-slate-900 tracking-tight">{formatMAD(billingStats.totalPaid).replace('MAD', '').trim()}</span>
             <span className="text-[10px] font-bold text-slate-400 font-sans">MAD</span>
           </div>
           <div className="flex items-center justify-between mt-1 pt-1.5 border-t border-slate-100 text-[10px]">
@@ -251,7 +258,7 @@ export const DashboardOverviewView: React.FC = () => {
             </span>
             <span className="font-bold text-emerald-700 flex items-center gap-0.5 font-mono">
               <ArrowUpRight className="w-3 h-3" />
-              +12.4%
+              {billingStats.totalDue > 0 ? Math.round((billingStats.totalPaid / billingStats.totalDue) * 100) + '%' : '0%'}
             </span>
           </div>
         </div>
@@ -277,7 +284,7 @@ export const DashboardOverviewView: React.FC = () => {
               {isRtl ? 'نسبة التحصيل' : 'Taux'}
             </span>
             <span className="font-bold text-emerald-700 font-mono">
-              {Math.round((billingStats.totalPaid / (billingStats.totalDue || 1)) * 100)}% {isRtl ? 'من الرسوم' : ''}
+              {billingStats.totalDue > 0 ? Math.round((billingStats.totalPaid / billingStats.totalDue) * 100) : 0}% {isRtl ? 'من الرسوم' : ''}
             </span>
           </div>
         </div>

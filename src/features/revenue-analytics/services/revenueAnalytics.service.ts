@@ -12,26 +12,9 @@ import {
 } from '../models/revenue.types';
 
 // Fallback seed data for theoretical monthly CA
-const seedTheoreticalCA: MonthlyTheoreticalCA[] = [
-  { academic_level: 'PS', level_name_ar: 'روض أول (صغار)', students_count: 14, tuition_subtotal: 22400, transport_subtotal: 4500, canteen_subtotal: 4050, monthly_total: 30950 },
-  { academic_level: 'MS', level_name_ar: 'روض ثان (متوسط)', students_count: 16, tuition_subtotal: 27200, transport_subtotal: 5500, canteen_subtotal: 4950, monthly_total: 37650 },
-  { academic_level: 'GS', level_name_ar: 'تمهيدي (كبار)', students_count: 22, tuition_subtotal: 39600, transport_subtotal: 7500, canteen_subtotal: 6750, monthly_total: 53850 },
-  { academic_level: 'CP', level_name_ar: 'الأول ابتدائي', students_count: 26, tuition_subtotal: 52000, transport_subtotal: 9000, canteen_subtotal: 8100, monthly_total: 69100 },
-  { academic_level: 'CE1', level_name_ar: 'الثاني ابتدائي', students_count: 24, tuition_subtotal: 49200, transport_subtotal: 8500, canteen_subtotal: 7650, monthly_total: 65350 },
-  { academic_level: 'CE2', level_name_ar: 'الثالث ابتدائي', students_count: 25, tuition_subtotal: 52500, transport_subtotal: 9000, canteen_subtotal: 8100, monthly_total: 69600 },
-  { academic_level: 'CM1', level_name_ar: 'الرابع ابتدائي', students_count: 23, tuition_subtotal: 49450, transport_subtotal: 8000, canteen_subtotal: 7200, monthly_total: 64650 },
-  { academic_level: 'CM2', level_name_ar: 'الخامس ابتدائي', students_count: 22, tuition_subtotal: 48400, transport_subtotal: 7500, canteen_subtotal: 6750, monthly_total: 62650 },
-  { academic_level: 'CE6', level_name_ar: 'السادس ابتدائي', students_count: 24, tuition_subtotal: 55200, transport_subtotal: 8500, canteen_subtotal: 7650, monthly_total: 71350 },
-  { academic_level: '1AC', level_name_ar: 'الأولى إعدادي', students_count: 20, tuition_subtotal: 48000, transport_subtotal: 7000, canteen_subtotal: 6300, monthly_total: 61300 },
-  { academic_level: '2AC', level_name_ar: 'الثانية إعدادي', students_count: 18, tuition_subtotal: 45000, transport_subtotal: 6500, canteen_subtotal: 5850, monthly_total: 57350 },
-  { academic_level: '3AC', level_name_ar: 'الثالثة إعدادي', students_count: 19, tuition_subtotal: 49400, transport_subtotal: 7000, canteen_subtotal: 6300, monthly_total: 62700 }
-];
+const seedTheoreticalCA: MonthlyTheoreticalCA[] = [];
 
-const seedAlimentations: CaisseAlimentation[] = [
-  { id: 'alim-01', alimentation_date: '2026-09-01', amount: 50000, source: 'apport_personnel', destination_account: 'caisse_centrale', agent_name: 'المسير العام', motif: 'ضخ سيولة انطلاق الموسم الدراسي 2026/2027', receipt_reference: 'ALIM-2026-001', academic_year: '2026/2027' },
-  { id: 'alim-02', alimentation_date: '2026-09-15', amount: 30000, source: 'virement_bancaire', destination_account: 'caisse_centrale', agent_name: 'إدارة الحسابات', motif: 'تغذية صندوق الطوارئ ومصاريف البداية', receipt_reference: 'ALIM-2026-002', academic_year: '2026/2027' },
-  { id: 'alim-03', alimentation_date: '2026-09-25', amount: 15000, source: 'recouvrement', destination_account: 'caisse_centrale', agent_name: 'أمين الصندوق', motif: 'استرداد تسبيقات وسيولة تشغيلية', receipt_reference: 'ALIM-2026-003', academic_year: '2026/2027' }
-];
+const seedAlimentations: CaisseAlimentation[] = [];
 
 export const revenueAnalyticsService = {
   // 1. Monthly Theoretical CA by level
@@ -56,7 +39,7 @@ export const revenueAnalyticsService = {
     }
 
     const local = localStorage.getItem('aroua_theoretical_ca_' + academicYear);
-    return local ? JSON.parse(local) : seedTheoreticalCA;
+    return local ? JSON.parse(local) : [];
   },
 
   // 2. Annual CA Summary and Target Comparison
@@ -155,7 +138,7 @@ export const revenueAnalyticsService = {
     }
 
     const local = localStorage.getItem('aroua_alimentations_' + academicYear);
-    return local ? JSON.parse(local) : seedAlimentations;
+    return local ? JSON.parse(local) : [];
   },
 
   // 5. Record New Alimentation

@@ -9,11 +9,7 @@ import {
 } from '../models/reportsAnalytics.types';
 import { enrollmentService } from '../../student-enrollment/services/enrollmentService';
 
-const DEMO_FINANCIAL_SUMMARY: FinancialSummaryReport[] = [
-  { period: '2026-07', totalRevenue: 95000,  totalExpenses: 62000,  netSurplus: 33000,  collectionRate: 72, totalImpayes: 18000, payrollCost: 38000 },
-  { period: '2026-08', totalRevenue: 112000, totalExpenses: 71000,  netSurplus: 41000,  collectionRate: 79, totalImpayes: 14500, payrollCost: 40000 },
-  { period: '2026-09', totalRevenue: 238000, totalExpenses: 125000, netSurplus: 113000, collectionRate: 88, totalImpayes: 9800,  payrollCost: 42000 },
-];
+const DEMO_FINANCIAL_SUMMARY: FinancialSummaryReport[] = [];
 
 const ARABIC_MONTHS: Record<string, string> = {
   '01': 'يناير', '02': 'فبراير', '03': 'مارس', '04': 'أبريل',
@@ -23,13 +19,13 @@ const ARABIC_MONTHS: Record<string, string> = {
 
 export const reportsAnalyticsService = {
   async getFinancialSummary(filter?: Partial<ReportExportFilter>): Promise<FinancialSummaryReport[]> {
-    if (!isSupabaseConfigured()) return DEMO_FINANCIAL_SUMMARY;
+    if (!isSupabaseConfigured()) return [];
     try {
       const { data, error } = await supabase
         .from('caisse_transactions')
         .select('transaction_date, type, amount')
         .order('transaction_date', { ascending: true });
-      if (error || !data || data.length === 0) return DEMO_FINANCIAL_SUMMARY;
+      if (error || !data || data.length === 0) return [];
       const monthMap: Record<string, { revenue: number; expenses: number }> = {};
       data.forEach((row: any) => {
         const month = (row.transaction_date as string).substring(0, 7);
@@ -47,9 +43,7 @@ export const reportsAnalyticsService = {
         totalImpayes: Math.round(vals.revenue * 0.07),
         payrollCost: Math.round(vals.expenses * 0.38)
       }));
-    } catch {
-      return DEMO_FINANCIAL_SUMMARY;
-    }
+    } catch { return []; }
   },
 
   async getCollectionRateMetrics(academicYear = '2026/2027'): Promise<CollectionRateMetrics> {

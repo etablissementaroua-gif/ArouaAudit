@@ -228,7 +228,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           </span>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono font-black text-xs shadow-2xs">
             <Wallet className="w-3 h-3 text-emerald-600" />
-            <span>MAD {summary?.currentBalance ? formatMAD(summary.currentBalance).replace('MAD', '').trim() : '95.000,00'}</span>
+            <span>MAD {summary?.currentBalance !== undefined ? formatMAD(summary.currentBalance).replace('MAD', '').trim() : '0,00'}</span>
           </div>
         </div>
 

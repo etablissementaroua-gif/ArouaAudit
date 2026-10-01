@@ -153,7 +153,7 @@ export const StudentEnrollmentView: React.FC = () => {
           </div>
           <div className="flex items-baseline gap-1.5 font-mono">
             <span className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-              {summary?.totalDue ? formatMAD(summary.totalDue).replace('MAD', '').trim() : '142.500,00'}
+              {summary?.totalDue !== undefined ? formatMAD(summary.totalDue).replace('MAD', '').trim() : '0,00'}
             </span>
             <span className="text-xs font-bold text-slate-500 font-sans">MAD</span>
           </div>
@@ -170,7 +170,7 @@ export const StudentEnrollmentView: React.FC = () => {
           </div>
           <div className="flex items-baseline gap-1.5 font-mono">
             <span className="text-2xl sm:text-3xl font-black text-emerald-700 tracking-tight">
-              {summary?.totalPaid ? formatMAD(summary.totalPaid).replace('MAD', '').trim() : '86.000,00'}
+              {summary?.totalPaid !== undefined ? formatMAD(summary.totalPaid).replace('MAD', '').trim() : '0,00'}
             </span>
             <span className="text-xs font-bold text-emerald-600 font-sans">MAD</span>
           </div>
@@ -187,7 +187,7 @@ export const StudentEnrollmentView: React.FC = () => {
           </div>
           <div className="flex items-baseline gap-1.5 font-mono">
             <span className="text-2xl sm:text-3xl font-black text-amber-600 tracking-tight">
-              {summary?.totalBalance ? formatMAD(summary.totalBalance).replace('MAD', '').trim() : '56.500,00'}
+              {summary?.totalBalance !== undefined ? formatMAD(summary.totalBalance).replace('MAD', '').trim() : '0,00'}
             </span>
             <span className="text-xs font-bold text-amber-500 font-sans">MAD</span>
           </div>
