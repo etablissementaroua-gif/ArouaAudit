@@ -53,13 +53,51 @@ export const systemSettingsService = {
     if (isSupabaseConfigured()) {
       try {
         const { data, error } = await supabase.from('academic_years').select('*').order('start_date', { ascending: false });
-        if (!error && data && data.length > 0) return data as AcademicYear[];
+        if (!error && data && data.length > 0) {
+          return (data as any[]).map(year => {
+            const raw = Number(year.target_annual_ca) || 0;
+            // Purge dummy mock targets (4200000, 4800000, 5200000)
+            const target = (raw === 4200000 || raw === 4800000 || raw === 5200000) ? 0 : raw;
+            return {
+              ...year,
+              target_annual_ca: target
+            };
+          }) as AcademicYear[];
+        }
       } catch (err) {
         console.warn('Academic years fetch fallback:', err);
       }
     }
     const local = localStorage.getItem('aroua_academic_years');
     return local ? JSON.parse(local) : seedYears;
+  },
+
+  async deleteAcademicYear(code: string): Promise<boolean> {
+    if (code === '2026/2027') return false;
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('academic_years').delete().eq('code', code);
+      } catch (err) {
+        console.warn('Supabase deleteAcademicYear error:', err);
+      }
+    }
+    const years = await this.getAcademicYears();
+    const updated = years.filter(y => y.code !== code);
+    localStorage.setItem('aroua_academic_years', JSON.stringify(updated));
+    return true;
+  },
+
+  async purgeMockAcademicYears(): Promise<boolean> {
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('academic_years').update({ target_annual_ca: 0 }).neq('id', '00000000-0000-0000-0000-000000000000');
+        await supabase.from('academic_years').delete().in('code', ['2025/2026', '2027/2028']);
+      } catch (err) {
+        console.warn('Supabase purgeMockAcademicYears error:', err);
+      }
+    }
+    localStorage.removeItem('aroua_academic_years');
+    return true;
   },
 
   async setActiveAcademicYear(code: string): Promise<boolean> {

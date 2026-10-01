@@ -1,7 +1,9 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { 
   Calendar, 
-  Plus, 
+  Plus,
+  Trash2,
+  RotateCcw, 
   CheckCircle2, 
   DollarSign, 
   Layers, 
@@ -27,7 +29,7 @@ export const AcademicYearsView: React.FC = () => {
   const [formCode, setFormCode] = useState<string>('');
   const [formStartDate, setFormStartDate] = useState<string>('2027-09-01');
   const [formEndDate, setFormEndDate] = useState<string>('2028-06-30');
-  const [formTargetCA, setFormTargetCA] = useState<number>(5000000);
+  const [formTargetCA, setFormTargetCA] = useState<number>(0);
   const [formIsCurrent, setFormIsCurrent] = useState<boolean>(false);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -45,6 +47,21 @@ export const AcademicYearsView: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const [purging, setPurging] = useState(false);
+  const handlePurgeMockYears = async () => {
+    setPurging(true);
+    await systemSettingsService.purgeMockAcademicYears();
+    await loadYears();
+    setPurging(false);
+    showSuccess('تم تصفير الأهداف المالية وحذف السنوات الدراسية الوهمية بنجاح');
+  };
+
+  const handleDeleteYear = async (code: string) => {
+    await systemSettingsService.deleteAcademicYear(code);
+    await loadYears();
+    showSuccess(`تم حذف السنة الدراسية ${code} بنجاح`);
   };
 
   const handleSetActive = async (code: string) => {
@@ -87,7 +104,7 @@ export const AcademicYearsView: React.FC = () => {
     setFormCode('');
     setFormStartDate('2027-09-01');
     setFormEndDate('2028-06-30');
-    setFormTargetCA(5000000);
+    setFormTargetCA(0);
     setFormIsCurrent(false);
     setFormError(null);
   };
@@ -123,6 +140,15 @@ export const AcademicYearsView: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
+          <button
+            onClick={handlePurgeMockYears}
+            disabled={purging}
+            className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 rounded-xl font-bold text-xs transition shadow-xs cursor-pointer"
+            title="تصفير الهدف السنوي وحذف السنوات الوهمية"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 text-rose-600 ${purging ? 'animate-spin' : ''}`} />
+            <span>تصفير الأهداف وحذف السنوات الوهمية</span>
+          </button>
           <button
             onClick={() => setIsModalOpen(true)}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 cursor-pointer"
@@ -252,13 +278,22 @@ export const AcademicYearsView: React.FC = () => {
                           معتمدة افتراضياً
                         </span>
                       ) : (
-                        <button
-                          onClick={() => handleSetActive(year.code)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 text-slate-700 text-xs font-medium border border-slate-200 hover:border-emerald-300 transition-all cursor-pointer"
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
-                          تعيين كسنة معتمدة للحسابات
-                        </button>
+                        <div className="inline-flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => handleSetActive(year.code)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 text-slate-700 text-xs font-medium border border-slate-200 hover:border-emerald-300 transition-all cursor-pointer"
+                          >
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+                            تعيين كسنة معتمدة للحسابات
+                          </button>
+                          <button
+                            onClick={() => handleDeleteYear(year.code)}
+                            className="inline-flex items-center p-1.5 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 border border-rose-200 transition-colors cursor-pointer"
+                            title="حذف هذه السنة"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       )}
                     </td>
                   </tr>
