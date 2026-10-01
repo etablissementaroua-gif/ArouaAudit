@@ -17,7 +17,13 @@ export const DEFAULT_ADMIN_PROFILE: UserProfile = {
   is_suspended: false,
 };
 
-export const GUEST_USER_PROFILE: UserProfile = DEFAULT_ADMIN_PROFILE;
+export const GUEST_USER_PROFILE: UserProfile = {
+  id: 'usr-guest',
+  full_name: 'زائر غير مسجل',
+  email: '',
+  role_code: 'viewer',
+  is_suspended: false,
+};
 
 interface PermissionsContextType {
   currentUser: UserProfile;
@@ -48,7 +54,10 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
     try {
       const savedUser = localStorage.getItem(STORAGE_USER_KEY);
       if (savedUser) {
-        return JSON.parse(savedUser);
+        const parsed = JSON.parse(savedUser);
+        if (parsed && parsed.email && parsed.id !== 'usr-guest') {
+          return parsed;
+        }
       }
     } catch {
       // ignore
@@ -58,7 +67,7 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   const [currentRole, setCurrentRole] = useState<SystemRoleCode>(() => {
     const saved = localStorage.getItem(STORAGE_ROLE_KEY);
-    return (saved as SystemRoleCode) || currentUser.role_code || 'super_admin';
+    return (saved as SystemRoleCode) || currentUser.role_code || 'viewer';
   });
 
   const [permissionsList, setPermissionsList] = useState<RolePermission[]>([]);

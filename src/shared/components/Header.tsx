@@ -241,11 +241,15 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         {/* Executive User Badge & Fast Logout */}
         <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-200">
           <div className="w-6 h-6 rounded-lg bg-emerald-800 text-white flex items-center justify-center font-bold text-xs shrink-0">
-            م
+            {currentUser?.full_name ? currentUser.full_name.trim().charAt(0) : 'م'}
           </div>
           <div className="flex flex-col text-start">
-            <span className="text-xs font-bold text-slate-900 leading-tight">مصعب</span>
-            <span className="text-[10px] text-emerald-800 font-semibold leading-tight font-mono">المدير العام</span>
+            <span className="text-xs font-bold text-slate-900 leading-tight">
+              {currentUser?.full_name ? currentUser.full_name.split(' ')[0] : 'المستخدم'}
+            </span>
+            <span className="text-[10px] text-emerald-800 font-semibold leading-tight font-mono">
+              {getRoleDisplay(currentRole)}
+            </span>
           </div>
           <button
             type="button"
