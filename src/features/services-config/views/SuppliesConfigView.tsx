@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
+  RotateCcw,
   Plus,
   RefreshCw,
   Package,
@@ -38,6 +39,14 @@ export const SuppliesConfigView: React.FC = () => {
     ],
     academic_year: '2026/2027',
   });
+
+  const [resettingStock, setResettingStock] = useState(false);
+  const handleResetSuppliesStock = async () => {
+    setResettingStock(true);
+    await servicesConfigService.resetAllSuppliesStock();
+    await loadData();
+    setResettingStock(false);
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -124,6 +133,15 @@ export const SuppliesConfigView: React.FC = () => {
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
 
+          <button
+            onClick={handleResetSuppliesStock}
+            disabled={resettingStock}
+            className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 rounded-xl font-bold text-xs transition shadow-xs cursor-pointer"
+            title="تصفير مبيعات وأرباح الحزم إلى 0 MAD"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 text-rose-600 ${resettingStock ? 'animate-spin' : ''}`} />
+            <span>تصفير المبيعات والأرباح (0 MAD)</span>
+          </button>
           <button
             onClick={() => setIsModalOpen(true)}
             className="btn-primary"

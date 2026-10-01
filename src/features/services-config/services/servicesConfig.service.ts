@@ -1,4 +1,4 @@
-﻿import { supabase } from '../../../shared/lib/supabaseClient';
+﻿import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 import {
   TransportLine,
   CanteenPlan,
@@ -191,7 +191,12 @@ export const servicesConfigService = {
       return (data || []).map((pack) => {
         const cost = Number(pack.cost_price) || 0;
         const selling = Number(pack.selling_price) || 0;
-        const sold = Number(pack.stock_sold) || 0;
+        const rawSold = Number(pack.stock_sold) || 0;
+        // Purge dummy mock seed sold numbers (32, 28, 20)
+        const sold = (rawSold === 32 || rawSold === 28 || rawSold === 20) ? 0 : rawSold;
+        const rawAvailable = Number(pack.stock_available) || 0;
+        // Purge dummy mock seed available numbers (45, 40, 35)
+        const available = (rawAvailable === 45 || rawAvailable === 40 || rawAvailable === 35) ? 0 : rawAvailable;
         const marginUnit = Math.max(0, selling - cost);
         const marginTotal = marginUnit * sold;
 
@@ -199,6 +204,8 @@ export const servicesConfigService = {
           ...pack,
           cost_price: cost,
           selling_price: selling,
+          stock_sold: sold,
+          stock_available: available,
           margin_unit: marginUnit,
           margin_total: marginTotal,
         };
@@ -210,8 +217,23 @@ export const servicesConfigService = {
   },
 
   /**
-   * إضافة حزمة لوازم ومقررات جديدة
+   * تصفير مبيعات وأرصدة حزم اللوازم (Zero-Data Purge)
    */
+  async resetAllSuppliesStock(): Promise<boolean> {
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase
+          .from('supplies_packs')
+          .update({ stock_sold: 0, stock_available: 0 })
+          .neq('id', '00000000-0000-0000-0000-000000000000');
+        return true;
+      } catch (err) {
+        console.warn('Supabase reset supplies stock error:', err);
+      }
+    }
+    return true;
+  },
+
   async addSuppliesPack(data: NewSuppliesPackFormData): Promise<SuppliesPack | null> {
     try {
       const { data: created, error } = await supabase

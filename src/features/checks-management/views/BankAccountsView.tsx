@@ -36,7 +36,7 @@ export const BankAccountsView: React.FC = () => {
 
   const [resettingBalances, setResettingBalances] = useState(false);
   const handleResetBalances = async () => {
-    if (!window.confirm('هل أنت متأكد من تصفير أرصدة كافة الحسابات البنكية إلى 0,00 MAD؟')) return;
+    
     setResettingBalances(true);
     await checksManagementService.resetAllAccountBalances();
     await loadAccounts();

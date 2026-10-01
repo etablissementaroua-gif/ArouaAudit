@@ -51,7 +51,7 @@ export const AuditTrailView: React.FC = () => {
 
   const [clearingLogs, setClearingLogs] = useState(false);
   const handleClearLogs = async () => {
-    if (!window.confirm('هل أنت متأكد من تفريغ وتصفير سجل العمليات والتدقيق بالكامل؟')) return;
+    
     setClearingLogs(true);
     await securityService.clearAllAuditLogs();
     setLogs([]);

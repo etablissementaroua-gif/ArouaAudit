@@ -27,7 +27,7 @@ export const AnnualCAView: React.FC = () => {
 
   const [resettingTarget, setResettingTarget] = useState(false);
   const handleResetTarget = async () => {
-    if (!window.confirm('هل أنت متأكد من تصفير الهدف المالي السنوي إلى 0,00 MAD؟')) return;
+    
     setResettingTarget(true);
     await revenueAnalyticsService.resetAnnualTarget(academicYear);
     await loadAnnualData(academicYear);

@@ -35,7 +35,7 @@ export const ExpenseCategoriesView: React.FC = () => {
 
   const [resettingBudgets, setResettingBudgets] = useState(false);
   const handleResetBudgets = async () => {
-    if (!window.confirm('هل أنت متأكد من تصفير مخصصات الميزانية لكافة الأبواب إلى 0,00 MAD؟')) return;
+    
     setResettingBudgets(true);
     await expensesService.resetAllBudgetAllocations();
     await loadData();
