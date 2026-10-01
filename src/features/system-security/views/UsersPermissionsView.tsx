@@ -14,7 +14,8 @@ import {
   AlertCircle,
   Sparkles,
   Sliders,
-  RefreshCw
+  RefreshCw,
+  Trash2
 } from 'lucide-react';
 import { securityService } from '../services/security.service';
 import { 
@@ -94,6 +95,11 @@ export const UsersPermissionsView: React.FC = () => {
     } finally {
       setUpdatingKey(null);
     }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    setUsers(prev => prev.filter(u => u.id !== userId));
+    await securityService.deleteUserProfile(userId);
   };
 
   const handleToggleSuspension = async (userId: string, currentStatus: boolean) => {
@@ -397,7 +403,15 @@ export const UsersPermissionsView: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-xs text-slate-700">
-                  {filteredUsers.map(user => {
+                  {filteredUsers.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="py-12 text-center text-slate-400">
+                        <Users className="w-10 h-10 mx-auto mb-2 text-slate-300 stroke-1" />
+                        <p className="font-semibold text-slate-600">لا توجد حسابات مستخدمين مسجلة حتى الآن</p>
+                        <p className="text-xs text-slate-400 mt-1">يمكنك إضافة أول حساب مستخدم للمنظومة عبر زر «إضافة حساب مستخدم جديد»</p>
+                      </td>
+                    </tr>
+                  ) : filteredUsers.map(user => {
                     const isSuspended = user.is_suspended;
 
                     return (
@@ -453,19 +467,29 @@ export const UsersPermissionsView: React.FC = () => {
                         </td>
 
                         <td className="py-4 px-4 text-center">
-                          <button
-                            type="button"
-                            onClick={() => handleToggleSuspension(user.id, isSuspended)}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer ${
-                              isSuspended
-                                ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
-                                : 'bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200'
-                            }`}
-                          >
-                            {isSuspended 
-                              ? (isRtl ? 'إلغاء التعليق' : 'Réactiver') 
-                              : (isRtl ? 'تعليق الحساب' : 'Suspendre')}
-                          </button>
+                          <div className="flex items-center justify-center gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleSuspension(user.id, isSuspended)}
+                              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer ${
+                                isSuspended
+                                  ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
+                                  : 'bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200'
+                              }`}
+                            >
+                              {isSuspended 
+                                ? (isRtl ? 'إلغاء التعليق' : 'Réactiver') 
+                                : (isRtl ? 'تعليق الحساب' : 'Suspendre')}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteUser(user.id)}
+                              title="حذف الحساب نهائياً"
+                              className="p-1.5 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 transition shadow-xs cursor-pointer"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     );

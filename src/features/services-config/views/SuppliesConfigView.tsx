@@ -2,6 +2,8 @@
 import {
   BookOpen,
   RotateCcw,
+  PackageCheck,
+  Trash2,
   Plus,
   RefreshCw,
   Package,
@@ -225,7 +227,13 @@ export const SuppliesConfigView: React.FC = () => {
 
       {/* 4. Pack Cards 3-Column Grid Matching Benchmark */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {packs.map((pack) => {
+        {packs.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/50">
+            <PackageCheck className="w-10 h-10 mx-auto mb-2 text-slate-300 stroke-1" />
+            <p className="font-semibold text-slate-600">لا توجد حزم لوازم أو كتب مسجلة حالياً</p>
+            <p className="text-xs text-slate-400 mt-1">اضغط على «إضافة حزمة جديدة» لإنشاء حزم المستويات المعتمدة</p>
+          </div>
+        ) : packs.map((pack) => {
           const totalStock = pack.stock_available + pack.stock_sold;
           const soldRate = totalStock > 0 ? Math.round((pack.stock_sold / totalStock) * 100) : 0;
           const items = Array.isArray(pack.items_breakdown) ? pack.items_breakdown : [];

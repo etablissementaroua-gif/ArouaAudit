@@ -127,7 +127,6 @@ export const TarifsPricingGridView: React.FC = () => {
   };
 
     const handleResetToZero = async () => {
-    if (!window.confirm('هل أنت متأكد من رغبتك في تصفير كافة تسعيرات الرسوم إلى 0 MAD؟')) return;
     setLoading(true);
     try {
       const zeroed = tarifs.map(t => ({

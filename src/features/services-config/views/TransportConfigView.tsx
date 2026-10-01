@@ -12,6 +12,7 @@ import {
   X,
   CreditCard,
   AlertCircle,
+  Trash2,
 } from 'lucide-react';
 import { StatCard } from '../../../shared/components/StatCard';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
@@ -60,6 +61,11 @@ export const TransportConfigView: React.FC = () => {
   const totalSeats = lines.reduce((sum, l) => sum + l.capacity, 0);
   const totalEnrolled = lines.reduce((sum, l) => sum + (l.enrolled_count || 0), 0);
   const avgOccupancy = totalSeats > 0 ? Math.round((totalEnrolled / totalSeats) * 100) : 0;
+
+  const handleDeleteLine = async (id: string) => {
+    setLines(prev => prev.filter(l => l.id !== id));
+    await servicesConfigService.deleteTransportLine(id);
+  };
 
   const handleToggleStatus = async (id: string, currentStatus: boolean) => {
     try {
@@ -169,7 +175,13 @@ export const TransportConfigView: React.FC = () => {
 
       {/* Transport Lines Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {lines.map((line) => {
+        {lines.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/50">
+            <Bus className="w-10 h-10 mx-auto mb-2 text-slate-300 stroke-1" />
+            <p className="font-semibold text-slate-600">لا توجد خطوط نقل مدرسي مسجلة حالياً</p>
+            <p className="text-xs text-slate-400 mt-1">اضغط على «إضافة خط نقل مدرسي» لتسجيل أول مسار وحافلة</p>
+          </div>
+        ) : lines.map((line) => {
           const rate = line.occupancy_rate || 0;
           const isFull = rate >= 95;
           const isMid = rate >= 70 && rate < 95;

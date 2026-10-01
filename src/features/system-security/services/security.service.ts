@@ -74,68 +74,7 @@ const MOCK_SYSTEM_ROLES: SystemRole[] = [
   },
 ];
 
-let mockUsers: UserProfile[] = [
-  {
-    id: 'usr-1',
-    employee_id: 'emp-101',
-    employee_name: 'أحمد بنشقرون (الإدارة المركزية)',
-    full_name: 'أحمد بنشقرون',
-    email: 'admin@arouaschools.ma',
-    role_code: 'super_admin',
-    is_suspended: false,
-    created_at: '2026-09-01',
-  },
-  {
-    id: 'usr-2',
-    employee_id: 'emp-102',
-    employee_name: 'مريم التازي (الشؤون المالية)',
-    full_name: 'مريم التازي',
-    email: 'finance@arouaschools.ma',
-    role_code: 'finance_director',
-    is_suspended: false,
-    created_at: '2026-09-01',
-  },
-  {
-    id: 'usr-3',
-    employee_id: 'emp-103',
-    employee_name: 'ياسين العلمي (المحاسبة)',
-    full_name: 'ياسين العلمي',
-    email: 'comptable@arouaschools.ma',
-    role_code: 'accountant',
-    is_suspended: false,
-    created_at: '2026-09-05',
-  },
-  {
-    id: 'usr-4',
-    employee_id: 'emp-104',
-    employee_name: 'فاطمة الزهراء (صندوق 1)',
-    full_name: 'فاطمة الزهراء بلمقدم',
-    email: 'caisse1@arouaschools.ma',
-    role_code: 'cashier',
-    is_suspended: false,
-    created_at: '2026-09-08',
-  },
-  {
-    id: 'usr-5',
-    employee_id: 'emp-105',
-    employee_name: 'عمر السبتي (صندوق 2)',
-    full_name: 'عمر السبتي',
-    email: 'caisse2@arouaschools.ma',
-    role_code: 'cashier',
-    is_suspended: false,
-    created_at: '2026-09-08',
-  },
-  {
-    id: 'usr-6',
-    employee_id: 'emp-106',
-    employee_name: 'خديجة الوزاني (الموارد البشرية)',
-    full_name: 'خديجة الوزاني',
-    email: 'rh@arouaschools.ma',
-    role_code: 'hr_manager',
-    is_suspended: false,
-    created_at: '2026-09-10',
-  },
-];
+let mockUsers: UserProfile[] = [];
 
 // Initialize Mock Permissions Matrix
 const buildInitialPermissions = (): RolePermission[] => {
@@ -211,7 +150,7 @@ class SecurityService {
           .select('*')
           .order('created_at', { ascending: true });
 
-        if (!error && data && data.length > 0) {
+        if (!error && data) {
           return data as SystemRole[];
         }
       } catch (err) {
@@ -365,6 +304,21 @@ class SecurityService {
   /**
    * Toggle user account suspension
    */
+    /**
+   * Delete user profile
+   */
+  async deleteUserProfile(userId: string): Promise<boolean> {
+    mockUsers = mockUsers.filter(u => u.id !== userId);
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('user_profiles').delete().eq('id', userId);
+      } catch (err) {
+        console.warn('Supabase deleteUserProfile error:', err);
+      }
+    }
+    return true;
+  }
+
   async toggleUserSuspension(userId: string, isSuspended: boolean): Promise<boolean> {
     const user = mockUsers.find(u => u.id === userId);
     if (user) {

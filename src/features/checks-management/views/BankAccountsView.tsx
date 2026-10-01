@@ -14,7 +14,8 @@ import {
   Wallet, 
   Landmark,
   X,
-  AlertCircle
+  AlertCircle,
+  Trash2
 } from 'lucide-react';
 
 export const BankAccountsView: React.FC = () => {
@@ -61,6 +62,11 @@ export const BankAccountsView: React.FC = () => {
     navigator.clipboard.writeText(rib);
     setCopiedRib(rib);
     setTimeout(() => setCopiedRib(null), 2500);
+  };
+
+  const handleDeleteAccount = async (id: string) => {
+    setAccounts(prev => prev.filter(a => a.id !== id));
+    await checksManagementService.deleteBankAccount(id);
   };
 
   const handleToggleStatus = async (id: string, currentStatus: boolean) => {

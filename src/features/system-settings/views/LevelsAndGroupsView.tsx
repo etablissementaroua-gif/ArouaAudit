@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { 
-  Layers, 
+  Layers,
+  RotateCcw, 
   Users, 
   Plus, 
   Trash2, 
@@ -49,6 +50,13 @@ export const LevelsAndGroupsView: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePurgeAllGroups = async () => {
+    await systemSettingsService.purgeAllGroups();
+    await loadData();
+    setActionSuccess('تم تصفير وحذف كافة الأفواج بنجاح (0 أفواج متبقية)');
+    setTimeout(() => setActionSuccess(null), 3000);
   };
 
   const openGroupModal = (level: AcademicLevelClass) => {
@@ -104,6 +112,14 @@ export const LevelsAndGroupsView: React.FC = () => {
             <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 border border-indigo-500/20">
               المرحلة 2: البنية البيداغوجية
             </span>
+            <button
+              type="button"
+              onClick={handlePurgeAllGroups}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition shadow-xs cursor-pointer mr-auto"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              تصفير وحذف كافة الأفواج (0 أفواج)
+            </button>
           </div>
           <p className="text-xs text-slate-500 mt-1">
             الهيكل البيداغوجي المعتمد وتوزيع الأفواج الدراسية المتطابقة تلقائياً مع خيارات الفلترة والتسجيل بشاشة التلاميذ.

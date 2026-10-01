@@ -34,6 +34,30 @@ export const checksManagementService = {
     return true;
   },
 
+  async deleteBankAccount(id: string): Promise<boolean> {
+    localBankAccounts = localBankAccounts.filter(a => a.id !== id);
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('bank_accounts').delete().eq('id', id);
+      } catch (err) {
+        console.warn('Supabase delete bank account error:', err);
+      }
+    }
+    return true;
+  },
+
+  async purgeAllBankAccounts(): Promise<boolean> {
+    localBankAccounts = [];
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('bank_accounts').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      } catch (err) {
+        console.warn('Supabase purge all bank accounts error:', err);
+      }
+    }
+    return true;
+  },
+
   async getBankAccounts(): Promise<BankAccount[]> {
     if (isSupabaseConfigured()) {
       try {

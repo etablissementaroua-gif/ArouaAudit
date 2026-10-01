@@ -62,6 +62,11 @@ export const CanteenConfigView: React.FC = () => {
       return sum + count * (p.fee_amount / 2);
     }, 0);
 
+  const handleDeletePlan = async (id: string) => {
+    setPlans(prev => prev.filter(p => p.id !== id));
+    await servicesConfigService.deleteCanteenPlan(id);
+  };
+
   const handleToggleStatus = async (id: string, currentStatus: boolean) => {
     try {
       await servicesConfigService.updateCanteenPlan(id, { is_active: !currentStatus });
@@ -195,7 +200,13 @@ export const CanteenConfigView: React.FC = () => {
 
       {/* Meal Plans Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {plans.map((plan) => (
+        {plans.length === 0 ? (
+          <div className="col-span-full py-12 text-center text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-white/50">
+            <Utensils className="w-10 h-10 mx-auto mb-2 text-slate-300 stroke-1" />
+            <p className="font-semibold text-slate-600">لا توجد صيغ اشتراك مطعم مسجلة حالياً</p>
+            <p className="text-xs text-slate-400 mt-1">اضغط على «إضافة صيغة مطعم جديدة» لإدراج أول صيغة معتمدة</p>
+          </div>
+        ) : plans.map((plan) => (
           <div
             key={plan.id}
             className="p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-emerald-300 hover:shadow-xs transition-all flex flex-col justify-between shadow-xs"
@@ -246,37 +257,6 @@ export const CanteenConfigView: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Weekly Menu Preview */}
-      <div className="p-5 rounded-2xl border border-slate-200 bg-white/60 backdrop-blur-md">
-        <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-emerald-800" />
-          نموذج البرنامج الغذائي الأسبوعي المتوازن (Menu Hebdomadaire Type)
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 text-xs">
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="font-bold text-emerald-800 block mb-1">الاثنين</span>
-            <p className="text-slate-700">سلطة خضراء + طاجين اللحم البقري بالبرقوق + تفاح طازج + لمجة</p>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="font-bold text-emerald-800 block mb-1">الثلاثاء</span>
-            <p className="text-slate-700">حساء خضر + دجاج محمر مع أرز مبخر + ياغورت بالفواكه + لمجة</p>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="font-bold text-emerald-800 block mb-1">الأربعاء</span>
-            <p className="text-slate-700">سلطة معكرونة وتونة + كفتة مشوية بصلصة الطماطم + موز + لمجة</p>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="font-bold text-emerald-800 block mb-1">الخميس</span>
-            <p className="text-slate-700">سلطة جزر ومقبلات + طاجين سمك بالخضار + برتقال محلى + لمجة</p>
-          </div>
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="font-bold text-emerald-800 block mb-1">الجمعة</span>
-            <p className="text-slate-700">كسكس تقليدي بالسبع خضار ولحم العجل + لبن رائب + فاكهة الموسم</p>
-          </div>
-        </div>
       </div>
 
       {/* Add Canteen Plan Modal */}

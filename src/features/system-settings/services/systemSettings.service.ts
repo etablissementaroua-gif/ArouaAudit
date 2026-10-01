@@ -18,18 +18,18 @@ const seedCycles: EducationalCycle[] = [
 ];
 
 const seedLevels: AcademicLevelClass[] = [
-  { id: 'lvl-1', cycle_code: 'preschool', level_code: 'PS', name_ar: 'روض أول (صغار)', name_fr: 'Petite Section', display_order: 1, groups: ['فوج A'] },
-  { id: 'lvl-2', cycle_code: 'preschool', level_code: 'MS', name_ar: 'روض ثان (متوسط)', name_fr: 'Moyenne Section', display_order: 2, groups: ['فوج A'] },
-  { id: 'lvl-3', cycle_code: 'preschool', level_code: 'GS', name_ar: 'تمهيدي (كبار)', name_fr: 'Grande Section', display_order: 3, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-4', cycle_code: 'primary', level_code: 'CP', name_ar: 'الأول ابتدائي', name_fr: '1ère Année (CP)', display_order: 10, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-5', cycle_code: 'primary', level_code: 'CE1', name_ar: 'الثاني ابتدائي', name_fr: '2ème Année (CE1)', display_order: 11, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-6', cycle_code: 'primary', level_code: 'CE2', name_ar: 'الثالث ابتدائي', name_fr: '3ème Année (CE2)', display_order: 12, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-7', cycle_code: 'primary', level_code: 'CM1', name_ar: 'الرابع ابتدائي', name_fr: '4ème Année (CM1)', display_order: 13, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-8', cycle_code: 'primary', level_code: 'CM2', name_ar: 'الخامس ابتدائي', name_fr: '5ème Année (CM2)', display_order: 14, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-9', cycle_code: 'primary', level_code: 'CE6', name_ar: 'السادس ابتدائي', name_fr: '6ème Année (CE6)', display_order: 15, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-10', cycle_code: 'middle_school', level_code: '1AC', name_ar: 'الأولى إعدادي', name_fr: '1ère Année Collège', display_order: 20, groups: ['فوج A', 'فوج B'] },
-  { id: 'lvl-11', cycle_code: 'middle_school', level_code: '2AC', name_ar: 'الثانية إعدادي', name_fr: '2ème Année Collège', display_order: 21, groups: ['فوج A'] },
-  { id: 'lvl-12', cycle_code: 'middle_school', level_code: '3AC', name_ar: 'الثالثة إعدادي', name_fr: '3ème Année Collège', display_order: 22, groups: ['فوج A'] }
+  { id: 'lvl-1', cycle_code: 'preschool', level_code: 'PS', name_ar: 'روض أول (صغار)', name_fr: 'Petite Section', display_order: 1, groups: [] },
+  { id: 'lvl-2', cycle_code: 'preschool', level_code: 'MS', name_ar: 'روض ثان (متوسط)', name_fr: 'Moyenne Section', display_order: 2, groups: [] },
+  { id: 'lvl-3', cycle_code: 'preschool', level_code: 'GS', name_ar: 'تمهيدي (كبار)', name_fr: 'Grande Section', display_order: 3, groups: [] },
+  { id: 'lvl-4', cycle_code: 'primary', level_code: 'CP', name_ar: 'الأول ابتدائي', name_fr: '1ère Année (CP)', display_order: 10, groups: [] },
+  { id: 'lvl-5', cycle_code: 'primary', level_code: 'CE1', name_ar: 'الثاني ابتدائي', name_fr: '2ème Année (CE1)', display_order: 11, groups: [] },
+  { id: 'lvl-6', cycle_code: 'primary', level_code: 'CE2', name_ar: 'الثالث ابتدائي', name_fr: '3ème Année (CE2)', display_order: 12, groups: [] },
+  { id: 'lvl-7', cycle_code: 'primary', level_code: 'CM1', name_ar: 'الرابع ابتدائي', name_fr: '4ème Année (CM1)', display_order: 13, groups: [] },
+  { id: 'lvl-8', cycle_code: 'primary', level_code: 'CM2', name_ar: 'الخامس ابتدائي', name_fr: '5ème Année (CM2)', display_order: 14, groups: [] },
+  { id: 'lvl-9', cycle_code: 'primary', level_code: 'CE6', name_ar: 'السادس ابتدائي', name_fr: '6ème Année (CE6)', display_order: 15, groups: [] },
+  { id: 'lvl-10', cycle_code: 'middle_school', level_code: '1AC', name_ar: 'الأولى إعدادي', name_fr: '1ère Année Collège', display_order: 20, groups: [] },
+  { id: 'lvl-11', cycle_code: 'middle_school', level_code: '2AC', name_ar: 'الثانية إعدادي', name_fr: '2ème Année Collège', display_order: 21, groups: [] },
+  { id: 'lvl-12', cycle_code: 'middle_school', level_code: '3AC', name_ar: 'الثالثة إعدادي', name_fr: '3ème Année Collège', display_order: 22, groups: [] }
 ];
 
 const seedTarifs: LevelTarif[] = [
@@ -179,6 +179,20 @@ export const systemSettingsService = {
     }
     const levels = await this.getLevelsAndClasses();
     const updated = levels.map(l => l.level_code === levelCode ? { ...l, groups } : l);
+    localStorage.setItem('aroua_levels_classes', JSON.stringify(updated));
+    return true;
+  },
+
+  async purgeAllGroups(): Promise<boolean> {
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('academic_levels_classes').update({ groups: [] }).neq('id', '00000000-0000-0000-0000-000000000000');
+      } catch (err) {
+        console.warn('Supabase purgeAllGroups error:', err);
+      }
+    }
+    const levels = await this.getLevelsAndClasses();
+    const updated = levels.map(l => ({ ...l, groups: [] }));
     localStorage.setItem('aroua_levels_classes', JSON.stringify(updated));
     return true;
   },

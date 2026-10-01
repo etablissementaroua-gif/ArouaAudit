@@ -266,6 +266,48 @@ export const servicesConfigService = {
   /**
    * إحصائيات عامة شاملة للخدمات الملحقة
    */
+    /**
+   * حذف خط نقل مدرسي
+   */
+  async deleteTransportLine(id: string): Promise<boolean> {
+    try {
+      const { error } = await supabase.from('transport_lines').delete().eq('id', id);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error deleting transport line:', err);
+      return false;
+    }
+  },
+
+  /**
+   * حذف صيغة اشتراك مطعم
+   */
+  async deleteCanteenPlan(id: string): Promise<boolean> {
+    try {
+      const { error } = await supabase.from('canteen_plans').delete().eq('id', id);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error deleting canteen plan:', err);
+      return false;
+    }
+  },
+
+  /**
+   * حذف حزمة لوازم مدرسية
+   */
+  async deleteSuppliesPack(id: string): Promise<boolean> {
+    try {
+      const { error } = await supabase.from('supplies_packs').delete().eq('id', id);
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.error('Error deleting supplies pack:', err);
+      return false;
+    }
+  },
+
   async getServicesOverviewStats(academicYear = '2026/2027'): Promise<ServicesOverviewStats> {
     try {
       const [lines, plans, packs] = await Promise.all([
