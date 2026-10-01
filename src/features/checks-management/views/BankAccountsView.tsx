@@ -3,7 +3,8 @@ import { checksManagementService } from '../services/checksManagement.service';
 import { BankAccount, CreateBankAccountDTO } from '../models/check.types';
 import { formatMAD } from '../../../shared/lib/currencyFormatter';
 import { 
-  Building2, 
+  Building2,
+  RotateCcw, 
   CreditCard, 
   Plus, 
   Copy, 
@@ -32,6 +33,15 @@ export const BankAccountsView: React.FC = () => {
     is_active: true
   });
   const [errorMsg, setErrorMsg] = useState('');
+
+  const [resettingBalances, setResettingBalances] = useState(false);
+  const handleResetBalances = async () => {
+    if (!window.confirm('هل أنت متأكد من تصفير أرصدة كافة الحسابات البنكية إلى 0,00 MAD؟')) return;
+    setResettingBalances(true);
+    await checksManagementService.resetAllAccountBalances();
+    await loadAccounts();
+    setResettingBalances(false);
+  };
 
   const loadAccounts = async () => {
     setLoading(true);
@@ -117,13 +127,24 @@ export const BankAccountsView: React.FC = () => {
           </div>
         </div>
 
-        <button
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleResetBalances}
+            disabled={resettingBalances}
+            className="flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-xs cursor-pointer"
+            title="تصفير أرصدة الحسابات إلى 0,00 MAD"
+          >
+            <RotateCcw className={`w-4 h-4 text-rose-600 ${resettingBalances ? 'animate-spin' : ''}`} />
+            <span>تصفير الأرصدة (0 MAD)</span>
+          </button>
+          <button
           onClick={() => setIsModalOpen(true)}
           className="btn-primary"
         >
           <Plus className="w-5 h-5" />
           <span>إضافة حساب بنكي جديد</span>
         </button>
+        </div>
       </div>
 
       {/* Financial Liquidity Metrics */}

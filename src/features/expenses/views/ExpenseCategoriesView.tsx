@@ -29,9 +29,18 @@ export const ExpenseCategoriesView: React.FC = () => {
     name_ar: '',
     name_fr: '',
     charge_type: 'variable',
-    budget_allocation: 50000,
+    budget_allocation: 0,
     color_hex: '#6366f1',
   });
+
+  const [resettingBudgets, setResettingBudgets] = useState(false);
+  const handleResetBudgets = async () => {
+    if (!window.confirm('هل أنت متأكد من تصفير مخصصات الميزانية لكافة الأبواب إلى 0,00 MAD؟')) return;
+    setResettingBudgets(true);
+    await expensesService.resetAllBudgetAllocations();
+    await loadData();
+    setResettingBudgets(false);
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -67,7 +76,7 @@ export const ExpenseCategoriesView: React.FC = () => {
         name_ar: '',
         name_fr: '',
         charge_type: 'variable',
-        budget_allocation: 50000,
+        budget_allocation: 0,
         color_hex: '#6366f1',
       });
       await loadData();
@@ -103,6 +112,15 @@ export const ExpenseCategoriesView: React.FC = () => {
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
 
+          <button
+            onClick={handleResetBudgets}
+            disabled={resettingBudgets}
+            className="flex items-center gap-2 px-3.5 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-xs cursor-pointer"
+            title="تصفير مخصصات الميزانية لكافة الأبواب إلى 0 MAD"
+          >
+            <RefreshCw className={`w-4 h-4 text-rose-600 ${resettingBudgets ? 'animate-spin' : ''}`} />
+            <span>تصفير مخصصات الميزانية (0 MAD)</span>
+          </button>
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-700/20 active:scale-95 flex items-center gap-2"

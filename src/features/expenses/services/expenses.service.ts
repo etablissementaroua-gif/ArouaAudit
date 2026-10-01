@@ -1,4 +1,4 @@
-﻿import { supabase } from '../../../shared/lib/supabaseClient';
+﻿import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 import {
   ExpenseCategory,
   ExpenseItem,
@@ -413,5 +413,17 @@ export const expensesService = {
         pending_approval: 0,
       };
     }
+  },
+
+  async resetAllBudgetAllocations(): Promise<boolean> {
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('expense_categories').update({ budget_allocation: 0 }).neq('id', '00000000-0000-0000-0000-000000000000');
+        return true;
+      } catch (err) {
+        console.warn('Supabase resetAllBudgetAllocations error:', err);
+      }
+    }
+    return true;
   },
 };

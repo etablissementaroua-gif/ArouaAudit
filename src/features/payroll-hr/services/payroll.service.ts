@@ -171,20 +171,7 @@ export const payrollService = {
     }
 
     const local = localStorage.getItem('aroua_staff_advances');
-    let list: StaffAdvance[] = local ? JSON.parse(local) : [
-      {
-        id: 'adv-seed-01',
-        employee_id: 'emp-uuid-7',
-        amount: 1000,
-        advance_date: '2026-09-12',
-        payment_method: 'espece',
-        academic_year: '2026/2027',
-        month_reference: '2026-09',
-        is_settled: false,
-        notes: 'تسبيق استثنائي على راتب شهر شتنبر',
-        created_at: '2026-09-12T10:00:00Z'
-      }
-    ];
+    let list: StaffAdvance[] = local ? JSON.parse(local) : [];
     if (monthReference) list = list.filter(a => a.month_reference === monthReference);
     if (employeeId) list = list.filter(a => a.employee_id === employeeId);
     return list;

@@ -23,15 +23,18 @@ export const revenueAnalyticsService = {
       try {
         const { data, error } = await supabase.rpc('calculate_monthly_theoretical_ca', { p_academic_year: academicYear });
         if (!error && data && data.length > 0) {
-          return data.map((item: any) => ({
-            academic_level: item.academic_level,
-            level_name_ar: item.level_name_ar || item.academic_level,
-            students_count: Number(item.students_count) || 0,
-            tuition_subtotal: Number(item.tuition_subtotal) || 0,
-            transport_subtotal: Number(item.transport_subtotal) || 0,
-            canteen_subtotal: Number(item.canteen_subtotal) || 0,
-            monthly_total: Number(item.monthly_total) || 0
-          }));
+          return data.map((item: any) => {
+            const count = Number(item.students_count) || 0;
+            return {
+              academic_level: item.academic_level,
+              level_name_ar: item.level_name_ar || item.academic_level,
+              students_count: count,
+              tuition_subtotal: count > 0 ? (Number(item.tuition_subtotal) || 0) : 0,
+              transport_subtotal: count > 0 ? (Number(item.transport_subtotal) || 0) : 0,
+              canteen_subtotal: count > 0 ? (Number(item.canteen_subtotal) || 0) : 0,
+              monthly_total: count > 0 ? (Number(item.monthly_total) || 0) : 0
+            };
+          });
         }
       } catch (err) {
         console.warn('RPC calculate_monthly_theoretical_ca fallback:', err);
@@ -55,13 +58,13 @@ export const revenueAnalyticsService = {
     const totalStudents = monthlyList.reduce((acc, c) => acc + c.students_count, 0);
 
     // Annual estimations: 10 months school year + registration + supplies
-    const tuitionX10 = monthlyTuitionTotal * 10;
-    const transportX10 = monthlyTransportTotal * 10;
-    const canteenX10 = monthlyCanteenTotal * 10;
+    const tuitionX10 = totalStudents > 0 ? monthlyTuitionTotal * 10 : 0;
+    const transportX10 = totalStudents > 0 ? monthlyTransportTotal * 10 : 0;
+    const canteenX10 = totalStudents > 0 ? monthlyCanteenTotal * 10 : 0;
     const registrationFees = totalStudents * 1500;
     const suppliesFees = totalStudents * 950;
 
-    const annualTheoretical = tuitionX10 + transportX10 + canteenX10 + registrationFees + suppliesFees;
+    const annualTheoretical = totalStudents > 0 ? (tuitionX10 + transportX10 + canteenX10 + registrationFees + suppliesFees) : 0;
 
     // Actual collected from caisse_transactions
     const transactions = await caisseService.getTransactions();
@@ -255,5 +258,16 @@ export const revenueAnalyticsService = {
         canteen_share: totalTheoretical > 0 ? Math.round((canteenSum / totalTheoretical) * 100) : 12
       }
     };
-  }
+  },
+
+  async resetAnnualTarget(academicYear: string = '2026/2027'): Promise<boolean> {
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('academic_years').update({ target_annual_ca: 0 }).eq('code', academicYear);
+      } catch (err) {
+        console.warn('Supabase resetAnnualTarget error:', err);
+      }
+    }
+    return true;
+  },
 };

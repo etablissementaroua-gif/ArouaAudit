@@ -22,6 +22,18 @@ let localChecks: CheckItem[] = [];
 
 export const checksManagementService = {
   // 1. الحسابات البنكية (Bank Accounts)
+  async resetAllAccountBalances(): Promise<boolean> {
+    localBankAccounts = localBankAccounts.map(a => ({ ...a, initial_balance: 0, current_balance: 0 }));
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('bank_accounts').update({ initial_balance: 0, current_balance: 0 }).neq('id', '00000000-0000-0000-0000-000000000000');
+      } catch (err) {
+        console.warn('Supabase reset bank accounts error:', err);
+      }
+    }
+    return true;
+  },
+
   async getBankAccounts(): Promise<BankAccount[]> {
     if (isSupabaseConfigured()) {
       try {
@@ -411,56 +423,7 @@ export const checksManagementService = {
 
   // 4. سجل الوصولات وسندات الصندوق (Receipts Registry)
   async getReceiptsRegistry(): Promise<ReceiptRecord[]> {
-    return [
-      {
-        id: 'rec-001',
-        receipt_number: 'REC-2026-0891',
-        date: '2026-09-25',
-        amount: 3500.00,
-        payer_name: 'أحمد التازي (ولي أمر التلميذ حمزة التازي)',
-        payment_method: 'especes',
-        purpose: 'واجبات التمدرس والإطعام - شهر شتنبر',
-        student_id: 'STU-2026-005',
-        reference: 'ESP-99812',
-        academic_year: '2026/2027'
-      },
-      {
-        id: 'rec-002',
-        receipt_number: 'REC-2026-0892',
-        date: '2026-09-24',
-        amount: 15000.00,
-        payer_name: 'محمد المنصوري (ولي أمر التلميذ ياسين المنصوري)',
-        payment_method: 'cheque',
-        purpose: 'واجبات التمدرس للثلاثي الأول',
-        student_id: 'STU-2026-001',
-        reference: 'CHQ-892144',
-        academic_year: '2026/2027'
-      },
-      {
-        id: 'rec-003',
-        receipt_number: 'REC-2026-0893',
-        date: '2026-09-23',
-        amount: 2800.00,
-        payer_name: 'سعاد الودغيري',
-        payment_method: 'virement',
-        purpose: 'رسوم النقل المدرسي والتسجيل السنوي',
-        student_id: 'STU-2026-004',
-        reference: 'VIR-BNK-4412',
-        academic_year: '2026/2027'
-      },
-      {
-        id: 'rec-004',
-        receipt_number: 'REC-2026-0894',
-        date: '2026-09-22',
-        amount: 4200.00,
-        payer_name: 'فاطمة الزهراء العلوي',
-        payment_method: 'especes',
-        purpose: 'تمدرس شهر أكتوبر وتأمين مدرسي',
-        student_id: 'STU-2026-007',
-        reference: 'ESP-11094',
-        academic_year: '2026/2027'
-      }
-    ];
+    return [];
   },
 
   // 5. المطابقة البنكية (Bank Reconciliation)
@@ -478,47 +441,7 @@ export const checksManagementService = {
     const pendingChecksAmount = pendingChecks.reduce((sum, c) => sum + c.amount, 0);
     const bookBalance = bankBalance - pendingChecksAmount;
 
-    const items: BankReconciliationItem[] = [
-      {
-        id: 'rec-item-1',
-        date: '2026-09-22',
-        type: 'check_cleared',
-        reference: 'CHQ-892144',
-        description: 'صرف شيك التمدرس - محمد المنصوري',
-        debit: 0,
-        credit: 15000.00,
-        bank_balance: 385400.00,
-        book_balance: 385400.00,
-        difference: 0,
-        is_matched: true
-      },
-      {
-        id: 'rec-item-2',
-        date: '2026-09-20',
-        type: 'caisse_deposit',
-        reference: 'REM-2026-001',
-        description: 'إيداع نقدي حصيلة الصندوق - أمين الصندوق',
-        debit: 0,
-        credit: 42500.00,
-        bank_balance: 370400.00,
-        book_balance: 370400.00,
-        difference: 0,
-        is_matched: true
-      },
-      {
-        id: 'rec-item-3',
-        date: '2026-09-22',
-        type: 'check_cleared',
-        reference: 'CHQ-331902',
-        description: 'شيك قيد المقاصة في الحافظة REM-2026-002',
-        debit: 0,
-        credit: 16000.00,
-        bank_balance: 385400.00,
-        book_balance: 369400.00,
-        difference: 16000.00,
-        is_matched: false
-      }
-    ];
+    const items: BankReconciliationItem[] = [];
 
     return {
       items,

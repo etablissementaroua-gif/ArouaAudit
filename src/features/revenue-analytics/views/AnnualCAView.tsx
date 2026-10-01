@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { 
-  TrendingUp, 
+  TrendingUp,
+  RotateCcw, 
   Target, 
   DollarSign, 
   Calendar, 
@@ -23,6 +24,15 @@ export const AnnualCAView: React.FC = () => {
   useEffect(() => {
     loadAnnualData(academicYear);
   }, [academicYear]);
+
+  const [resettingTarget, setResettingTarget] = useState(false);
+  const handleResetTarget = async () => {
+    if (!window.confirm('هل أنت متأكد من تصفير الهدف المالي السنوي إلى 0,00 MAD؟')) return;
+    setResettingTarget(true);
+    await revenueAnalyticsService.resetAnnualTarget(academicYear);
+    await loadAnnualData(academicYear);
+    setResettingTarget(false);
+  };
 
   const loadAnnualData = async (year: string) => {
     setLoading(true);
@@ -53,6 +63,15 @@ export const AnnualCAView: React.FC = () => {
           </p>
         </div>
 
+        <button
+            onClick={handleResetTarget}
+            disabled={resettingTarget}
+            className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 rounded-xl font-bold text-xs transition shadow-xs cursor-pointer"
+            title="تصفير الهدف المالي السنوي إلى 0,00 MAD"
+          >
+            <RotateCcw className={`w-3.5 h-3.5 text-rose-600 ${resettingTarget ? 'animate-spin' : ''}`} />
+            <span>تصفير الهدف (0 MAD)</span>
+          </button>
         <div className="flex items-center gap-2 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200">
           <Calendar className="w-4 h-4 text-emerald-700" />
           <span className="text-xs text-slate-500">السنة الدراسية:</span>

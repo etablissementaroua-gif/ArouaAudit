@@ -49,6 +49,15 @@ export const AuditTrailView: React.FC = () => {
     }
   };
 
+  const [clearingLogs, setClearingLogs] = useState(false);
+  const handleClearLogs = async () => {
+    if (!window.confirm('هل أنت متأكد من تفريغ وتصفير سجل العمليات والتدقيق بالكامل؟')) return;
+    setClearingLogs(true);
+    await securityService.clearAllAuditLogs();
+    setLogs([]);
+    setClearingLogs(false);
+  };
+
   useEffect(() => {
     loadData();
   }, [selectedAction, selectedEntity, search]);
@@ -155,7 +164,17 @@ export const AuditTrailView: React.FC = () => {
           </div>
         </div>
 
-        <button
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleClearLogs}
+            disabled={clearingLogs}
+            className="flex items-center gap-1.5 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition shadow-xs cursor-pointer"
+            title="تفريغ وتصفير سجل التدقيق (0 سجل)"
+          >
+            <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+            <span>تفريغ وتصفير السجل (0 سجل)</span>
+          </button>
+          <button
           type="button"
           onClick={() => loadData()}
           className="p-2.5 bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 rounded-xl shadow-xs transition cursor-pointer self-start md:self-auto"
@@ -163,6 +182,7 @@ export const AuditTrailView: React.FC = () => {
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
         </button>
+        </div>
       </div>
 
       {/* Security Immutability Banner */}

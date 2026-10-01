@@ -197,76 +197,7 @@ const buildInitialPermissions = (): RolePermission[] => {
 
 let mockPermissions: RolePermission[] = buildInitialPermissions();
 
-let mockAuditLogs: AuditLog[] = [
-  {
-    id: 'aud-001',
-    user_name: 'أحمد بنشقرون',
-    user_role: 'super_admin',
-    action_type: 'LOGIN',
-    target_entity: 'auth_session',
-    entity_id: 'SES-98210',
-    new_values: { ip: '192.168.1.100', browser: 'Chrome 128 / Windows', status: 'authenticated' },
-    ip_address: '192.168.1.100',
-    created_at: '2026-09-29 18:30:12',
-  },
-  {
-    id: 'aud-002',
-    user_name: 'فاطمة الزهراء بلمقدم',
-    user_role: 'cashier',
-    action_type: 'CREATE',
-    target_entity: 'caisse_transactions',
-    entity_id: 'REC-2026-0903',
-    new_values: { receipt_no: 'REC-2026-0903', amount: 2600.0, method: 'virement', student: 'سفيان بلمقدم' },
-    ip_address: '192.168.1.104',
-    created_at: '2026-09-29 17:05:10',
-  },
-  {
-    id: 'aud-003',
-    user_name: 'مريم التازي',
-    user_role: 'finance_director',
-    action_type: 'DISBURSEMENT',
-    target_entity: 'caisse_transactions',
-    entity_id: 'DEC-2026-0044',
-    new_values: { voucher_no: 'DEC-2026-0044', amount: 12500.0, beneficiary: 'Société Fournitures Scolaires SARL', category: 'FOURNITURES' },
-    ip_address: '192.168.1.102',
-    created_at: '2026-09-29 16:15:00',
-  },
-  {
-    id: 'aud-004',
-    user_name: 'ياسين العلمي',
-    user_role: 'accountant',
-    action_type: 'RECONCILE',
-    target_entity: 'bank_accounts',
-    entity_id: 'RIB-ATTIJARI-001',
-    new_values: { reconciled_month: '2026-09', cleared_checks_count: 14, balance_mad: 95000.0 },
-    ip_address: '192.168.1.103',
-    created_at: '2026-09-29 14:22:45',
-  },
-  {
-    id: 'aud-005',
-    user_name: 'أحمد بنشقرون',
-    user_role: 'super_admin',
-    action_type: 'ROLE_CHANGE',
-    target_entity: 'role_permissions',
-    entity_id: 'cashier:caisse.disburse',
-    old_values: { can_create: true },
-    new_values: { can_create: false, reason: 'حظر الصرف المالي عن أمناء الصناديق وحصره في الإدارة المالية' },
-    ip_address: '192.168.1.100',
-    created_at: '2026-09-29 12:00:00',
-  },
-  {
-    id: 'aud-006',
-    user_name: 'خديجة الوزاني',
-    user_role: 'hr_manager',
-    action_type: 'UPDATE',
-    target_entity: 'employees',
-    entity_id: 'EMP-TEACH-014',
-    old_values: { base_salary: 8200.0 },
-    new_values: { base_salary: 8500.0, note: 'تسوية الزيادة الدورية' },
-    ip_address: '192.168.1.106',
-    created_at: '2026-09-29 11:40:19',
-  }
-];
+let mockAuditLogs: AuditLog[] = [];
 
 class SecurityService {
   /**
@@ -498,6 +429,18 @@ class SecurityService {
   /**
    * Get Audit Logs with search & filters
    */
+  async clearAllAuditLogs(): Promise<boolean> {
+    mockAuditLogs = [];
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('audit_logs').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      } catch (err) {
+        console.warn('Supabase clearAllAuditLogs error:', err);
+      }
+    }
+    return true;
+  }
+
   async getAuditLogs(filters?: AuditFilterOptions): Promise<AuditLog[]> {
     if (isSupabaseConfigured()) {
       try {
