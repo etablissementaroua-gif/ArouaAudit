@@ -4,7 +4,8 @@ export type SystemRoleCode =
   | 'accountant' 
   | 'cashier' 
   | 'hr_manager' 
-  | 'viewer';
+  | 'viewer'
+  | (string & {});
 
 export type PermissionAction = 
   | 'can_view' 
@@ -47,6 +48,8 @@ export interface UserProfile {
   email?: string;
   role_code: SystemRoleCode;
   is_suspended: boolean;
+  password?: string;
+  password_hash?: string;
   custom_permissions?: Record<string, Partial<Record<PermissionAction, boolean>>>;
   last_login_at?: string;
   created_at?: string;
@@ -62,6 +65,9 @@ export type AuditActionType =
   | 'EXPORT' 
   | 'RECONCILE' 
   | 'ROLE_CHANGE' 
+  | 'PASSWORD_RESET'
+  | 'ROLE_CREATE'
+  | 'ROLE_DELETE'
   | 'SUSPEND';
 
 export interface AuditLog {

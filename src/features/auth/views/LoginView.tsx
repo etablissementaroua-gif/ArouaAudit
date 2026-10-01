@@ -78,6 +78,12 @@ export const LoginView: React.FC = () => {
           role_code: 'super_admin',
           is_suspended: false,
         };
+      } else {
+        // 0b. Verify employee credentials
+        const staffUser = await securityService.verifyUserPassword(email, password);
+        if (staffUser) {
+          matchedUser = staffUser;
+        }
       }
 
 

@@ -122,6 +122,81 @@ class SecurityService {
   /**
    * Get permissions matrix for a specific role or all roles
    */
+  /**
+   * Create a new custom system role and initialize default permissions
+   */
+  async createSystemRole(roleData: Omit<SystemRole, 'id' | 'created_at'>): Promise<SystemRole> {
+    const newRole: SystemRole = {
+      ...roleData,
+      id: `role-${Date.now()}`,
+      created_at: new Date().toISOString(),
+    };
+    MOCK_SYSTEM_ROLES.push(newRole);
+
+    // Initialize default permissions for this new role
+    for (const mod of PERMISSION_MODULES) {
+      mockPermissions.push({
+        id: `perm-${Date.now()}-${mod.key}`,
+        role_code: newRole.code,
+        permission_key: mod.key,
+        can_view: true,
+        can_create: false,
+        can_edit: false,
+        can_delete: false,
+        can_export: false,
+        can_print: true,
+      });
+    }
+
+    await this.logAuditEvent({
+      user_name: 'مصعب (المدير العام)',
+      user_role: 'super_admin',
+      action_type: 'ROLE_CREATE',
+      target_entity: 'system_roles',
+      entity_id: newRole.code,
+      new_values: newRole,
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('system_roles').insert([newRole]);
+      } catch (err) {
+        console.warn('Supabase createSystemRole error:', err);
+      }
+    }
+    return newRole;
+  }
+
+  /**
+   * Delete custom system role (cannot delete super_admin)
+   */
+  async deleteSystemRole(roleCode: string): Promise<boolean> {
+    if (roleCode === 'super_admin') return false;
+    const idx = MOCK_SYSTEM_ROLES.findIndex(r => r.code === roleCode);
+    if (idx !== -1) {
+      MOCK_SYSTEM_ROLES.splice(idx, 1);
+    }
+    mockPermissions = mockPermissions.filter(p => p.role_code !== roleCode);
+
+    await this.logAuditEvent({
+      user_name: 'مصعب (المدير العام)',
+      user_role: 'super_admin',
+      action_type: 'ROLE_DELETE',
+      target_entity: 'system_roles',
+      entity_id: roleCode,
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('system_roles').delete().eq('code', roleCode);
+        await supabase.from('role_permissions').delete().eq('role_code', roleCode);
+      } catch (err) {
+        console.warn('Supabase deleteSystemRole error:', err);
+      }
+    }
+    return true;
+  }
+
   async getRolePermissions(roleCode?: SystemRoleCode): Promise<RolePermission[]> {
     if (isSupabaseConfigured()) {
       try {
@@ -209,7 +284,7 @@ class SecurityService {
   /**
    * Get all user profiles with linked staff info
    */
-  async getUserProfiles(): Promise<UserProfile[]> {
+  async getUserProfiles(viewerRole?: string): Promise<UserProfile[]> {
     if (isSupabaseConfigured()) {
       try {
         const { data, error } = await supabase
@@ -224,7 +299,11 @@ class SecurityService {
         console.warn('Supabase getUserProfiles error, falling back to mock:', err);
       }
     }
-    return [...mockUsers];
+    let result = [...mockUsers];
+    if (viewerRole && viewerRole !== 'super_admin') {
+      result = result.filter(u => u.role_code !== 'super_admin' && u.email?.toLowerCase().trim() !== 'mossaabel@arouaaudit.com');
+    }
+    return result;
   }
 
   /**
@@ -276,6 +355,119 @@ class SecurityService {
       }
     }
     return true;
+  }
+
+  /**
+   * Update full user profile details (Name, Employee, Role, Email)
+   */
+  async updateUserProfile(userId: string, data: Partial<UserProfile>): Promise<boolean> {
+    const user = mockUsers.find(u => u.id === userId);
+    const oldVals = user ? { ...user } : {};
+    if (user) {
+      Object.assign(user, data);
+    }
+
+    await this.logAuditEvent({
+      user_name: 'مصعب (المدير العام)',
+      user_role: 'super_admin',
+      action_type: 'UPDATE',
+      target_entity: 'user_profiles',
+      entity_id: userId,
+      old_values: oldVals,
+      new_values: data,
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase
+          .from('user_profiles')
+          .update({ ...data, updated_at: new Date().toISOString() })
+          .eq('id', userId);
+      } catch (err) {
+        console.warn('Supabase updateUserProfile error:', err);
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Reset / Update Employee Password
+   */
+  async updateUserPassword(userId: string, newPassword: string): Promise<boolean> {
+    const user = mockUsers.find(u => u.id === userId);
+    if (user) {
+      user.password = newPassword;
+      user.password_hash = newPassword;
+    }
+
+    try {
+      const key = 'aroua_staff_passwords';
+      const existing = JSON.parse(localStorage.getItem(key) || '{}');
+      if (user?.email) {
+        existing[user.email.toLowerCase().trim()] = newPassword;
+      }
+      existing[userId] = newPassword;
+      localStorage.setItem(key, JSON.stringify(existing));
+    } catch (e) {
+      console.warn('Password storage exception:', e);
+    }
+
+    await this.logAuditEvent({
+      user_name: 'مصعب (المدير العام)',
+      user_role: 'super_admin',
+      action_type: 'PASSWORD_RESET',
+      target_entity: 'user_profiles',
+      entity_id: userId,
+      new_values: { password_updated: true },
+    });
+
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase
+          .from('user_profiles')
+          .update({ password_hash: newPassword, updated_at: new Date().toISOString() })
+          .eq('id', userId);
+      } catch (err) {
+        console.warn('Supabase updateUserPassword error:', err);
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Verify employee password for login
+   */
+  async verifyUserPassword(email: string, password: string): Promise<UserProfile | null> {
+    const normalizedEmail = email.toLowerCase().trim();
+
+    if (normalizedEmail === 'mossaabel@arouaaudit.com') {
+      if (password === 'Mo1356365508') {
+        return {
+          id: 'usr-mossaabel',
+          full_name: 'مصعب (المدير العام والمشرف الأعلى)',
+          email: 'mossaabel@arouaaudit.com',
+          role_code: 'super_admin',
+          is_suspended: false,
+        };
+      }
+      return null;
+    }
+
+    const profiles = await this.getUserProfiles();
+    const user = profiles.find(u => u.email?.toLowerCase().trim() === normalizedEmail);
+    if (!user) return null;
+
+    let savedPass = user.password || user.password_hash;
+    try {
+      const key = 'aroua_staff_passwords';
+      const existing = JSON.parse(localStorage.getItem(key) || '{}');
+      savedPass = existing[normalizedEmail] || existing[user.id] || savedPass;
+    } catch {}
+
+    if (savedPass && savedPass === password) {
+      return user;
+    }
+    return null;
   }
 
   async toggleUserSuspension(userId: string, isSuspended: boolean): Promise<boolean> {
