@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { 
-  DollarSign, 
+import {
+  DollarSign,
+  RotateCcw, 
   Search, 
   Filter, 
   Save, 
@@ -125,6 +126,31 @@ export const TarifsPricingGridView: React.FC = () => {
     }
   };
 
+    const handleResetToZero = async () => {
+    if (!window.confirm('هل أنت متأكد من رغبتك في تصفير كافة تسعيرات الرسوم إلى 0 MAD؟')) return;
+    setLoading(true);
+    try {
+      const zeroed = tarifs.map(t => ({
+        ...t,
+        tuition_monthly: 0,
+        transport_monthly: 0,
+        canteen_monthly: 0,
+        supplies_fee: 0,
+        registration_fee: 0,
+        re_registration_fee: 0
+      }));
+      for (const t of zeroed) {
+        await systemSettingsService.updateLevelTarif(t.level_code, t, selectedYear);
+      }
+      setTarifs(zeroed);
+      showToast(`تم تصفير كافة تسعيرات الرسوم للسنة ${selectedYear} بنجاح (0 MAD)`);
+    } catch (err) {
+      console.error('Error zeroing tarifs:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSaveAll = async () => {
     setLoading(true);
     try {
@@ -240,6 +266,15 @@ export const TarifsPricingGridView: React.FC = () => {
             </select>
           </div>
 
+          <button
+            onClick={handleResetToZero}
+            disabled={loading}
+            className="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 hover:border-rose-200 font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+            title="تصفير كافة أسعار ورسوم المستويات إلى 0 MAD"
+          >
+            <RotateCcw className="w-4 h-4 text-rose-500" />
+            تصفير كافة الأسعار (0 MAD)
+          </button>
           <button
             onClick={handleSaveAll}
             disabled={loading}
