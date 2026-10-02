@@ -174,7 +174,7 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
     const updatedUser: UserProfile = {
       ...currentUser,
       role_code: newRole,
-      full_name: newRole === 'super_admin' ? 'أحمد بنشقرون (المشرف الأعلى)' : `مستخدم تجريبي (${newRole})`,
+      full_name: newRole === 'super_admin' ? 'مصعب (المدير العام والمشرف الأعلى)' : (currentUser.id === 'usr-mossaabel' ? currentUser.full_name : `مستخدم تجريبي (${newRole})`),
     };
     setCurrentUser(updatedUser);
     localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(updatedUser));

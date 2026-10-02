@@ -28,7 +28,7 @@ import {
   PermissionAction,
   PERMISSION_MODULES 
 } from '../models/security.types';
-import { securityService } from '../services/security.service';
+import { securityService, buildInitialPermissions } from '../services/security.service';
 import { usePermissions } from '../context/PermissionsContext';
 import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 
@@ -99,19 +99,21 @@ export const UsersPermissionsView: React.FC = () => {
 
   // Helper to ensure all modules exist in permissions array
   const normalizePermissions = (rawPerms: RolePermission[], roleCode: string): RolePermission[] => {
+    const defaultRolePerms = buildInitialPermissions().filter(p => p.role_code === roleCode);
     return PERMISSION_MODULES.map(mod => {
       const found = rawPerms.find(p => p.permission_key === mod.key);
+      const def = defaultRolePerms.find(p => p.permission_key === mod.key);
       const isSuper = roleCode === 'super_admin';
       return {
         id: found?.id || `perm-${roleCode}-${mod.key}`,
         role_code: roleCode,
         permission_key: mod.key,
-        can_view: isSuper ? true : Boolean(found?.can_view),
-        can_create: isSuper ? true : Boolean(found?.can_create),
-        can_edit: isSuper ? true : Boolean(found?.can_edit),
-        can_delete: isSuper ? true : Boolean(found?.can_delete),
-        can_export: isSuper ? true : Boolean(found?.can_export),
-        can_print: isSuper ? true : Boolean(found?.can_print),
+        can_view: isSuper ? true : (found?.can_view !== undefined ? Boolean(found.can_view) : (def?.can_view ?? false)),
+        can_create: isSuper ? true : (found?.can_create !== undefined ? Boolean(found.can_create) : (def?.can_create ?? false)),
+        can_edit: isSuper ? true : (found?.can_edit !== undefined ? Boolean(found.can_edit) : (def?.can_edit ?? false)),
+        can_delete: isSuper ? true : (found?.can_delete !== undefined ? Boolean(found.can_delete) : (def?.can_delete ?? false)),
+        can_export: isSuper ? true : (found?.can_export !== undefined ? Boolean(found.can_export) : (def?.can_export ?? false)),
+        can_print: isSuper ? true : (found?.can_print !== undefined ? Boolean(found.can_print) : (def?.can_print ?? false)),
       };
     });
   };

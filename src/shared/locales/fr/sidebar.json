@@ -1,4 +1,4 @@
-﻿{
+{
   "admin": {
     "title": "Groupe Scolaire Aroua",
     "subtitle": "Compte Administratif & Pédagogique Central",
@@ -38,7 +38,9 @@
       "monthly_ca": "Chiffre d'Affaires Mensuel",
       "annual_ca": "Chiffre d'Affaires Annuel (CA)",
       "regisseurs": "Recettes Régisseurs & Caisses",
-      "global_recettes": "Registre Global des Recettes"
+      "administration": "Recettes Administration & Virements",
+      "global_recettes": "Registre Global des Recettes",
+      "catering_stats": "Alimentation Caisse & Trésorerie"
     },
     "checks": {
       "title": "Comptes & Chèques",
@@ -74,6 +76,7 @@
     "followup": "Suivi",
     "important": "Important",
     "security": "Sécurité",
+    "salaries": "Salaires",
     "audit": "Rapports"
   }
 }

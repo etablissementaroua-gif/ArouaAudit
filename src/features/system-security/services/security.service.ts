@@ -1,4 +1,4 @@
-﻿import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
+import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 import { 
   SystemRole, 
   SystemRoleCode, 
@@ -36,7 +36,7 @@ let mockUsers: UserProfile[] = [
 ];
 
 // Initialize Mock Permissions Matrix
-const buildInitialPermissions = (): RolePermission[] => {
+export const buildInitialPermissions = (): RolePermission[] => {
   const result: RolePermission[] = [];
   let idCounter = 1;
 
@@ -55,7 +55,7 @@ const buildInitialPermissions = (): RolePermission[] => {
         canView = true;
         canCreate = canEdit = canExport = canPrint = true;
         canDelete = false;
-        if (mod.key === 'system.settings' || mod.key === 'security.users') {
+        if (mod.key === 'security.users') {
           canCreate = canEdit = false;
         }
       } else if (role.code === 'accountant') {
@@ -97,23 +97,28 @@ let mockPermissions: RolePermission[] = buildInitialPermissions();
 
 let mockAuditLogs: AuditLog[] = [];
 
+// Cache for known missing Supabase tables (avoids repeated 404 attempts in this session)
+const missingTables = new Set<string>();
+
 class SecurityService {
   /**
    * Get all defined system roles
    */
   async getSystemRoles(): Promise<SystemRole[]> {
-    if (isSupabaseConfigured()) {
+    if (isSupabaseConfigured() && !missingTables.has('system_roles')) {
       try {
         const { data, error } = await supabase
           .from('system_roles')
           .select('*')
           .order('created_at', { ascending: true });
 
-        if (!error && data) {
+        if (error?.code === 'PGRST116' || error?.message?.includes('does not exist') || (error as any)?.details?.includes('does not exist')) {
+          missingTables.add('system_roles');
+        } else if (!error && data) {
           return data as SystemRole[];
         }
-      } catch (err) {
-        console.warn('Supabase getSystemRoles error, falling back to mock:', err);
+      } catch {
+        missingTables.add('system_roles');
       }
     }
     return MOCK_SYSTEM_ROLES;
@@ -198,25 +203,86 @@ class SecurityService {
   }
 
   async getRolePermissions(roleCode?: SystemRoleCode): Promise<RolePermission[]> {
-    if (isSupabaseConfigured()) {
+    let perms: RolePermission[] = [];
+    if (isSupabaseConfigured() && !missingTables.has('role_permissions')) {
       try {
         let query = supabase.from('role_permissions').select('*');
         if (roleCode) {
           query = query.eq('role_code', roleCode);
         }
         const { data, error } = await query;
-        if (!error && data && data.length > 0) {
-          return data as RolePermission[];
+        if (error?.code === 'PGRST116' || error?.message?.includes('does not exist')) {
+          missingTables.add('role_permissions');
+        } else if (!error && data && data.length > 0) {
+          perms = data as RolePermission[];
         }
-      } catch (err) {
-        console.warn('Supabase getRolePermissions error, falling back to mock:', err);
+      } catch {
+        missingTables.add('role_permissions');
       }
     }
 
-    if (roleCode) {
-      return mockPermissions.filter(p => p.role_code === roleCode);
+    if (perms.length === 0) {
+      try {
+        const local = localStorage.getItem('aroua_role_permissions');
+        if (local) {
+          const parsed = JSON.parse(local);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            perms = roleCode ? parsed.filter((p: RolePermission) => p.role_code === roleCode) : parsed;
+          }
+        }
+      } catch {
+        // ignore
+      }
     }
-    return mockPermissions;
+
+    if (perms.length === 0) {
+      perms = roleCode ? mockPermissions.filter(p => p.role_code === roleCode) : mockPermissions;
+    }
+
+    if (roleCode) {
+      const defaultRolePerms = buildInitialPermissions().filter(p => p.role_code === roleCode);
+      return PERMISSION_MODULES.map(mod => {
+        const found = perms.find(p => p.permission_key === mod.key);
+        const def = defaultRolePerms.find(p => p.permission_key === mod.key);
+        if (roleCode === 'super_admin') {
+          return {
+            id: found?.id || `perm-super_admin-${mod.key}`,
+            role_code: 'super_admin',
+            permission_key: mod.key,
+            can_view: true,
+            can_create: true,
+            can_edit: true,
+            can_delete: true,
+            can_export: true,
+            can_print: true,
+          };
+        }
+        if (found) {
+          return {
+            ...found,
+            can_view: found.can_view !== undefined ? Boolean(found.can_view) : (def?.can_view ?? false),
+            can_create: found.can_create !== undefined ? Boolean(found.can_create) : (def?.can_create ?? false),
+            can_edit: found.can_edit !== undefined ? Boolean(found.can_edit) : (def?.can_edit ?? false),
+            can_delete: found.can_delete !== undefined ? Boolean(found.can_delete) : (def?.can_delete ?? false),
+            can_export: found.can_export !== undefined ? Boolean(found.can_export) : (def?.can_export ?? false),
+            can_print: found.can_print !== undefined ? Boolean(found.can_print) : (def?.can_print ?? false),
+          };
+        }
+        return def || {
+          id: `perm-${roleCode}-${mod.key}`,
+          role_code: roleCode,
+          permission_key: mod.key,
+          can_view: false,
+          can_create: false,
+          can_edit: false,
+          can_delete: false,
+          can_export: false,
+          can_print: false,
+        };
+      });
+    }
+
+    return perms;
   }
 
   /**
@@ -713,4 +779,6 @@ class SecurityService {
 
 export const securityService = new SecurityService();
 export default securityService;
+
+
 

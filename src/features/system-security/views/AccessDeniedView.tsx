@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ShieldAlert, ArrowLeft, Home, Lock } from 'lucide-react';
@@ -57,7 +57,7 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
 
           <button
             type="button"
-            onClick={() => navigate('/hr/enrolled-students')}
+            onClick={() => navigate('/')}
             className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition shadow-xs flex items-center justify-center gap-2 cursor-pointer"
           >
             <Home className="w-3.5 h-3.5" />
@@ -71,7 +71,10 @@ export const AccessDeniedView: React.FC<AccessDeniedViewProps> = ({
             <span>{isRtl ? 'لأغراض الاختبار والتطوير: ' : 'Mode test : '}</span>
             <button
               type="button"
-              onClick={() => switchRole('super_admin')}
+              onClick={async () => {
+                await switchRole('super_admin');
+                window.location.reload();
+              }}
               className="text-emerald-700 font-bold hover:underline cursor-pointer"
             >
               {isRtl ? 'العودة لصلاحية المدير العام' : 'Repasser en Super Admin'}
