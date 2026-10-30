@@ -207,8 +207,12 @@
 
 ---
 
-## 7. حالة البناء والتحقق البرمجي (Production Verification)
+## 7. حالة البناء والتحقق البرمجي (Production Verification & Deployment)
 - **أمر البناء:** `npm run build` (`tsc -b && vite build`)
-- **النتيجة:** `✓ built in 3.10s` مع **0 أخطاء** برمجية نهائياً (TypeScript Strict Mode compliant).
+- **النتيجة:** `✓ built in 953ms` مع **0 أخطاء** برمجية نهائياً (TypeScript Strict Mode compliant).
 - **تجزئة الحزم:** تحميل كسول (Code Splitting & Lazy Loading) لكافة الشاشات الـ 38 ومكونات الطباعة المنبثقة.
 - **استجابة الخادم:** استجابة جميع المسارات بالرمز `HTTP 200 OK`.
+- **النشر السحابي الحي (Firebase Hosting):** تم النشر بنجاح تام إلى الإنتاج عبر الحساب المعتمد `etablissement.aroua@gmail.com`:
+  - **رابط الاستضافة المباشر:** [https://arouaaudit.web.app](https://arouaaudit.web.app)
+  - **لوحة تحكم المشروع:** [https://console.firebase.google.com/project/arouaaudit/overview](https://console.firebase.google.com/project/arouaaudit/overview)
+  - **حالة النشر:** `Deploy complete!` (102 ملفاً تم نشرها وتفعيل الإصدار الحي).
