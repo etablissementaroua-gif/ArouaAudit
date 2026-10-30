@@ -1,4 +1,4 @@
-﻿import { StaffPayrollSlip, PayrollSummary } from '../models/payroll.types';
+import { StaffPayrollSlip, PayrollSummary } from '../models/payroll.types';
 import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 import { caisseService } from '../../treasury-caisse/services/caisseService';
 import { 
@@ -23,6 +23,7 @@ const initialEmployees: Employee[] = arouaSchoolsExternalStaffRegistry.map((item
   assigned_classes: item.assigned_classes || [],
   base_salary: item.base_salary || 0,
   credit_ancien: item.credit_ancien || 0,
+  previous_balance_due: item.previous_balance_due || 0,
   bank_name: item.bank_name,
   rib_account: item.rib_account,
   employment_status: item.employment_status || 'active',
@@ -71,7 +72,8 @@ export const payrollService = {
     id: string, 
     base_salary: number, 
     credit_ancien: number, 
-    status?: 'active' | 'departed' | 'suspended'
+    status?: 'active' | 'departed' | 'suspended',
+    previous_balance_due?: number
   ): Promise<boolean> {
     const updatePayload: any = { 
       base_salary: Number(base_salary) || 0, 
@@ -79,6 +81,9 @@ export const payrollService = {
       updated_at: new Date().toISOString()
     };
     if (status) updatePayload.employment_status = status;
+    if (previous_balance_due !== undefined) {
+      updatePayload.previous_balance_due = Number(previous_balance_due) || 0;
+    }
 
     if (isSupabaseConfigured()) {
       try {
@@ -105,18 +110,26 @@ export const payrollService = {
     month_reference: string;
     notes?: string;
   }): Promise<StaffAdvance> {
+    const chosenDate = (advanceData.advance_date && advanceData.advance_date.trim())
+      ? advanceData.advance_date.trim().split('T')[0]
+      : new Date().toISOString().split('T')[0];
+
+    const allEmps = await this.getEmployees();
+    const empObj = allEmps.find(e => e.id === advanceData.employee_id);
+
     const newAdvance: StaffAdvance = {
       id: 'adv-' + Date.now(),
       employee_id: advanceData.employee_id,
       amount: Number(advanceData.amount) || 0,
-      advance_date: advanceData.advance_date || new Date().toISOString().split('T')[0],
+      advance_date: chosenDate,
       payment_method: advanceData.payment_method || 'espece',
       check_number: advanceData.check_number,
       academic_year: advanceData.academic_year || '2026/2027',
       month_reference: advanceData.month_reference || '2026-09',
       is_settled: false,
       notes: advanceData.notes,
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
+      employee: empObj
     };
 
     if (isSupabaseConfigured()) {
@@ -124,7 +137,7 @@ export const payrollService = {
         // في Supabase، ينطلق Trigger الخصم من الصندوق trg_staff_advance_caisse تلقائياً
         const { data, error } = await supabase.from('staff_advances').insert([newAdvance]).select().single();
         if (!error && data) {
-          return data as StaffAdvance;
+          return { ...(data as StaffAdvance), employee: empObj };
         }
       } catch (err) {
         console.warn('Supabase advance insert fallback:', err);

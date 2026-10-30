@@ -256,7 +256,7 @@ export const arouaStaffSyncService = {
       try {
         const { data: existingEmployees, error: fetchErr } = await supabase
           .from('employees')
-          .select('id, external_staff_id, cin, base_salary, credit_ancien, employment_status, bank_name, rib_account');
+          .select('id, external_staff_id, cin, base_salary, credit_ancien, previous_balance_due, employment_status, bank_name, rib_account');
 
         if (!fetchErr && existingEmployees) {
           existingEmployees.forEach((emp: any) => {
@@ -310,6 +310,13 @@ export const arouaStaffSyncService = {
           ? Number(existingLoc.credit_ancien)
           : Number(item.credit_ancien) || 0;
 
+      const preservedPreviousBalanceDue = 
+        existingSb?.previous_balance_due !== undefined && existingSb?.previous_balance_due !== null
+          ? Number(existingSb.previous_balance_due)
+          : existingLoc?.previous_balance_due !== undefined && existingLoc?.previous_balance_due !== null
+          ? Number(existingLoc.previous_balance_due)
+          : Number(item.previous_balance_due) || 0;
+
       const empId = existingSb?.id || existingLoc?.id || ('emp-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6));
 
       return {
@@ -326,6 +333,7 @@ export const arouaStaffSyncService = {
         assigned_classes: item.assigned_classes && item.assigned_classes.length > 0 ? item.assigned_classes : (existingLoc?.assigned_classes || []),
         base_salary: preservedSalary,
         credit_ancien: preservedCredit,
+        previous_balance_due: preservedPreviousBalanceDue,
         bank_name: existingSb?.bank_name || existingLoc?.bank_name || item.bank_name || '',
         rib_account: existingSb?.rib_account || existingLoc?.rib_account || item.rib_account || '',
         employment_status: existingSb?.employment_status || existingLoc?.employment_status || 'active',

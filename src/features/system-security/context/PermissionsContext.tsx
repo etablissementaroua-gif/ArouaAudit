@@ -157,6 +157,11 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
       return true;
     }
 
+    // Finance Director has guaranteed permissions for system.settings (tarifs, pricing-grid, academic years)
+    if (currentRole === 'finance_director' && permissionKey === 'system.settings' && action !== 'can_delete') {
+      return true;
+    }
+
     const perm = permissionsMap.get(permissionKey);
     if (!perm) return false;
 
@@ -165,6 +170,7 @@ export const PermissionsProvider: React.FC<{ children: ReactNode }> = ({ childre
 
   const canAccessRoute = (routePermissionKey: string): boolean => {
     if (currentRole === 'super_admin') return true;
+    if (currentRole === 'finance_director' && (routePermissionKey === 'system.settings' || routePermissionKey === 'settings/pricing-grid')) return true;
     return hasPermission(routePermissionKey, 'can_view');
   };
 

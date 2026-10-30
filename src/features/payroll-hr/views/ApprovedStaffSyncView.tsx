@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   RefreshCw, 
@@ -18,7 +18,8 @@ import {
 import { StatCard } from '../../../shared/components/StatCard';
 import { arouaStaffSyncService } from '../services/arouaStaffSync.service';
 import { payrollService } from '../services/payroll.service';
-import { Employee } from '../models/payroll.types';
+import { Employee, StaffAdvance } from '../models/payroll.types';
+import { AdvanceReceiptModal } from '../components/AdvanceReceiptModal';
 
 export const ApprovedStaffSyncView: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -45,6 +46,9 @@ export const ApprovedStaffSyncView: React.FC = () => {
   const [editSalary, setEditSalary] = useState<number>(0);
   const [editDebt, setEditDebt] = useState<number>(0);
   const [editStatus, setEditStatus] = useState<'active' | 'departed' | 'suspended'>('active');
+  const [editPreviousBalanceDue, setEditPreviousBalanceDue] = useState<number>(0);
+  const [receiptAdvance, setReceiptAdvance] = useState<StaffAdvance | null>(null);
+  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState<boolean>(false);
 
   // Statement Drawer / Modal State
   const [statementEmp, setStatementEmp] = useState<Employee | null>(null);
@@ -85,7 +89,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
     setAdvanceLoading(true);
     try {
-      await payrollService.recordAdvance({
+      const createdAdvance = await payrollService.recordAdvance({
         employee_id: advanceModalEmployee.id,
         amount: Number(advanceAmount) || 0,
         advance_date: advanceDate,
@@ -97,6 +101,11 @@ export const ApprovedStaffSyncView: React.FC = () => {
 
       showToast(`تم صرف وتقييد تسبيق بقيمة ${advanceAmount} MAD للأستاذ/الموظف ${advanceModalEmployee.full_name} وخصمه تلقائياً من الصندوق`);
       setAdvanceModalEmployee(null);
+      if (createdAdvance) {
+        if (!createdAdvance.employee) createdAdvance.employee = advanceModalEmployee;
+        setReceiptAdvance(createdAdvance);
+        setIsReceiptModalOpen(true);
+      }
     } catch (err) {
       console.error('Record advance error:', err);
       alert('حدث خطأ أثناء تسجيل التسبيق');
@@ -110,7 +119,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
     if (!editEmp) return;
 
     try {
-      await payrollService.updateEmployeeFinancials(editEmp.id, editSalary, editDebt, editStatus);
+      await payrollService.updateEmployeeFinancials(editEmp.id, editSalary, editDebt, editStatus, editPreviousBalanceDue);
       await loadStaff();
       showToast(`تم تحديث البيانات المالية للأستاذ/الموظف ${editEmp.full_name} بنجاح`);
       setEditEmp(null);
@@ -288,6 +297,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 <th className="py-4 px-3">المواد والأفواج المسندة</th>
                 <th className="py-4 px-3 text-center">الراتب الأساسي (Base Salary)</th>
                 <th className="py-4 px-3 text-center">ديون سابقة (Crédit Ancien)</th>
+                <th className="py-4 px-3 text-center">مستحقات للموظف (Solde Dû)</th>
                 <th className="py-4 px-3 text-center">الحالة</th>
                 <th className="py-4 px-4 text-center">الإجراءات</th>
               </tr>
@@ -295,13 +305,13 @@ export const ApprovedStaffSyncView: React.FC = () => {
             <tbody className="divide-y divide-slate-100 text-slate-700">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-500 font-medium">
+                  <td colSpan={8} className="py-12 text-center text-slate-500 font-medium">
                     جاري تحميل سجل الأطر والموظفين...
                   </td>
                 </tr>
               ) : filteredEmployees.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-slate-500 font-medium">
+                  <td colSpan={8} className="py-12 text-center text-slate-500 font-medium">
                     لا يوجد أي موظف مطابق للبحث.
                   </td>
                 </tr>
@@ -380,6 +390,17 @@ export const ApprovedStaffSyncView: React.FC = () => {
                       )}
                     </td>
 
+                    {/* Previous Balance Due (Solde Dû) */}
+                    <td className="py-3.5 px-3 text-center">
+                      {(emp.previous_balance_due || 0) > 0 ? (
+                        <span className="font-bold font-mono text-emerald-700 text-sm">
+                          {(emp.previous_balance_due || 0).toLocaleString()} MAD
+                        </span>
+                      ) : (
+                        <span className="text-slate-400 font-mono text-xs">—</span>
+                      )}
+                    </td>
+
                     {/* Status */}
                     <td className="py-3.5 px-3 text-center">
                       <span className={`px-3 py-1 rounded-lg text-xs font-bold inline-flex items-center gap-1 ${
@@ -418,6 +439,7 @@ export const ApprovedStaffSyncView: React.FC = () => {
                             setEditSalary(emp.base_salary);
                             setEditDebt(emp.credit_ancien);
                             setEditStatus(emp.employment_status);
+                            setEditPreviousBalanceDue(emp.previous_balance_due || 0);
                           }}
                           className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition cursor-pointer shadow-xs"
                           title="تعديل الراتب الأساسي والديون السابقة"
@@ -612,6 +634,23 @@ export const ApprovedStaffSyncView: React.FC = () => {
               </div>
 
               <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  الرصيد الافتتاحي للمستحقات السابقة للموظف — Solde Initial Dû (MAD)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  step="50"
+                  value={editPreviousBalanceDue}
+                  onChange={(e) => setEditPreviousBalanceDue(Number(e.target.value))}
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-emerald-700 font-mono text-sm focus:border-emerald-500 focus:outline-none font-bold shadow-xs"
+                />
+                <span className="text-[10px] text-slate-500 mt-1 block">
+                  مستحقات ورواتب سابقة غير مدفوعة للموظف — تُسدد له ككتلة واحدة أو عبر دفعات تسوية خاصة
+                </span>
+              </div>
+
+              <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">الحالة الوظيفية بالنظام المالي</label>
                 <select 
                   value={editStatus}
@@ -685,6 +724,12 @@ export const ApprovedStaffSyncView: React.FC = () => {
                 <span className="text-[11px] text-slate-500 block font-medium">الديون السابقة العالقة:</span>
                 <span className="font-mono font-bold text-rose-600 text-sm">{statementEmp.credit_ancien.toLocaleString()} MAD</span>
               </div>
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                <span className="text-[11px] text-slate-500 block font-medium">المستحقات السابقة للموظف (Solde Dû):</span>
+                <span className="font-mono font-bold text-emerald-700 text-sm">
+                  {(statementEmp.previous_balance_due || 0).toLocaleString()} MAD
+                </span>
+              </div>
             </div>
 
             {/* Bank details */}
@@ -716,6 +761,13 @@ export const ApprovedStaffSyncView: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Advance Receipt Print Modal */}
+      <AdvanceReceiptModal
+        advance={receiptAdvance}
+        isOpen={isReceiptModalOpen}
+        onClose={() => { setIsReceiptModalOpen(false); setReceiptAdvance(null); }}
+      />
     </div>
   );
 };

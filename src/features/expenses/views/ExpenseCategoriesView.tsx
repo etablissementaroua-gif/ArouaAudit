@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Layers,
   Plus,
@@ -22,6 +22,8 @@ export const ExpenseCategoriesView: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // New Category Form State
   const [formData, setFormData] = useState<NewCategoryFormData>({
@@ -35,7 +37,7 @@ export const ExpenseCategoriesView: React.FC = () => {
 
   const [resettingBudgets, setResettingBudgets] = useState(false);
   const handleResetBudgets = async () => {
-    
+
     setResettingBudgets(true);
     await expensesService.resetAllBudgetAllocations();
     await loadData();
@@ -80,9 +82,11 @@ export const ExpenseCategoriesView: React.FC = () => {
         color_hex: '#6366f1',
       });
       await loadData();
+      setSuccessMessage('تم حفظ باب النفقة الجديد بنجاح');
+      setTimeout(() => setSuccessMessage(null), 5000);
     } catch (err) {
       console.error(err);
-      alert('حدث خطأ أثناء حفظ الباب الجديد');
+      setErrorMessage(err instanceof Error ? err.message : 'حدث خطأ أثناء حفظ الباب الجديد');
     } finally {
       setSubmitting(false);
     }
@@ -90,6 +94,33 @@ export const ExpenseCategoriesView: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Notifications / Alerts */}
+      {errorMessage && (
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center justify-between shadow-xs animate-fade-in">
+          <div className="flex items-center gap-2.5">
+            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+            <div>
+              <p className="font-bold">{errorMessage}</p>
+              <p className="text-[11px] text-rose-600 mt-0.5">يرجى التأكد من تشغيل مشروع Supabase (Unpause) من لوحة التحكم أو فحص جودة الاتصال بالإنترنت.</p>
+            </div>
+          </div>
+          <button onClick={() => setErrorMessage(null)} className="text-rose-500 hover:text-rose-700 p-1">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center justify-between shadow-xs animate-fade-in">
+          <div className="flex items-center gap-2.5">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+            <p className="font-bold">{successMessage}</p>
+          </div>
+          <button onClick={() => setSuccessMessage(null)} className="text-emerald-500 hover:text-emerald-700 p-1">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -189,11 +220,10 @@ export const ExpenseCategoriesView: React.FC = () => {
                   </span>
 
                   <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                      cat.charge_type === 'fixe'
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${cat.charge_type === 'fixe'
                         ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20'
                         : 'bg-cyan-500/10 text-emerald-800 border border-cyan-500/20'
-                    }`}
+                      }`}
                   >
                     {cat.charge_type === 'fixe' ? 'تكلفة ثابتة (Fixe)' : 'تكلفة متغيرة (Variable)'}
                   </span>
@@ -226,9 +256,8 @@ export const ExpenseCategoriesView: React.FC = () => {
 
                 <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      isHigh ? 'bg-rose-500' : isMid ? 'bg-amber-500' : 'bg-emerald-500'
-                    }`}
+                    className={`h-full rounded-full transition-all duration-500 ${isHigh ? 'bg-rose-500' : isMid ? 'bg-amber-500' : 'bg-emerald-500'
+                      }`}
                     style={{ width: `${Math.min(100, rate)}%` }}
                   />
                 </div>
@@ -265,6 +294,15 @@ export const ExpenseCategoriesView: React.FC = () => {
             </div>
 
             <form onSubmit={handleCreateCategory} className="space-y-4 text-xs">
+              {errorMessage && (
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-[11px] flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-bold">{errorMessage}</p>
+                    <p className="text-rose-600 text-[10px] mt-0.5">تأكد من استئناف تشغيل مشروع Supabase (Unpause) أو فحص الشبكة.</p>
+                  </div>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-slate-500 block mb-1">رمز الباب (Code Unique)*</label>

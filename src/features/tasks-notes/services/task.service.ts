@@ -1,4 +1,4 @@
-// ArouaAudit — Tasks & Notes Service (Production Clean — Zero Mock Data)
+﻿// ArouaAudit — Tasks & Notes Service (Production Clean — Zero Mock Data)
 import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
 import {
   SystemTask, SystemNotification, CreateTaskDTO, TaskFilter,
@@ -39,6 +39,10 @@ export const taskService = {
       }
 
       const { data, error } = await query;
+      // Silently handle missing table (404/PGRST116) - table may not be created yet
+      if (error && (error.code === 'PGRST116' || error.message?.includes('does not exist'))) {
+        return [];
+      }
       if (error) { console.warn('[taskService] getTasks:', error.message); return []; }
       return (data as SystemTask[]) ?? [];
     } catch { return []; }
@@ -96,6 +100,8 @@ export const taskService = {
         .or(`user_id.eq.${userId},user_id.is.null`)
         .order('created_at', { ascending: false })
         .limit(30);
+      // Silently handle missing table
+      if (error && (error.code === 'PGRST116' || error.message?.includes('does not exist'))) return [];
       if (error || !data) return [];
       return data as SystemNotification[];
     } catch { return []; }
@@ -135,3 +141,4 @@ export const taskService = {
     };
   }
 };
+

@@ -257,6 +257,19 @@ class SecurityService {
             can_print: true,
           };
         }
+        if (roleCode === 'finance_director' && mod.key === 'system.settings') {
+          return {
+            id: found?.id || `perm-finance_director-${mod.key}`,
+            role_code: 'finance_director',
+            permission_key: 'system.settings',
+            can_view: true,
+            can_create: true,
+            can_edit: true,
+            can_delete: false,
+            can_export: true,
+            can_print: true,
+          };
+        }
         if (found) {
           return {
             ...found,

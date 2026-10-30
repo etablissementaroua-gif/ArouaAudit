@@ -1,4 +1,4 @@
-﻿import { supabase, isSupabaseConfigured } from '../../../shared/lib/supabaseClient';
+import { supabase, isSupabaseConfigured, getFriendlySupabaseErrorMessage, isSupabaseNetworkOrDnsError } from '../../../shared/lib/supabaseClient';
 import {
   ExpenseCategory,
   ExpenseItem,
@@ -79,11 +79,11 @@ export const expensesService = {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
       return created;
     } catch (err) {
       console.error('Error adding category:', err);
-      throw err;
+      throw new Error(getFriendlySupabaseErrorMessage(err, 'حدث خطأ أثناء إضافة باب النفقة'));
     }
   },
 
@@ -100,7 +100,7 @@ export const expensesService = {
         })
         .eq('id', id);
 
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
       return true;
     } catch (err) {
       console.error('Error updating category:', err);
@@ -135,7 +135,7 @@ export const expensesService = {
       }
 
       const { data, error } = await query;
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
 
       let results = data || [];
 
@@ -211,7 +211,7 @@ export const expensesService = {
       return createdExp;
     } catch (err) {
       console.error('Error recording expense:', err);
-      throw err;
+      throw new Error(getFriendlySupabaseErrorMessage(err, 'حدث خطأ أثناء إضافة باب النفقة'));
     }
   },
 
@@ -225,7 +225,7 @@ export const expensesService = {
         .update({ status, updated_at: new Date().toISOString() })
         .eq('id', id);
 
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
       return true;
     } catch (err) {
       console.error('Error updating expense status:', err);
@@ -243,7 +243,7 @@ export const expensesService = {
         .select('*')
         .order('disbursement_date', { ascending: false });
 
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
       return (data || []).map((v) => ({
         ...v,
         amount: Number(v.amount) || 0,
@@ -282,11 +282,11 @@ export const expensesService = {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
       return created;
     } catch (err) {
       console.error('Error generating disbursement voucher:', err);
-      throw err;
+      throw new Error(getFriendlySupabaseErrorMessage(err, 'حدث خطأ أثناء إضافة باب النفقة'));
     }
   },
 
@@ -307,7 +307,7 @@ export const expensesService = {
         .eq('academic_year', academicYear)
         .neq('status', 'cancelled');
 
-      if (error) throw error;
+      if (error) throw new Error(getFriendlySupabaseErrorMessage(error, 'فشلت عملية إضافة باب النفقة في قاعدة البيانات'));
 
       const monthNames: Record<string, string> = {
         '09': 'سبتمبر',

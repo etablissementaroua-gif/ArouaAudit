@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { 
@@ -87,27 +87,24 @@ export const LoginView: React.FC = () => {
       }
 
 
-      // 1. If Supabase is fully configured, attempt cloud sign in
-      if (isSupabaseConfigured()) {
+      // 1. Attempt Supabase cloud sign-in only for non-local accounts
+      // (Skip for hardcoded super_admin to avoid unnecessary 400 errors)
+      if (isSupabaseConfigured() && !matchedUser) {
         try {
-          const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-          });
-
-          if (error) {
-            console.warn('Supabase auth sign in error, trying local profile check:', error.message);
-          }
-        } catch (supabaseErr) {
-          console.warn('Supabase auth network exception:', supabaseErr);
+          await supabase.auth.signInWithPassword({ email, password });
+        } catch {
+          // Silent — local profile matching will proceed below
         }
       }
 
       // 2. Fetch profiles to check credentials & suspension status
-      const allProfiles = await securityService.getUserProfiles();
-      matchedUser = allProfiles.find(
-        u => u.email?.toLowerCase().trim() === email.toLowerCase().trim()
-      );
+      // Only run if no match found yet (preserves hardcoded admin match)
+      if (!matchedUser) {
+        const allProfiles = await securityService.getUserProfiles();
+        matchedUser = allProfiles.find(
+          u => u.email?.toLowerCase().trim() === email.toLowerCase().trim()
+        );
+      }
 
       // If user not in predefined list, check if user is entering a valid email format
       if (!matchedUser) {
@@ -408,3 +405,4 @@ export const LoginView: React.FC = () => {
 };
 
 export default LoginView;
+

@@ -1,4 +1,4 @@
-﻿// ── Merged from payrollModels.ts (legacy) ──────────────────────────────────
+// ── Merged from payrollModels.ts (legacy) ──────────────────────────────────
 import { StaffPayrollSlip, PayrollStatus } from '../../../shared/types';
 export type { StaffPayrollSlip, PayrollStatus };
 
@@ -22,7 +22,8 @@ export interface Employee {
   subjects: string[];
   assigned_classes: string[];
   base_salary: number;
-  credit_ancien: number; // ديون سابقة عالقة
+  credit_ancien: number; // ديون وسلفات سابقة عالقة على الموظف للمؤسسة (تُقتطع من الراتب)
+  previous_balance_due?: number; // مستحقات سابقة ورصيد افتتاحي للموظف في ذمة المؤسسة (Solde Initial Dû)
   bank_name?: string;
   rib_account?: string;
   employment_status: 'active' | 'departed' | 'suspended';

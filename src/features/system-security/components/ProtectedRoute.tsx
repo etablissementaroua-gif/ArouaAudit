@@ -1,4 +1,4 @@
-﻿import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { usePermissions } from '../context/PermissionsContext';
 import { PermissionAction, SystemRoleCode } from '../models/security.types';
 import { AccessDeniedView } from '../views/AccessDeniedView';
@@ -30,6 +30,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // Super Admin always bypasses route restrictions
   if (isSuperAdmin) {
+    return <>{children}</>;
+  }
+
+  // Finance Director has direct access to system settings & pricing grid
+  if (currentRole === 'finance_director' && requiredPermission === 'system.settings' && requiredAction !== 'can_delete') {
     return <>{children}</>;
   }
 

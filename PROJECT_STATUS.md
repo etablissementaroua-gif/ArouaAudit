@@ -1,7 +1,7 @@
 # وثيقة حالة المنظومة والمشروع الرسمية (ArouaAudit Master Project Status)
 
-> **تاريخ التحديث الأخير:** 2 أكتوبر 2026  
-> **الإصدار الحالي:** v1.2.0 (Security Hardened & Production Zero-Data Verified)  
+> **تاريخ التحديث الأخير:** 30 أكتوبر 2026  
+> **الإصدار الحالي:** v1.3.0 (Operational Hardened & Staff Balances Integration)  
 > **الفرع النشط:** `main`  
 > **المؤسسة المالكة:** مجموعة مدارس أروى للتعليم المدرسي الخصوصي - مراكش (Groupe Scolaire Aroua)
 
@@ -187,8 +187,28 @@
 
 ---
 
-## 6. حالة البناء والتحقق البرمجي (Production Verification)
+## 6. حزمة المعالجات التشغيلية الميدانية (Operational Fixes - v1.3.0)
+تم تطبيق حزمة إصلاحات تشغيلية شاملة بناءً على الملاحظات الميدانية للإدارة المالية:
+1. **معالجة انقطاع الاتصال بقاعدة البيانات (Graceful Handling for Supabase DNS / Paused Error):**
+   - إضافة دالتي `isSupabaseNetworkOrDnsError` و `getFriendlySupabaseErrorMessage` في `src/shared/lib/supabaseClient.ts` لرصد أخطاء `ERR_NAME_NOT_RESOLVED` وحالات تجمد السيرفر المجاني أو انقطاع DNS.
+   - ترقية واجهة إضافة أبواب النفقات `ExpenseCategoriesView.tsx` وخدمة `expenses.service.ts` لاستبدال نوافذ التنبيه البدائية (`alert()`) بإشعارات نظامية واضحة ومسالمة تشرح للمستخدم سبب المشكلة وتوجه الإدارة لاستئناف المشروع (Unpause) من لوحة تحكم Supabase دون انهيار الواجهة.
+2. **تثبيت صلاحيات المدير المالي (finance_director) في الـ RBAC:**
+   - إنهاء تعارض حظر 403 Forbidden عن شبكة الأسعار والتعريفات (`settings/pricing-grid`).
+   - منح دور `finance_director` الصلاحيات الحتمية الكاملة (العرض، الإضافة، التعديل، التصدير، والطباعة) لموديول `system.settings` في `security.service.ts` و `PermissionsContext.tsx` و `ProtectedRoute.tsx`.
+3. **دعم وثيقة سند التسبيق المستقلة والتاريخ الفعلي (Staff Advance Slip & Actual Date):**
+   - تعديل دالة `recordAdvance` في `payroll.service.ts` للاحتفاظ الحصري بالتاريخ الفعلي المختار للسلفة (`advance_date`) بدلاً من تاريخ اليوم.
+   - إنشاء مكون الطباعة المالي الرسمي `AdvanceReceiptModal.tsx` بمقاس A4/A5، متضمناً هوية المؤسسة الرسمية، أرقام التعريف القانوني (ICE / IF / RC)، تفقيط المبالغ بالدرهم المغربي بالعربية والفرنسية، مربعات التوقيع المزدوج (الموظف المستلم والإدارة المالية)، وأمر الطباعة المباشر مع إخفاء أزرار التحكم آلياً.
+   - ربط نافذة الطباعة تلقائياً بجدول الأطر `ApprovedStaffSyncView.tsx` عند صرف أي تسبيق جديد.
+4. **دعم الرصيد الافتتاحي لمستحقات الموظفين القديمة (Solde Initial Dû):**
+   - إضافة حقل `previous_balance_due` في نموذج الموظف `Employee` في `payroll.types.ts`.
+   - الفصل المحاسبي الدقيق بين ديون وسلفات الموظف للمؤسسة (`credit_ancien` - تُقتطع من راتبه) ومستحقات ورواتب سابقة للموظف في ذمة المؤسسة (`previous_balance_due` - تُسدد له ككتلة واحدة).
+   - إبراز الحقل في عمود خاص بجدول الأطر المعتمدين، وفي نافذة تعديل البيانات المالية، وكشف الحساب التفصيلي `statementEmp`.
+   - تحديث دوال الحفظ والمزامنة في `payroll.service.ts` و `arouaStaffSync.service.ts` للحفاظ التام على الرصيد بالخادم والذاكرة المحلية.
+
+---
+
+## 7. حالة البناء والتحقق البرمجي (Production Verification)
 - **أمر البناء:** `npm run build` (`tsc -b && vite build`)
-- **النتيجة:** `✓ built in ~3.8s` مع **0 أخطاء** برمجية نهائياً.
-- **تجزئة الحزم:** تحميل كسول (Code Splitting & Lazy Loading) لكافة الشاشات الـ 38.
+- **النتيجة:** `✓ built in 3.10s` مع **0 أخطاء** برمجية نهائياً (TypeScript Strict Mode compliant).
+- **تجزئة الحزم:** تحميل كسول (Code Splitting & Lazy Loading) لكافة الشاشات الـ 38 ومكونات الطباعة المنبثقة.
 - **استجابة الخادم:** استجابة جميع المسارات بالرمز `HTTP 200 OK`.
