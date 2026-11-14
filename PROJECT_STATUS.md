@@ -205,6 +205,11 @@
    - إبراز الحقل في عمود خاص بجدول الأطر المعتمدين، وفي نافذة تعديل البيانات المالية، وكشف الحساب التفصيلي `statementEmp`.
    - تحديث دوال الحفظ والمزامنة في `payroll.service.ts` و `arouaStaffSync.service.ts` للحفاظ التام على الرصيد بالخادم والذاكرة المحلية.
 
+5. **أتمتة نبضة الاستيقاظ الدورية لقاعدة بيانات Supabase (Keep-Alive Automation):**
+   - إنشاء ونشر سير العمل `.github/workflows/supabase-keep-alive.yml` عبر GitHub Actions.
+   - جدولة نبضة استعلام خفيفة لـ Supabase REST API كل يومين (`0 7 */2 * *`) مع دعم التشغيل اليدوي `workflow_dispatch`.
+   - حقن متغيرات الأمان السرية (`SUPABASE_URL` و `SUPABASE_ANON_KEY`) على مستوى مستودع GitHub لحماية المفاتيح وضمان الاستمرار الأوتوماتيكي لمنع دخول المشروع في وضع الخمول (Auto-Pause).
+
 ---
 
 ## 7. حالة البناء والتحقق البرمجي (Production Verification & Deployment)
