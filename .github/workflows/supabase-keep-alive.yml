@@ -1,0 +1,30 @@
+name: ArouaAudit Supabase Keep-Alive Pulse
+
+on:
+  schedule:
+    # يعمل تلقائياً كل يومين عند الساعة 07:00 صباحاً بتوقيت UTC (= 08:00 بتوقيت المغرب)
+    - cron: '0 7 */2 * *'
+  workflow_dispatch: # يتيح تشغيل النبضة يدوياً في أي وقت للتحقق الفوري
+
+jobs:
+  ping:
+    name: Keep ArouaAudit Supabase Active
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API & Audit Table
+        run: |
+          echo "Sending keep-alive pulse to ArouaAudit Supabase instance..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/academic_years?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+
+          echo "Response HTTP Status: $HTTP_STATUS"
+
+          # يعتبر الاتصال ناجحاً إذا استجاب الخادم (200 OK أو أي رد أقل من 500 يثبت نشاط المحرك)
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 500 ]; then
+            echo "✅ ArouaAudit Supabase instance is active and responded successfully."
+          else
+            echo "❌ Warning: Supabase responded with unexpected status $HTTP_STATUS"
+            exit 1
+          fi
