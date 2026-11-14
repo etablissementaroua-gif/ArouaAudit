@@ -17,14 +17,15 @@ jobs:
           HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
             -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/academic_years?select=id&limit=1" \
             -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" || echo "000")
 
           echo "Response HTTP Status: $HTTP_STATUS"
 
           # يعتبر الاتصال ناجحاً إذا استجاب الخادم (200 OK أو أي رد أقل من 500 يثبت نشاط المحرك)
           if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 500 ]; then
-            echo "✅ ArouaAudit Supabase instance is active and responded successfully."
+            echo "✅ ArouaAudit Supabase instance is active and responded successfully with HTTP $HTTP_STATUS."
           else
-            echo "❌ Warning: Supabase responded with unexpected status $HTTP_STATUS"
+            echo "❌ Alert: Supabase instance is unreachable (HTTP $HTTP_STATUS)."
+            echo "👉 If HTTP status is 000, the project is currently PAUSED on Supabase. Please unpause it at https://supabase.com/dashboard"
             exit 1
           fi
