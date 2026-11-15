@@ -205,10 +205,11 @@
    - إبراز الحقل في عمود خاص بجدول الأطر المعتمدين، وفي نافذة تعديل البيانات المالية، وكشف الحساب التفصيلي `statementEmp`.
    - تحديث دوال الحفظ والمزامنة في `payroll.service.ts` و `arouaStaffSync.service.ts` للحفاظ التام على الرصيد بالخادم والذاكرة المحلية.
 
-5. **أتمتة نبضة الاستيقاظ الدورية لقاعدة بيانات Supabase (Keep-Alive Automation):**
-   - إنشاء ونشر سير العمل `.github/workflows/supabase-keep-alive.yml` عبر GitHub Actions.
+5. **أتمتة نبضة الاستيقاظ الدورية وتهيئة قاعدة بيانات Supabase:**
+   - إنشاء ونشر سير العمل `.github/workflows/supabase-keep-alive.yml` عبر GitHub Actions وتأكيد تشغيله الأخضر الناجح بنسبة 100%.
    - جدولة نبضة استعلام خفيفة لـ Supabase REST API كل يومين (`0 7 */2 * *`) مع دعم التشغيل اليدوي `workflow_dispatch`.
-   - حقن متغيرات الأمان السرية (`SUPABASE_URL` و `SUPABASE_ANON_KEY`) على مستوى مستودع GitHub لحماية المفاتيح وضمان الاستمرار الأوتوماتيكي لمنع دخول المشروع في وضع الخمول (Auto-Pause).
+   - حقن متغيرات الأمان السرية (`SUPABASE_URL` و `SUPABASE_ANON_KEY`) على مستوى مستودع GitHub لحماية المفاتيح وضمان الاستمرار الأوتوماتيكي لمنع خمول وسكون المشروع.
+   - تشغيل وتأكيد سكربت التهيئة الشاملة `supabase/init_all_missing_system_tables.sql` بنجاح على قاعدة البيانات الحية، وبناء كافة الجداول النظامية (`system_roles`, `role_permissions`, `user_profiles`, `audit_logs`, `system_tasks`, `system_notifications`, `employees`, `approved_staff`) وتأكيد استجابتها بدون أي أخطاء 404 أو 400.
 
 ---
 
