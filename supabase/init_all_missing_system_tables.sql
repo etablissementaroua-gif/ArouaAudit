@@ -288,4 +288,4 @@ END $$;
 
 GRANT ALL ON public.approved_staff TO anon, authenticated, service_role;
 
-RAISE NOTICE '✅ تم بنجاح إنشاء وتهيئة كافة الجداول والأدوار وحساب المشرف الأعلى بنجاح!';
+SELECT '✅ تم بنجاح إنشاء وتهيئة كافة الجداول والأدوار وحساب المشرف الأعلى بنجاح!' AS result;
